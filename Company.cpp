@@ -4,4 +4,3 @@
 
 #include "Company.h"
 
-//péréréréré
