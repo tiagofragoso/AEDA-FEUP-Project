@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 #ifndef AEDA_FEUP_PROJECT_PASSENGER_H
 #define AEDA_FEUP_PROJECT_PASSENGER_H
 

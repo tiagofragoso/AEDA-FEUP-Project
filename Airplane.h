@@ -16,10 +16,10 @@ class Airplane {
 private:
 	string name;
 	int capacity;
-	vector <Flight> flights;
+	vector <Flight *> flights;
 
 public:
-	Airplane(string name, int capacity; vector <Flight> flights);
+	Airplane(string name, int capacity, vector <Flight> flights);
 
 	//get Methods
 	string getName();
@@ -29,7 +29,7 @@ public:
 	//set Methods
 	void setName( string name);
 	void setCapacity(int capacity);
-	void setFlights(vector <Flight> flights);
+	void setFlights(vector <Flight*> flights);
 
 };
 
