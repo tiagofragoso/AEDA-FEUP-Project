@@ -1,7 +1,3 @@
-//
-// Created by Tiago Fragoso on 17/10/2017.
-//
-
 #include "Airplane.h"
 
 Airplane::Airplane(string name, int capacity, vector<Flight *> flights)
@@ -20,7 +16,7 @@ int Airplane::getCapacity() const
 
 vector<Flight *> Airplane::getFlights() const
 {
-	return flights;
+	return this->flights;
 }
 
 void Airplane::setName(string name)

@@ -1,10 +1,6 @@
-//
-// Created by Tiago Fragoso on 17/10/2017.
-//
-
 #include "Passenger.h"
 
-Passenger::Passenger(int name, int dateOfBirth)
+Passenger::Passenger(string name, int dateOfBirth) : name(name), dateOfBirth(dateOfBirth)
 {
 }
 
@@ -15,7 +11,7 @@ string Passenger::getName() const
 
 int Passenger::getDateOfBirth() const
 {
-	return this ->getDateOfBirth();
+	return this->dateOfBirth;
 }
 
 void Passenger::setName(string name)
@@ -24,4 +20,19 @@ void Passenger::setName(string name)
 
 void Passenger::setDateOfBirth(int dateOfBirth)
 {
+}
+
+
+PassengerWithCard::PassengerWithCard(string name, int dateOfBirth, Card *card) : Passenger(name, dateOfBirth), card(card)
+{
+}
+
+Card * PassengerWithCard::getCard() const {
+
+	return this-> card;
+}
+
+void PassengerWithCard::setCard(Card *card) {
+
+	this->card = card;
 }

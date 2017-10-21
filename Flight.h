@@ -1,10 +1,7 @@
-//
-// Created by Tiago Fragoso on 17/10/2017.
-//
-
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Passenger.h"
 
 using namespace std;
 
@@ -37,18 +34,40 @@ public:
 	void setBasePrice(int basePrice);
 	void setDuration(int duration);
 
-
-
-
-
-
-
 };
 
 class RentedFlight : public Flight {
 
+private:
+	Passenger * buyer;
 
+public:
+	RentedFlight(string departure1, string destination1, int time_to_flight1, int basePrice1,
+                     int duration1, string departure, string destination, int time_to_flight, int basePrice,
+                     int duration, Passenger *buyer);
 
+	//get Methods
+	Passenger * getBuyer() const;
 
+	//set Methods
+	void setBuyer(Passenger * buyer);
+
+};
+
+class ComercialFlight : public Flight {
+
+private:
+	vector<Passenger * > passengers;
+
+public:
+	ComercialFlight(string departure1, string destination1, int time_to_flight1, int basePrice1,
+                        int duration1, string departure, string destination, int time_to_flight,
+                        int basePrice, int duration, vector<Passenger *> passengers);
+
+	//get methods
+	vector<Passenger * > getPassengers() const;
+
+	//set methods
+	void setPassengers(vector<Passenger * > passengers);
 };
 #endif //AEDA_FEUP_PROJECT_FLIGHT_H

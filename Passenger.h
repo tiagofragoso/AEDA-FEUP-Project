@@ -1,24 +1,21 @@
-//
-// Created by Tiago Fragoso on 17/10/2017.
-//
-
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Card.h"
 
 using namespace std;
 
 #ifndef AEDA_FEUP_PROJECT_PASSENGER_H
 #define AEDA_FEUP_PROJECT_PASSENGER_H
 
-class Passenger{
+class Passenger {
 
 private:
 	string name;
 	int dateOfBirth;
 
 public:
-	Passenger(int name, int dateOfBirth);
+	Passenger(string name, int dateOfBirth);
 
 	//get Methods
 	string getName() const;
@@ -27,6 +24,22 @@ public:
 	//set Methods
 	void setName(string name);
 	void setDateOfBirth(int dateOfBirth);
+};
+
+class PassengerWithCard: public Passenger {
+
+private:
+	Card *card;
+
+public:
+	PassengerWithCard(string name, int dateOfBirth, Card *card);
+
+	//get Methods
+	Card * getCard() const;
+
+	//Set Methods
+	void setCard(Card * card);
+
 };
 
 #endif //AEDA_FEUP_PROJECT_PASSENGER_H

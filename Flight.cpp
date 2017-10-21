@@ -1,7 +1,3 @@
-//
-// Created by Tiago Fragoso on 17/10/2017.
-//
-
 #include "Flight.h"
 
 Flight::Flight(string departure, string destination, int time_to_flight, int basePrice, int duration)
@@ -56,4 +52,32 @@ void Flight::setBasePrice(int basePrice)
 void Flight::setDuration(int duration)
 {
     this->duration = duration;
+}
+
+RentedFlight::RentedFlight(string departure1, string destination1, int time_to_flight1, int basePrice1,
+                           int duration1, string departure, string destination, int time_to_flight, int basePrice,
+                           int duration, Passenger *buyer) : Flight(departure1, destination1, time_to_flight1, basePrice1, duration1), buyer(buyer) {}
+
+Passenger * RentedFlight::getBuyer() const {
+
+    return this-> buyer;
+}
+
+void RentedFlight::setBuyer(Passenger *buyer) {
+
+    this->buyer = buyer;
+}
+
+ComercialFlight::ComercialFlight(string departure1, string destination1, int time_to_flight1, int basePrice1,
+                                 int duration1, string departure, string destination, int time_to_flight,
+                                 int basePrice, int duration, vector<Passenger *> passengers) : Flight(departure1, destination1, time_to_flight1, basePrice1, duration1), passengers(passengers) {}
+
+vector<Passenger *> ComercialFlight::getPassengers() const {
+
+    return this->passengers;
+}
+
+void ComercialFlight::setPassengers(vector<Passenger *> passengers) {
+
+    this->passengers = passengers;
 }

@@ -1,7 +1,3 @@
-//
-// Created by Tiago Fragoso on 17/10/2017.
-//
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -29,6 +25,7 @@ public:
 	string getName() const;
 	vector <Airplane> getFleet() const;
 	vector <Passenger> getPassangers() const;
+
 	//set methods
 	void setName(string name);
 	void setFleet(vector <Airplane> fleet);
