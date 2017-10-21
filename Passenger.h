@@ -21,8 +21,8 @@ public:
 	Passenger(int name, int dateOfBirth);
 
 	//get Methods
-	string getName();
-	int getDateOfBirth();
+	string getName() const;
+	int getDateOfBirth() const;
 
 	//set Methods
 	void setName(string name);

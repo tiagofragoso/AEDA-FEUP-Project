@@ -24,11 +24,11 @@ public:
 	Flight(string departure, string destination, int time_to_flight, int basePrice, int duration);
 
 	//get Methods
-	string getDeparture();
-	string getDestination();
-	int getTime_to_flight();
-	int getBasePrice();
-	int getDuration();
+	string getDeparture() const;
+	string getDestination() const;
+	int getTime_to_flight() const;
+	int getBasePrice() const;
+	int getDuration() const;
 
 	//set Methods
 	void setDeparture(string departure);

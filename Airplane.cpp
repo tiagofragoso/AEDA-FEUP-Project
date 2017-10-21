@@ -4,33 +4,36 @@
 
 #include "Airplane.h"
 
-Airplane::Airplane(string name, int capacity, vector<Flight> flights)
+Airplane::Airplane(string name, int capacity, vector<Flight *> flights)
 {
 }
 
-string Airplane::getName()
+string Airplane::getName() const
 {
-	return string();
+	return this->name;
 }
 
-int Airplane::getCapacity()
+int Airplane::getCapacity() const
 {
-	return 0;
+	return this->capacity;
 }
 
-vector<Flight> Airplane::getFlights()
+vector<Flight *> Airplane::getFlights() const
 {
-	return vector<Flight>();
+	return flights;
 }
 
 void Airplane::setName(string name)
 {
+    this->name = name;
 }
 
 void Airplane::setCapacity(int capacity)
 {
+    this->capacity = capacity;
 }
 
 void Airplane::setFlights(vector<Flight*> flights)
 {
+    this->flights = flights;
 }

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Flight.h"
 
 using namespace std;
 
@@ -19,17 +20,17 @@ private:
 	vector <Flight *> flights;
 
 public:
-	Airplane(string name, int capacity, vector <Flight> flights);
+	Airplane(string name, int capacity, vector <Flight *> flights);
 
 	//get Methods
-	string getName();
-	int getCapacity();
-	vector <Flight> getFlights();
+	string getName() const;
+	int getCapacity() const;
+	vector <Flight *> getFlights() const;
 
 	//set Methods
-	void setName( string name);
+	void setName(string name);
 	void setCapacity(int capacity);
-	void setFlights(vector <Flight*> flights);
+	void setFlights(vector <Flight *> flights);
 
 };
 

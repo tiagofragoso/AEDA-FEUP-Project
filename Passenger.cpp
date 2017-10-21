@@ -8,14 +8,14 @@ Passenger::Passenger(int name, int dateOfBirth)
 {
 }
 
-string Passenger::getName()
+string Passenger::getName() const
 {
-	return string();
+	return this->name;
 }
 
-int Passenger::getDateOfBirth()
+int Passenger::getDateOfBirth() const
 {
-	return 0;
+	return this ->getDateOfBirth();
 }
 
 void Passenger::setName(string name)
