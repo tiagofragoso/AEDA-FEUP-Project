@@ -54,9 +54,7 @@ void Flight::setDuration(int duration)
     this->duration = duration;
 }
 
-RentedFlight::RentedFlight(string departure1, string destination1, int time_to_flight1, int basePrice1,
-                           int duration1, string departure, string destination, int time_to_flight, int basePrice,
-                           int duration, Passenger *buyer) : Flight(departure1, destination1, time_to_flight1, basePrice1, duration1), buyer(buyer) {}
+RentedFlight::RentedFlight(string departure, string destination, int time_to_flight, int basePrice, int duration, Passenger *buyer) : Flight(departure, destination, time_to_flight, basePrice, duration), buyer(buyer) {}
 
 Passenger * RentedFlight::getBuyer() const {
 
@@ -68,9 +66,8 @@ void RentedFlight::setBuyer(Passenger *buyer) {
     this->buyer = buyer;
 }
 
-ComercialFlight::ComercialFlight(string departure1, string destination1, int time_to_flight1, int basePrice1,
-                                 int duration1, string departure, string destination, int time_to_flight,
-                                 int basePrice, int duration, vector<Passenger *> passengers) : Flight(departure1, destination1, time_to_flight1, basePrice1, duration1), passengers(passengers) {}
+ComercialFlight::ComercialFlight(string departure, string destination, int time_to_flight, int basePrice, int duration, vector<Passenger *> passengers) : Flight(departure, destination, time_to_flight, basePrice, duration), passengers(passengers) {}
+
 
 vector<Passenger *> ComercialFlight::getPassengers() const {
 

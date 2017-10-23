@@ -42,9 +42,7 @@ private:
 	Passenger * buyer;
 
 public:
-	RentedFlight(string departure1, string destination1, int time_to_flight1, int basePrice1,
-                     int duration1, string departure, string destination, int time_to_flight, int basePrice,
-                     int duration, Passenger *buyer);
+	RentedFlight(string departure, string destination, int time_to_flight, int basePrice, int duration, Passenger *buyer);
 
 	//get Methods
 	Passenger * getBuyer() const;
@@ -60,9 +58,7 @@ private:
 	vector<Passenger * > passengers;
 
 public:
-	ComercialFlight(string departure1, string destination1, int time_to_flight1, int basePrice1,
-                        int duration1, string departure, string destination, int time_to_flight,
-                        int basePrice, int duration, vector<Passenger *> passengers);
+	ComercialFlight( string departure, string destination, int time_to_flight, int basePrice, int duration, vector<Passenger *> passengers);
 
 	//get methods
 	vector<Passenger * > getPassengers() const;
