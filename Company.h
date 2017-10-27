@@ -5,6 +5,7 @@
 #include "Card.h"
 #include "Flight.h"
 #include "Passenger.h"
+#include "helper.h"
 
 using namespace std;
 
@@ -33,7 +34,8 @@ public:
 
 	//Other methods
 
-	int Company::chooseAirplane();
+	int chooseAirplane();
+	bool validIdAirplane(int id);
 
 	//Management methods
 	//Airplane

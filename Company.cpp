@@ -46,14 +46,27 @@ int Company::chooseAirplane() {
 		cout << endl;
 	}
 	do {
-		cout << "Choose line: ";
-		if (!validArg(lineID)) continue;
-		if (validIdLines(lineID)) break;
+		cout << "Choose airplane: ";
+		if (!validArg(AirplaneID)) continue;
+		if (validIdAirplane(AirplaneID)) break;
 		else {
 			cout << "Invalid id. Reenter.\n";
 		}
 	} while (true);
-	return lineID;
+	return AirplaneID;
+}
+
+// Tests if the line with id id_number exists
+bool Company::validIdAirplane(int id) {
+	vector <Airplane> fleet = getFleet();
+	for (int i = 0; i < fleet.size(); i++)
+	{
+		if (fleet.at(i).getId() == id)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 //Management methods
