@@ -4,7 +4,7 @@
 #include "Flight.h"
 
 using namespace std;
-
+	
 #ifndef AEDA_FEUP_PROJECT_AIRPLANE_H
 #define AEDA_FEUP_PROJECT_AIRPLANE_H
 
@@ -12,6 +12,7 @@ class Airplane {
 
 private:
 	string name;
+	int id;
 	int capacity;
 	vector <Flight *> flights;
 
@@ -20,11 +21,13 @@ public:
 
 	//get Methods
 	string getName() const;
+	int getId() const;
 	int getCapacity() const;
 	vector <Flight *> getFlights() const;
 
 	//set Methods
 	void setName(string name);
+	void setId(int id);
 	void setCapacity(int capacity);
 	void setFlights(vector <Flight *> flights);
 

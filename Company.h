@@ -31,6 +31,28 @@ public:
 	void setFleet(vector <Airplane> fleet);
 	void setPassengers(vector <Passenger> passengers);
 
+	//Other methods
+
+	int Company::chooseAirplane();
+
+	//Management methods
+	//Airplane
+	void addAirplane();
+	void removeAirplane();
+
+	//Card
+	void addCard();
+	void removeCard();
+
+	//Flight
+	void addFlight();
+	void removeFlght();
+
+	//Passenger
+	void addPassanger();
+	void removePassenger();
+
+
 };
 
 #endif //AEDA_FEUP_PROJECT_COMPANY_H

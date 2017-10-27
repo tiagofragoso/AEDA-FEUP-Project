@@ -33,3 +33,33 @@ void Company::setPassengers(vector<Passenger> passengers)
 {
     this->passengers = passengers;
 }
+
+//Helper methods
+int Company::chooseAirplane() {
+	int AirplaneID;
+	vector <Airplane> fleet = getFleet();
+	if (!fleet.empty()) {
+		cout << "Available  IDs: ";
+		for (auto& x : fleet) {
+			cout << x.getId() << " ";
+		}
+		cout << endl;
+	}
+	do {
+		cout << "Choose line: ";
+		if (!validArg(lineID)) continue;
+		if (validIdLines(lineID)) break;
+		else {
+			cout << "Invalid id. Reenter.\n";
+		}
+	} while (true);
+	return lineID;
+}
+
+//Management methods
+
+//Airplane
+
+void addAirplane() {
+
+}
