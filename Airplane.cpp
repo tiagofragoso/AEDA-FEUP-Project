@@ -43,3 +43,16 @@ void Airplane::setFlights(vector<Flight*> flights)
 {
     this->flights = flights;
 }
+
+
+void Airplane::printSummary() {
+
+    cout << name << endl;
+}
+
+void Airplane::print() {
+
+    cout << "Name: " << name;
+    cout << "Capacity: " << capacity << endl;
+
+}

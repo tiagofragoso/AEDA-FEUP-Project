@@ -74,4 +74,11 @@ void pause() {
 	string foo;
 	cout << "Press enter to continue.";
 	getline(cin, foo);
-}	
+}
+
+void normalize(string &s){
+    for (int i = 0; i < s.size(); i++) {
+        s.at(i) = tolower(s.at(i));
+    }
+    trimString(s);
+}

@@ -12,18 +12,21 @@ class Passenger {
 
 private:
 	string name;
-	int dateOfBirth;
+	string dateOfBirth;
 
 public:
-	Passenger(string name, int dateOfBirth);
+	Passenger(string name, string dateOfBirth);
 
 	//get Methods
 	string getName() const;
-	int getDateOfBirth() const;
+	string getDateOfBirth() const;
 
 	//set Methods
 	void setName(string name);
-	void setDateOfBirth(int dateOfBirth);
+	void setDateOfBirth(string dateOfBirth);
+
+    void printSummary();
+    void virtual print();
 };
 
 class PassengerWithCard: public Passenger {
@@ -32,13 +35,14 @@ private:
 	Card *card;
 
 public:
-	PassengerWithCard(string name, int dateOfBirth, Card *card);
+	PassengerWithCard(string name, string dateOfBirth, Card *card);
 
 	//get Methods
 	Card * getCard() const;
 
 	//Set Methods
 	void setCard(Card * card);
+    void print();
 
 };
 

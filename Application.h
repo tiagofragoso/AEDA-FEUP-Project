@@ -23,12 +23,30 @@ private:
 
 public:
     Application();
+
+    //menus
     void mainMenu();
     void filesMenu();
     void passengersMenu();
     void airplanesMenu();
     void flightsMenu();
     void bookingsMenu();
+
+    //passenger fucntions
+    void passengerShow();
+    void passengerCreate();
+    void passengerDelete();
+    void passengerUpdateMenu();
+    void printSummaryPassenger();
+    int choosePassenger();
+
+    //airplane functions
+    void airplaneShow();
+    void airplaneCreate();
+    void airplaneDelete();
+    void airplaneUpdateMenu();
+    void printSummaryAirplane();
+    int chooseAirplane();
 };
 
 

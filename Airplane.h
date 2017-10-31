@@ -31,6 +31,11 @@ public:
 	void setCapacity(int capacity);
 	void setFlights(vector <Flight *> flights);
 
+    void printSummary();
+    void print();
+
+
+
 };
 
 #endif //AEDA_FEUP_PROJECT_AIRPLANE_H

@@ -11,5 +11,6 @@ bool validArg(int &variable);
 bool validArg(int &variable, bool &end);
 void trimString(string &s);
 void pause();
+void normalize(string &s);
 
 #endif /* SRC_HELPER_H_ */

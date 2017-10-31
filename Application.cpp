@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Company.h"
 #include "helper.h"
+#include <string>
 
 Application::Application() {
 
@@ -280,3 +281,107 @@ void Application::bookingsMenu() {
     //..
 
 }
+
+void Application::printSummaryPassenger() {
+
+    int i = 1;
+
+    cout << "PASSENGER SUMMARY\n\n";
+
+    for (auto &passenger : company.getPassangers()) {
+        cout << i << ". ";
+        passenger.printSummary();
+        i++;
+    }
+
+}
+
+void Application::printSummaryAirplane() {
+
+    int i = 1;
+
+    cout << "AIRPLANE SUMMARY\n\n";
+
+    for (auto &airplane : company.getFleet()) {
+        cout << i << ". ";
+        airplane.printSummary();
+        i++;
+    }
+}
+
+int Application::choosePassenger() {
+
+    int pIndex;
+    do {
+        cout << "Choose passenger: ";
+        if (!validArg(pIndex)) continue;
+        if (pIndex <= company.getPassangers().size()) break;
+        else {
+            cout << "Invalid number. Reenter.\n";
+        }
+    } while (true);
+    return pIndex;
+
+}
+
+int Application::chooseAirplane() {
+
+    int aIndex;
+    do {
+        cout << "Choose airplane: ";
+        if (!validArg(aIndex)) continue;
+        if (aIndex <= company.getFleet().size()) break;
+        else {
+            cout << "Invalid number. Reenter.\n";
+        }
+    } while (true);
+    return aIndex;
+}
+
+
+void Application::passengerShow() {
+
+    printSummaryPassenger();
+    string foo;
+    int pIndex;
+    do {
+        cout << "Do you wish to view detailed information about a passenger (Y/N)?: ";
+        getline(cin, foo);
+        normalize(foo);
+        if (foo == "y") {
+            cout << endl;
+            pIndex = choosePassenger();
+            company.getPassangers().at(pIndex).print();
+        }
+        else if (foo == "n") break;
+        else {
+            cout << "Invalid option. Reenter." << endl;
+        }
+    } while (true);
+    cout << endl;
+
+}
+
+void Application::airplaneShow() {
+
+    printSummaryAirplane();
+    string foo;
+    int aIndex;
+    do {
+        cout << "Do you wish to view detailed information about an airplane (Y/N)?: ";
+        getline(cin, foo);
+        normalize(foo);
+        if (foo == "y") {
+            cout << endl;
+            aIndex = chooseAirplane();
+            company.getFleet().at(aIndex).print();
+        }
+        else if (foo == "n") break;
+        else {
+            cout << "Invalid option. Reenter." << endl;
+        }
+    } while (true);
+    cout << endl;
+
+}
+
