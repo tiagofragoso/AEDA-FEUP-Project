@@ -14,6 +14,7 @@ private:
     int avgYrFlights;
 
 public:
+    Card(string job, int nYear);
     string getJob() const;
     int getAvgYrFlights() const;
 

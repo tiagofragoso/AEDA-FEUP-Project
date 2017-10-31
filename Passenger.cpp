@@ -4,6 +4,7 @@ Passenger::Passenger(string name, string dateOfBirth) : name(name), dateOfBirth(
 {
 }
 
+
 string Passenger::getName() const
 {
 	return this->name;
@@ -27,9 +28,17 @@ PassengerWithCard::PassengerWithCard(string name, string dateOfBirth, Card *card
 {
 }
 
-Card * PassengerWithCard::getCard() const {
+PassengerWithCard::PassengerWithCard(string name, string dateOfBirth, string job, int nYear) : Passenger(name, dateOfBirth) {
 
-	return this-> card;
+    Card* c = new Card(job, nYear);
+    card = c;
+}
+
+
+
+Card* PassengerWithCard::getCard() const {
+
+	return card;
 }
 
 void PassengerWithCard::setCard(Card *card) {

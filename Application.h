@@ -39,6 +39,7 @@ public:
     void passengerUpdateMenu();
     void printSummaryPassenger();
     int choosePassenger();
+    bool validPassenger(string name);
 
     //airplane functions
     void airplaneShow();
@@ -47,6 +48,7 @@ public:
     void airplaneUpdateMenu();
     void printSummaryAirplane();
     int chooseAirplane();
+    bool validAirplane(string name);
 
     void flightShow(int aIndex);
     void flightCreate(int aIndex);

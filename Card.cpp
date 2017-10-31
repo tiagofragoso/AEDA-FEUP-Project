@@ -7,3 +7,9 @@ int Card::getAvgYrFlights() const {
 string Card::getJob() const {
     return this->job;
 }
+
+Card::Card(string job, int nYear) {
+
+    this->job = job;
+    this->avgYrFlights = nYear;
+}

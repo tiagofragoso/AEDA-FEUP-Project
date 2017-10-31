@@ -17,44 +17,40 @@ class Company {
 private:
 	string name;
 	vector <Airplane> fleet;
-	vector <Passenger> passengers;
+	vector <Passenger*> passengers;
 
 public:
     Company();
-	Company(string name, vector <Airplane> fleet, vector <Passenger> passengers);
+	Company(string name, vector <Airplane> fleet, vector <Passenger*> passengers);
     Company(string name);
 	
 	//get methods
 	string getName() const;
 	vector <Airplane> getFleet() const;
-	vector <Passenger> getPassangers() const;
+	vector <Passenger*> getPassangers() const;
 
 	//set methods
 	void setName(string name);
 	void setFleet(vector <Airplane> fleet);
-	void setPassengers(vector <Passenger> passengers);
+	void setPassengers(vector <Passenger*> passengers);
 
 	//Other methods
 
-	int chooseAirplane();
-	bool validIdAirplane(int id);
+	//int chooseAirplane();
+	//bool validIdAirplane(int id);
 
 	//Management methods
 	//Airplane
-	void addAirplane();
-	void removeAirplane();
-
-	//Card
-	void addCard();
-	void removeCard();
+	void addAirplane(Airplane airplane);
+	void removeAirplane(int aIndex);
 
 	//Flight
-	void addFlight();
-	void removeFlght();
+	void addFlight(Flight flight);
+	void removeFlght(int fIndex);
 
 	//Passenger
-	void addPassanger();
-	void removePassenger();
+	void addPassanger(Passenger *passenger);
+	void removePassenger(int pIndex);
 
 
 };

@@ -36,9 +36,11 @@ private:
 
 public:
 	PassengerWithCard(string name, string dateOfBirth, Card *card);
+	PassengerWithCard(string name, string dateOfBirth, string job, int nYear);
+
 
 	//get Methods
-	Card * getCard() const;
+	Card* getCard() const;
 
 	//Set Methods
 	void setCard(Card * card);

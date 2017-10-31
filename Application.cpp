@@ -167,7 +167,7 @@ void Application::passengersMenu() {
                 passengerShow();
                 break;
             case 2:
-                //TODO passengers create
+                passengerCreate();
                 break;
             case 3:
                 //TODO passengers delete
@@ -292,7 +292,7 @@ void Application::printSummaryPassenger() {
 
     for (auto &passenger : company.getPassangers()) {
         cout << i << ". ";
-        passenger.printSummary();
+        passenger->printSummary();
         i++;
     }
 
@@ -336,7 +336,7 @@ int Application::choosePassenger() {
             cout << "Invalid number. Reenter.\n";
         }
     } while (true);
-    return pIndex;
+    return pIndex-1;
 
 }
 
@@ -351,7 +351,7 @@ int Application::chooseAirplane() {
             cout << "Invalid number. Reenter.\n";
         }
     } while (true);
-    return aIndex;
+    return aIndex-1;
 }
 
 int Application::chooseFlight(int aIndex) {
@@ -360,12 +360,12 @@ int Application::chooseFlight(int aIndex) {
     do {
         cout << "Choose flight: ";
         if (!validArg(fIndex)) continue;
-        if (aIndex <= company.getFleet().at(aIndex).getFlights().size()) break;
+        if (fIndex <= company.getFleet().at(fIndex).getFlights().size()) break;
         else {
             cout << "Invalid number. Reenter.\n";
         }
     } while (true);
-    return fIndex;
+    return fIndex-1;
 
 }
 
@@ -382,7 +382,7 @@ void Application::passengerShow() {
         if (foo == "y") {
             cout << endl;
             pIndex = choosePassenger();
-            company.getPassangers().at(pIndex).print();
+            company.getPassangers().at(pIndex)->print();
         }
         else if (foo == "n") break;
         else {
@@ -438,4 +438,82 @@ void Application::flightShow(int aIndex) {
     cout << endl;
 
 }
+
+bool Application::validPassenger(string name) {
+
+    normalize(name);
+     for (auto &passenger : company.getPassangers()) {
+
+         if (passenger->getName() == name)
+             return false;
+
+     }
+
+    return true;
+
+}
+
+bool Application::validAirplane(string name) {
+
+    normalize(name);
+    for (auto &airplane : company.getFleet()) {
+
+        if (airplane.getName() == name)
+            return false;
+    }
+
+    return true;
+}
+
+void Application::passengerCreate() {
+
+    string foo;
+    string name, dateOfBirth, job;
+    int nYear;
+
+    cout << "Normal passenger or passenger with card? (n/c)\n";
+    getline(cin, foo);
+
+    cout << "Insert the new passenger information: \n\n";
+    do {
+        cout << "Insert name: ";
+        getline(cin, name);
+        normalize(name);
+        if (!validPassenger(name)) {
+            cout << "This passenger already exists. Please insert another name or delete the driver." << endl;
+        }
+        else {
+            break;
+        }
+    } while (true);
+
+    cout << "Date of Birth: (DD/MM/YYYY): ";
+    getline(cin, dateOfBirth);
+
+    if (foo == "n") {
+
+        Passenger *newpassenger = new Passenger(name, dateOfBirth);
+        company.addPassanger(newpassenger);
+        cout << "Passenger successfully added\n";
+        passengersChanged = true;
+        return;
+    } else if (foo == "c") {
+
+        cout << "Job: ";
+        getline(cin, job);
+        normalize(job);
+
+        do {
+            cout << "Number of flights/year: ";
+            if (validArg(nYear)) break;
+        } while (true);
+
+        PassengerWithCard *newpassenger = new PassengerWithCard(name, dateOfBirth, job, nYear);
+        company.addPassanger(newpassenger);
+        cout << "Passenger successfully added\n";
+        passengersChanged = true;
+        return;
+    }
+}
+
 
