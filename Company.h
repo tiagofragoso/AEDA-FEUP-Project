@@ -20,7 +20,9 @@ private:
 	vector <Passenger> passengers;
 
 public:
+    Company();
 	Company(string name, vector <Airplane> fleet, vector <Passenger> passengers);
+    Company(string name);
 	
 	//get methods
 	string getName() const;

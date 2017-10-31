@@ -1,7 +1,28 @@
 #include "Company.h"
 
+Company::Company() {
+
+    name = "";
+    vector<Airplane> a;
+    vector<Passenger> p;
+    fleet = a;
+    passengers = p;
+
+}
+
 Company::Company(string name, vector<Airplane> fleet, vector<Passenger> passengers)
 {
+
+}
+
+Company::Company(string name) {
+
+    this->name;
+    vector<Airplane> fleet;
+    vector<Passenger> passengers;
+    this->fleet = fleet;
+    this->passengers = passengers;
+
 }
 
 string Company::getName() const
