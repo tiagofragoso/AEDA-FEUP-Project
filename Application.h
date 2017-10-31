@@ -29,7 +29,7 @@ public:
     void filesMenu();
     void passengersMenu();
     void airplanesMenu();
-    void flightsMenu();
+    void flightsMenu(int aIndex);
     void bookingsMenu();
 
     //passenger fucntions
@@ -47,6 +47,12 @@ public:
     void airplaneUpdateMenu();
     void printSummaryAirplane();
     int chooseAirplane();
+
+    void flightShow(int aIndex);
+    void flightCreate(int aIndex);
+    void flightUpdateMenu(int aIndex);
+    void printSummaryFlight(int aIndex);
+    int chooseFlight(int aIndex);
 };
 
 

@@ -17,7 +17,7 @@ Company::Company(string name, vector<Airplane> fleet, vector<Passenger> passenge
 
 Company::Company(string name) {
 
-    this->name;
+    this->name = name;
     vector<Airplane> fleet;
     vector<Passenger> passengers;
     this->fleet = fleet;

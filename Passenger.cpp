@@ -48,9 +48,9 @@ void Passenger::print() {
 
 void PassengerWithCard::print() {
 
-    cout << "Name: " << Passenger::getName();
-    cout << "Date of Birth: " << Passenger::getDateOfBirth();
-    cout << "Job: " << card->getJob();
+    cout << "Name: " << Passenger::getName() << endl;
+    cout << "Date of Birth: " << Passenger::getDateOfBirth() << endl;
+    cout << "Job: " << card->getJob() << endl;
     cout << "Number of flights/year: " << card->getAvgYrFlights() << endl;
 
 

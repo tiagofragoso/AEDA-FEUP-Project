@@ -164,7 +164,7 @@ void Application::passengersMenu() {
 
         switch (op) {
             case 1:
-                //TODO passengers show
+                passengerShow();
                 break;
             case 2:
                 //TODO passengers create
@@ -209,7 +209,7 @@ void Application::airplanesMenu() {
 
         switch (op) {
             case 1:
-                //TODO airplanes show
+                airplaneShow();
                 break;
             case 2:
                 //TODO airplanes create
@@ -221,16 +221,18 @@ void Application::airplanesMenu() {
                 //TODO airplanes update (chamar outro menu)
                 break;
             case 5:
-                flightsMenu();
+                flightsMenu(chooseAirplane());
                 break;
         }
 
     } while (op != 9);
 }
 
-void Application::flightsMenu() {
+void Application::flightsMenu(int aIndex) {
 
     int op;
+
+    Airplane airplane = company.getFleet().at(aIndex);
 
     do {
         cout << "[FLIGHT MANAGEMENT MENU]\n\n";
@@ -256,7 +258,7 @@ void Application::flightsMenu() {
 
         switch (op) {
             case 1:
-                //TODO flights show
+                flightShow(aIndex);
                 break;
             case 2:
                 //TODO flights create
@@ -309,6 +311,20 @@ void Application::printSummaryAirplane() {
     }
 }
 
+void Application::printSummaryFlight(int aIndex) {
+
+    int i = 1;
+    Airplane a = company.getFleet().at(aIndex);
+
+    cout << "FLIGHT SUMMARY\n\n";
+
+    for (auto &flight : a.getFlights()) {
+        cout << i << ". ";
+        flight->printSummary();
+        i++;
+    }
+}
+
 int Application::choosePassenger() {
 
     int pIndex;
@@ -336,6 +352,21 @@ int Application::chooseAirplane() {
         }
     } while (true);
     return aIndex;
+}
+
+int Application::chooseFlight(int aIndex) {
+
+    int fIndex;
+    do {
+        cout << "Choose flight: ";
+        if (!validArg(fIndex)) continue;
+        if (aIndex <= company.getFleet().at(aIndex).getFlights().size()) break;
+        else {
+            cout << "Invalid number. Reenter.\n";
+        }
+    } while (true);
+    return fIndex;
+
 }
 
 
@@ -375,6 +406,29 @@ void Application::airplaneShow() {
             cout << endl;
             aIndex = chooseAirplane();
             company.getFleet().at(aIndex).print();
+        }
+        else if (foo == "n") break;
+        else {
+            cout << "Invalid option. Reenter." << endl;
+        }
+    } while (true);
+    cout << endl;
+
+}
+
+void Application::flightShow(int aIndex) {
+
+    printSummaryFlight(aIndex);
+    string foo;
+    int fIndex;
+    do {
+        cout << "Do you wish to view detailed information about a flight (Y/N)?: ";
+        getline(cin, foo);
+        normalize(foo);
+        if (foo == "y") {
+            cout << endl;
+            fIndex = chooseFlight(aIndex);
+            company.getFleet().at(aIndex).getFlights().at(fIndex)->print();
         }
         else if (foo == "n") break;
         else {

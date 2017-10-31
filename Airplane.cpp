@@ -52,7 +52,7 @@ void Airplane::printSummary() {
 
 void Airplane::print() {
 
-    cout << "Name: " << name;
+    cout << "Name: " << name  << endl;
     cout << "Capacity: " << capacity << endl;
 
 }

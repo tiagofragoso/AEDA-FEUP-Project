@@ -54,6 +54,23 @@ void Flight::setDuration(int duration)
     this->duration = duration;
 }
 
+void Flight::printSummary() {
+
+    cout << "Departure: " << departure;
+    cout << "Destination: " << destination;
+    cout << "Time to flight: " << time_to_flight << endl;
+
+}
+
+void Flight::print() {
+
+    cout << "Departure: " << departure << endl;
+    cout << "Destination: " << destination << endl;
+    cout << "Time to flight: " << time_to_flight << endl;
+    cout << "Base Price: " << basePrice << endl;
+    cout << "Flight duration: " << duration << endl;
+}
+
 RentedFlight::RentedFlight(string departure, string destination, int time_to_flight, int basePrice, int duration, Passenger *buyer) : Flight(departure, destination, time_to_flight, basePrice, duration), buyer(buyer) {}
 
 Passenger * RentedFlight::getBuyer() const {
@@ -66,15 +83,38 @@ void RentedFlight::setBuyer(Passenger *buyer) {
     this->buyer = buyer;
 }
 
-ComercialFlight::ComercialFlight(string departure, string destination, int time_to_flight, int basePrice, int duration, vector<Passenger *> passengers) : Flight(departure, destination, time_to_flight, basePrice, duration), passengers(passengers) {}
+void RentedFlight::print() {
+
+    Flight::print();
+    cout << "Buyer: ";
+    buyer->printSummary();
+    cout << endl;
+}
+
+ComercialFlight::ComercialFlight(string departure, string destination, int time_to_flight, int basePrice, int duration, map<string, Passenger *> passengers) : Flight(departure, destination, time_to_flight, basePrice, duration), passengers(passengers) {}
 
 
-vector<Passenger *> ComercialFlight::getPassengers() const {
+map<string, Passenger *> ComercialFlight::getPassengers() const {
 
     return this->passengers;
 }
 
-void ComercialFlight::setPassengers(vector<Passenger *> passengers) {
+void ComercialFlight::setPassengers(map<string, Passenger *> passengers) {
 
     this->passengers = passengers;
+}
+
+void ComercialFlight::print() {
+
+    cout << "Passengers:\n";
+
+    Flight::print();
+
+    for (auto& p : passengers) {
+
+        Passenger* passenger = p.second;
+
+        passenger->printSummary();
+    }
+
 }
