@@ -64,3 +64,9 @@ void Airplane::print() {
     cout << "Capacity: " << capacity << endl;
 
 }
+
+void Airplane::removeFlight(int fIndex) {
+
+    flights.erase(flights.begin() + fIndex);
+
+}

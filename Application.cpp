@@ -170,7 +170,7 @@ void Application::passengersMenu() {
                 passengerCreate();
                 break;
             case 3:
-                //TODO passengers delete
+                passengerDelete();
                 break;
             case 4:
                 //TODO passengers update (chamar outro menu)
@@ -215,7 +215,7 @@ void Application::airplanesMenu() {
                 airplaneCreate();
                 break;
             case 3:
-                //TODO airplanes delete
+                airplaneDelete();
                 break;
             case 4:
                 //TODO airplanes update (chamar outro menu)
@@ -372,6 +372,11 @@ int Application::chooseFlight(int aIndex) {
 
 void Application::passengerShow() {
 
+    if (company.getPassangers().size() == 0) {
+        cout << "There are no passengers.\n";
+        return;
+    }
+
     printSummaryPassenger();
     string foo;
     int pIndex;
@@ -395,6 +400,13 @@ void Application::passengerShow() {
 
 void Application::airplaneShow() {
 
+    if (company.getFleet().size() == 0) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
+
     printSummaryAirplane();
     string foo;
     int aIndex;
@@ -417,6 +429,11 @@ void Application::airplaneShow() {
 }
 
 void Application::flightShow(int aIndex) {
+
+    if (company.getFleet().at(aIndex).getFlights().size() == 0) {
+        cout << "There are no flights in this airplane.\n";
+        return;
+    }
 
     printSummaryFlight(aIndex);
     string foo;
@@ -545,3 +562,33 @@ void Application::airplaneCreate() {
     airplanesChanged = true;
 }
 
+void Application::passengerDelete() {
+
+    printSummaryPassenger();
+    int pIndex;
+    pIndex = choosePassenger();
+    company.removePassenger(pIndex);
+    cout << "Passenger deleted sucessfully.\n ";
+    passengersChanged = true;
+
+}
+
+void Application::airplaneDelete() {
+
+    printSummaryAirplane();
+    int aIndex;
+    aIndex = chooseAirplane();
+    company.removeAirplane(aIndex);
+    cout << "Airplane deleted sucessfully.\n ";
+    airplanesChanged = true;
+}
+
+void Application::flightDelete(int aIndex) {
+
+    printSummaryFlight(aIndex);
+    int fIndex;
+    fIndex = chooseFlight(aIndex);
+    company.removeFlght(fIndex);
+    cout << "Flight deleted sucessfully.\n";
+    airplanesChanged = true;
+}

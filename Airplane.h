@@ -35,6 +35,9 @@ public:
     void printSummary();
     void print();
 
+    void removeFlight(int fIndex);
+
+
 
 
 };

@@ -52,6 +52,7 @@ public:
 
     void flightShow(int aIndex);
     void flightCreate(int aIndex);
+    void flightDelete(int aIndex);
     void flightUpdateMenu(int aIndex);
     void printSummaryFlight(int aIndex);
     int chooseFlight(int aIndex);
