@@ -59,7 +59,7 @@ void Application::mainMenu() {
                     cout << "There are changes to be deployed to the files.\n";
                     do {
                         cout << "Would you like to save those changes (Y/N) ? ";
-                        if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N')) {
+                        if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N' || auxOp == 'y' || auxOp == 'n')) {
                             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                             if (auxOp == 'Y') {
                                 //TODO functions to update files.
@@ -212,7 +212,7 @@ void Application::airplanesMenu() {
                 airplaneShow();
                 break;
             case 2:
-                //TODO airplanes create
+                airplaneCreate();
                 break;
             case 3:
                 //TODO airplanes delete
@@ -480,7 +480,7 @@ void Application::passengerCreate() {
         getline(cin, name);
         normalize(name);
         if (!validPassenger(name)) {
-            cout << "This passenger already exists. Please insert another name or delete the driver." << endl;
+            cout << "This passenger already exists. Please insert another name or delete the airplane." << endl;
         }
         else {
             break;
@@ -516,4 +516,32 @@ void Application::passengerCreate() {
     }
 }
 
+void Application::airplaneCreate() {
+
+    string name;
+    int capacity;
+
+    cout << "Insert the new airplane information: \n\n";
+    do {
+        cout << "Insert name: ";
+        getline(cin, name);
+        normalize(name);
+        if (!validAirplane(name)) {
+            cout << "This airplane already exists. Please insert another name or delete the airplane." << endl;
+        }
+        else {
+            break;
+        }
+    } while (true);
+
+    do {
+        cout << "Capacity: ";
+        if (validArg(capacity)) break;
+    } while (true);
+
+    Airplane newairplane = Airplane(name, capacity);
+    company.addAirplane(newairplane);
+    cout << "Airplane successfully added\n";
+    airplanesChanged = true;
+}
 

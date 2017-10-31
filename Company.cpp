@@ -98,3 +98,18 @@ void Company::addPassanger(Passenger *passenger) {
     passengers.push_back(passenger);
 
 }
+
+void Company::addAirplane(Airplane airplane) {
+    fleet.push_back(airplane);
+}
+
+void Company::removePassenger(int pIndex) {
+
+    passengers.erase(passengers.begin() + pIndex);
+
+}
+
+void Company::removeAirplane(int aIndex) {
+
+    fleet.erase(fleet.begin() + aIndex);
+}

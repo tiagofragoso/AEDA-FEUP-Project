@@ -4,6 +4,14 @@ Airplane::Airplane(string name, int capacity, vector<Flight *> flights)
 {
 }
 
+Airplane::Airplane(string name, int capacity) {
+
+    this->name = name;
+    this->capacity = capacity;
+    vector<Flight* > v;
+    flights = v;
+}
+
 string Airplane::getName() const
 {
 	return this->name;

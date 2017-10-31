@@ -18,6 +18,7 @@ private:
 
 public:
 	Airplane(string name, int capacity, vector <Flight *> flights);
+    Airplane(string name, int capacity);
 
 	//get Methods
 	string getName() const;

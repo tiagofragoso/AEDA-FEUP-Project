@@ -52,7 +52,7 @@ void Passenger::printSummary() {
 
 
 void Passenger::print() {
-    cout << "Name: " << name << " Date of Birth: " << dateOfBirth << endl;
+    cout << "Name: " << name << endl << " Date of Birth: " << dateOfBirth << endl;
 }
 
 void PassengerWithCard::print() {
