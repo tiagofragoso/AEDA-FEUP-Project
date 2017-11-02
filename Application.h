@@ -40,6 +40,10 @@ public:
     void printSummaryPassenger();
     int choosePassenger();
     bool validPassenger(string name);
+    void passengerUpdateName(int pIndex);
+    void passengerUpdateDateOfBirth(int pIndex);
+    void passengerUpdateJob(int pIndex);
+    void passengerUpdateNYear(int pIndex);
 
     //airplane functions
     void airplaneShow();
@@ -49,6 +53,9 @@ public:
     void printSummaryAirplane();
     int chooseAirplane();
     bool validAirplane(string name);
+    void airplaneUpdateName(int aIndex);
+    void airplaneUpdateCapacity(int aIndex);
+
 
     void flightShow(int aIndex);
     void flightCreate(int aIndex);
@@ -56,6 +63,17 @@ public:
     void flightUpdateMenu(int aIndex);
     void printSummaryFlight(int aIndex);
     int chooseFlight(int aIndex);
+    void flightUpdateDeparture(int aIndex, int fIndex);
+    void flightUpdateDestination(int aIndex, int fIndex);
+    void flightUpdateTimeToFlight(int aIndex, int fIndex);
+    void flightUpdatePrice(int aIndex, int fIndex);
+    void flightUpdateDuration(int aIndex, int fIndex);
+    //nao sei se vale a pena
+    void flightAddPassenger();
+    void flightDeletePassenger();
+    void flightUpdateBuyer();
+
+
 };
 
 

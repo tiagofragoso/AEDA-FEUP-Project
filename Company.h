@@ -44,9 +44,6 @@ public:
 	void addAirplane(Airplane airplane);
 	void removeAirplane(int aIndex);
 
-	//Flight
-	void addFlight(Flight flight);
-	void removeFlght(int fIndex);
 
 	//Passenger
 	void addPassanger(Passenger *passenger);

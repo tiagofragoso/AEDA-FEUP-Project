@@ -5,11 +5,23 @@ int Card::getAvgYrFlights() const {
 }
 
 string Card::getJob() const {
-    return this->job;
+
+    return job;
 }
 
 Card::Card(string job, int nYear) {
 
     this->job = job;
     this->avgYrFlights = nYear;
+}
+
+void Card::setAvgyrFlights(int nYear) {
+
+    avgYrFlights = nYear;
+}
+
+void Card::setJob(string job) {
+
+    this->job = job;
+
 }

@@ -17,6 +17,8 @@ public:
     Card(string job, int nYear);
     string getJob() const;
     int getAvgYrFlights() const;
+    void setAvgyrFlights(int nYear);
+    void setJob(string job);
 
 };
 

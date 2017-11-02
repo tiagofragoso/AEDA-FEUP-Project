@@ -26,7 +26,10 @@ public:
 	void setDateOfBirth(string dateOfBirth);
 
     void printSummary();
-    void virtual print();
+    virtual void print();
+    virtual string getType();
+    virtual Card *  getCard() const;
+    virtual void setCard(Card * card);
 };
 
 class PassengerWithCard: public Passenger {
@@ -44,7 +47,9 @@ public:
 
 	//Set Methods
 	void setCard(Card * card);
+
     void print();
+    string getType();
 
 };
 

@@ -173,7 +173,7 @@ void Application::passengersMenu() {
                 passengerDelete();
                 break;
             case 4:
-                //TODO passengers update (chamar outro menu)
+                passengerUpdateMenu();
                 break;
         }
 
@@ -264,7 +264,7 @@ void Application::flightsMenu(int aIndex) {
                 //TODO flights create
                 break;
             case 3:
-                //TODO flights delete
+                flightDelete(aIndex);
                 break;
             case 4:
                 //TODO flights update (chamar outro menu), nao esquecer adicionar e eliminar passageiros
@@ -488,8 +488,16 @@ void Application::passengerCreate() {
     string name, dateOfBirth, job;
     int nYear;
 
-    cout << "Normal passenger or passenger with card? (n/c)\n";
-    getline(cin, foo);
+    while(true) {
+
+        cout << "Normal passenger or passenger with card? (n/c)\n";
+        getline(cin, foo);
+        if ((foo == "n") || (foo == "c"))
+            break;
+        else
+            cout << "Invalid option.\n";
+
+    }
 
     cout << "Insert the new passenger information: \n\n";
     do {
@@ -588,7 +596,132 @@ void Application::flightDelete(int aIndex) {
     printSummaryFlight(aIndex);
     int fIndex;
     fIndex = chooseFlight(aIndex);
-    company.removeFlght(fIndex);
+    company.getFleet().at(aIndex).removeFlight(fIndex);
     cout << "Flight deleted sucessfully.\n";
     airplanesChanged = true;
+}
+
+void Application::passengerUpdateMenu() {
+
+    printSummaryPassenger();
+    int pIndex, op;
+    pIndex = choosePassenger();
+
+    do {
+        cout << "Passenger selected: \n\n";
+        company.getPassangers().at(pIndex)->print();
+        cout << "[PASSENGER UPDATE MENU]\n\n";
+        cout << "[1]- Change passenger name.\n";
+        cout << "[2]- Change passenger date of birth.\n";
+
+        if(company.getPassangers().at(pIndex)->getType() == "c") {
+
+
+            cout << "[3]- Change passenger job.\n";
+            cout << "[4]- Change passenger number of flights/year.\n";
+
+        }
+        cout << "[9]- Back.\n\n";
+
+        do {
+            cout << "Insert the desired option: ";
+            if (cin >> op && ((op >= 1 && op <= 4) || op == 9)) {
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                break;
+            }
+            else {
+                cerr << "Invalid option.\n";
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+        } while (true);
+
+        switch (op) {
+            case 1:
+                passengerUpdateName(pIndex);
+                break;
+            case 2:
+                passengerUpdateDateOfBirth(pIndex);
+                break;
+            case 3:
+                passengerUpdateJob(pIndex);
+                break;
+            case 4:
+                passengerUpdateNYear(pIndex);
+                break;
+        }
+
+    } while (op != 9);
+}
+
+void Application::passengerUpdateName(int pIndex) {
+
+    Passenger * passenger = company.getPassangers().at(pIndex);
+
+    string newName;
+    cout << "The current name for the chosen passenger is '" << passenger->getName() << "'.\n";
+    do {
+        cout << "Insert new name: ";
+        getline(cin, newName);
+        normalize(newName);
+        if (!validPassenger(newName)) {
+            cout << "This passenger already exists. Please insert another name or delete the passenger." << endl;
+        }
+        else {
+            break;
+        }
+    } while (true);
+
+    passenger->setName(newName);
+    passengersChanged = true;
+    cout << "Passenger name updated successfully.\n";
+
+}
+
+void Application::passengerUpdateDateOfBirth(int pIndex) {
+
+    Passenger *passenger = company.getPassangers().at(pIndex);
+
+    string newDateOfBirth;
+    cout << "The current date of birth for the chosen passenger is '" << passenger->getDateOfBirth() << "'.\n";
+    cout << "Insert the new date of birth (DD/MM/YYYY): ";
+    getline(cin, newDateOfBirth);
+    passenger->setDateOfBirth(newDateOfBirth);
+    passengersChanged= true;
+    cout << "Passenger date of birth updated successfully.\n";
+}
+
+void Application::passengerUpdateJob(int pIndex) {
+
+    Card *card = company.getPassangers().at(pIndex)->getCard();
+
+    string newJob;
+
+    cout << "The current job for the chosen passenger is '" << card->getJob() << "'.\n";
+    cout << "Insert the new job: ";
+    getline(cin, newJob);
+    card->setJob(newJob);
+    passengersChanged= true;
+    cout << "Passenger job updated successfully.\n";
+
+}
+
+void Application::passengerUpdateNYear(int pIndex) {
+
+    Card *card = company.getPassangers().at(pIndex)->getCard();
+
+    int newN;
+
+    cout << "The current number of flights/year for the chosen passenger is '" << card->getAvgYrFlights() << "'.\n";
+    do {
+        cout << "Insert the new number of flights/year : ";
+        if (!validArg(newN)) continue;
+        else break;
+
+    } while (true);
+
+    card->setAvgyrFlights(newN);
+    passengersChanged= true;
+    cout << "Passenger number of flights/year updated successfully.\n";
+
 }

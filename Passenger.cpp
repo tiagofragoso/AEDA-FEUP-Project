@@ -17,11 +17,25 @@ string Passenger::getDateOfBirth() const
 
 void Passenger::setName(string name)
 {
+  this->name = name;
 }
 
 void Passenger::setDateOfBirth(string dateOfBirth)
 {
+    this->dateOfBirth = dateOfBirth;
 }
+
+string Passenger::getType() {
+
+    return "n";
+}
+
+Card* Passenger::getCard() const{
+
+    return nullptr;
+}
+
+void Passenger::setCard(Card *card) {}
 
 
 PassengerWithCard::PassengerWithCard(string name, string dateOfBirth, Card *card) : Passenger(name, dateOfBirth), card(card)
@@ -52,7 +66,7 @@ void Passenger::printSummary() {
 
 
 void Passenger::print() {
-    cout << "Name: " << name << endl << " Date of Birth: " << dateOfBirth << endl;
+    cout << "Name: " << name << endl << "Date of Birth: " << dateOfBirth << endl;
 }
 
 void PassengerWithCard::print() {
@@ -63,4 +77,9 @@ void PassengerWithCard::print() {
     cout << "Number of flights/year: " << card->getAvgYrFlights() << endl;
 
 
+}
+
+string PassengerWithCard::getType() {
+
+    return "c";
 }
