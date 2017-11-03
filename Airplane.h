@@ -12,6 +12,8 @@ class Airplane {
 
 private:
 	string name;
+	//é suposto isto estar aqui? é suposto o airplane ter id???
+	//se for é preciso dar update a imensas funções
 	int id;
 	int capacity;
 	vector <Flight *> flights;

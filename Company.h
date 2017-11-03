@@ -43,11 +43,14 @@ public:
 	//Airplane
 	void addAirplane(Airplane airplane);
 	void removeAirplane(int aIndex);
+    void setAirplane(int aIndex, Airplane newairplane);
 
 
 	//Passenger
 	void addPassanger(Passenger *passenger);
 	void removePassenger(int pIndex);
+
+
 
 
 };

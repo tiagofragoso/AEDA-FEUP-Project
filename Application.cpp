@@ -218,7 +218,7 @@ void Application::airplanesMenu() {
                 airplaneDelete();
                 break;
             case 4:
-                //TODO airplanes update (chamar outro menu)
+                airplaneUpdateMenu();
                 break;
             case 5:
                 flightsMenu(chooseAirplane());
@@ -505,7 +505,7 @@ void Application::passengerCreate() {
         getline(cin, name);
         normalize(name);
         if (!validPassenger(name)) {
-            cout << "This passenger already exists. Please insert another name or delete the airplane." << endl;
+            cout << "This passenger already exists. Please insert another name or delete the passenger." << endl;
         }
         else {
             break;
@@ -623,18 +623,39 @@ void Application::passengerUpdateMenu() {
         }
         cout << "[9]- Back.\n\n";
 
-        do {
-            cout << "Insert the desired option: ";
-            if (cin >> op && ((op >= 1 && op <= 4) || op == 9)) {
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                break;
-            }
-            else {
-                cerr << "Invalid option.\n";
-                cin.clear();
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            }
-        } while (true);
+        if (company.getPassangers().at(pIndex)->getType() == "c") {
+
+            do {
+                cout << "Insert the desired option: ";
+                if (cin >> op && ((op >= 1 && op <= 4) || op == 9)) {
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    break;
+                }
+                else {
+                    cerr << "Invalid option.\n";
+                    cin.clear();
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
+            } while (true);
+
+        }
+
+        if (company.getPassangers().at(pIndex)->getType() == "n") {
+
+            do {
+                cout << "Insert the desired option: ";
+                if (cin >> op && ((op >= 1 && op <= 2) || op == 9)) {
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    break;
+                }
+                else {
+                    cerr << "Invalid option.\n";
+                    cin.clear();
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
+            } while (true);
+
+        }
 
         switch (op) {
             case 1:
@@ -725,3 +746,97 @@ void Application::passengerUpdateNYear(int pIndex) {
     cout << "Passenger number of flights/year updated successfully.\n";
 
 }
+
+void Application::airplaneUpdateMenu() {
+
+    printSummaryAirplane();
+    int aIndex, op;
+    aIndex = chooseAirplane();
+
+    do {
+        cout << "Airplane selected: \n\n";
+        company.getFleet().at(aIndex).print();
+        cout << "[AIRPLANE UPDATE MENU]\n\n";
+        cout << "[1]- Change airplane name.\n";
+        cout << "[2]- Change airplane capacity.\n";
+        cout << "[9]- Back.\n\n";
+
+        do {
+            cout << "Insert the desired option: ";
+            if (cin >> op && ((op >= 1 && op <= 2) || op == 9)) {
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                break;
+            }
+            else {
+                cerr << "Invalid option.\n";
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+        } while (true);
+
+        switch (op) {
+            case 1:
+                airplaneUpdateName(aIndex);
+                break;
+            case 2:
+                airplaneUpdateCapacity(aIndex);
+                break;
+        }
+
+    } while (op != 9);
+}
+
+void Application::airplaneUpdateName(int aIndex) {
+
+    Airplane airplane = company.getFleet().at(aIndex);
+
+    string newName;
+    cout << "The current name for the chosen airplane is '" << airplane.getName() << "'.\n";
+    do {
+        cout << "Insert new name: ";
+        getline(cin, newName);
+        normalize(newName);
+        if (!validAirplane(newName)) {
+            cout << "This airplane already exists. Please insert another name or delete the airplane." << endl;
+        }
+        else {
+            break;
+        }
+    } while (true);
+
+    airplane.setName(newName);
+    company.setAirplane(aIndex, airplane);
+    airplanesChanged = true;
+    cout << "Airplane name updated successfully.\n";
+
+}
+
+void Application::airplaneUpdateCapacity(int aIndex) {
+
+    Airplane airplane = company.getFleet().at(aIndex);
+
+    if (airplane.getFlights().size() != 0) {
+
+        cout << "There are asigned seats in at least one flight in this airplane, if you want to change its capacity delete the flight\n";
+        return;
+
+    }
+
+    int newcapacity;
+
+    cout << "The current capacity for the chosen airplane is '" << airplane.getCapacity() << "'.\n";
+    do {
+        cout << "Insert the new capacity : ";
+        if (!validArg(newcapacity)) continue;
+        else break;
+
+    } while (true);
+
+    airplane.setCapacity(newcapacity);
+    company.setAirplane(aIndex, airplane);
+    airplanesChanged= true;
+    cout << "Airplane capacity updated successfully.\n";
+
+}
+
+

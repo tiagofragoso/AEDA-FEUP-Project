@@ -56,7 +56,7 @@ void Company::setPassengers(vector<Passenger*> passengers)
 }
 
 //Helper methods
-//estou confusa porque os avioes nao tem id's so nomes, o que é que isto esta aqui a fazer????
+
 //int Company::chooseAirplane() {
 //	int AirplaneID;
 //	vector <Airplane> fleet = getFleet();
@@ -112,4 +112,10 @@ void Company::removePassenger(int pIndex) {
 void Company::removeAirplane(int aIndex) {
 
     fleet.erase(fleet.begin() + aIndex);
+}
+
+void Company::setAirplane(int aIndex, Airplane newairplane) {
+
+    fleet.at(aIndex) = newairplane;
+
 }
