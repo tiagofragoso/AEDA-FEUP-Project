@@ -76,6 +76,12 @@ void Passenger::print() {
     cout << "Id: " << id << endl << "Name: " << name << endl << "Date of Birth: " << dateOfBirth << endl;
 }
 
+bool Passenger::operator==(const Passenger &p) {
+    if(id == p.getId())
+        return true;
+    else return false;
+}
+
 void PassengerWithCard::print() {
 
     cout << "Id: " << Passenger::getId() << endl;

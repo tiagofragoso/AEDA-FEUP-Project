@@ -1,5 +1,7 @@
 #include "Airplane.h"
 
+Airplane::Airplane() {}
+
 Airplane::Airplane(unsigned int id, string model, int capacity, vector<Flight *> flights)
 {
 }
@@ -56,7 +58,7 @@ void Airplane::setFlights(vector<Flight*> flights)
 
 void Airplane::printSummary() {
 
-    cout << << "Id: " << id << endl;
+    cout << "Id: " << id << endl;
 }
 
 void Airplane::print() {
@@ -73,10 +75,18 @@ void Airplane::removeFlight(Flight * flight) {
 
     for (auto &f : flights) {
 
-        if (f == flight) {
-            flights.erase(fligths.begin() + i);
+        if (*f == *flight) {
+            flights.erase(flights.begin() + i);
             i++;
         }
     }
+
+}
+
+bool Airplane::operator==(const Airplane &a1) {
+
+    if (id == a1.getId())
+        return true;
+    else return false;
 
 }
