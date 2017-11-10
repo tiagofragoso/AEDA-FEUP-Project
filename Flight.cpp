@@ -1,32 +1,31 @@
 #include "Flight.h"
 
-Flight::Flight(string departure, string destination, int time_to_flight, int basePrice, int duration)
-{
-}
+Flight::Flight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration): id(id), departure(departure),
+                destination(destination), time_to_flight(time_to_flight), basePrice(basePrice), duration(duration) {}
 
 string Flight::getDeparture() const
 {
-	return this->departure;
+    return this->departure;
 }
 
 string Flight::getDestination() const
 {
-	return this->destination;
+    return this->destination;
 }
 
-int Flight::getTime_to_flight() const
+unsigned int Flight::getTime_to_flight() const
 {
-	return this->time_to_flight;
+    return this->time_to_flight;
 }
 
-int Flight::getBasePrice() const
+unsigned int Flight::getBasePrice() const
 {
-	return this->basePrice;
+    return this->basePrice;
 }
 
-int Flight::getDuration() const
+unsigned int Flight::getDuration() const
 {
-	return this->duration;
+    return this->duration;
 }
 
 void Flight::setDeparture(string departure)
@@ -39,17 +38,17 @@ void Flight::setDestination(string destination)
     this->destination = destination;
 }
 
-void Flight::setTime_to_flight(int time_to_flight)
+void Flight::setTime_to_flight(unsigned int time_to_flight)
 {
     this->time_to_flight = time_to_flight;
 }
 
-void Flight::setBasePrice(int basePrice)
+void Flight::setBasePrice(unsigned int basePrice)
 {
     this->basePrice = basePrice;
 }
 
-void Flight::setDuration(int duration)
+void Flight::setDuration(unsigned int duration)
 {
     this->duration = duration;
 }
@@ -71,7 +70,11 @@ void Flight::print() {
     cout << "Flight duration: " << duration << endl;
 }
 
-RentedFlight::RentedFlight(string departure, string destination, int time_to_flight, int basePrice, int duration, Passenger *buyer) : Flight(departure, destination, time_to_flight, basePrice, duration), buyer(buyer) {}
+unsigned int Flight::getId() {
+    return this->id;
+}
+
+RentedFlight::RentedFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, Passenger *buyer) : Flight(id, departure, destination, time_to_flight, basePrice, duration), buyer(buyer) {}
 
 Passenger * RentedFlight::getBuyer() const {
 
@@ -91,7 +94,7 @@ void RentedFlight::print() {
     cout << endl;
 }
 
-ComercialFlight::ComercialFlight(string departure, string destination, int time_to_flight, int basePrice, int duration, map<string, Passenger *> passengers) : Flight(departure, destination, time_to_flight, basePrice, duration), passengers(passengers) {}
+ComercialFlight::ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, map<string, Passenger *> passengers) : Flight(id, departure, destination, time_to_flight, basePrice, duration), passengers(passengers) {}
 
 
 map<string, Passenger *> ComercialFlight::getPassengers() const {
