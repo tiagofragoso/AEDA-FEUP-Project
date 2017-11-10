@@ -35,6 +35,8 @@ public:
     virtual string getType();
     virtual Card *  getCard() const;
     virtual void setCard(Card * card);
+
+	bool operator==(const Passenger &p);
 };
 
 class PassengerWithCard: public Passenger {

@@ -82,13 +82,11 @@ void normalize(string &s){
     }
     trimString(s);
 }
-
+/*
 Airplane readAirplane(string &a) {
+ 
+
 
 }
-
-string Date::print(){
-    string s = to_string(day) + "/" + to_string(month) + "/" + to_string(year);
-    return s;
-}
+*/
 

@@ -67,19 +67,37 @@ void Company::addAirplane(Airplane airplane) {
     fleet.push_back(airplane);
 }
 
-void Company::removePassenger(int pIndex) {
+void Company::removePassenger(Passenger * passenger) {
 
-    passengers.erase(passengers.begin() + pIndex);
+    int i = 0;
 
+    for (auto &p : passengers) {
+
+        if (*p == *passenger) {
+            passengers.erase(passengers.begin() + i);
+            i++;
+        }
+    }
 }
 
-void Company::removeAirplane(int aIndex) {
+void Company::removeAirplane(Airplane airplane) {
 
-    fleet.erase(fleet.begin() + aIndex);
+    int i = 0;
+
+    for (auto a : fleet) {
+
+        if (a == airplane) {
+            fleet.erase(fleet.begin() + i);
+            i++;
+        }
+    }
 }
 
-void Company::setAirplane(int aIndex, Airplane newairplane) {
+void Company::setAirplane(Airplane newairplane) {
 
-    fleet.at(aIndex) = newairplane;
+    for (size_t i = 0; i < fleet.size(); i++) {
 
+        if (fleet.at(i).getId() == newairplane.getId())
+            fleet.at(i) = newairplane;
+    }
 }

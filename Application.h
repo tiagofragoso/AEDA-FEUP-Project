@@ -18,8 +18,10 @@ private:
     Company company;
     bool passengersChanged;
     bool airplanesChanged;
+    bool flightsChanged;
     string passengersFilepath;
     string airplanesFilepath;
+    string flightsFilepath;
 
 public:
     Application();
@@ -29,7 +31,7 @@ public:
     void filesMenu();
     void passengersMenu();
     void airplanesMenu();
-    void flightsMenu(int aIndex);
+    void flightsMenu(Airplane airplane);
     void bookingsMenu();
 
     //passenger fucntions
@@ -38,12 +40,12 @@ public:
     void passengerDelete();
     void passengerUpdateMenu();
     void printSummaryPassenger();
-    int choosePassenger();
+    Passenger * choosePassenger();
     bool validPassenger(int id);
-    void passengerUpdateName(int pIndex);
-    void passengerUpdateDateOfBirth(int pIndex);
-    void passengerUpdateJob(int pIndex);
-    void passengerUpdateNYear(int pIndex);
+    void passengerUpdateName(Passenger * passenger);
+    void passengerUpdateDateOfBirth(Passenger * passenger);
+    void passengerUpdateJob(Passenger * passenger);
+    void passengerUpdateNYear(Passenger * passenger);
 
     //airplane functions
     void airplaneShow();
@@ -51,23 +53,23 @@ public:
     void airplaneDelete();
     void airplaneUpdateMenu();
     void printSummaryAirplane();
-    int chooseAirplane();
+    Airplane chooseAirplane();
     bool validAirplane(int id);
-    void airplaneUpdateName(int aIndex);
-    void airplaneUpdateCapacity(int aIndex);
+    void airplaneUpdateName(Airplane airplane);
+    void airplaneUpdateCapacity(Airplane airplane);
 
 
-    void flightShow(int aIndex);
-    void flightCreate(int aIndex);
-    void flightDelete(int aIndex);
-    void flightUpdateMenu(int aIndex);
-    void printSummaryFlight(int aIndex);
-    int chooseFlight(int aIndex);
-    void flightUpdateDeparture(int aIndex, int fIndex);
-    void flightUpdateDestination(int aIndex, int fIndex);
-    void flightUpdateTimeToFlight(int aIndex, int fIndex);
-    void flightUpdatePrice(int aIndex, int fIndex);
-    void flightUpdateDuration(int aIndex, int fIndex);
+    void flightShow(Airplane airplane);
+    void flightCreate(Airplane airplane);
+    void flightDelete(Airplane airplane);
+    void flightUpdateMenu(Airplane airplane);
+    void printSummaryFlight(Airplane airplane);
+    Flight * chooseFlight(Airplane airplane);
+    void flightUpdateDeparture(Airplane airplane, Flight * flight);
+    void flightUpdateDestination(Airplane airplane, Flight * flight);
+    void flightUpdateTimeToFlight(Airplane airplane, Flight * flight);
+    void flightUpdatePrice(Airplane airplane, Flight * flight);
+    void flightUpdateDuration(Airplane airplane, Flight * flight);
     //nao sei se vale a pena
     void flightAddPassenger();
     void flightDeletePassenger();

@@ -23,7 +23,7 @@ public:
     Flight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration);
 
     //get Methods
-    unsigned int getId();
+    unsigned int getId() const;
     string getDeparture() const;
     string getDestination() const;
     unsigned int getTime_to_flight() const;
@@ -40,6 +40,8 @@ public:
 
     void printSummary();
     virtual void print() = 0;
+
+    bool operator==(const Flight &f);
 
 
 };

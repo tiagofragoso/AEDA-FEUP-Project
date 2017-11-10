@@ -55,6 +55,7 @@ void Flight::setDuration(unsigned int duration)
 
 void Flight::printSummary() {
 
+    cout << "Id: " << id;
     cout << "Departure: " << departure;
     cout << "Destination: " << destination;
     cout << "Time to flight: " << time_to_flight << endl;
@@ -63,6 +64,7 @@ void Flight::printSummary() {
 
 void Flight::print() {
 
+    cout << "Id: " << id << endl;
     cout << "Departure: " << departure << endl;
     cout << "Destination: " << destination << endl;
     cout << "Time to flight: " << time_to_flight << endl;
@@ -70,8 +72,14 @@ void Flight::print() {
     cout << "Flight duration: " << duration << endl;
 }
 
-unsigned int Flight::getId() {
+unsigned int Flight::getId() const{
     return this->id;
+}
+
+bool Flight::operator==(const Flight &f) {
+    if (id == f.getId())
+        return true;
+    else return false;
 }
 
 RentedFlight::RentedFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, Passenger *buyer) : Flight(id, departure, destination, time_to_flight, basePrice, duration), buyer(buyer) {}

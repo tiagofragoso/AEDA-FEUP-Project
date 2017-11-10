@@ -17,6 +17,7 @@ private:
 	vector <Flight *> flights;
 
 public:
+	Airplane();
 	Airplane(unsigned int id, string name, int capacity, vector <Flight *> flights);
     Airplane(unsigned int id, string name, int capacity);
 
@@ -35,7 +36,10 @@ public:
     void printSummary();
     void print();
 
-    void removeFlight(int fIndex);
+	bool operator==(const Airplane &a1);
+
+    void removeFlight(Flight * flight);
+
 };
 
 #endif //AEDA_FEUP_PROJECT_AIRPLANE_H
