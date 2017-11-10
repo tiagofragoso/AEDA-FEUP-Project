@@ -1,19 +1,21 @@
+#ifndef AEDA_FEUP_PROJECT_PASSENGER_H
+#define AEDA_FEUP_PROJECT_PASSENGER_H
+
 #include <iostream>
 #include <string>
 #include <vector>
 #include "Card.h"
+#include "helper.h"
 
 using namespace std;
 
-#ifndef AEDA_FEUP_PROJECT_PASSENGER_H
-#define AEDA_FEUP_PROJECT_PASSENGER_H
 
 class Passenger {
 
 private:
 	int id;
 	string name;
-	string dateOfBirth;
+	Date dateOfBirth;
 
 public:
 	Passenger(unsigned int id, string name, string dateOfBirth);
@@ -21,12 +23,12 @@ public:
 	//get Methods
 	unsigned int getId() const;
 	string getName() const;
-	string getDateOfBirth() const;
+	Date getDateOfBirth() const;
 
 	//set Methods
 	void setId(unsigned int id);
 	void setName(string name);
-	void setDateOfBirth(string dateOfBirth);
+	void setDateOfBirth(Date dateOfBirth);
 
     void printSummary();
     virtual void print();
@@ -41,8 +43,8 @@ private:
 	Card *card;
 
 public:
-	PassengerWithCard(unsigned int id, string name, string dateOfBirth, Card *card);
-	PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear);
+	PassengerWithCard(unsigned int id, string name, Date dateOfBirth, Card *card);
+	PassengerWithCard(unsigned int id, string name, Date dateOfBirth, string job, int nYear);
 
 
 	//get Methods

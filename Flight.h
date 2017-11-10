@@ -1,3 +1,5 @@
+#ifndef AEDA_FEUP_PROJECT_FLIGHT_H
+#define AEDA_FEUP_PROJECT_FLIGHT_H
 #include <iostream>
 #include <string>
 #include <vector>
@@ -6,8 +8,6 @@
 
 using namespace std;
 
-#ifndef AEDA_FEUP_PROJECT_FLIGHT_H
-#define AEDA_FEUP_PROJECT_FLIGHT_H
 
 class Flight {
 
@@ -29,6 +29,7 @@ public:
     unsigned int getTime_to_flight() const;
     unsigned int getBasePrice() const;
     unsigned int getDuration() const;
+    virtual string getType() const = 0;
 
     //set Methods
     void setDeparture(string departure);
@@ -53,6 +54,7 @@ public:
 
     //get Methods
     Passenger * getBuyer() const;
+    string getType() const { return "R"; }
 
     //set Methods
     void setBuyer(Passenger * buyer);
@@ -64,16 +66,17 @@ public:
 class ComercialFlight : public Flight {
 
 private:
-    map<string, Passenger * > passengers;
+    PassengerMap passengers;
 
 public:
     ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, map<string, Passenger *> passengers);
 
     //get methods
-    map<string, Passenger * > getPassengers() const;
+    PassengerMap getPassengers() const;
+    string getType() const { return "C"; }
 
     //set methods
-    void setPassengers(map<string, Passenger * > passengers);
+    void setPassengers(PassengerMap passengers);
 
     void print();
 };

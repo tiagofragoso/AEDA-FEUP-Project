@@ -1,11 +1,9 @@
+#ifndef AEDA_FEUP_PROJECT_CARD_H
+#define AEDA_FEUP_PROJECT_CARD_H
 #include <iostream>
 #include <string>
 
 using namespace std;
-
-#ifndef AEDA_FEUP_PROJECT_CARD_H
-#define AEDA_FEUP_PROJECT_CARD_H
-
 
 class Card{
 

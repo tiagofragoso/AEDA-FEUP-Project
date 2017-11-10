@@ -97,12 +97,12 @@ void RentedFlight::print() {
 ComercialFlight::ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, map<string, Passenger *> passengers) : Flight(id, departure, destination, time_to_flight, basePrice, duration), passengers(passengers) {}
 
 
-map<string, Passenger *> ComercialFlight::getPassengers() const {
+PassengerMap ComercialFlight::getPassengers() const {
 
     return this->passengers;
 }
 
-void ComercialFlight::setPassengers(map<string, Passenger *> passengers) {
+void ComercialFlight::setPassengers(PassengerMap passengers) {
 
     this->passengers = passengers;
 }

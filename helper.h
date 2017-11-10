@@ -1,3 +1,6 @@
+#ifndef SRC_HELPER_H_
+#define SRC_HELPER_H_
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -5,8 +8,18 @@
 
 using namespace std;
 
-#ifndef SRC_HELPER_H_
-#define SRC_HELPER_H_
+struct Date{
+    unsigned int day;
+    unsigned int month;
+    unsigned int year;
+
+    string print();
+
+    Date(string s);
+
+};
+
+typedef map<string, Passenger * > PassengerMap;
 
 bool validArg(int &variable);
 bool validArg(int &variable, bool &end);

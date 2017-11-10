@@ -13,7 +13,7 @@ string Passenger::getName() const
 	return this->name;
 }
 
-string Passenger::getDateOfBirth() const
+Date Passenger::getDateOfBirth() const
 {
 	return this->dateOfBirth;
 }
@@ -27,7 +27,7 @@ void Passenger::setName(string name)
   this->name = name;
 }
 
-void Passenger::setDateOfBirth(string dateOfBirth)
+void Passenger::setDateOfBirth(Date dateOfBirth)
 {
     this->dateOfBirth = dateOfBirth;
 }

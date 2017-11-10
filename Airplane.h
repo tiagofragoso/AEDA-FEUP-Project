@@ -1,12 +1,12 @@
+#ifndef AEDA_FEUP_PROJECT_AIRPLANE_H
+#define AEDA_FEUP_PROJECT_AIRPLANE_H
 #include <iostream>
 #include <string>
 #include <vector>
 #include "Flight.h"
 
 using namespace std;
-	
-#ifndef AEDA_FEUP_PROJECT_AIRPLANE_H
-#define AEDA_FEUP_PROJECT_AIRPLANE_H
+
 
 class Airplane {
 

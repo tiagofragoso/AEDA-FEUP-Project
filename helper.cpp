@@ -84,8 +84,11 @@ void normalize(string &s){
 }
 
 Airplane readAirplane(string &a) {
-    cout << "loladamix\n";
 
+}
 
+string Date::print(){
+    string s = to_string(day) + "/" + to_string(month) + "/" + to_string(year);
+    return s;
 }
 
