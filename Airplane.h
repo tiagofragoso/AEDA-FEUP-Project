@@ -17,8 +17,8 @@ private:
 	vector <Flight *> flights;
 
 public:
-	Airplane(string name, int capacity, vector <Flight *> flights);
-    Airplane(string name, int capacity);
+	Airplane(int id, string name, int capacity, vector <Flight *> flights);
+    Airplane(int id, string name, int capacity);
 
 	//get Methods
 	string getModel() const;
@@ -27,7 +27,7 @@ public:
 	vector <Flight *> getFlights() const;
 
 	//set Methods
-	void setName(string name);
+	void setModel(string model);
 	void setId(int id);
 	void setCapacity(int capacity);
 	void setFlights(vector <Flight *> flights);
@@ -36,10 +36,6 @@ public:
     void print();
 
     void removeFlight(int fIndex);
-
-
-
-
 };
 
 #endif //AEDA_FEUP_PROJECT_AIRPLANE_H
