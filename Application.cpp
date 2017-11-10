@@ -712,6 +712,7 @@ void Application::passengerUpdateDateOfBirth(int pIndex) {
     cout << "Passenger date of birth updated successfully.\n";
 }
 
+
 void Application::passengerUpdateJob(int pIndex) {
 
     Card *card = company.getPassangers().at(pIndex)->getCard();
