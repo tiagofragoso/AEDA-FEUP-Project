@@ -37,13 +37,13 @@ public:
 	//Management methods
 	//Airplane
 	void addAirplane(Airplane airplane);
-	void removeAirplane(int aIndex);
-    void setAirplane(int aIndex, Airplane newairplane);
+	void removeAirplane(Airplane airplane);
+    void setAirplane(Airplane newairplane);
 
 
 	//Passenger
 	void addPassanger(Passenger *passenger);
-	void removePassenger(int pIndex);
+	void removePassenger(Passenger *passenger);
 
 
 

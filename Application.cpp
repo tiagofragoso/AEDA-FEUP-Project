@@ -9,8 +9,10 @@ Application::Application() {
     company = c;
     passengersChanged = false;
     airplanesChanged = false;
+    flightsChanged = false;
     passengersFilepath = "";
     airplanesFilepath = "";
+    flightsFilepath = "";
 
 }
 
@@ -220,11 +222,9 @@ void Application::airplanesMenu() {
     } while (op != 9);
 }
 
-void Application::flightsMenu(int aIndex) {
+void Application::flightsMenu(Airplane airplane) {
 
     int op;
-
-    Airplane airplane = company.getFleet().at(aIndex);
 
     do {
         cout << "[FLIGHT MANAGEMENT MENU]\n\n";
@@ -249,13 +249,13 @@ void Application::flightsMenu(int aIndex) {
 
         switch (op) {
             case 1:
-                flightShow(aIndex);
+                flightShow(airplane);
                 break;
             case 2:
                 //TODO flights create
                 break;
             case 3:
-                flightDelete(aIndex);
+                flightDelete(airplane);
                 break;
             case 4:
                 //TODO flights update (chamar outro menu), nao esquecer adicionar e eliminar passageiros
@@ -277,86 +277,98 @@ void Application::bookingsMenu() {
 
 void Application::printSummaryPassenger() {
 
-    int i = 1;
-
     cout << "PASSENGER SUMMARY\n\n";
 
     for (auto &passenger : company.getPassangers()) {
-        cout << i << ". ";
         passenger->printSummary();
-        i++;
     }
 
 }
 
-void Application::printSummaryAirplane() {
-
-    int i = 1;
+void Application::printSummaryAirplane(){
 
     cout << "AIRPLANE SUMMARY\n\n";
 
     for (auto &airplane : company.getFleet()) {
-        cout << i << ". ";
         airplane.printSummary();
-        i++;
     }
 }
 
-void Application::printSummaryFlight(int aIndex) {
-
-    int i = 1;
-    Airplane a = company.getFleet().at(aIndex);
+void Application::printSummaryFlight(Airplane airplane) {
 
     cout << "FLIGHT SUMMARY\n\n";
 
-    for (auto &flight : a.getFlights()) {
-        cout << i << ". ";
+    for (auto &flight : airplane.getFlights()) {
+
         flight->printSummary();
-        i++;
     }
 }
 
-int Application::choosePassenger() {
+Passenger * Application::choosePassenger() {
 
-    int pIndex;
+    int pId;
+    bool found = false;
+    Passenger * cpassenger;
     do {
         cout << "Choose passenger: ";
-        if (!validArg(pIndex)) continue;
-        if (pIndex <= company.getPassangers().size()) break;
-        else {
-            cout << "Invalid number. Reenter.\n";
-        }
-    } while (true);
-    return pIndex - 1;
+        if (!validArg(pId)) continue;
+        for (auto &passenger : company.getPassangers()) {
 
+            if (passenger->getId() == pId) {
+                cpassenger = passenger;
+                found = true;
+            }
+        }
+        cout << "Invalid id. Reenter.\n";
+        
+    } while (!found);
+
+    return cpassenger;
 }
 
-int Application::chooseAirplane() {
+Airplane Application::chooseAirplane() {
 
-    int aIndex;
-    do {
-        cout << "Choose airplane: ";
-        if (!validArg(aIndex)) continue;
-        if (aIndex <= company.getFleet().size()) break;
-        else {
-            cout << "Invalid number. Reenter.\n";
-        }
-    } while (true);
-    return aIndex - 1;
+     int aId;
+     bool found = false;
+     Airplane cairplane;
+     do {
+         cout << "Choose airplane: ";
+         if (!validArg(aId)) continue;
+         for (auto &airplane : company.getFleet()) {
+
+             if (airplane.getId() == aId) {
+                 cairplane = airplane;
+                 found = true;
+             }
+         }
+         cout << "Invalid id. Reenter\n";
+
+     } while (!found);
+
+    return cairplane;
 }
 
-int Application::chooseFlight(int aIndex) {
+Flight * Application::chooseFlight(Airplane airplane) {
 
-    int fIndex;
+    int fId;
+    bool found = false;
+    Flight * cflight;
+
     do {
         cout << "Choose flight: ";
-        if (!validArg(fIndex)) continue;
-        if (fIndex <= company.getFleet().at(fIndex).getFlights().size()) break;
-        else {
-            cout << "Invalid number. Reenter.\n";
+        if (!validArg(fId)) continue;
+        for (auto &flight : airplane.getFlights()) {
+
+            if (flight->getId() == fId) {
+                cflight = flight;
+                found = true;
+            }
         }
-    } while (true);
-    return fIndex - 1;
+        cout << "Invalid id. Reenter\n";
+
+    } while (!found);
+
+    return cflight;
 
 }
 
@@ -370,15 +382,15 @@ void Application::passengerShow() {
 
     printSummaryPassenger();
     string foo;
-    int pIndex;
+    Passenger * passenger;
     do {
         cout << "Do you wish to view detailed information about a passenger (Y/N)?: ";
         getline(cin, foo);
         normalize(foo);
         if (foo == "y") {
             cout << endl;
-            pIndex = choosePassenger();
-            company.getPassangers().at(pIndex)->print();
+            passenger = choosePassenger();
+            passenger->print();
         } else if (foo == "n") break;
         else {
             cout << "Invalid option. Reenter." << endl;
@@ -399,15 +411,15 @@ void Application::airplaneShow() {
 
     printSummaryAirplane();
     string foo;
-    int aIndex;
+    Airplane airplane;
     do {
         cout << "Do you wish to view detailed information about an airplane (Y/N)?: ";
         getline(cin, foo);
         normalize(foo);
         if (foo == "y") {
             cout << endl;
-            aIndex = chooseAirplane();
-            company.getFleet().at(aIndex).print();
+            airplane = chooseAirplane();
+            airplane.print();
         } else if (foo == "n") break;
         else {
             cout << "Invalid option. Reenter." << endl;
@@ -417,24 +429,24 @@ void Application::airplaneShow() {
 
 }
 
-void Application::flightShow(int aIndex) {
+void Application::flightShow(Airplane airplane) {
 
-    if (company.getFleet().at(aIndex).getFlights().size() == 0) {
+    if (airplane.getFlights().size() == 0) {
         cout << "There are no flights in this airplane.\n";
         return;
     }
 
-    printSummaryFlight(aIndex);
+    printSummaryFlight(airplane);
     string foo;
-    int fIndex;
+    Flight * flight;
     do {
         cout << "Do you wish to view detailed information about a flight (Y/N)?: ";
         getline(cin, foo);
         normalize(foo);
         if (foo == "y") {
             cout << endl;
-            fIndex = chooseFlight(aIndex);
-            company.getFleet().at(aIndex).getFlights().at(fIndex)->print();
+            flight = chooseFlight(airplane);
+            flight->print();
         } else if (foo == "n") break;
         else {
             cout << "Invalid option. Reenter." << endl;
@@ -514,7 +526,7 @@ void Application::passengerCreate() {
 
     if (foo == "n") {
 
-        Passenger *newpassenger = new Passenger(id, name, dateOfBirth);
+        Passenger * newpassenger = new Passenger(id, name, dateOfBirth);
         company.addPassanger(newpassenger);
         cout << "Passenger successfully added\n";
         passengersChanged = true;
@@ -580,9 +592,9 @@ void Application::airplaneCreate() {
 void Application::passengerDelete() {
 
     printSummaryPassenger();
-    int pIndex;
-    pIndex = choosePassenger();
-    company.removePassenger(pIndex);
+    Passenger * passenger;
+    passenger = choosePassenger();
+    company.removePassenger(passenger);
     cout << "Passenger deleted sucessfully.\n ";
     passengersChanged = true;
 
@@ -591,37 +603,40 @@ void Application::passengerDelete() {
 void Application::airplaneDelete() {
 
     printSummaryAirplane();
-    int aIndex;
-    aIndex = chooseAirplane();
-    company.removeAirplane(aIndex);
+    Airplane airplane;
+    airplane = chooseAirplane();
+    company.removeAirplane(airplane);
     cout << "Airplane deleted sucessfully.\n ";
     airplanesChanged = true;
+    flightsChanged = true;
 }
 
-void Application::flightDelete(int aIndex) {
+void Application::flightDelete(Airplane airplane) {
 
-    printSummaryFlight(aIndex);
-    int fIndex;
-    fIndex = chooseFlight(aIndex);
-    company.getFleet().at(aIndex).removeFlight(fIndex);
+    printSummaryFlight(airplane);
+    Flight * flight;
+    flight = chooseFlight(airplane);
+    airplane.removeFlight(flight);
     cout << "Flight deleted sucessfully.\n";
     airplanesChanged = true;
+    flightsChanged = true;
 }
 
 void Application::passengerUpdateMenu() {
 
     printSummaryPassenger();
-    int pIndex, op;
-    pIndex = choosePassenger();
+    int op;
+    Passenger * passenger;
+    passenger = choosePassenger();
 
     do {
         cout << "Passenger selected: \n\n";
-        company.getPassangers().at(pIndex)->print();
+        passenger->print();
         cout << "[PASSENGER UPDATE MENU]\n\n";
         cout << "[1]- Change passenger name.\n";
         cout << "[2]- Change passenger date of birth.\n";
 
-        if (company.getPassangers().at(pIndex)->getType() == "c") {
+        if (passenger->getType() == "c") {
 
 
             cout << "[3]- Change passenger job.\n";
@@ -630,7 +645,7 @@ void Application::passengerUpdateMenu() {
         }
         cout << "[9]- Back.\n\n";
 
-        if (company.getPassangers().at(pIndex)->getType() == "c") {
+        if (passenger->getType() == "c") {
 
             do {
                 cout << "Insert the desired option: ";
@@ -646,7 +661,7 @@ void Application::passengerUpdateMenu() {
 
         }
 
-        if (company.getPassangers().at(pIndex)->getType() == "n") {
+        if (passenger->getType() == "n") {
 
             do {
                 cout << "Insert the desired option: ";
@@ -664,25 +679,23 @@ void Application::passengerUpdateMenu() {
 
         switch (op) {
             case 1:
-                passengerUpdateName(pIndex);
+                passengerUpdateName(passenger);
                 break;
             case 2:
-                passengerUpdateDateOfBirth(pIndex);
+                passengerUpdateDateOfBirth(passenger);
                 break;
             case 3:
-                passengerUpdateJob(pIndex);
+                passengerUpdateJob(passenger);
                 break;
             case 4:
-                passengerUpdateNYear(pIndex);
+                passengerUpdateNYear(passenger);
                 break;
         }
 
     } while (op != 9);
 }
 
-void Application::passengerUpdateName(int pIndex) {
-
-    Passenger *passenger = company.getPassangers().at(pIndex);
+void Application::passengerUpdateName(Passenger * passenger) {
 
     string newName;
     cout << "The current name for the chosen passenger is '" << passenger->getName() << "'.\n";
@@ -694,9 +707,7 @@ void Application::passengerUpdateName(int pIndex) {
 
 }
 
-void Application::passengerUpdateDateOfBirth(int pIndex) {
-
-    Passenger *passenger = company.getPassangers().at(pIndex);
+void Application::passengerUpdateDateOfBirth(Passenger * passenger) {
 
     string newDateOfBirth;
     cout << "The current date of birth for the chosen passenger is '" << passenger->getDateOfBirth() << "'.\n";
@@ -708,9 +719,9 @@ void Application::passengerUpdateDateOfBirth(int pIndex) {
 }
 
 
-void Application::passengerUpdateJob(int pIndex) {
+void Application::passengerUpdateJob(Passenger * passenger) {
 
-    Card *card = company.getPassangers().at(pIndex)->getCard();
+    Card *card = passenger->getCard();
 
     string newJob;
 
@@ -723,9 +734,9 @@ void Application::passengerUpdateJob(int pIndex) {
 
 }
 
-void Application::passengerUpdateNYear(int pIndex) {
+void Application::passengerUpdateNYear(Passenger * passenger) {
 
-    Card *card = company.getPassangers().at(pIndex)->getCard();
+    Card *card = passenger->getCard();
 
     int newN;
 
@@ -746,12 +757,13 @@ void Application::passengerUpdateNYear(int pIndex) {
 void Application::airplaneUpdateMenu() {
 
     printSummaryAirplane();
-    int aIndex, op;
-    aIndex = chooseAirplane();
+    int op;
+    Airplane airplane;
+    airplane = chooseAirplane();
 
     do {
         cout << "Airplane selected: \n\n";
-        company.getFleet().at(aIndex).print();
+        airplane.print();
         cout << "[AIRPLANE UPDATE MENU]\n\n";
         cout << "[1]- Change airplane name.\n";
         cout << "[2]- Change airplane capacity.\n";
@@ -771,34 +783,30 @@ void Application::airplaneUpdateMenu() {
 
         switch (op) {
             case 1:
-                airplaneUpdateName(aIndex);
+                airplaneUpdateName(airplane);
                 break;
             case 2:
-                airplaneUpdateCapacity(aIndex);
+                airplaneUpdateCapacity(airplane);
                 break;
         }
 
     } while (op != 9);
 }
 
-void Application::airplaneUpdateName(int aIndex) {
-
-    Airplane airplane = company.getFleet().at(aIndex);
+void Application::airplaneUpdateName(Airplane airplane) {
 
     string newModel;
     cout << "The current model for the chosen airplane is '" << airplane.getModel() << "'.\n";
     cout << "Insert new model: ";
     getline(cin, newModel);
     airplane.setModel(newModel);
-    company.setAirplane(aIndex, airplane);
+    company.setAirplane(airplane);
     airplanesChanged = true;
     cout << "Airplane model updated successfully.\n";
 
 }
 
-void Application::airplaneUpdateCapacity(int aIndex) {
-
-    Airplane airplane = company.getFleet().at(aIndex);
+void Application::airplaneUpdateCapacity(Airplane airplane) {
 
     if (airplane.getFlights().size() != 0) {
 
@@ -819,7 +827,7 @@ void Application::airplaneUpdateCapacity(int aIndex) {
     } while (true);
 
     airplane.setCapacity(newcapacity);
-    company.setAirplane(aIndex, airplane);
+    company.setAirplane(airplane);
     airplanesChanged = true;
     cout << "Airplane capacity updated successfully.\n";
 
