@@ -82,10 +82,11 @@ void normalize(string &s){
     }
     trimString(s);
 }
-
+/*
 Airplane readAirplane(string &a) {
-    cout << "loladamix\n";
+ 
 
 
 }
+*/
 
