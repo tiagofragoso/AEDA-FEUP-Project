@@ -12,31 +12,33 @@ using namespace std;
 class Flight {
 
 private:
-	string departure;
-	string destination;
-	int time_to_flight;
-	int basePrice;
-	int duration;
+    unsigned int id;
+    string departure;
+    string destination;
+    unsigned int time_to_flight;
+    unsigned int basePrice;
+    unsigned int duration;
 
 public:
-	Flight(string departure, string destination, int time_to_flight, int basePrice, int duration);
+    Flight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration);
 
-	//get Methods
-	string getDeparture() const;
-	string getDestination() const;
-	int getTime_to_flight() const;
-	int getBasePrice() const;
-	int getDuration() const;
+    //get Methods
+    unsigned int getId();
+    string getDeparture() const;
+    string getDestination() const;
+    unsigned int getTime_to_flight() const;
+    unsigned int getBasePrice() const;
+    unsigned int getDuration() const;
 
-	//set Methods
-	void setDeparture(string departure);
-	void setDestination(string destination);
-	void setTime_to_flight(int time_to_flight);
-	void setBasePrice(int basePrice);
-	void setDuration(int duration);
+    //set Methods
+    void setDeparture(string departure);
+    void setDestination(string destination);
+    void setTime_to_flight(unsigned int time_to_flight);
+    void setBasePrice(unsigned int basePrice);
+    void setDuration(unsigned int duration);
 
     void printSummary();
-    void virtual print();
+    virtual void print() = 0;
 
 
 };
@@ -44,16 +46,16 @@ public:
 class RentedFlight : public Flight {
 
 private:
-	Passenger * buyer;
+    Passenger * buyer;
 
 public:
-	RentedFlight(string departure, string destination, int time_to_flight, int basePrice, int duration, Passenger *buyer);
+    RentedFlight(unsigned int id, string departure, string destination,unsigned  int time_to_flight,unsigned  int basePrice,unsigned  int duration, Passenger *buyer);
 
-	//get Methods
-	Passenger * getBuyer() const;
+    //get Methods
+    Passenger * getBuyer() const;
 
-	//set Methods
-	void setBuyer(Passenger * buyer);
+    //set Methods
+    void setBuyer(Passenger * buyer);
 
     void print();
 
@@ -62,16 +64,16 @@ public:
 class ComercialFlight : public Flight {
 
 private:
-	map<string, Passenger * > passengers;
+    map<string, Passenger * > passengers;
 
 public:
-	ComercialFlight( string departure, string destination, int time_to_flight, int basePrice, int duration, map<string, Passenger *> passengers);
+    ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, map<string, Passenger *> passengers);
 
-	//get methods
-	map<string, Passenger * > getPassengers() const;
+    //get methods
+    map<string, Passenger * > getPassengers() const;
 
-	//set methods
-	void setPassengers(map<string, Passenger * > passengers);
+    //set methods
+    void setPassengers(map<string, Passenger * > passengers);
 
     void print();
 };

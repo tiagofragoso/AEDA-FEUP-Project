@@ -84,7 +84,7 @@ void normalize(string &s){
 }
 
 Airplane readAirplane(string &a) {
-
+    cout << "loladamix\n";
 
 
 }
