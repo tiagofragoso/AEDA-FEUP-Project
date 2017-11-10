@@ -11,9 +11,7 @@ using namespace std;
 class Airplane {
 
 private:
-	string name;
-	//é suposto isto estar aqui? é suposto o airplane ter id???
-	//se for é preciso dar update a imensas funções
+	string model;
 	int id;
 	int capacity;
 	vector <Flight *> flights;
@@ -23,7 +21,7 @@ public:
     Airplane(string name, int capacity);
 
 	//get Methods
-	string getName() const;
+	string getModel() const;
 	int getId() const;
 	int getCapacity() const;
 	vector <Flight *> getFlights() const;

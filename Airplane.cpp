@@ -12,9 +12,9 @@ Airplane::Airplane(string name, int capacity) {
     flights = v;
 }
 
-string Airplane::getName() const
+string Airplane::getModel() const
 {
-	return this->name;
+	return this->model;
 }
 
 int Airplane::getId() const 
@@ -34,7 +34,7 @@ vector<Flight *> Airplane::getFlights() const
 
 void Airplane::setName(string name)
 {
-    this->name = name;
+    this->model = name;
 }
 
 void Airplane::setId(int id)
@@ -55,13 +55,13 @@ void Airplane::setFlights(vector<Flight*> flights)
 
 void Airplane::printSummary() {
 
-    cout << name << endl;
+    cout << model << endl;
 }
 
 void Airplane::print() {
 
     cout << "Id: " << id << endl;
-    cout << "Name: " << name  << endl;
+    cout << "Model: " << model  << endl;
     cout << "Capacity: " << capacity << endl;
 
 }
