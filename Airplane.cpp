@@ -1,12 +1,13 @@
 #include "Airplane.h"
 
-Airplane::Airplane(string name, int capacity, vector<Flight *> flights)
+Airplane::Airplane(unsigned int id, string model, int capacity, vector<Flight *> flights)
 {
 }
 
-Airplane::Airplane(string name, int capacity) {
+Airplane::Airplane(unsigned int id, string model, int capacity) {
 
-    this->name = name;
+    this->id = id;
+    this->model = model;
     this->capacity = capacity;
     vector<Flight* > v;
     flights = v;
@@ -17,12 +18,12 @@ string Airplane::getModel() const
 	return this->model;
 }
 
-int Airplane::getId() const 
+unsigned int Airplane::getId() const
 {
 	return this->id;
 }
 
-int Airplane::getCapacity() const
+unsigned int Airplane::getCapacity() const
 {
 	return this->capacity;
 }
@@ -32,17 +33,17 @@ vector<Flight *> Airplane::getFlights() const
 	return this->flights;
 }
 
-void Airplane::setName(string name)
+void Airplane::setModel(string model)
 {
-    this->model = name;
+    this->model = model;
 }
 
-void Airplane::setId(int id)
+void Airplane::setId(unsigned int id)
 {
 	this->id = id;
 }
 
-void Airplane::setCapacity(int capacity)
+void Airplane::setCapacity(unsigned int capacity)
 {
     this->capacity = capacity;
 }
@@ -55,11 +56,12 @@ void Airplane::setFlights(vector<Flight*> flights)
 
 void Airplane::printSummary() {
 
-    cout << model << endl;
+    cout << id << endl;
 }
 
 void Airplane::print() {
 
+    cout << "Id: " << id << endl;
     cout << "Model: " << model  << endl;
     cout << "Capacity: " << capacity << endl;
 

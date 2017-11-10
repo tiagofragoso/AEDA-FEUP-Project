@@ -39,7 +39,7 @@ public:
     void passengerUpdateMenu();
     void printSummaryPassenger();
     int choosePassenger();
-    bool validPassenger(string name);
+    bool validPassenger(int id);
     void passengerUpdateName(int pIndex);
     void passengerUpdateDateOfBirth(int pIndex);
     void passengerUpdateJob(int pIndex);
@@ -52,7 +52,7 @@ public:
     void airplaneUpdateMenu();
     void printSummaryAirplane();
     int chooseAirplane();
-    bool validAirplane(string name);
+    bool validAirplane(int id);
     void airplaneUpdateName(int aIndex);
     void airplaneUpdateCapacity(int aIndex);
 

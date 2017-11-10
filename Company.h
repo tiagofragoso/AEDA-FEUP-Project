@@ -34,11 +34,6 @@ public:
 	void setFleet(vector <Airplane> fleet);
 	void setPassengers(vector <Passenger*> passengers);
 
-	//Other methods
-
-	//int chooseAirplane();
-	//bool validIdAirplane(int id);
-
 	//Management methods
 	//Airplane
 	void addAirplane(Airplane airplane);
