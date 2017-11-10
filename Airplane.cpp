@@ -60,6 +60,7 @@ void Airplane::printSummary() {
 
 void Airplane::print() {
 
+    cout << "Id: " << id << endl;
     cout << "Name: " << name  << endl;
     cout << "Capacity: " << capacity << endl;
 

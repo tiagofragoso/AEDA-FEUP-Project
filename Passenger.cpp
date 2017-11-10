@@ -1,9 +1,12 @@
 #include "Passenger.h"
 
-Passenger::Passenger(string name, string dateOfBirth) : name(name), dateOfBirth(dateOfBirth)
+Passenger::Passenger(int id, string name, string dateOfBirth) : id(id), name(name), dateOfBirth(dateOfBirth)
 {
 }
 
+int Passenger::getId() const {
+    return this->id;
+}
 
 string Passenger::getName() const
 {
@@ -13,6 +16,10 @@ string Passenger::getName() const
 string Passenger::getDateOfBirth() const
 {
 	return this->dateOfBirth;
+}
+
+void Passenger::setId(int id) {
+    this->id = id;
 }
 
 void Passenger::setName(string name)
@@ -38,11 +45,11 @@ Card* Passenger::getCard() const{
 void Passenger::setCard(Card *card) {}
 
 
-PassengerWithCard::PassengerWithCard(string name, string dateOfBirth, Card *card) : Passenger(name, dateOfBirth), card(card)
+PassengerWithCard::PassengerWithCard(int id, string name, string dateOfBirth, Card *card) : Passenger(id, name, dateOfBirth), card(card)
 {
 }
 
-PassengerWithCard::PassengerWithCard(string name, string dateOfBirth, string job, int nYear) : Passenger(name, dateOfBirth) {
+PassengerWithCard::PassengerWithCard(int id, string name, string dateOfBirth, string job, int nYear) : Passenger(id, name, dateOfBirth) {
 
     Card* c = new Card(job, nYear);
     card = c;
@@ -66,11 +73,12 @@ void Passenger::printSummary() {
 
 
 void Passenger::print() {
-    cout << "Name: " << name << endl << "Date of Birth: " << dateOfBirth << endl;
+    cout << "Id: " << id << endl << "Name: " << name << endl << "Date of Birth: " << dateOfBirth << endl;
 }
 
 void PassengerWithCard::print() {
 
+    cout << "Id: " << Passenger::getId() << endl;
     cout << "Name: " << Passenger::getName() << endl;
     cout << "Date of Birth: " << Passenger::getDateOfBirth() << endl;
     cout << "Job: " << card->getJob() << endl;

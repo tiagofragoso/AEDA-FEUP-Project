@@ -456,12 +456,11 @@ void Application::flightShow(int aIndex) {
 
 }
 
-bool Application::validPassenger(string name) {
+bool Application::validPassenger(int id) {
 
-    normalize(name);
      for (auto &passenger : company.getPassangers()) {
 
-         if (passenger->getName() == name)
+         if (passenger->getId() == id)
              return false;
 
      }
@@ -470,12 +469,11 @@ bool Application::validPassenger(string name) {
 
 }
 
-bool Application::validAirplane(string name) {
+bool Application::validAirplane(int id) {
 
-    normalize(name);
     for (auto &airplane : company.getFleet()) {
 
-        if (airplane.getName() == name)
+        if (airplane.getId() == id)
             return false;
     }
 
@@ -486,7 +484,7 @@ void Application::passengerCreate() {
 
     string foo;
     string name, dateOfBirth, job;
-    int nYear;
+    int id, nYear;
 
     while(true) {
 
@@ -500,24 +498,36 @@ void Application::passengerCreate() {
     }
 
     cout << "Insert the new passenger information: \n\n";
+
+
     do {
-        cout << "Insert name: ";
-        getline(cin, name);
-        normalize(name);
-        if (!validPassenger(name)) {
-            cout << "This passenger already exists. Please insert another name or delete the passenger." << endl;
-        }
-        else {
-            break;
-        }
+
+        do{
+
+            cout << "Insert id: ";
+            if (validArg(id)) break;
+
+        }while(true);
+
+            if (!validPassenger(id)) {
+                cout << "This passenger already exists. Please insert another id or delete the passenger." << endl;
+            }
+            else {
+                break;
+            }
+
     } while (true);
+
+
+    cout << "Name: ";
+    getline(cin, name);
 
     cout << "Date of Birth: (DD/MM/YYYY): ";
     getline(cin, dateOfBirth);
 
     if (foo == "n") {
 
-        Passenger *newpassenger = new Passenger(name, dateOfBirth);
+        Passenger *newpassenger = new Passenger(id, name, dateOfBirth);
         company.addPassanger(newpassenger);
         cout << "Passenger successfully added\n";
         passengersChanged = true;
@@ -533,7 +543,7 @@ void Application::passengerCreate() {
             if (validArg(nYear)) break;
         } while (true);
 
-        PassengerWithCard *newpassenger = new PassengerWithCard(name, dateOfBirth, job, nYear);
+        PassengerWithCard *newpassenger = new PassengerWithCard(id, name, dateOfBirth, job, nYear);
         company.addPassanger(newpassenger);
         cout << "Passenger successfully added\n";
         passengersChanged = true;
@@ -544,12 +554,32 @@ void Application::passengerCreate() {
 void Application::airplaneCreate() {
 
     string name;
-    int capacity;
+    int id, capacity;
 
     cout << "Insert the new airplane information: \n\n";
+
     do {
-        cout << "Insert name: ";
-        getline(cin, name);
+
+        do{
+
+            cout << "Insert id: ";
+            if (validArg(id)) break;
+
+        }while(true);
+
+        if (!validAirplane(id)) {
+            cout << "This airplane already exists. Please insert another id or delete the airplane." << endl;
+        }
+        else {
+            break;
+        }
+
+    } while (true);
+
+
+
+    cout << "Insert name: ";
+    getline(cin, name);
         normalize(name);
         if (!validAirplane(name)) {
             cout << "This airplane already exists. Please insert another name or delete the airplane." << endl;
@@ -557,7 +587,6 @@ void Application::airplaneCreate() {
         else {
             break;
         }
-    } while (true);
 
     do {
         cout << "Capacity: ";
