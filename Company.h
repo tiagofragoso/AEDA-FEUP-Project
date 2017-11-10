@@ -70,17 +70,22 @@ public:
 	* @param airplane Airplane airplane
 	*/
 	void addAirplane(Airplane airplane);
+<<<<<<< HEAD
 	/**
 	* @brief Removes the Airplane with the index aIndex of the company fleet
 	* @param aIndex int aIndex that indicates which Airplane to remove from the data member fleet of the company
 	*/
 	void removeAirplane(int aIndex);
     void setAirplane(int aIndex, Airplane newairplane);
+=======
+	void removeAirplane(Airplane airplane);
+    void setAirplane(Airplane newairplane);
+>>>>>>> 96e91a414146e71253b841ff63d96fd813d05f8d
 
 
 	//Passenger
 	void addPassanger(Passenger *passenger);
-	void removePassenger(int pIndex);
+	void removePassenger(Passenger *passenger);
 
 
 

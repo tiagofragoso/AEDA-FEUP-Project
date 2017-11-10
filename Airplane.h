@@ -35,7 +35,7 @@ public:
     void printSummary();
     void print();
 
-    void removeFlight(int fIndex);
+    void removeFlight(Flight * flight);
 };
 
 #endif //AEDA_FEUP_PROJECT_AIRPLANE_H

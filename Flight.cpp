@@ -55,6 +55,7 @@ void Flight::setDuration(unsigned int duration)
 
 void Flight::printSummary() {
 
+    cout << "Id: " << id;
     cout << "Departure: " << departure;
     cout << "Destination: " << destination;
     cout << "Time to flight: " << time_to_flight << endl;
@@ -63,6 +64,7 @@ void Flight::printSummary() {
 
 void Flight::print() {
 
+    cout << "Id: " << id << endl;
     cout << "Departure: " << departure << endl;
     cout << "Destination: " << destination << endl;
     cout << "Time to flight: " << time_to_flight << endl;

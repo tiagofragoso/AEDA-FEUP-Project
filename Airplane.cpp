@@ -56,7 +56,7 @@ void Airplane::setFlights(vector<Flight*> flights)
 
 void Airplane::printSummary() {
 
-    cout << id << endl;
+    cout << << "Id: " << id << endl;
 }
 
 void Airplane::print() {
@@ -67,8 +67,16 @@ void Airplane::print() {
 
 }
 
-void Airplane::removeFlight(int fIndex) {
+void Airplane::removeFlight(Flight * flight) {
 
-    flights.erase(flights.begin() + fIndex);
+    int i = 0;
+
+    for (auto &f : flights) {
+
+        if (f == flight) {
+            flights.erase(fligths.begin() + i);
+            i++;
+        }
+    }
 
 }
