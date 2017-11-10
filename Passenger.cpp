@@ -1,10 +1,10 @@
 #include "Passenger.h"
 
-Passenger::Passenger(int id, string name, string dateOfBirth) : id(id), name(name), dateOfBirth(dateOfBirth)
+Passenger::Passenger(unsigned int id, string name, string dateOfBirth) : id(id), name(name), dateOfBirth(dateOfBirth)
 {
 }
 
-int Passenger::getId() const {
+unsigned int Passenger::getId() const {
     return this->id;
 }
 
@@ -18,7 +18,7 @@ string Passenger::getDateOfBirth() const
 	return this->dateOfBirth;
 }
 
-void Passenger::setId(int id) {
+void Passenger::setId(unsigned int id) {
     this->id = id;
 }
 
@@ -45,11 +45,11 @@ Card* Passenger::getCard() const{
 void Passenger::setCard(Card *card) {}
 
 
-PassengerWithCard::PassengerWithCard(int id, string name, string dateOfBirth, Card *card) : Passenger(id, name, dateOfBirth), card(card)
+PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOfBirth, Card *card) : Passenger(id, name, dateOfBirth), card(card)
 {
 }
 
-PassengerWithCard::PassengerWithCard(int id, string name, string dateOfBirth, string job, int nYear) : Passenger(id, name, dateOfBirth) {
+PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear) : Passenger(id, name, dateOfBirth) {
 
     Card* c = new Card(job, nYear);
     card = c;

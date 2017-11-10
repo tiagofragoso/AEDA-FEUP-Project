@@ -16,15 +16,15 @@ private:
 	string dateOfBirth;
 
 public:
-	Passenger(int id, string name, string dateOfBirth);
+	Passenger(unsigned int id, string name, string dateOfBirth);
 
 	//get Methods
-	int getId() const;
+	unsigned int getId() const;
 	string getName() const;
 	string getDateOfBirth() const;
 
 	//set Methods
-	void setId(int id);
+	void setId(unsigned int id);
 	void setName(string name);
 	void setDateOfBirth(string dateOfBirth);
 
@@ -41,8 +41,8 @@ private:
 	Card *card;
 
 public:
-	PassengerWithCard(int id, string name, string dateOfBirth, Card *card);
-	PassengerWithCard(int id, string name, string dateOfBirth, string job, int nYear);
+	PassengerWithCard(unsigned int id, string name, string dateOfBirth, Card *card);
+	PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear);
 
 
 	//get Methods

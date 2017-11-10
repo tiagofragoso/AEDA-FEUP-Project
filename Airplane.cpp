@@ -1,10 +1,10 @@
 #include "Airplane.h"
 
-Airplane::Airplane(int id, string model, int capacity, vector<Flight *> flights)
+Airplane::Airplane(unsigned int id, string model, int capacity, vector<Flight *> flights)
 {
 }
 
-Airplane::Airplane(int id, string model, int capacity) {
+Airplane::Airplane(unsigned int id, string model, int capacity) {
 
     this->id = id;
     this->model = model;
@@ -18,12 +18,12 @@ string Airplane::getModel() const
 	return this->model;
 }
 
-int Airplane::getId() const 
+unsigned int Airplane::getId() const
 {
 	return this->id;
 }
 
-int Airplane::getCapacity() const
+unsigned int Airplane::getCapacity() const
 {
 	return this->capacity;
 }
@@ -38,12 +38,12 @@ void Airplane::setModel(string model)
     this->model = model;
 }
 
-void Airplane::setId(int id)
+void Airplane::setId(unsigned int id)
 {
 	this->id = id;
 }
 
-void Airplane::setCapacity(int capacity)
+void Airplane::setCapacity(unsigned int capacity)
 {
     this->capacity = capacity;
 }
