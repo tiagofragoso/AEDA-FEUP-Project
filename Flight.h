@@ -45,6 +45,7 @@ public:
     virtual void print() = 0;
 
     bool operator==(const Flight &f);
+    bool operator<(const Flight &f);
 
 
 };

@@ -82,6 +82,14 @@ bool Flight::operator==(const Flight &f) {
     else return false;
 }
 
+bool Flight::operator<(const Flight &f) {
+
+    if (time_to_flight < f.getTime_to_flight())
+        return true;
+    else return false;
+
+}
+
 RentedFlight::RentedFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, Passenger *buyer) : Flight(id, departure, destination, time_to_flight, basePrice, duration), buyer(buyer) {}
 
 Passenger * RentedFlight::getBuyer() const {
