@@ -119,7 +119,7 @@ public:
     void removeFlight(Flight * flight);
 
     /**
-     * @brief Tests if it is possible to add the flight passed as argument
+     * @brief Adds the flight passed as argument
      * @param flight Flight * flight
      */
     void addFlight(Flight * flight);

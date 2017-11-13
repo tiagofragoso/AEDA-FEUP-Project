@@ -31,7 +31,7 @@ public:
     void filesMenu();
     void passengersMenu();
     void airplanesMenu();
-    void flightsMenu(Airplane airplane);
+    void flightsMenu(Airplane *airplane);
     void bookingsMenu();
 
     //passenger fucntions
@@ -53,23 +53,23 @@ public:
     void airplaneDelete();
     void airplaneUpdateMenu();
     void printSummaryAirplane();
-    Airplane chooseAirplane();
+    Airplane * chooseAirplane();
     void validAirplane(int id);
-    void airplaneUpdateName(Airplane airplane);
-    void airplaneUpdateCapacity(Airplane airplane);
+    void airplaneUpdateModel(Airplane * airplane);
+    void airplaneUpdateCapacity(Airplane * airplane);
 
 
-    void flightShow(Airplane airplane);
-    void flightCreate(Airplane airplane);
-    void flightDelete(Airplane airplane);
-    void flightUpdateMenu(Airplane airplane);
-    void printSummaryFlight(Airplane airplane);
-    Flight * chooseFlight(Airplane airplane);
+    void flightShow(Airplane * airplane);
+    void flightCreate(Airplane * airplane);
+    void flightDelete(Airplane * airplane);
+    void flightUpdateMenu(Airplane * airplane);
+    void printSummaryFlight(Airplane * airplane);
+    Flight * chooseFlight(Airplane * airplane);
     void validFlight(int id);
-    void flightUpdateDeparture(Airplane airplane, Flight * flight);
-    void flightUpdateDestination(Airplane airplane, Flight * flight);
-    void flightUpdateTimeToFlight(Airplane airplane, Flight * flight);
-    void flightUpdatePrice(Airplane airplane, Flight * flight);
+    void flightUpdateDeparture(Airplane * airplane, Flight * flight);
+    void flightUpdateDestination(Airplane * airplane, Flight * flight);
+    void flightUpdateTimeToFlight(Airplane * airplane, Flight * flight);
+    void flightUpdatePrice(Flight * flight);
     void flightUpdateDuration(Airplane airplane, Flight * flight);
     //nao sei se vale a pena
     void flightAddPassenger();

@@ -3,14 +3,14 @@
 Company::Company() {
 
     name = "";
-    vector<Airplane> a;
+    vector<Airplane*> a;
     vector<Passenger*> p;
     fleet = a;
     passengers = p;
 
 }
 
-Company::Company(string name, vector<Airplane> fleet, vector<Passenger*> passengers)
+Company::Company(string name, vector<Airplane*> fleet, vector<Passenger*> passengers)
 {
 
 }
@@ -18,7 +18,7 @@ Company::Company(string name, vector<Airplane> fleet, vector<Passenger*> passeng
 Company::Company(string name) {
 
     this->name = name;
-    vector<Airplane> fleet;
+    vector<Airplane*> fleet;
     vector<Passenger*> passengers;
     this->fleet = fleet;
     this->passengers = passengers;
@@ -30,7 +30,7 @@ string Company::getName() const
 	return this->name;
 }
 
-vector<Airplane> Company::getFleet() const
+vector<Airplane*> Company::getFleet() const
 {
 	return this->fleet;
 }
@@ -45,7 +45,7 @@ void Company::setName(string name)
     this->name = name;
 }
 
-void Company::setFleet(vector<Airplane> fleet)
+void Company::setFleet(vector<Airplane*> fleet)
 {
     this->fleet = fleet;
 }
@@ -63,7 +63,7 @@ void Company::addPassenger(Passenger *passenger) {
 
 }
 
-void Company::addAirplane(Airplane airplane) {
+void Company::addAirplane(Airplane* airplane) {
     fleet.push_back(airplane);
 }
 
@@ -75,29 +75,31 @@ void Company::removePassenger(Passenger * passenger) {
 
         if (*p == *passenger) {
             passengers.erase(passengers.begin() + i);
-            i++;
+            break;
         }
+        i++;
     }
 }
 
-void Company::removeAirplane(Airplane airplane) {
+void Company::removeAirplane(Airplane *airplane) {
 
     int i = 0;
 
     for (auto a : fleet) {
 
-        if (a == airplane) {
+        if (*a == *airplane) {
             fleet.erase(fleet.begin() + i);
-            i++;
+            break;
         }
+            i++;
     }
 }
 
-void Company::setAirplane(Airplane newairplane) {
+void Company::setAirplane(Airplane *newairplane) {
 
     for (size_t i = 0; i < fleet.size(); i++) {
 
-        if (fleet.at(i).getId() == newairplane.getId())
+        if (fleet.at(i)->getId() == newairplane->getId())
             fleet.at(i) = newairplane;
     }
 }
@@ -105,13 +107,6 @@ void Company::setAirplane(Airplane newairplane) {
 Flight * Company::flightById(unsigned int id) {
     for (auto const &f: flights){
         if (f->getId() == id) return (Flight *) f;
-    }
-    return nullptr;
-}
-
-Passenger *Company::passengerById(unsigned int id) {
-    for (auto const &p: passengers){
-        if (p->getId() == id) return (Passenger *) p;
     }
     return nullptr;
 }

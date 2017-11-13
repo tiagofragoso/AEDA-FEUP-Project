@@ -77,7 +77,7 @@ void Airplane::removeFlight(Flight * flight) {
     for (auto &f : flights) {
 
         if (*f == *flight) {
-            flights.erase(flights.begin() + i);
+            flights.erase(flights.begin() + i );
             i++;
         }
     }
@@ -113,21 +113,6 @@ void Airplane::addFlight(Flight *flight) {
 
         flights.push_back(flight);
         return;
-    }
-
-    for (size_t i = 0; i < flights.size() - 1; i++) {
-
-        Flight * ant = flights.at(i), * pos = flights.at(i+1);
-
-        if(ant->getDestination() == flight->getDeparture() && (ant->getTime_to_flight() + ant->getDuration()) < flight->getTime_to_flight()) {
-
-            if (flight->getDeparture() == pos->getDestination() && (flight->getTime_to_flight() + flight->getDuration()) < pos->getTime_to_flight()) {
-
-                flights.insert(flights.begin() + i + 1, flight);
-                return;
-            }
-        }
-
     }
 
     throw OverlapingFlight();
