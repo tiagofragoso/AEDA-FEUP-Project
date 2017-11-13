@@ -5,6 +5,11 @@
 #ifndef AEDA_FEUP_PROJECT_EXCEPTIONS_H
 #define AEDA_FEUP_PROJECT_EXCEPTIONS_H
 
+class InvalidFormat {
+public:
+    InvalidFormat();
+};
+
 class InvalidPassenger {
 
 private:

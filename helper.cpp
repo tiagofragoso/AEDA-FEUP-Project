@@ -145,6 +145,8 @@ Airplane readAirplane(string &a) {
 		f.push_back((unsigned int)fid);
 	}
 
+
+
 	//newAirplane.setFlights();
 
 	return newAirplane;

@@ -36,6 +36,7 @@ private:
 	* @brief vector with pointers to all the Passengers of the company
 	*/
 	vector <Passenger*> passengers;
+	/** @} end of Company data-members */
 
     vector<Flight*> flights;
 
@@ -124,6 +125,8 @@ public:
 	* @param newairplane Airplane newairplane it will be included in the data member fleet of the company
 	*/
     void setAirplane(Airplane newairplane);
+
+	Flight * flightById(unsigned int id);
 
 };
 

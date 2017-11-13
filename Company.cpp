@@ -103,3 +103,10 @@ void Company::setAirplane(Airplane newairplane) {
             fleet.at(i) = newairplane;
     }
 }
+
+Flight * Company::flightById(unsigned int id) {
+    for (auto const &f: flights){
+        if (f.getId() == id) return (Flight *) f;
+    }
+    return nullptr;
+}
