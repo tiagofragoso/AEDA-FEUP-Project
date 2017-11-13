@@ -57,7 +57,7 @@ void Company::setPassengers(vector<Passenger*> passengers)
 
 //Management methods
 
-void Company::addPassanger(Passenger *passenger) {
+void Company::addPassenger(Passenger *passenger) {
 
     passengers.push_back(passenger);
 

@@ -4,8 +4,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
+#include "Passenger.h"
 #include "Airplane.h"
-
 using namespace std;
 /** @name Date Struct*/
 /** @{
@@ -13,17 +14,17 @@ using namespace std;
  * Struct that saves the information about a Passenger year, month and day of birth
  */
 struct Date{
-    unsigned int day;
-    unsigned int month;
-    unsigned int year;
+    unsigned int day = 0;
+    unsigned int month = 0;
+    unsigned int year = 0;
 
     string print();
-
+    Date();
     Date(string s);
 };
 /** @} end of Date Struct */
 
-typedef map<string, Passenger * > PassengerMap;
+typedef std::map<string, Passenger* > PassengerMap;
 
 bool validArg(int &variable);
 bool validArg(int &variable, bool &end);
