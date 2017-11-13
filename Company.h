@@ -1,5 +1,3 @@
-#ifndef AEDA_FEUP_PROJECT_COMPANY_H
-#define AEDA_FEUP_PROJECT_COMPANY_H
 /**
 * @{
 *
@@ -17,6 +15,8 @@
 
 using namespace std;
 
+#ifndef AEDA_FEUP_PROJECT_COMPANY_H
+#define AEDA_FEUP_PROJECT_COMPANY_H
 /**
 *	The Company class is the one that countains all the passengers, airplanes and flights information
 */

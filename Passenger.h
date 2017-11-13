@@ -32,9 +32,6 @@ private:
 	/** @} end of Passenger data-members */
 
 public:
-
-	Passenger();
-
 	/**
 	 * @brief Constructor of a PassengerWithCard object using ID, name, Date of birth, job and the number of Flights per year
 	 * @param id
@@ -117,7 +114,7 @@ public:
 	 * @param dateOfBirth
 	 * @param card
 	 */
-	PassengerWithCard(unsigned int id, string name, string dateOfBirth, Card *card);
+	PassengerWithCard(unsigned int id, string name, Date dateOfBirth, Card *card);
 	/**
 	 * @brief Constructor of a PassengerWithCard object using ID, name, Date of birth, job and the number of Flights per year
 	 * @param id
@@ -126,7 +123,7 @@ public:
 	 * @param job
 	 * @param nYear
 	 */
-	PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear);
+	PassengerWithCard(unsigned int id, string name, Date dateOfBirth, string job, int nYear);
 
 
 	//get Methods
