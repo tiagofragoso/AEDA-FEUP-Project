@@ -56,9 +56,9 @@ void Flight::setDuration(unsigned int duration)
 void Flight::printSummary() {
 
     cout << "Id: " << id;
-    cout << "Departure: " << departure;
-    cout << "Destination: " << destination;
-    cout << "Time to flight: " << time_to_flight << endl;
+    cout << " Departure: " << departure;
+    cout << " Destination: " << destination;
+    cout << " Time to flight: " << time_to_flight << endl;
 
 }
 
@@ -77,17 +77,12 @@ unsigned int Flight::getId() const{
 }
 
 bool Flight::operator==(const Flight &f) {
-    if (id == f.getId())
-        return true;
-    else return false;
+    return (id == f.getId());
 }
 
 bool Flight::operator<(const Flight &f) {
 
-    if (time_to_flight < f.getTime_to_flight())
-        return true;
-    else return false;
-
+    return (time_to_flight < f.getTime_to_flight());
 }
 
 void Flight::setId(unsigned int id) {

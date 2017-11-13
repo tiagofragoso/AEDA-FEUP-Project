@@ -67,7 +67,6 @@ public:
     Flight * chooseFlight(Airplane * airplane);
     void validFlight(int id);
     void flightUpdatePrice(Flight * flight);
-    void flightUpdateDuration(Flight * flight);
     void flightAddPassenger(Flight * flight);
     void flightDeletePassenger(Flight * flight);
     void flightUpdateBuyer(Flight * flight);

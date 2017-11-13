@@ -213,7 +213,7 @@ void Application::airplanesMenu() {
                 airplaneUpdateMenu();
                 break;
             case 5:
-                Airplane * airplane;
+                Airplane *airplane;
                 printSummaryAirplane();
                 do {
                     try {
@@ -227,7 +227,7 @@ void Application::airplanesMenu() {
                     airplane->print();
                     cout << endl;
                     break;
-                }while(true);
+                } while (true);
 
                 flightsMenu(airplane);
                 break;
@@ -236,7 +236,7 @@ void Application::airplanesMenu() {
     } while (op != 9);
 }
 
-void Application::flightsMenu(Airplane * airplane) {
+void Application::flightsMenu(Airplane *airplane) {
 
     int op;
 
@@ -299,7 +299,7 @@ void Application::printSummaryPassenger() {
 
 }
 
-void Application::printSummaryAirplane(){
+void Application::printSummaryAirplane() {
 
     cout << "AIRPLANE SUMMARY\n\n";
 
@@ -318,16 +318,16 @@ void Application::printSummaryFlight(Airplane *airplane) {
     }
 }
 
-Passenger * Application::choosePassenger() {
+Passenger *Application::choosePassenger() {
 
     int pId;
-    Passenger * cpassenger;
+    Passenger *cpassenger;
     do {
         cout << "Choose passenger: ";
         if (!validArg(pId)) continue;
         else break;
 
-    } while(true);
+    } while (true);
 
     for (auto &passenger : company.getPassangers()) {
 
@@ -340,16 +340,16 @@ Passenger * Application::choosePassenger() {
     throw InvalidPassenger(pId);
 }
 
-Airplane * Application::chooseAirplane() {
+Airplane *Application::chooseAirplane() {
 
-     int aId;
-     Airplane* cairplane;
-     do {
-         cout << "Choose airplane: ";
-         if (!validArg(aId)) continue;
-         else break;
+    int aId;
+    Airplane *cairplane;
+    do {
+        cout << "Choose airplane: ";
+        if (!validArg(aId)) continue;
+        else break;
 
-     } while (true);
+    } while (true);
 
     for (auto &airplane : company.getFleet()) {
 
@@ -358,13 +358,13 @@ Airplane * Application::chooseAirplane() {
             return cairplane;
         }
     }
-    throw  InvalidAirplane(aId);
+    throw InvalidAirplane(aId);
 }
 
-Flight * Application::chooseFlight(Airplane *airplane) {
+Flight *Application::chooseFlight(Airplane *airplane) {
 
     int fId;
-    Flight * cflight;
+    Flight *cflight;
 
     do {
         cout << "Choose flight: ";
@@ -380,7 +380,7 @@ Flight * Application::chooseFlight(Airplane *airplane) {
             return cflight;
         }
     }
-    throw  InvalidFlight(fId);
+    throw InvalidFlight(fId);
 }
 
 
@@ -393,7 +393,7 @@ void Application::passengerShow() {
 
     printSummaryPassenger();
     string foo;
-    Passenger * passenger;
+    Passenger *passenger;
     do {
         cout << "Do you wish to view detailed information about a passenger (Y/N)?: ";
         getline(cin, foo);
@@ -404,7 +404,7 @@ void Application::passengerShow() {
                 try {
                     passenger = choosePassenger();
                 }
-                catch(const InvalidPassenger &i) {
+                catch (const InvalidPassenger &i) {
                     i.print();
                     continue;
                 }
@@ -412,7 +412,7 @@ void Application::passengerShow() {
                 passenger->print();
                 break;
 
-            }while(true);
+            } while (true);
 
         } else if (foo == "n") break;
         else {
@@ -452,7 +452,7 @@ void Application::airplaneShow() {
 
                 airplane->print();
                 break;
-            }while(true);
+            } while (true);
 
         } else if (foo == "n") break;
         else {
@@ -472,7 +472,7 @@ void Application::flightShow(Airplane *airplane) {
 
     printSummaryFlight(airplane);
     string foo;
-    Flight * flight;
+    Flight *flight;
     do {
         cout << "Do you wish to view detailed information about a flight (Y/N)?: ";
         getline(cin, foo);
@@ -491,7 +491,7 @@ void Application::flightShow(Airplane *airplane) {
                 flight->print();
                 break;
 
-            }while(true);
+            } while (true);
 
         } else if (foo == "n") break;
         else {
@@ -532,7 +532,6 @@ void Application::validFlight(int id) {
         }
     }
 }
-
 
 
 void Application::passengerCreate() {
@@ -584,7 +583,7 @@ void Application::passengerCreate() {
 
     if (foo == "n") {
 
-        Passenger * newpassenger = new Passenger(id, name, dateOfBirth);
+        Passenger *newpassenger = new Passenger(id, name, dateOfBirth);
         company.addPassenger(newpassenger);
         cout << "Passenger successfully added\n";
         passengersChanged = true;
@@ -644,7 +643,7 @@ void Application::airplaneCreate() {
         if (validArg(capacity)) break;
     } while (true);
 
-    Airplane * newairplane =  new Airplane(id, model, capacity);
+    Airplane *newairplane = new Airplane(id, model, capacity);
     company.addAirplane(newairplane);
     cout << "Airplane successfully added\n";
     airplanesChanged = true;
@@ -655,8 +654,8 @@ void Application::flightCreate(Airplane *airplane) {
 
     string departure, destination, foo;
     int price, id, duration, time_to_flight;
-    Passenger * buyer;
-    Flight * flight;
+    Passenger *buyer;
+    Flight *flight;
 
     while (true) {
 
@@ -727,7 +726,7 @@ void Application::flightCreate(Airplane *airplane) {
             }
             break;
 
-        }while(true);
+        } while (true);
 
         flight = new RentedFlight(id, departure, destination, time_to_flight, price, duration, buyer);
 
@@ -754,7 +753,7 @@ void Application::flightCreate(Airplane *airplane) {
 void Application::passengerDelete() {
 
     printSummaryPassenger();
-    Passenger * passenger;
+    Passenger *passenger;
     do {
         try {
             passenger = choosePassenger();
@@ -765,7 +764,7 @@ void Application::passengerDelete() {
         }
         break;
 
-    }while(true);
+    } while (true);
     company.removePassenger(passenger);
     cout << "Passenger deleted sucessfully.\n ";
     passengersChanged = true;
@@ -787,7 +786,7 @@ void Application::airplaneDelete() {
 
         break;
 
-    }while(true);
+    } while (true);
     company.removeAirplane(airplane);
     cout << "Airplane deleted sucessfully.\n ";
     airplanesChanged = true;
@@ -797,7 +796,7 @@ void Application::airplaneDelete() {
 void Application::flightDelete(Airplane *airplane) {
 
     printSummaryFlight(airplane);
-    Flight * flight;
+    Flight *flight;
     do {
         try {
             flight = chooseFlight(airplane);
@@ -808,7 +807,7 @@ void Application::flightDelete(Airplane *airplane) {
         }
         break;
 
-    }while(true);
+    } while (true);
 
     do {
         try {
@@ -820,7 +819,7 @@ void Application::flightDelete(Airplane *airplane) {
         }
         break;
 
-    }while(true);
+    } while (true);
 
     cout << "Flight deleted sucessfully.\n";
     airplanesChanged = true;
@@ -831,7 +830,7 @@ void Application::passengerUpdateMenu() {
 
     printSummaryPassenger();
     int op;
-    Passenger * passenger;
+    Passenger *passenger;
     do {
         try {
             passenger = choosePassenger();
@@ -842,7 +841,7 @@ void Application::passengerUpdateMenu() {
         }
         break;
 
-    }while(true);
+    } while (true);
 
     do {
         cout << "Passenger selected: \n\n";
@@ -910,7 +909,7 @@ void Application::passengerUpdateMenu() {
     } while (op != 9);
 }
 
-void Application::passengerUpdateName(Passenger * passenger) {
+void Application::passengerUpdateName(Passenger *passenger) {
 
     string newName;
     cout << "The current name for the chosen passenger is '" << passenger->getName() << "'.\n";
@@ -922,7 +921,7 @@ void Application::passengerUpdateName(Passenger * passenger) {
 
 }
 
-void Application::passengerUpdateDateOfBirth(Passenger * passenger) {
+void Application::passengerUpdateDateOfBirth(Passenger *passenger) {
 
     string newDateOfBirth;
     cout << "The current date of birth for the chosen passenger is '" << passenger->getDateOfBirth() << "'.\n";
@@ -934,7 +933,7 @@ void Application::passengerUpdateDateOfBirth(Passenger * passenger) {
 }
 
 
-void Application::passengerUpdateJob(Passenger * passenger) {
+void Application::passengerUpdateJob(Passenger *passenger) {
 
     Card *card = passenger->getCard();
 
@@ -949,7 +948,7 @@ void Application::passengerUpdateJob(Passenger * passenger) {
 
 }
 
-void Application::passengerUpdateNYear(Passenger * passenger) {
+void Application::passengerUpdateNYear(Passenger *passenger) {
 
     Card *card = passenger->getCard();
 
@@ -973,7 +972,7 @@ void Application::airplaneUpdateMenu() {
 
     printSummaryAirplane();
     int op;
-    Airplane * airplane;
+    Airplane *airplane;
     do {
         try {
             airplane = chooseAirplane();
@@ -985,7 +984,7 @@ void Application::airplaneUpdateMenu() {
 
         break;
 
-    }while(true);
+    } while (true);
 
     do {
         cout << "Airplane selected: \n\n";
@@ -1058,18 +1057,115 @@ void Application::airplaneUpdateCapacity(Airplane *airplane) {
 
 }
 
-void Application::flightUpdatePrice( Flight * flight) {
+void Application::flightUpdatePrice(Flight *flight) {
 
-	int newPrice;
-	cout << "The current price for the chosen flight is '" << flight->getBasePrice() << "'.\n";
-	do {
-		cout << "Insert new price: ";
-		if (!validArg(newPrice)) continue;
-		else break;
+    int newPrice;
+    cout << "The current price for the chosen flight is '" << flight->getBasePrice() << "'.\n";
+    do {
+        cout << "Insert new price: ";
+        if (!validArg(newPrice)) continue;
+        else break;
 
-	} while (true);
+    } while (true);
 
-	flight->setBasePrice(newPrice);
-	flightsChanged = true;
-	cout << "Flight base price updated successfully.\n";
+    flight->setBasePrice(newPrice);
+    flightsChanged = true;
+    cout << "Flight base price updated successfully.\n";
+}
+
+void Application::flightUpdateBuyer(Flight *flight) {
+
+    Passenger * passenger;
+    cout << "The current buyer for the chosen flight is:\n";
+
+}
+
+void Application::flightUpdateMenu(Airplane *airplane) {
+
+    printSummaryFlight(airplane);
+    int op;
+    string foo;
+    Flight *flight;
+    do {
+        try {
+            flight = chooseFlight(airplane);
+        }
+        catch (const InvalidFlight &i) {
+            i.print();
+            continue;
+        }
+
+        break;
+
+    } while (true);
+
+    do {
+        cout << "Flight selected: \n\n";
+        flight->print();
+        foo = flight->getType();
+
+        if (foo == "r") {
+
+            cout << "[FLIGHT UPDATE MENU]\n\n";
+            cout << "[1]- Change flight price.\n";
+            cout << "[2]- Change flight buyer.\n";
+            cout << "[9]- Back.\n\n";
+
+            do {
+                cout << "Insert the desired option: ";
+                if (cin >> op && ((op >= 1 && op <= 2) || op == 9)) {
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    break;
+                } else {
+                    cerr << "Invalid option.\n";
+                    cin.clear();
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
+            } while (true);
+
+            switch (op) {
+                case 1:
+                    flightUpdatePrice(flight);
+                    break;
+                case 2:
+                    flightUpdateBuyer(flight);
+                    break;
+
+            }
+
+        }
+
+        if (foo == "c") {
+
+            cout << "[FLIGHT UPDATE MENU]\n\n";
+            cout << "[1]- Change flight price.\n";
+            cout << "[2]- Add passenger.\n";
+            cout << "[3]- Delete passenger.\n";
+            cout << "[9]- Back.\n\n";
+
+            do {
+                cout << "Insert the desired option: ";
+                if (cin >> op && ((op >= 1 && op <= 3) || op == 9)) {
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    break;
+                } else {
+                    cerr << "Invalid option.\n";
+                    cin.clear();
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
+            } while (true);
+
+            switch (op) {
+                case 1:
+                    flightUpdatePrice(flight);
+                    break;
+                case 2:
+                    flightAddPassenger(flight);
+                    break;
+                case 3:
+                    flightDeletePassenger(flight);
+                    break;
+            }
+        }
+    } while (op != 9);
 }
