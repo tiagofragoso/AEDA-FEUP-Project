@@ -48,11 +48,11 @@ private:
 
 
 public:
-	/// Constructor of an empty company object
+	/// Constructor of an empty Company object
     Company();  
-	/// Constructor of a company object with all of its data members
+	/// Constructor of a Company object with all of its data members
 	Company(string name, vector <Airplane> fleet, vector <Passenger*> passengers); 
-	///Constructor of a company object only defining its name
+	///Constructor of a Company object only defining its name
     Company(string name); 
 
 
