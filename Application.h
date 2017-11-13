@@ -69,7 +69,7 @@ public:
     void flightUpdateDeparture(Airplane * airplane, Flight * flight);
     void flightUpdateDestination(Airplane * airplane, Flight * flight);
     void flightUpdateTimeToFlight(Airplane * airplane, Flight * flight);
-    void flightUpdatePrice(Airplane * airplane, Flight * flight);
+    void flightUpdatePrice(Flight * flight);
     void flightUpdateDuration(Airplane airplane, Flight * flight);
     //nao sei se vale a pena
     void flightAddPassenger();
