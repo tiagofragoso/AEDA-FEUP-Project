@@ -1,3 +1,9 @@
+/**
+* @{
+*
+* Company class declaration
+*/
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -20,14 +26,34 @@ using namespace std;
 class Company {
 
 private:
-	string name;  /// Name of the company  
-	vector <Airplane> fleet; /// Fleet of the company 
-	vector <Passenger*> passengers; /// All the passengers of the company 
+	/** @name Company data-members*/
+	/** @{ 
+	*
+	*/
+
+	/**
+	* @brief string name of the company object
+	*/
+	string name;  
+	/**
+	* @brief vector <Airplane> fleet fleet with all the Airplanes of the company 
+	*/
+	vector <Airplane> fleet; 
+	/**
+	* @brief vector with pointers to all the Passengers of the company
+	*/
+	vector <Passenger*> passengers; 
+	/** @} end of Company data-members */
+
+
 
 public:
-    Company();  /// Constructor of an empty company object
-	Company(string name, vector <Airplane> fleet, vector <Passenger*> passengers); /// Constructor of a company object with all of its data members
-    Company(string name); ///Constructor of a company object only defining its name
+	/// Constructor of an empty company object
+    Company();  
+	/// Constructor of a company object with all of its data members
+	Company(string name, vector <Airplane> fleet, vector <Passenger*> passengers); 
+	///Constructor of a company object only defining its name
+    Company(string name); 
 
 
 	
@@ -60,6 +86,16 @@ public:
 	*/
 	void setFleet(vector <Airplane> fleet);
 	/**
+	*@brief Adds the passed pointer to a Passenger to the data member passengers
+	*@param *passenger Passenger *passenger pointer to the Passenger object to be added
+	*/
+	void addPassanger(Passenger *passenger);
+	/**
+	*@brief Removes the Passenger from the data member passengers
+	*@param *passenger Passenger *passenger pointer to the Passenger object to be removed
+	*/
+	void removePassenger(Passenger *passenger);
+	/**
 	* @brief Sets the pointers of the Passengers of the company to the passed parameter vector <Passanger*> passengers
 	* @param passengers vector <Passenger*> passengers
 	*/
@@ -73,20 +109,15 @@ public:
 	*/
 	void addAirplane(Airplane airplane);
 	/**
-	* @brief Removes the Airplane with the index aIndex of the company fleet
-	* @param aIndex int aIndex that indicates which Airplane to remove from the data member fleet of the company
+	* @brief Removes the passed Airplane of the company fleet
+	* @param airplane Airplane airplane that indicates which Airplane to remove from the data member fleet of the company
 	*/
 	void removeAirplane(Airplane airplane);
+	/**
+	* @brief Replaces the Airplane with the same id as the passed Airplane to the one passed 
+	* @param newairplane Airplane newairplane it will be included in the data member fleet of the company
+	*/
     void setAirplane(Airplane newairplane);
-
-
-
-	//Passenger
-	void addPassanger(Passenger *passenger);
-	void removePassenger(Passenger *passenger);
-
-
-
 
 };
 
