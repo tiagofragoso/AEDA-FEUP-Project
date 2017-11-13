@@ -1,3 +1,5 @@
+#ifndef AEDA_FEUP_PROJECT_COMPANY_H
+#define AEDA_FEUP_PROJECT_COMPANY_H
 /**
 * @{
 *
@@ -8,15 +10,9 @@
 #include <string>
 #include <vector>
 #include "Airplane.h"
-#include "Card.h"
-#include "Flight.h"
-#include "Passenger.h"
-#include "helper.h"
 
 using namespace std;
 
-#ifndef AEDA_FEUP_PROJECT_COMPANY_H
-#define AEDA_FEUP_PROJECT_COMPANY_H
 /**
 *	The Company class is the one that countains all the passengers, airplanes and flights information
 */

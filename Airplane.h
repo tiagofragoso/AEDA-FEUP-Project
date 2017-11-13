@@ -31,7 +31,7 @@ private:
 	/**
 	 * @brief vector <Flight*> vector with the pointer to the Flights of the Airplane
 	 */
-	vector <Flight *> flights;
+	vector < Flight * > flights;
 	/** @} end of Airplane data-members */
 
 public:

@@ -1,12 +1,15 @@
 #ifndef AEDA_FEUP_PROJECT_FLIGHT_H
 #define AEDA_FEUP_PROJECT_FLIGHT_H
+
+#include "Passenger.h"
 #include <iostream>
 #include <string>
 #include <vector>
 #include <map>
-#include "Passenger.h"
 
 using namespace std;
+
+typedef std::map<string, Passenger* > PassengerMap;
 
 
 class Flight {
@@ -71,7 +74,7 @@ private:
     PassengerMap passengers;
 
 public:
-    ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, map<string, Passenger *> passengers);
+    ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, PassengerMap passengers);
 
     //get methods
     PassengerMap getPassengers() const;

@@ -9,7 +9,6 @@
 
 using namespace std;
 
-
 class Passenger {
 
 private:
@@ -28,7 +27,7 @@ private:
 	/**
 	 * @brief Date Struct Date of birth of the Passenger
 	 */
-	Date dateOfBirth;
+	string dateOfBirth;
 	/** @} end of Passenger data-members */
 
 public:
@@ -55,7 +54,7 @@ public:
 	 * @brief Gets the Date of birth of a Passenger
 	 * @return Date Date struct countaining the Date of birth of a Passenger
 	 */
-	Date getDateOfBirth() const;
+	string getDateOfBirth() const;
 
 	//set Methods
 	/**
@@ -72,7 +71,7 @@ public:
 	 * @brief Sets the Date of Birth of the Passenger object to the passed parameter
 	 * @param dateofBirth Date struct dateofBirth
 	 */
-	void setDateOfBirth(Date dateOfBirth);
+	void setDateOfBirth(string dateOfBirth);
 	/**
  	* @brief Prints the id  and the name of the Passenger
  	*/
@@ -114,7 +113,7 @@ public:
 	 * @param dateOfBirth
 	 * @param card
 	 */
-	PassengerWithCard(unsigned int id, string name, Date dateOfBirth, Card *card);
+	PassengerWithCard(unsigned int id, string name, string dateOfBirth, Card *card);
 	/**
 	 * @brief Constructor of a PassengerWithCard object using ID, name, Date of birth, job and the number of Flights per year
 	 * @param id
@@ -123,7 +122,7 @@ public:
 	 * @param job
 	 * @param nYear
 	 */
-	PassengerWithCard(unsigned int id, string name, Date dateOfBirth, string job, int nYear);
+	PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear);
 
 
 	//get Methods

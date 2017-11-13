@@ -13,7 +13,7 @@ string Passenger::getName() const
 	return this->name;
 }
 
-Date Passenger::getDateOfBirth() const
+string Passenger::getDateOfBirth() const
 {
 	return this->dateOfBirth;
 }
@@ -27,7 +27,7 @@ void Passenger::setName(string name)
   this->name = name;
 }
 
-void Passenger::setDateOfBirth(Date dateOfBirth)
+void Passenger::setDateOfBirth(string dateOfBirth)
 {
     this->dateOfBirth = dateOfBirth;
 }
@@ -73,7 +73,7 @@ void Passenger::printSummary() {
 
 
 void Passenger::print() {
-    cout << "Id: " << id << endl << "Name: " << name << endl << "Date of Birth: " << dateOfBirth.print() << endl;
+    cout << "Id: " << id << endl << "Name: " << name << endl << "Date of Birth: " << dateOfBirth << endl;
 }
 
 bool Passenger::operator==(const Passenger &p) {
@@ -82,13 +82,11 @@ bool Passenger::operator==(const Passenger &p) {
     else return false;
 }
 
-Passenger::Passenger() {}
-
 void PassengerWithCard::print() {
 
     cout << "Id: " << Passenger::getId() << endl;
     cout << "Name: " << Passenger::getName() << endl;
-    cout << "Date of Birth: " << Passenger::getDateOfBirth().print() << endl;
+    cout << "Date of Birth: " << Passenger::getDateOfBirth() << endl;
     cout << "Job: " << card->getJob() << endl;
     cout << "Number of flights/year: " << card->getAvgYrFlights() << endl;
 

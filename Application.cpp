@@ -707,7 +707,7 @@ void Application::passengerUpdateName(Passenger * passenger) {
 void Application::passengerUpdateDateOfBirth(Passenger * passenger) {
 
     string newDateOfBirth;
-    cout << "The current date of birth for the chosen passenger is '" << passenger->getDateOfBirth().print() << "'.\n";
+    cout << "The current date of birth for the chosen passenger is '" << passenger->getDateOfBirth() << "'.\n";
     cout << "Insert the new date of birth (DD/MM/YYYY): ";
     getline(cin, newDateOfBirth);
     passenger->setDateOfBirth(newDateOfBirth);
