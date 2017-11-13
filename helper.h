@@ -7,7 +7,11 @@
 #include "Airplane.h"
 
 using namespace std;
-
+/** @name Date Struct*/
+/** @{
+ *
+ * Struct that saves the information about a Passenger year, month and day of birth
+ */
 struct Date{
     unsigned int day;
     unsigned int month;
@@ -16,8 +20,8 @@ struct Date{
     string print();
 
     Date(string s);
-
 };
+/** @} end of Date Struct */
 
 typedef map<string, Passenger * > PassengerMap;
 

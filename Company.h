@@ -18,10 +18,7 @@ using namespace std;
 #ifndef AEDA_FEUP_PROJECT_COMPANY_H
 #define AEDA_FEUP_PROJECT_COMPANY_H
 /**
-*	The Company class contains 3 data members:
-*   string name
-*	vector <Airplane> fleet
-*   vector <Passenger*> passengers
+*	The Company class is the one that countains all the passengers, airplanes and flights information
 */
 class Company {
 
@@ -48,11 +45,22 @@ private:
 
 
 public:
-	/// Constructor of an empty Company object
+
+	/**
+	 * @brief Constructor of an empty Company object
+	 */
     Company();  
-	/// Constructor of a Company object with all of its data members
+	/**
+	 * @brief Constructor of a Company object with all of its data members
+	 * @param name
+	 * @param fleet
+	 * @param passengers
+	 */
 	Company(string name, vector <Airplane> fleet, vector <Passenger*> passengers); 
-	///Constructor of a Company object only defining its name
+	/**
+	 * @brief Constructor of a Company object only defining its name
+	 * @param name
+	 */
     Company(string name); 
 
 
@@ -89,7 +97,7 @@ public:
 	*@brief Adds the passed pointer to a Passenger to the data member passengers
 	*@param *passenger Passenger *passenger pointer to the Passenger object to be added
 	*/
-	void addPassanger(Passenger *passenger);
+	void addPassenger(Passenger *passenger);
 	/**
 	*@brief Removes the Passenger from the data member passengers
 	*@param *passenger Passenger *passenger pointer to the Passenger object to be removed

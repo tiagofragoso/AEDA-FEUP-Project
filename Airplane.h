@@ -35,11 +35,24 @@ private:
 	/** @} end of Airplane data-members */
 
 public:
-	///Constructor of an empty Airplane object
+	/**
+	 * @brief Constructor of an empty Airplane object
+	 */
 	Airplane();
-	///Constructor of an Airplane object with all of its data members
+	/**
+	 * @brief Constructor of an Airplane object with all of its data members
+	 * @param id
+	 * @param name
+	 * @param capacity
+	 * @param flights
+	 */
 	Airplane(unsigned int id, string name, int capacity, vector <Flight *> flights);
-	///Constructor of an Airplane object with no flights
+	/**
+	 * @brief Constructor of an Airplane object with no flights
+	 * @param id
+	 * @param name
+	 * @param capacity
+	 */
     Airplane(unsigned int id, string name, int capacity);
 
 	//get Methods
