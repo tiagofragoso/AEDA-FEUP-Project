@@ -1032,3 +1032,25 @@ void Application::airplaneUpdateCapacity(Airplane airplane) {
 
 }
 
+void Application::flightUpdatePrice(Airplane airplane, Flight * flight)
+{
+	int newPrice;
+	cout << "The current price for the chosen flight is '" << flight->getBasePrice() << "'.\n";
+	do {
+		cout << "Insert new price: ";
+		if (!validArg(newPrice)) continue;
+		else break;
+
+	} while (true);
+
+	flight->setBasePrice(newPrice);
+	for (size_t i = 0; i < airplane.getFlights().size(); i++)
+	{
+		if (airplane.getFlights().at(i) == flight)
+		{
+			airplane.getFlights().at(i) = flight;
+		}
+	}
+	flightsChanged = true;
+	cout << "Flight base price updated successfully.\n";
+}
