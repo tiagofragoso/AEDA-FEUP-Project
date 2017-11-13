@@ -76,7 +76,10 @@ public:
     void flightDeletePassenger();
     void flightUpdateBuyer();
 
-
+    //file functions
+    Airplane * readAirplane(string &a);
+    Passenger * readPassenger(string &p);
+    Flight * readFlight(string &f);
 };
 
 

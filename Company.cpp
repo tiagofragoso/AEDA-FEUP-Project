@@ -104,7 +104,14 @@ void Company::setAirplane(Airplane newairplane) {
 
 Flight * Company::flightById(unsigned int id) {
     for (auto const &f: flights){
-        if (f.getId() == id) return (Flight *) f;
+        if (f->getId() == id) return (Flight *) f;
+    }
+    return nullptr;
+}
+
+Passenger *Company::passengerById(unsigned int id) {
+    for (auto const &p: passengers){
+        if (p->getId() == id) return (Passenger *) p;
     }
     return nullptr;
 }

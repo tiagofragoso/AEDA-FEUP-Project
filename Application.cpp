@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "exceptions.h"
 
+
 Application::Application() {
 
     Company c = Company("TAP");
@@ -1031,4 +1032,117 @@ void Application::airplaneUpdateCapacity(Airplane airplane) {
     cout << "Airplane capacity updated successfully.\n";
 
 }
+
+Airplane * Application::readAirplane(string &a) {
+    Airplane * newAirplane = new Airplane;
+
+    int temp;
+    string st;
+
+    try {next(temp, a, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Airplane data in the correct format.\n";
+    }
+
+    newAirplane->setId(temp);
+
+    next(st, a, ";");
+    newAirplane->setModel(st);
+
+    try {next(temp, a, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Airplane data in the correct format.\n";
+    }
+
+    newAirplane->setCapacity(temp);
+
+    vector<unsigned int> f;
+
+    while (st != ""){
+        int fid;
+        try {next(fid, a, ";");} catch(InvalidFormat) {
+            cout << "Please insert the Airplane data in the correct format.\n";
+        }
+        f.push_back((unsigned int)fid);
+    }
+
+    vector<Flight *> flights;
+
+    for (auto const &id:f){
+        Flight* fp = this->company.flightById(id);
+        if (fp != nullptr) flights.push_back(fp);
+    }
+
+    newAirplane->setFlights(flights);
+
+    return newAirplane;
+
+}
+
+Flight *Application::readFlight(string &f) {
+
+    char type = f.at(0);
+    Flight * newFlight;
+
+   if (type == 'c'){
+       //Comercial Flight
+
+        newFlight = new ComercialFlight;
+
+   } else if (type == 'r'){
+       //Rented Flight
+
+       newFlight = new RentedFlight;
+   } else throw InvalidFlight(0);
+
+    f = f.substr(1);
+    int temp;
+    try {next(temp, f, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Flight data in the correct format.\n";
+    }
+
+    newFlight->setId((unsigned int) temp);
+
+    string st;
+
+    next(st, f, ";");
+
+    newFlight->setDeparture(st);
+
+    next(st, f, ";");
+
+    newFlight->setDestination(st);
+
+    try {next(temp, f, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Flight data in the correct format.\n";
+    }
+
+    newFlight->setTime_to_flight((unsigned int) temp);
+
+    try {next(temp, f, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Flight data in the correct format.\n";
+    }
+
+    newFlight->setBasePrice((unsigned int) temp);
+
+    try {next(temp, f, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Flight data in the correct format.\n";
+    }
+
+    newFlight->setDuration((unsigned int) temp);
+
+    if (type == 'r'){
+
+        try {next(temp, f, ";");} catch(InvalidFormat) {
+            cout << "Please insert the Flight data in the correct format.\n";
+        }
+
+        Passenger * p = this->company.passengerById((unsigned int)temp);
+
+        //if (p != nullptr) newFlight->setBuyer(p);
+
+
+    }
+
+}
+
+
 

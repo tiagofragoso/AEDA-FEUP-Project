@@ -37,7 +37,7 @@ private:
 	*/
 	vector <Passenger*> passengers;
 
-	vector <Flight> flights;
+	vector <Flight*> flights;
 	/** @} end of Company data-members */
 
 
@@ -126,6 +126,8 @@ public:
     void setAirplane(Airplane newairplane);
 
 	Flight * flightById(unsigned int id);
+
+    Passenger * passengerById(unsigned int id);
 
 };
 
