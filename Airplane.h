@@ -117,6 +117,12 @@ public:
 	 * @param flight Flight * flight
 	 */
     void removeFlight(Flight * flight);
+
+    /**
+     * @brief Tests if it is possible to add the flight passed as argument
+     * @param flight Flight * flight
+     */
+    void addFlight(Flight * flight);
 };
 
 #endif //AEDA_FEUP_PROJECT_AIRPLANE_H

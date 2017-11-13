@@ -1,4 +1,5 @@
 #include "Airplane.h"
+#include "exceptions.h"
 
 Airplane::Airplane() {}
 
@@ -89,4 +90,45 @@ bool Airplane::operator==(const Airplane &a1) {
         return true;
     else return false;
 
+}
+
+void Airplane::addFlight(Flight *flight) {
+
+    if (flights.size() == 0) {
+
+        flights.push_back(flight);
+        return;
+    }
+
+    Flight * elem1 = flights.at(0);
+    Flight * lelem = flights.at(flights.size()-1);
+
+    if ((flight->getTime_to_flight()+flight->getDuration()) < elem1->getTime_to_flight() && flight->getDestination() == elem1->getDeparture()) {
+
+        flights.insert(flights.begin(), flight);
+        return;
+    }
+
+    if (flight->getTime_to_flight() > (lelem->getTime_to_flight() + lelem->getDuration()) && flight->getDeparture() == lelem->getDestination()) {
+
+        flights.push_back(flight);
+        return;
+    }
+
+    for (size_t i = 0; i < flights.size() - 1; i++) {
+
+        Flight * ant = flights.at(i), * pos = flights.at(i+1);
+
+        if(ant->getDestination() == flight->getDeparture() && (ant->getTime_to_flight() + ant->getDuration()) < flight->getTime_to_flight()) {
+
+            if (flight->getDeparture() == pos->getDestination() && (flight->getTime_to_flight() + flight->getDuration()) < pos->getTime_to_flight()) {
+
+                flights.insert(flights.begin() + i + 1, flight);
+                return;
+            }
+        }
+
+    }
+
+    throw OverlapingFlight();
 }

@@ -250,7 +250,7 @@ void Application::flightsMenu(Airplane airplane) {
                 flightShow(airplane);
                 break;
             case 2:
-                //TODO flights create
+                flightCreate(airplane);
                 break;
             case 3:
                 flightDelete(airplane);
@@ -609,7 +609,7 @@ void Application::airplaneCreate() {
         } while (true);
 
         try {
-            validPassenger(id);
+            validAirplane(id);
         }
         catch (const InvalidAirplane &i) {
             i.printDuplicate();
@@ -633,6 +633,108 @@ void Application::airplaneCreate() {
     cout << "Airplane successfully added\n";
     airplanesChanged = true;
 }
+
+
+void Application::flightCreate(Airplane airplane) {
+
+    string departure, destination, foo;
+    int price, id, duration, time_to_flight;
+    Passenger * buyer;
+    Flight * flight;
+
+    while (true) {
+
+        cout << "Comercial flight or rented flight? (c/r)\n";
+        getline(cin, foo);
+        if ((foo == "c") || (foo == "r"))
+            break;
+        else
+            cout << "Invalid option.\n";
+
+    }
+
+    cout << "Insert new flight information: \n\n";
+
+    do {
+
+        do {
+
+            cout << "Insert id: ";
+            if (validArg(id)) break;
+
+        } while (true);
+
+        try {
+            validFlight(id);
+        }
+        catch (const InvalidFlight &i) {
+            i.printDuplicate();
+            continue;
+        }
+        break;
+    } while (true);
+
+    cout << "City of departure: ";
+    getline(cin, departure);
+    normalize(departure);
+
+    cout << "City of arrival: ";
+    getline(cin, destination);
+    normalize(destination);
+
+    do {
+        cout << "Duartion (h): ";
+        if (validArg(duration)) break;
+    } while (true);
+
+    do {
+        cout << "Base price (€): ";
+        if (validArg(price)) break;
+    } while (true);
+
+    do {
+        cout << "Time to flight (h): ";
+        if (validArg(time_to_flight)) break;
+    } while (true);
+
+    if (foo == "r") {
+
+        printSummaryPassenger();
+        cout << "Chose buyer (id): ";
+        do {
+            try {
+                buyer = choosePassenger();
+            }
+            catch (const InvalidPassenger &i) {
+                i.print();
+                continue;
+            }
+            break;
+
+        }while(true);
+
+        flight = new RentedFlight(id, departure, destination, time_to_flight, price, duration, buyer);
+
+    } else
+        flight = new ComercialFlight(id, departure, destination, time_to_flight, price, duration);
+
+
+    try {
+
+        airplane.addFlight(flight);
+
+    } catch (const OverlapingFlight &f) {
+
+        f.print();
+        return;
+    }
+
+    company.setAirplane(airplane);
+    airplanesChanged = true;
+    cout << "Flight added successfully\n";
+
+}
+
 
 void Application::passengerDelete() {
 
@@ -929,3 +1031,4 @@ void Application::airplaneUpdateCapacity(Airplane airplane) {
     cout << "Airplane capacity updated successfully.\n";
 
 }
+

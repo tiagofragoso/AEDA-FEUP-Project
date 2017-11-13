@@ -133,7 +133,18 @@ void ComercialFlight::print() {
 
         Passenger* passenger = p.second;
 
+        cout << p.first << " ";
+
         passenger->printSummary();
     }
 
+}
+
+ComercialFlight::ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight,
+                                 unsigned int basePrice, unsigned int duration) : Flight(id, departure, destination,
+                                                                                         time_to_flight, basePrice,
+                                                                                         duration) {
+
+    PassengerMap passengers;
+    this->passengers = passengers;
 }

@@ -41,4 +41,11 @@ public:
 
 };
 
+class OverlapingFlight {
+
+public:
+    OverlapingFlight();
+    void print() const;
+};
+
 #endif //AEDA_FEUP_PROJECT_EXCEPTIONS_H
