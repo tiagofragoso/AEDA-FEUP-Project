@@ -1080,6 +1080,14 @@ void Application::flightUpdateBuyer(Flight *flight) {
 
 }
 
+void Application::flightDeletePassenger(Flight *flight) {
+
+}
+
+void Application::flightAddPassenger(Flight *flight) {
+    
+}
+
 void Application::flightUpdateMenu(Airplane *airplane) {
 
     printSummaryFlight(airplane);

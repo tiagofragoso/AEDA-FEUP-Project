@@ -43,7 +43,7 @@ private:
     /**
     * @brief string airplanesFilepath is the name of the file containing the Airplanes information
     */
-    string airplanesFilepath
+    string airplanesFilepath;
     /**
     * @brief string flightsFilepath is the name of the file containing the Flights information
     */
