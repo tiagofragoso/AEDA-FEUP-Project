@@ -43,7 +43,7 @@ private:
     /**
     * @brief string airplanesFilepath is the name of the file containing the Airplanes information
     */
-    string airplanesFilepath
+    string airplanesFilepath;
     /**
     * @brief string flightsFilepath is the name of the file containing the Flights information
     */
@@ -170,7 +170,6 @@ public:
     Flight * chooseFlight(Airplane * airplane);
     void validFlight(int id);
     void flightUpdatePrice(Flight * flight);
-    void flightUpdateDuration(Flight * flight);
     void flightAddPassenger(Flight * flight);
     void flightDeletePassenger(Flight * flight);
     void flightUpdateBuyer(Flight * flight);
