@@ -73,7 +73,7 @@ void Passenger::printSummary() {
 
 
 void Passenger::print() {
-    cout << "Id: " << id << endl << "Name: " << name << endl << "Date of Birth: " << dateOfBirth << endl;
+    cout << "Id: " << id << endl << "Name: " << name << endl << "Date of Birth: " << dateOfBirth.print() << endl;
 }
 
 bool Passenger::operator==(const Passenger &p) {
@@ -82,11 +82,13 @@ bool Passenger::operator==(const Passenger &p) {
     else return false;
 }
 
+Passenger::Passenger() {}
+
 void PassengerWithCard::print() {
 
     cout << "Id: " << Passenger::getId() << endl;
     cout << "Name: " << Passenger::getName() << endl;
-    cout << "Date of Birth: " << Passenger::getDateOfBirth() << endl;
+    cout << "Date of Birth: " << Passenger::getDateOfBirth().print() << endl;
     cout << "Job: " << card->getJob() << endl;
     cout << "Number of flights/year: " << card->getAvgYrFlights() << endl;
 

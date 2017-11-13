@@ -7,8 +7,9 @@
 
 #include <iostream>
 #include <vector>
-#include "helper.h"
 #include "Company.h"
+#include "helper.h"
+
 
 using namespace std;
 
