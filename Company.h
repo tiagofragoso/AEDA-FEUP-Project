@@ -55,7 +55,7 @@ public:
 	 * @param passengers
 	 * @param flights
 	 */
-	Company(string name, vector <Airplane*> fleet, vector <Passenger*> passengers, vector<Flight*> flights);
+	Company(string name, vector <Airplane*> fleet, vector <Passenger*> passengers);
 	/**
 	 * @brief Constructor of a Company object only defining its name
 	 * @param name
@@ -114,17 +114,17 @@ public:
 	* @brief Adds the passed parameter airplane to the data member fleet of the company
 	* @param airplane Airplane airplane
 	*/
-	void addAirplane(Airplane airplane);
+	void addAirplane(Airplane *airplane);
 	/**
 	* @brief Removes the passed Airplane of the company fleet
 	* @param airplane Airplane airplane that indicates which Airplane to remove from the data member fleet of the company
 	*/
-	void removeAirplane(Airplane airplane);
+	void removeAirplane(Airplane *airplane);
 	/**
 	* @brief Replaces the Airplane with the same id as the passed Airplane to the one passed 
 	* @param newairplane Airplane newairplane it will be included in the data member fleet of the company
 	*/
-    void setAirplane(Airplane newairplane);
+    void setAirplane(Airplane *newairplane);
 
 	Flight * flightById(unsigned int id);
 

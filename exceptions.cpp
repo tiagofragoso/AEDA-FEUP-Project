@@ -65,3 +65,7 @@ void OverlapingFlight::print() const {
     cout << "It is not possible to add this flight to this plane.\n";
 
 }
+
+InvalidFormat::InvalidFormat() {
+
+}
