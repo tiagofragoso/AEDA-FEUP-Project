@@ -63,9 +63,10 @@ void Company::addPassenger(Passenger *passenger) {
 
 }
 
-void Company::addAirplane(Airplane* airplane) {
+void Company::addAirplane(Airplane *airplane) {
     fleet.push_back(airplane);
 }
+
 
 void Company::removePassenger(Passenger * passenger) {
 
@@ -75,9 +76,8 @@ void Company::removePassenger(Passenger * passenger) {
 
         if (*p == *passenger) {
             passengers.erase(passengers.begin() + i);
-            break;
+            i++;
         }
-        i++;
     }
 }
 
@@ -89,24 +89,22 @@ void Company::removeAirplane(Airplane *airplane) {
 
         if (*a == *airplane) {
             fleet.erase(fleet.begin() + i);
-            break;
-        }
             i++;
+        }
     }
 }
 
-void Company::setAirplane(Airplane *newairplane) {
-
-    for (size_t i = 0; i < fleet.size(); i++) {
-
-        if (fleet.at(i)->getId() == newairplane->getId())
-            fleet.at(i) = newairplane;
-    }
-}
 
 Flight * Company::flightById(unsigned int id) {
     for (auto const &f: flights){
         if (f->getId() == id) return (Flight *) f;
+    }
+    return nullptr;
+}
+
+Passenger *Company::passengerById(unsigned int id) {
+    for (auto const &p: passengers){
+        if (p->getId() == id) return (Passenger *) p;
     }
     return nullptr;
 }

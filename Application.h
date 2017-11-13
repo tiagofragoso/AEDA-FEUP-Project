@@ -169,17 +169,16 @@ public:
     void printSummaryFlight(Airplane * airplane);
     Flight * chooseFlight(Airplane * airplane);
     void validFlight(int id);
-    void flightUpdateDeparture(Airplane * airplane, Flight * flight);
-    void flightUpdateDestination(Airplane * airplane, Flight * flight);
-    void flightUpdateTimeToFlight(Airplane * airplane, Flight * flight);
     void flightUpdatePrice(Flight * flight);
-    void flightUpdateDuration(Airplane airplane, Flight * flight);
-    //nao sei se vale a pena
-    void flightAddPassenger();
-    void flightDeletePassenger();
-    void flightUpdateBuyer();
+    void flightUpdateDuration(Flight * flight);
+    void flightAddPassenger(Flight * flight);
+    void flightDeletePassenger(Flight * flight);
+    void flightUpdateBuyer(Flight * flight);
 
-
+    //file functions
+    Airplane * readAirplane(string &a);
+    Passenger * readPassenger(string &p);
+    Flight * readFlight(string &f);
 };
 
 

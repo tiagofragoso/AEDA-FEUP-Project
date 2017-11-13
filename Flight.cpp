@@ -90,6 +90,10 @@ bool Flight::operator<(const Flight &f) {
 
 }
 
+void Flight::setId(unsigned int id) {
+    this->id = id;
+}
+
 RentedFlight::RentedFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, Passenger *buyer) : Flight(id, departure, destination, time_to_flight, basePrice, duration), buyer(buyer) {}
 
 Passenger * RentedFlight::getBuyer() const {
@@ -109,6 +113,8 @@ void RentedFlight::print() {
     buyer->printSummary();
     cout << endl;
 }
+
+
 
 ComercialFlight::ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, map<string, Passenger *> passengers) : Flight(id, departure, destination, time_to_flight, basePrice, duration), passengers(passengers) {}
 

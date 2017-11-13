@@ -745,7 +745,6 @@ void Application::flightCreate(Airplane *airplane) {
         return;
     }
 
-    company.setAirplane(airplane);
     airplanesChanged = true;
     cout << "Flight added successfully\n";
 
@@ -810,7 +809,19 @@ void Application::flightDelete(Airplane *airplane) {
         break;
 
     }while(true);
-    airplane->removeFlight(flight);
+
+    do {
+        try {
+            airplane->removeFlight(flight);
+        }
+        catch (const ConnectionFlight &f) {
+            f.print();
+            continue;
+        }
+        break;
+
+    }while(true);
+
     cout << "Flight deleted sucessfully.\n";
     airplanesChanged = true;
     flightsChanged = true;
@@ -1003,6 +1014,7 @@ void Application::airplaneUpdateMenu() {
             case 2:
                 airplaneUpdateCapacity(airplane);
                 break;
+
         }
 
     } while (op != 9);
@@ -1046,8 +1058,8 @@ void Application::airplaneUpdateCapacity(Airplane *airplane) {
 
 }
 
-void Application::flightUpdatePrice( Flight * flight)
-{
+void Application::flightUpdatePrice( Flight * flight) {
+
 	int newPrice;
 	cout << "The current price for the chosen flight is '" << flight->getBasePrice() << "'.\n";
 	do {

@@ -69,3 +69,13 @@ void OverlapingFlight::print() const {
 InvalidFormat::InvalidFormat() {
 
 }
+
+ConnectionFlight::ConnectionFlight() {
+
+}
+
+void ConnectionFlight::print() const {
+
+    cout << "It is not possible to delete this flight.\n";
+}
+

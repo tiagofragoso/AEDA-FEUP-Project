@@ -31,9 +31,8 @@ bool validArg(int &variable, bool &end);
 void trimString(string &s);
 void pause();
 void normalize(string &s);
-/*Passenger readPassengers(string &p);
-Airplane readAirplane(string &a);
- */
-//lolada
+void next(int &elem, string &piece, string separator);
+void next(string &piece, string &line, string separator);
+
 
 #endif /* SRC_HELPER_H_ */

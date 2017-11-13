@@ -53,4 +53,11 @@ public:
     void print() const;
 };
 
+class ConnectionFlight {
+
+public:
+    ConnectionFlight();
+    void print() const ;
+};
+
 #endif //AEDA_FEUP_PROJECT_EXCEPTIONS_H
