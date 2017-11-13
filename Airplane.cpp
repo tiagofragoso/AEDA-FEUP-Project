@@ -78,9 +78,9 @@ void Airplane::removeFlight(Flight * flight) {
 
         if (*f == *flight) {
             flights.erase(flights.begin() + i );
-            i++;
         }
     }
+    i++;
 
 }
 

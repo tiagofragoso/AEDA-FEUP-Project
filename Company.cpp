@@ -67,6 +67,7 @@ void Company::addAirplane(Airplane* airplane) {
     fleet.push_back(airplane);
 }
 
+
 void Company::removePassenger(Passenger * passenger) {
 
     int i = 0;

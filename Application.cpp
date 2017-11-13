@@ -1003,6 +1003,7 @@ void Application::airplaneUpdateMenu() {
             case 2:
                 airplaneUpdateCapacity(airplane);
                 break;
+
         }
 
     } while (op != 9);
