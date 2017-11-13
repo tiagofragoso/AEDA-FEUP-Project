@@ -304,7 +304,6 @@ void Application::printSummaryFlight(Airplane airplane) {
 Passenger * Application::choosePassenger() {
 
     int pId;
-    bool found = false;
     Passenger * cpassenger;
     do {
         cout << "Choose passenger: ";
@@ -313,20 +312,19 @@ Passenger * Application::choosePassenger() {
 
             if (passenger->getId() == pId) {
                 cpassenger = passenger;
-                found = true;
+                return cpassenger;
             }
         }
+
         cout << "Invalid id. Reenter.\n";
         
-    } while (!found);
+    } while (true);
 
-    return cpassenger;
 }
 
 Airplane Application::chooseAirplane() {
 
      int aId;
-     bool found = false;
      Airplane cairplane;
      do {
          cout << "Choose airplane: ";
@@ -335,20 +333,17 @@ Airplane Application::chooseAirplane() {
 
              if (airplane.getId() == aId) {
                  cairplane = airplane;
-                 found = true;
+                 return cairplane;
              }
          }
          cout << "Invalid id. Reenter\n";
 
-     } while (!found);
-
-    return cairplane;
+     } while (true);
 }
 
 Flight * Application::chooseFlight(Airplane airplane) {
 
     int fId;
-    bool found = false;
     Flight * cflight;
 
     do {
@@ -358,15 +353,12 @@ Flight * Application::chooseFlight(Airplane airplane) {
 
             if (flight->getId() == fId) {
                 cflight = flight;
-                found = true;
+                return cflight;
             }
         }
         cout << "Invalid id. Reenter\n";
 
-    } while (!found);
-
-    return cflight;
-
+    } while (true);
 }
 
 
