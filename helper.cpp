@@ -1,6 +1,7 @@
 #include "helper.h"
 #include "Airplane.h"
 #include "exceptions.h"
+#include "Company.h"
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -112,48 +113,6 @@ void next(int &elem, string &piece, string separator){
 
 	if (i != elemstring.length() || err) throw InvalidFormat();
 }
-
-
-Airplane readAirplane(string &a) {
- 	Airplane newAirplane;
-
-	int temp;
-	string st;
-
-	try {next(temp, a, ";");} catch(InvalidFormat) {
-		cout << "Please insert the Airplane data in the correct format.\n";
-	}
-
-	newAirplane.setId(temp);
-
-	next(st, a, ";");
-	newAirplane.setModel(st);
-
-	try {next(temp, a, ";");} catch(InvalidFormat) {
-		cout << "Please insert the Airplane data in the correct format.\n";
-	}
-
-	newAirplane.setCapacity(temp);
-
-	vector<unsigned int> f;
-
-	while (st != ""){
-		int fid;
-		try {next(fid, a, ";");} catch(InvalidFormat) {
-			cout << "Please insert the Airplane data in the correct format.\n";
-		}
-		f.push_back((unsigned int)fid);
-	}
-
-
-
-	//newAirplane.setFlights();
-
-	return newAirplane;
-
-}
-
-
 
 Date::Date(string &s) {
 	int temp;

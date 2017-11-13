@@ -40,6 +40,7 @@ public:
     void setTime_to_flight(unsigned int time_to_flight);
     void setBasePrice(unsigned int basePrice);
     void setDuration(unsigned int duration);
+    void setId(unsigned int id);
 
     void printSummary();
     virtual void print() = 0;
@@ -56,6 +57,7 @@ private:
     Passenger * buyer;
 
 public:
+    RentedFlight();
     RentedFlight(unsigned int id, string departure, string destination,unsigned  int time_to_flight,unsigned  int basePrice,unsigned  int duration, Passenger *buyer);
 
     //get Methods
@@ -75,6 +77,7 @@ private:
     PassengerMap passengers;
 
 public:
+    ComercialFlight();
     ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration);
     ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, PassengerMap passengers);
 

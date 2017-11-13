@@ -72,7 +72,10 @@ public:
     void flightDeletePassenger(Flight * flight);
     void flightUpdateBuyer(Flight * flight);
 
-
+    //file functions
+    Airplane * readAirplane(string &a);
+    Passenger * readPassenger(string &p);
+    Flight * readFlight(string &f);
 };
 
 

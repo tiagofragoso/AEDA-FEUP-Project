@@ -128,6 +128,8 @@ public:
 
 	Flight * flightById(unsigned int id);
 
+    Passenger * passengerById(unsigned int id);
+
 };
 
 #endif //AEDA_FEUP_PROJECT_COMPANY_H

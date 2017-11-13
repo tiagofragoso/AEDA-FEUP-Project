@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "exceptions.h"
 
+
 Application::Application() {
 
     Company c = Company("TAP");
@@ -213,30 +214,14 @@ void Application::airplanesMenu() {
                 airplaneUpdateMenu();
                 break;
             case 5:
-                Airplane * airplane;
-                printSummaryAirplane();
-                do {
-                    try {
-                        airplane = chooseAirplane();
-                    }
-                    catch (const InvalidAirplane &i) {
-                        i.print();
-                        continue;
-                    }
-
-                    airplane->print();
-                    cout << endl;
-                    break;
-                }while(true);
-
-                flightsMenu(airplane);
+                flightsMenu(chooseAirplane());
                 break;
         }
 
     } while (op != 9);
 }
 
-void Application::flightsMenu(Airplane * airplane) {
+void Application::flightsMenu(Airplane airplane) {
 
     int op;
 
@@ -304,15 +289,15 @@ void Application::printSummaryAirplane(){
     cout << "AIRPLANE SUMMARY\n\n";
 
     for (auto &airplane : company.getFleet()) {
-        airplane->printSummary();
+        airplane.printSummary();
     }
 }
 
-void Application::printSummaryFlight(Airplane *airplane) {
+void Application::printSummaryFlight(Airplane airplane) {
 
     cout << "FLIGHT SUMMARY\n\n";
 
-    for (auto &flight : airplane->getFlights()) {
+    for (auto &flight : airplane.getFlights()) {
 
         flight->printSummary();
     }
@@ -340,10 +325,10 @@ Passenger * Application::choosePassenger() {
     throw InvalidPassenger(pId);
 }
 
-Airplane * Application::chooseAirplane() {
+Airplane Application::chooseAirplane() {
 
      int aId;
-     Airplane* cairplane;
+     Airplane cairplane;
      do {
          cout << "Choose airplane: ";
          if (!validArg(aId)) continue;
@@ -353,7 +338,7 @@ Airplane * Application::chooseAirplane() {
 
     for (auto &airplane : company.getFleet()) {
 
-        if (airplane->getId() == aId) {
+        if (airplane.getId() == aId) {
             cairplane = airplane;
             return cairplane;
         }
@@ -361,7 +346,7 @@ Airplane * Application::chooseAirplane() {
     throw  InvalidAirplane(aId);
 }
 
-Flight * Application::chooseFlight(Airplane *airplane) {
+Flight * Application::chooseFlight(Airplane airplane) {
 
     int fId;
     Flight * cflight;
@@ -373,7 +358,7 @@ Flight * Application::chooseFlight(Airplane *airplane) {
 
     } while (true);
 
-    for (auto &flight : airplane->getFlights()) {
+    for (auto &flight : airplane.getFlights()) {
 
         if (flight->getId() == fId) {
             cflight = flight;
@@ -434,7 +419,7 @@ void Application::airplaneShow() {
 
     printSummaryAirplane();
     string foo;
-    Airplane *airplane;
+    Airplane airplane;
     do {
         cout << "Do you wish to view detailed information about an airplane (Y/N)?: ";
         getline(cin, foo);
@@ -450,7 +435,7 @@ void Application::airplaneShow() {
                     continue;
                 }
 
-                airplane->print();
+                airplane.print();
                 break;
             }while(true);
 
@@ -463,9 +448,9 @@ void Application::airplaneShow() {
 
 }
 
-void Application::flightShow(Airplane *airplane) {
+void Application::flightShow(Airplane airplane) {
 
-    if (airplane->getFlights().size() == 0) {
+    if (airplane.getFlights().size() == 0) {
         cout << "There are no flights in this airplane.\n";
         return;
     }
@@ -516,7 +501,7 @@ void Application::validAirplane(int id) {
 
     for (auto &airplane : company.getFleet()) {
 
-        if (airplane->getId() == id)
+        if (airplane.getId() == id)
             throw InvalidAirplane(id);
     }
 }
@@ -525,7 +510,7 @@ void Application::validFlight(int id) {
 
     for (auto &airplane : company.getFleet()) {
 
-        for (auto &flight : airplane->getFlights()) {
+        for (auto &flight : airplane.getFlights()) {
 
             if (flight->getId() == id)
                 throw InvalidFlight(id);
@@ -644,14 +629,14 @@ void Application::airplaneCreate() {
         if (validArg(capacity)) break;
     } while (true);
 
-    Airplane * newairplane =  new Airplane(id, model, capacity);
+    Airplane newairplane = Airplane(id, model, capacity);
     company.addAirplane(newairplane);
     cout << "Airplane successfully added\n";
     airplanesChanged = true;
 }
 
 
-void Application::flightCreate(Airplane *airplane) {
+void Application::flightCreate(Airplane airplane) {
 
     string departure, destination, foo;
     int price, id, duration, time_to_flight;
@@ -737,7 +722,7 @@ void Application::flightCreate(Airplane *airplane) {
 
     try {
 
-        airplane->addFlight(flight);
+        airplane.addFlight(flight);
 
     } catch (const OverlapingFlight &f) {
 
@@ -776,7 +761,7 @@ void Application::passengerDelete() {
 void Application::airplaneDelete() {
 
     printSummaryAirplane();
-    Airplane *airplane;
+    Airplane airplane;
     do {
         try {
             airplane = chooseAirplane();
@@ -795,7 +780,7 @@ void Application::airplaneDelete() {
     flightsChanged = true;
 }
 
-void Application::flightDelete(Airplane *airplane) {
+void Application::flightDelete(Airplane airplane) {
 
     printSummaryFlight(airplane);
     Flight * flight;
@@ -810,7 +795,7 @@ void Application::flightDelete(Airplane *airplane) {
         break;
 
     }while(true);
-    airplane->removeFlight(flight);
+    airplane.removeFlight(flight);
     cout << "Flight deleted sucessfully.\n";
     airplanesChanged = true;
     flightsChanged = true;
@@ -962,7 +947,7 @@ void Application::airplaneUpdateMenu() {
 
     printSummaryAirplane();
     int op;
-    Airplane * airplane;
+    Airplane airplane;
     do {
         try {
             airplane = chooseAirplane();
@@ -978,9 +963,9 @@ void Application::airplaneUpdateMenu() {
 
     do {
         cout << "Airplane selected: \n\n";
-        airplane->print();
+        airplane.print();
         cout << "[AIRPLANE UPDATE MENU]\n\n";
-        cout << "[1]- Change airplane model.\n";
+        cout << "[1]- Change airplane name.\n";
         cout << "[2]- Change airplane capacity.\n";
         cout << "[9]- Back.\n\n";
 
@@ -998,7 +983,7 @@ void Application::airplaneUpdateMenu() {
 
         switch (op) {
             case 1:
-                airplaneUpdateModel(airplane);
+                airplaneUpdateName(airplane);
                 break;
             case 2:
                 airplaneUpdateCapacity(airplane);
@@ -1009,21 +994,22 @@ void Application::airplaneUpdateMenu() {
     } while (op != 9);
 }
 
-void Application::airplaneUpdateModel(Airplane *airplane) {
+void Application::airplaneUpdateName(Airplane airplane) {
 
     string newModel;
-    cout << "The current model for the chosen airplane is '" << airplane->getModel() << "'.\n";
+    cout << "The current model for the chosen airplane is '" << airplane.getModel() << "'.\n";
     cout << "Insert new model: ";
     getline(cin, newModel);
-    airplane->setModel(newModel);
+    airplane.setModel(newModel);
+    company.setAirplane(airplane);
     airplanesChanged = true;
     cout << "Airplane model updated successfully.\n";
 
 }
 
-void Application::airplaneUpdateCapacity(Airplane *airplane) {
+void Application::airplaneUpdateCapacity(Airplane airplane) {
 
-    if (airplane->getFlights().size() != 0) {
+    if (airplane.getFlights().size() != 0) {
 
         cout
                 << "There are assigned seats in at least one flight in this airplane, if you want to change its capacity delete the flight\n";
@@ -1033,7 +1019,7 @@ void Application::airplaneUpdateCapacity(Airplane *airplane) {
 
     int newcapacity;
 
-    cout << "The current capacity for the chosen airplane is '" << airplane->getCapacity() << "'.\n";
+    cout << "The current capacity for the chosen airplane is '" << airplane.getCapacity() << "'.\n";
     do {
         cout << "Insert the new capacity : ";
         if (!validArg(newcapacity)) continue;
@@ -1041,24 +1027,123 @@ void Application::airplaneUpdateCapacity(Airplane *airplane) {
 
     } while (true);
 
-    airplane->setCapacity(newcapacity);
+    airplane.setCapacity(newcapacity);
+    company.setAirplane(airplane);
     airplanesChanged = true;
     cout << "Airplane capacity updated successfully.\n";
 
 }
 
-void Application::flightUpdatePrice( Flight * flight) {
+Airplane * Application::readAirplane(string &a) {
+    Airplane * newAirplane = new Airplane;
 
-	int newPrice;
-	cout << "The current price for the chosen flight is '" << flight->getBasePrice() << "'.\n";
-	do {
-		cout << "Insert new price: ";
-		if (!validArg(newPrice)) continue;
-		else break;
+    int temp;
+    string st;
 
-	} while (true);
+    try {next(temp, a, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Airplane data in the correct format.\n";
+    }
 
-	flight->setBasePrice(newPrice);
-	flightsChanged = true;
-	cout << "Flight base price updated successfully.\n";
+    newAirplane->setId(temp);
+
+    next(st, a, ";");
+    newAirplane->setModel(st);
+
+    try {next(temp, a, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Airplane data in the correct format.\n";
+    }
+
+    newAirplane->setCapacity(temp);
+
+    vector<unsigned int> f;
+
+    while (st != ""){
+        int fid;
+        try {next(fid, a, ";");} catch(InvalidFormat) {
+            cout << "Please insert the Airplane data in the correct format.\n";
+        }
+        f.push_back((unsigned int)fid);
+    }
+
+    vector<Flight *> flights;
+
+    for (auto const &id:f){
+        Flight* fp = this->company.flightById(id);
+        if (fp != nullptr) flights.push_back(fp);
+    }
+
+    newAirplane->setFlights(flights);
+
+    return newAirplane;
+
 }
+
+Flight *Application::readFlight(string &f) {
+
+    char type = f.at(0);
+    Flight * newFlight;
+
+   if (type == 'c'){
+       //Comercial Flight
+
+        newFlight = new ComercialFlight;
+
+   } else if (type == 'r'){
+       //Rented Flight
+
+       newFlight = new RentedFlight;
+   } else throw InvalidFlight(0);
+
+    f = f.substr(1);
+    int temp;
+    try {next(temp, f, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Flight data in the correct format.\n";
+    }
+
+    newFlight->setId((unsigned int) temp);
+
+    string st;
+
+    next(st, f, ";");
+
+    newFlight->setDeparture(st);
+
+    next(st, f, ";");
+
+    newFlight->setDestination(st);
+
+    try {next(temp, f, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Flight data in the correct format.\n";
+    }
+
+    newFlight->setTime_to_flight((unsigned int) temp);
+
+    try {next(temp, f, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Flight data in the correct format.\n";
+    }
+
+    newFlight->setBasePrice((unsigned int) temp);
+
+    try {next(temp, f, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Flight data in the correct format.\n";
+    }
+
+    newFlight->setDuration((unsigned int) temp);
+
+    if (type == 'r'){
+
+        try {next(temp, f, ";");} catch(InvalidFormat) {
+            cout << "Please insert the Flight data in the correct format.\n";
+        }
+
+        Passenger * p = this->company.passengerById((unsigned int)temp);
+
+        //if (p != nullptr) newFlight->setBuyer(p);
+
+
+    }
+
+}
+
+
+
