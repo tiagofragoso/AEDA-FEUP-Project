@@ -1,4 +1,6 @@
 #include "helper.h"
+#include "Airplane.h"
+#include "exceptions.h"
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -82,11 +84,95 @@ void normalize(string &s){
     }
     trimString(s);
 }
-/*
-Airplane readAirplane(string &a) {
- 
 
+void next(string &piece, string &line, string separator){
+	int temp = line.find_first_of(separator);
+	if(temp == string::npos){
+		piece = line;
+		line = "";
+	}else{
+		piece = line.substr(0,temp);
+		line=line.substr(temp+1, line.length() - 1);
+	}
+	trimString(piece);
+}
+
+void next(int &elem, string &piece, string separator){
+	string elemstring;
+	size_t i;
+	bool err = false;
+	next(elemstring,piece,separator);
+	try {
+
+		elem = stoi(elemstring, &i);
+
+	} catch (std::invalid_argument){
+		err = true;
+	}
+
+	if (i != elemstring.length() || err) throw InvalidFormat();
+}
+
+
+Airplane readAirplane(string &a) {
+ 	Airplane newAirplane;
+
+	int temp;
+	string st;
+
+	try {next(temp, a, ";");} catch(InvalidFormat) {
+		cout << "Please insert the Airplane data in the correct format.\n";
+	}
+
+	newAirplane.setId(temp);
+
+	next(st, a, ";");
+	newAirplane.setModel(st);
+
+	try {next(temp, a, ";");} catch(InvalidFormat) {
+		cout << "Please insert the Airplane data in the correct format.\n";
+	}
+
+	newAirplane.setCapacity(temp);
+
+	vector<unsigned int> f;
+
+	while (st != ""){
+		int fid;
+		try {next(fid, a, ";");} catch(InvalidFormat) {
+			cout << "Please insert the Airplane data in the correct format.\n";
+		}
+		f.push_back((unsigned int)fid);
+	}
+
+	//newAirplane.setFlights();
+
+	return newAirplane;
 
 }
-*/
 
+
+
+Date::Date(string &s) {
+	int temp;
+	try {
+		next(temp, s, "/");
+	} catch (InvalidFormat) {
+		cout << "Please insert the correct date.\n";
+	}
+	this->day = temp;
+	temp = 0;
+	try {
+		next(temp, s, "/");
+	} catch (InvalidFormat) {
+		cout << "Please insert the correct date.\n";
+	}
+	this->month = temp;
+	temp = 0;
+	try {
+		next(temp, s, "/");
+	} catch (InvalidFormat) {
+		cout << "Please insert the correct date.\n";
+	}
+	this->year = temp;
+}

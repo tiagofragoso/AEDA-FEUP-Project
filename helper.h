@@ -19,9 +19,11 @@ struct Date{
 
     string print();
     Date();
-    Date(string s);
+    Date(string &s);
 };
 /** @} end of Date Struct */
+
+
 
 bool validArg(int &variable);
 bool validArg(int &variable, bool &end);

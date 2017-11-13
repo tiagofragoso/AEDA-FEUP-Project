@@ -6,5 +6,10 @@
 #define AEDA_FEUP_PROJECT_EXCEPTIONS_H
 
 
+class InvalidFormat {
+public:
+    InvalidFormat();
+};
+
 
 #endif //AEDA_FEUP_PROJECT_EXCEPTIONS_H
