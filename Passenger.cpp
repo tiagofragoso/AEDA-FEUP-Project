@@ -68,7 +68,7 @@ void PassengerWithCard::setCard(Card *card) {
 }
 
 void Passenger::printSummary() {
-    cout << "Id: " << id << "Name: " << name << endl;
+    cout << "Id: " << id << " Name: " << name << endl;
 }
 
 

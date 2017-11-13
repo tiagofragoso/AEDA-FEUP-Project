@@ -45,6 +45,7 @@ public:
     virtual void print() = 0;
 
     bool operator==(const Flight &f);
+    bool operator<(const Flight &f);
 
 
 };
@@ -59,7 +60,7 @@ public:
 
     //get Methods
     Passenger * getBuyer() const;
-    string getType() const { return "R"; }
+    string getType() const { return "r"; }
 
     //set Methods
     void setBuyer(Passenger * buyer);
@@ -74,11 +75,12 @@ private:
     PassengerMap passengers;
 
 public:
+    ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration);
     ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, PassengerMap passengers);
 
     //get methods
     PassengerMap getPassengers() const;
-    string getType() const { return "C"; }
+    string getType() const { return "c"; }
 
     //set methods
     void setPassengers(PassengerMap passengers);

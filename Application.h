@@ -41,7 +41,7 @@ public:
     void passengerUpdateMenu();
     void printSummaryPassenger();
     Passenger * choosePassenger();
-    bool validPassenger(int id);
+    void validPassenger(int id);
     void passengerUpdateName(Passenger * passenger);
     void passengerUpdateDateOfBirth(Passenger * passenger);
     void passengerUpdateJob(Passenger * passenger);
@@ -54,7 +54,7 @@ public:
     void airplaneUpdateMenu();
     void printSummaryAirplane();
     Airplane chooseAirplane();
-    bool validAirplane(int id);
+    void validAirplane(int id);
     void airplaneUpdateName(Airplane airplane);
     void airplaneUpdateCapacity(Airplane airplane);
 
@@ -65,6 +65,7 @@ public:
     void flightUpdateMenu(Airplane airplane);
     void printSummaryFlight(Airplane airplane);
     Flight * chooseFlight(Airplane airplane);
+    void validFlight(int id);
     void flightUpdateDeparture(Airplane airplane, Flight * flight);
     void flightUpdateDestination(Airplane airplane, Flight * flight);
     void flightUpdateTimeToFlight(Airplane airplane, Flight * flight);
