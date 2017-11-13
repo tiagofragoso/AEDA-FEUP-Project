@@ -31,16 +31,16 @@ private:
 	/**
 	* @brief vector <Airplane> fleet fleet with all the Airplanes of the company 
 	*/
-	vector <Airplane> fleet; 
+	vector <Airplane*> fleet;
 	/**
 	* @brief vector with pointers to all the Passengers of the company
 	*/
 	vector <Passenger*> passengers;
-
-	vector <Flight> flights;
 	/** @} end of Company data-members */
 
+    vector<Flight*> flights;
 
+	/** @} end of Company data-members */
 
 public:
 
@@ -53,8 +53,9 @@ public:
 	 * @param name
 	 * @param fleet
 	 * @param passengers
+	 * @param flights
 	 */
-	Company(string name, vector <Airplane> fleet, vector <Passenger*> passengers); 
+	Company(string name, vector <Airplane*> fleet, vector <Passenger*> passengers);
 	/**
 	 * @brief Constructor of a Company object only defining its name
 	 * @param name
@@ -73,7 +74,7 @@ public:
 	* @brief Gets the fleet of the company
 	* @return vector <Airplane> with the Airplanes of the company
 	*/
-	vector <Airplane> getFleet() const;
+	vector <Airplane*> getFleet() const;
 	/**
 	* @brief Gets a vector of pointers to the passengers of the company
 	* @return vector <Passenger*> with the pointers to the Passengers of the company
@@ -90,7 +91,7 @@ public:
 	* @brief Sets the fleet of the company to the passed parameter vector <Airplane> fleet
 	* @param fleet vector <Airplane> fleet
 	*/
-	void setFleet(vector <Airplane> fleet);
+	void setFleet(vector <Airplane*> fleet);
 	/**
 	*@brief Adds the passed pointer to a Passenger to the data member passengers
 	*@param *passenger Passenger *passenger pointer to the Passenger object to be added
@@ -113,17 +114,17 @@ public:
 	* @brief Adds the passed parameter airplane to the data member fleet of the company
 	* @param airplane Airplane airplane
 	*/
-	void addAirplane(Airplane airplane);
+	void addAirplane(Airplane *airplane);
 	/**
 	* @brief Removes the passed Airplane of the company fleet
 	* @param airplane Airplane airplane that indicates which Airplane to remove from the data member fleet of the company
 	*/
-	void removeAirplane(Airplane airplane);
+	void removeAirplane(Airplane *airplane);
 	/**
 	* @brief Replaces the Airplane with the same id as the passed Airplane to the one passed 
 	* @param newairplane Airplane newairplane it will be included in the data member fleet of the company
 	*/
-    void setAirplane(Airplane newairplane);
+    void setAirplane(Airplane *newairplane);
 
 	Flight * flightById(unsigned int id);
 
