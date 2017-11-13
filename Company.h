@@ -124,7 +124,6 @@ public:
 	* @brief Replaces the Airplane with the same id as the passed Airplane to the one passed 
 	* @param newairplane Airplane newairplane it will be included in the data member fleet of the company
 	*/
-    void setAirplane(Airplane *newairplane);
 
 	Flight * flightById(unsigned int id);
 

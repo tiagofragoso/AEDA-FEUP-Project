@@ -114,9 +114,7 @@ void RentedFlight::print() {
     cout << endl;
 }
 
-RentedFlight::RentedFlight() {
 
-}
 
 ComercialFlight::ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, map<string, Passenger *> passengers) : Flight(id, departure, destination, time_to_flight, basePrice, duration), passengers(passengers) {}
 
@@ -155,8 +153,4 @@ ComercialFlight::ComercialFlight(unsigned int id, string departure, string desti
 
     PassengerMap passengers;
     this->passengers = passengers;
-}
-
-ComercialFlight::ComercialFlight() {
-
 }

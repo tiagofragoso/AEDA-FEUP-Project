@@ -72,15 +72,19 @@ void Airplane::print() {
 
 void Airplane::removeFlight(Flight * flight) {
 
-    int i = 0;
+    if (flight->getId() == flights.at(0)->getId()) {
 
-    for (auto &f : flights) {
-
-        if (*f == *flight) {
-            flights.erase(flights.begin() + i );
-            i++;
-        }
+        flights.erase(flights.begin());
+        return;
     }
+
+    if (flight->getId() == flights.at(flights.size() - 1)->getId()) {
+
+        flights.erase(flights.begin() + flights.size() - 1);
+        return;
+    }
+
+    throw ConnectionFlight();
 
 }
 
