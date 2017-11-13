@@ -74,9 +74,10 @@ void Company::removePassenger(Passenger * passenger) {
     for (auto &p : passengers) {
 
         if (*p == *passenger) {
-            passengers.erase(passengers.begin() + i);
-            i++;
+            passengers.erase(passengers.begin() + i + 1);
+            break;
         }
+        i++;
     }
 }
 
@@ -88,8 +89,9 @@ void Company::removeAirplane(Airplane airplane) {
 
         if (a == airplane) {
             fleet.erase(fleet.begin() + i);
-            i++;
+            break;
         }
+            i++;
     }
 }
 

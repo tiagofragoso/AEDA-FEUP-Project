@@ -213,7 +213,23 @@ void Application::airplanesMenu() {
                 airplaneUpdateMenu();
                 break;
             case 5:
-                flightsMenu(chooseAirplane());
+                Airplane airplane;
+                printSummaryAirplane();
+                do {
+                    try {
+                        airplane = chooseAirplane();
+                    }
+                    catch (const InvalidAirplane &i) {
+                        i.print();
+                        continue;
+                    }
+
+                    airplane.print();
+                    cout << endl;
+                    break;
+                }while(true);
+
+                flightsMenu(airplane);
                 break;
         }
 
@@ -964,7 +980,7 @@ void Application::airplaneUpdateMenu() {
         cout << "Airplane selected: \n\n";
         airplane.print();
         cout << "[AIRPLANE UPDATE MENU]\n\n";
-        cout << "[1]- Change airplane name.\n";
+        cout << "[1]- Change airplane model.\n";
         cout << "[2]- Change airplane capacity.\n";
         cout << "[9]- Back.\n\n";
 
@@ -982,7 +998,7 @@ void Application::airplaneUpdateMenu() {
 
         switch (op) {
             case 1:
-                airplaneUpdateName(airplane);
+                airplaneUpdateModel(airplane);
                 break;
             case 2:
                 airplaneUpdateCapacity(airplane);
@@ -992,7 +1008,7 @@ void Application::airplaneUpdateMenu() {
     } while (op != 9);
 }
 
-void Application::airplaneUpdateName(Airplane airplane) {
+void Application::airplaneUpdateModel(Airplane airplane) {
 
     string newModel;
     cout << "The current model for the chosen airplane is '" << airplane.getModel() << "'.\n";

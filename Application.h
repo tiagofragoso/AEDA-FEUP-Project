@@ -55,7 +55,7 @@ public:
     void printSummaryAirplane();
     Airplane chooseAirplane();
     void validAirplane(int id);
-    void airplaneUpdateName(Airplane airplane);
+    void airplaneUpdateModel(Airplane airplane);
     void airplaneUpdateCapacity(Airplane airplane);
 
 
