@@ -31,6 +31,8 @@ private:
 	/** @} end of Passenger data-members */
 
 public:
+    Passenger();
+
 	/**
 	 * @brief Constructor of a PassengerWithCard object using ID, name, Date of birth, job and the number of Flights per year
 	 * @param id
@@ -106,6 +108,9 @@ private:
 	/** @} end of PassengerWithCard data-members */
 
 public:
+
+    PassengerWithCard();
+
 	/**
 	 * @brief Constructor of a PassengerWithCard object using ID, name, Date of birth and a card object
 	 * @param id

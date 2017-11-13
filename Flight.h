@@ -44,6 +44,8 @@ public:
 
     void printSummary();
     virtual void print() = 0;
+    virtual void setBuyer(unsigned int id) = 0;
+    virtual void setPassengers(PassengerMap passengers) = 0;
 
     bool operator==(const Flight &f);
     bool operator<(const Flight &f);
@@ -66,7 +68,7 @@ public:
 
     //set Methods
     void setBuyer(Passenger * buyer);
-
+    void setPassengers(PassengerMap passengers){};
     void print();
 
 };
@@ -87,6 +89,7 @@ public:
 
     //set methods
     void setPassengers(PassengerMap passengers);
+    void setBuyer(unsigned int id){};
 
     void print();
 };

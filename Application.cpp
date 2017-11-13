@@ -1055,6 +1055,7 @@ Airplane * Application::readAirplane(string &a) {
     newAirplane->setCapacity(temp);
 
     vector<unsigned int> f;
+    next(st, a, ";");
 
     while (st != ""){
         int fid;
@@ -1137,11 +1138,79 @@ Flight *Application::readFlight(string &f) {
 
         Passenger * p = this->company.passengerById((unsigned int)temp);
 
-        //if (p != nullptr) newFlight->setBuyer(p);
+        if (p != nullptr) newFlight->setBuyer(p);
 
+    } else {
+/*
+        next(st, f, ";");
+        vector<unsigned int> pid;
+        while (st != ""){
+            int elem;
+            try {next(elem, f, ",");} catch(InvalidFormat) {
+                cout << "Please insert the Flight data in the correct format.\n";
+            }
+
+            pid.push_back((unsigned int)elem);
+        }
+        vector<Passenger *>pass;
+        for (auto const &id:pid){
+            Passenger * p = this->company.passengerById(id);
+            if (p != nullptr) pass.push_back(p);
+        }
+
+        newFlight->setPassengers()*/
 
     }
 
+    return newFlight;
+
+}
+
+Passenger *Application::readPassenger(string &p) {
+    Passenger * newPassenger;
+
+    char type = p.at(0);
+
+    if (type == 'c') newPassenger = new PassengerWithCard;
+    else if (type == 'n') newPassenger = new Passenger;
+    else throw InvalidPassenger(0);
+
+
+    p = p.substr(1);
+
+    int temp;
+    try {next(temp, p, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Passenger data in the correct format.\n";
+    }
+
+    newPassenger->setId((unsigned int) temp);
+
+    string st;
+
+    next(st, p, ";");
+
+    newPassenger->setName(st);
+
+    next(st, p, ";");
+
+    try {
+        Date d(st);
+    } catch (InvalidFormat) {
+        cout << "Please insert the correct Date format.\n";
+    }
+
+    if (type == 'c'){
+        next(st, p, ";");
+        try {next(temp, p, ";");} catch(InvalidFormat) {
+                cout << "Please insert the Passenger data in the correct format.\n";
+        }
+
+        Card* c = new Card(st, temp);
+        newPassenger->setCard(c);
+
+    }
+
+    return newPassenger;
 }
 
 
