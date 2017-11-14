@@ -171,10 +171,12 @@ public:
     void flightUpdateBuyer(Flight * flight);
 
     //file functions
+    string inputFilePath(string s);
     Airplane * readAirplane(string &a);
     Passenger * readPassenger(string &p);
     Flight * readFlight(string &f);
     void loadPassengerFile();
+
 
 };
 
