@@ -332,15 +332,216 @@ void Application::flightsMenu(Airplane *airplane) {
     } while (op != 9);
 
 }
+Passenger * Application::newCustomer() {
+	string foo;
+	string name, dateOfBirth, job;
+	int id, nYear;
+
+	while (true) {
+
+		cout << "Normal passenger or passenger with card? (n/c)\n";
+		getline(cin, foo);
+		if ((foo == "n") || (foo == "c"))
+			break;
+		else
+			cout << "Invalid option.\n";
+
+	}
+
+	cout << "Insert the new passenger information: \n\n";
+
+	do {
+
+		do {
+
+			cout << "Insert id: ";
+			if (validArg(id)) break;
+
+		} while (true);
+
+		try {
+			validPassenger(id);
+		}
+		catch (const InvalidPassenger &i) {
+			i.printDuplicate();
+			continue;
+		}
+
+		break;
+
+	} while (true);
+
+
+	cout << "Name: ";
+	getline(cin, name);
+
+	cout << "Date of Birth: (DD/MM/YYYY): ";
+	getline(cin, dateOfBirth);
+
+	if (foo == "n") {
+
+		Passenger *newpassenger = new Passenger(id, name, dateOfBirth);
+		company.addPassenger(newpassenger);
+		cout << "Passenger successfully added\n";
+		passengersChanged = true;
+		return newpassenger;
+	}
+	else if (foo == "c") {
+
+		cout << "Job: ";
+		getline(cin, job);
+		normalize(job);
+
+		nYear = 0;
+
+		PassengerWithCard *newpassenger = new PassengerWithCard(id, name, dateOfBirth, job, nYear);
+		company.addPassenger(newpassenger);
+		cout << "Passenger successfully added\n";
+		passengersChanged = true;
+		return newpassenger;
+	}
+}
 
 void Application::bookingsMenu() {
-
+	string menuhelper;
+	int id, op;
+	Passenger* a;
+	cout << "[BOOKING MANAGEMENT MENU]\n\n";
     cout << "Are you a new costumer? (y/n)\n";
-    //...
-    //...
-    //..
+	getline(cin, menuhelper);
+	normalize(menuhelper);
+	do {
+		if (menuhelper == "y") {
+			cout << endl;
+			a = newCustomer();
+			break;
+		}
+		else if (menuhelper == "n") {
+			printSummaryPassenger();
+			a = choosePassenger();
+			break;
+		}
+		else {
+			cout << "Invalid option. Reenter." << endl;
+		}
+	} while (true);
+	cout << endl;
+	do {
+		cout << "[BOOKING MANAGEMENT MENU]\n\n";
+		cout << "[1]- Show my scheduled Flights";
+		cout << "[2]- Book a Flight";
+		cout << "[3]- Return a Flight ticket";
+		//TODO:CHECK IF THERE IS ANYTHING ELSE TO INSERT HERE
+		cout << "[9]- Back.\n\n";
+		do {
+			cout << "Insert the desired option: ";
+			if ((cin >> op) && ((op >= 1 && op <= 3) || op == 9)) {
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				break;
+			}
+			else {
+				cerr << "Invalid option.\n";
+				cin.clear();
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+		} while (true);
+
+		switch (op) {
+		case 1:
+			showAllFlights(a);
+			break;
+			/*
+			case2:
+				funçãospolis;
+			*/
+		case 3:
+			returnTicket(a);
+			break;
+		}
+	} while (op != 9);
 
 }
+void Application::returnTicket(Passenger *p){
+	int id;
+	string seat, removehelper;
+	showAllFlights(p);
+	do {
+		cout << "Insert the ID of the flight you would like to return the ticket: ";
+		if (!validArg(id)) continue;
+		else break;
+	} while (true);
+	PassengerMap::iterator it;
+	for (size_t i = 0; i < company.getFlights().size() ; i++)
+	{
+		if (company.getFlights().at(i)->getId() == id) {
+			if (company.getFlights().at(i)->getType() == "c"){
+				for (it = company.getFlights().at(i)->getPassengers().begin(); it != company.getFlights().at(i)->getPassengers().end(); it++)
+				{
+					if (it->second->getId() == p->getId()) {
+						seat = it->first;
+						cout << "Would you like to remove seat " << seat << " ?(Y/N)\n";
+						getline(cin, removehelper);
+						normalize(removehelper);
+						do {
+							if (removehelper == "y") {
+								cout << endl;
+								company.getFlights().at(i)->getPassengers().erase(it);
+								cout << "The seat " << seat << " that you had on that flight has been returned";
+								flightsChanged = true;
+								break;
+							}
+							else if (removehelper == "n") {
+								break;
+							}
+							else {
+								cout << "Invalid option. Reenter." << endl;
+							}
+						} while (true);
+						removehelper.clear();
+					}
+				}
+			}
+		}
+		else if (company.getFlights().at(i)->getType() == "r") {
+			cout << "Do you want to remove your rental of flight " << company.getFlights().at(i)->getId() << " ?(Y/N)\n";
+			getline(cin, removehelper);
+			normalize(removehelper);
+			do {
+				if (removehelper == "y") {
+					cout << endl;
+					company.getFlights().at(i)->setBuyer(nullptr);
+					cout << "Your rental of flight " << company.getFlights().at(i)->getId() << "has been removed" << endl;
+					flightsChanged = true;
+					break;
+				}
+				else if (removehelper == "n") {
+					break;
+				}
+				else {
+					cout << "Invalid option. Reenter." << endl;
+				}
+			} while (true);
+		}
+	}
+}
+
+void Application::showAllFlights(Passenger *p) {
+	PassengerMap::iterator it;
+	Passenger *b;
+	for (size_t i = 0; i < company.getFlights().size(); i++)
+	{
+		
+		for (it = company.getFlights().at(i)->getPassengers().begin(); it != company.getFlights().at(i)->getPassengers().end(); it++)
+		{	
+			b = it->second;
+			if (b->getId() == p->getId()) {
+				cout << "Flight ID: " << company.getFlights().at(i)->getId() << " Departure: " << company.getFlights().at(i)->getDeparture() << " Destination: " << company.getFlights().at(i)->getDestination() << " Time to flight: " << company.getFlights().at(i)->getTime_to_flight();
+			}
+		}
+	}
+	cout << endl;
+}
+
 
 void Application::printSummaryPassenger() {
 
@@ -1151,13 +1352,65 @@ void Application::flightUpdateBuyer(Flight *flight) {
     cout << "Buyer updated successfully\n";
 }
 
+PassengerMap::iterator Application::chooseSeat(Flight *flight) {
+    PassengerMap::iterator it;
+    string seat_to_be_removed;
+    cout << "Please insert the seat you would like to remove : ";
+    getline(cin, seat_to_be_removed);
+    it = flight->getPassengers().find(seat_to_be_removed);
+    if (it == flight->getPassengers().end())
+        throw (InvalidSeat(seat_to_be_removed));
+    else {
+        return it;
+    }
+}
+
+
 void Application::flightDeletePassenger(Flight *flight) {
 
+    PassengerMap::iterator it;
+    for (it = flight->getPassengers().begin(); it != flight->getPassengers().end(); it++)
+    {
+        cout << it->first << " : ";
+        it->second->printSummary();
+        cout << endl;
+    }
+    do {
+        try {
+            it = chooseSeat(flight);
+        }
+        catch (const InvalidSeat &it) {
+            it.print();
+            continue;
+        }
+        break;
+
+    } while (true);
+    flight->getPassengers().erase(it);
+    cout << "The passenger was removed from the flight\n";
+	flightsChanged = true;
 }
 
 void Application::flightAddPassenger(Flight *flight) {
 
+    Passenger * passenger = new Passenger;
+
+    printSummaryPassenger();
+
+    do {
+        try {
+            passenger = choosePassenger();
+        }
+        catch (const InvalidPassenger &i) {
+            i.print();
+            continue;
+        }
+        break;
+
+    } while (true);
+    
 }
+
 
 void Application::flightUpdateMenu(Airplane *airplane) {
 
