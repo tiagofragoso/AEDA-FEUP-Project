@@ -8,6 +8,8 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <map>
+#include <string>
 #include "Company.h"
 
 
