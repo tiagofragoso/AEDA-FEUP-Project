@@ -159,7 +159,7 @@ public:
     void airplaneUpdateModel(Airplane * airplane);
     void airplaneUpdateCapacity(Airplane * airplane);
 
-	
+	void showAllFlights(Passenger *p);
     void flightShow(Airplane * airplane);
     void flightCreate(Airplane * airplane);
     void flightDelete(Airplane * airplane);
@@ -172,6 +172,7 @@ public:
     void flightDeletePassenger(Flight * flight);
     void flightUpdateBuyer(Flight * flight);
 	PassengerMap::iterator chooseSeat(Flight *flight);
+	Passenger * newCustomer();
 
     //file functions
     string inputFilePath(string s);
