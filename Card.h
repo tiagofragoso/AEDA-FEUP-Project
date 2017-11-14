@@ -8,11 +8,6 @@ using namespace std;
 class Card{
 
 private:
-    /** @name Card data-members*/
-    /** @{
-    *
-    */
-
     /**
      * @brief string Job of the Passenger who holds the card
      */
@@ -21,7 +16,6 @@ private:
      * @brief int Average flights the Passenger that holds this card takes per year
      */
     int avgYrFlights;
-    /** @} end of Card data-members */
 
 public:
     /**

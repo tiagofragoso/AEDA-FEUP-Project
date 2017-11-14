@@ -12,10 +12,6 @@ using namespace std;
 class Passenger {
 
 private:
-	/** @name Passenger data-members*/
-	/** @{
-    *
-    */
 	/**
 	 * @brief int ID of the Passenger
 	 */
@@ -28,7 +24,6 @@ private:
 	 * @brief Date Struct Date of birth of the Passenger
 	 */
 	string dateOfBirth;
-	/** @} end of Passenger data-members */
 
 public:
     Passenger();

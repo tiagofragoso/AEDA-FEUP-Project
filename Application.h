@@ -15,11 +15,6 @@ using namespace std;
 class Application {
 
 private:
-    /** @name Application data-members*/
-    /** @{
-    *
-    */
-
     /**
      * @brief Company company
      */
@@ -48,7 +43,6 @@ private:
     * @brief string flightsFilepath is the name of the file containing the Flights information
     */
     string flightsFilepath;
-    /** @} end of Application data-members */
 
 public:
     /**

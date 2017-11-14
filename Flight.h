@@ -15,11 +15,29 @@ typedef std::map<string, Passenger* > PassengerMap;
 class Flight {
 
 private:
+    /**
+     * @brief unsigned int id of the Flight
+     */
     unsigned int id;
+    /**
+     * @brief string departure location
+     */
     string departure;
+    /**
+     * @brief string destination location
+     */
     string destination;
+    /**
+     * @brief unsigned int time_to_flight time until the Flight takes off
+     */
     unsigned int time_to_flight;
+    /**
+     * @brief unsigned int basePrice of the Flight object
+     */
     unsigned int basePrice;
+    /**
+     * @brief unsigned int duration of the Flight
+     */
     unsigned int duration;
 
 public:
