@@ -177,7 +177,7 @@ void Application::filesMenu() {
                         }
                     } while (true);
                 } else cout << "There are no changes to be deployed.\n";
-                
+
                 break;
         }
     } while (op != 9);
@@ -1153,11 +1153,48 @@ void Application::flightUpdateBuyer(Flight *flight) {
 
 void Application::flightDeletePassenger(Flight *flight) {
 
+    PassengerMap::iterator it;
+    for (it = flight->getPassengers().begin(); it != flight->getPassengers().end(); it++)
+    {
+        cout << it->first << " : ";
+        it->second->printSummary();
+        cout << endl;
+    }
+    do {
+        try {
+            it = chooseSeat(flight);
+        }
+        catch (const InvalidSeat &it) {
+            it.print();
+            continue;
+        }
+        break;
+
+    } while (true);
+    flight->getPassengers().erase(it);
+    cout << "The passenger was removed from the flight\n";
 }
 
 void Application::flightAddPassenger(Flight *flight) {
 
+    Passenger * passenger = new Passenger;
+
+    printSummaryPassenger();
+
+    do {
+        try {
+            passenger = choosePassenger();
+        }
+        catch (const InvalidPassenger &i) {
+            i.print();
+            continue;
+        }
+        break;
+
+    } while (true);
+    
 }
+
 
 void Application::flightUpdateMenu(Airplane *airplane) {
 
