@@ -91,7 +91,7 @@ void Flight::setId(unsigned int id) {
 
 RentedFlight::RentedFlight() : Flight(0, "", "", 0, 0, 0){
 
-    Passenger * p;
+    Passenger * p = new Passenger;
     buyer = p;
 }
 
