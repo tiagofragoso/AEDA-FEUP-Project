@@ -8,9 +8,9 @@ Application::Application() {
     passengersChanged = false;
     airplanesChanged = false;
     flightsChanged = false;
-    passengersFilepath = "../Files/Passengers.txt";
-    airplanesFilepath = "../Files/Airplanes.txt";
-    flightsFilepath = "../Files/Flights.txt";
+    passengersFilepath = "";
+    airplanesFilepath = "";
+    flightsFilepath = "";
 
 }
 
@@ -82,14 +82,9 @@ void Application::mainMenu() {
 
 void Application::filesMenu() {
     int op;
-    char auxOp;
     do {
         bool validOp = false;
         cout << "[FILE MANAGEMENT MENU]\n\n";
-
-        cout << "NOTE:\n*Please load the files in the following order: Passengers-Flights-Airplanes.\n";
-        cout << "*Loading multiple files for the same category will try to merge data, which may cause data overlapping.\n\n";
-
         cout << "[1]- Load passengers file ";
         if (passengersFilepath.empty()) {
             cout << "(No file loaded).";
@@ -97,18 +92,18 @@ void Application::filesMenu() {
             cout << "('" << passengersFilepath << "' loaded).";
         }
         cout << endl;
-        cout << "[2]- Load flight file ";
-        if (flightsFilepath.empty()) {
-            cout << "(No file loaded).";
-        } else {
-            cout << "('" << flightsFilepath << "' loaded).";
-        }
-        cout << endl;
-        cout << "[3]- Load airplane file ";
+        cout << "[2]- Load airplane file ";
         if (airplanesFilepath.empty()) {
             cout << "(No file loaded).";
         } else {
             cout << "('" << airplanesFilepath << "' loaded).";
+        }
+        cout << endl;
+        cout << "[3]- Load flight file ";
+        if (flightsFilepath.empty()) {
+            cout << "(No file loaded).";
+        } else {
+            cout << "('" << flightsFilepath << "' loaded).";
         }
         cout << endl;
         cout << "[4]- Save all changes to files.\n";
@@ -128,57 +123,25 @@ void Application::filesMenu() {
 
         switch (op) {
             case 1:
-                //passengersFilepath = inputFilePath("passenger");
+                //TODO function to load passenger's file
+
+                passengersFilepath = inputFilePath("passenger");
+
                 try {
                     loadPassengerFile();
                 } catch (InvalidFilePath &in){
                     in.print();
                 }
+
+
                 break;
             case 2:
-                //flightsFilepath = inputFilePath("flight");
-                try {
-                    loadFlightFile();
-                } catch(InvalidFilePath &in){
-                    in.print();
-                }
-                for (auto const &f: this->company.getFlights()){
-                    f->print();
-                    cout << endl;
-                }
+                //TODO funtion to load airplanes's file
                 break;
             case 3:
-                //airplanesFilepath = inputFilePath("airplane");
-                try {
-                    loadAirplaneFile();
-                } catch (InvalidFilePath &in){
-                    in.print();
-                }
-                break;
+                //TODO function to load flight's file
             case 4:
-
-                if (passengersChanged || airplanesChanged || flightsChanged) {
-                    do {
-                        cout << "Saving all changes will replace the data in the files with the current state of the application. Proceed (Y/N) ? ";
-                        if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N' || auxOp == 'y' || auxOp == 'n')) {
-                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                            if (auxOp == 'Y') {
-                                //TODO functions to update files.
-                                cout << "Press any key to continue...";
-                                getchar();
-                                break;
-                            } else {
-                                break;
-                            }
-                        } else {
-                            cerr << "Invalid option.\n";
-                            cin.clear();
-                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                        }
-                    } while (true);
-                } else cout << "There are no changes to be deployed.\n";
-
-
+                //TODO function to save file changes
                 break;
         }
     } while (op != 9);
@@ -694,7 +657,7 @@ void Application::airplaneCreate() {
 
     do {
         cout << "Capacity: ";
-        if (validArg(capacity)) break;
+        if (validArg(capacity) && (capacity & 6) == 0) break;
     } while (true);
 
     Airplane *newairplane = new Airplane(id, model, capacity);
@@ -752,7 +715,7 @@ void Application::flightCreate(Airplane *airplane) {
     normalize(destination);
 
     do {
-        cout << "Duartion (h): ";
+        cout << "Duration (h): ";
         if (validArg(duration)) break;
     } while (true);
 
@@ -1100,7 +1063,7 @@ void Application::airplaneUpdateCapacity(Airplane *airplane) {
     cout << "The current capacity for the chosen airplane is '" << airplane->getCapacity() << "'.\n";
     do {
         cout << "Insert the new capacity : ";
-        if (!validArg(newcapacity)) continue;
+        if (!validArg(newcapacity)  && (newcapacity & 6) == 0) continue;
         else break;
 
     } while (true);
@@ -1151,12 +1114,61 @@ void Application::flightUpdateBuyer(Flight *flight) {
     flightsChanged = true;
     cout << "Buyer updated successfully\n";
 }
-
+PassengerMap::iterator Application::chooseSeat(Flight *flight) {
+	PassengerMap::iterator it;
+	string seat_to_be_removed;
+	cout << "Please insert the seat you would like to remove : ";
+	getline(cin, seat_to_be_removed);
+	it = flight->getPassengers().find(seat_to_be_removed);
+	if (it == flight->getPassengers().end())
+		throw (InvalidSeat(seat_to_be_removed));
+	else {
+		return it;
+	}
+}
 void Application::flightDeletePassenger(Flight *flight) {
+	
+	PassengerMap::iterator it;
+	for (it = flight->getPassengers().begin(); it != flight->getPassengers().end(); it++)
+	{
+		cout << it->first << " : ";
+		it->second->printSummary();
+		cout << endl;
+	}
+	do {
+		try {
+			it = chooseSeat(flight);
+		}
+		catch (const InvalidSeat &it) {
+			it.print();
+			continue;
+		}
+		break;
 
+	} while (true);
+	flight->getPassengers().erase(it);
+	cout << "The passenger was removed from the flight";
 }
 
 void Application::flightAddPassenger(Flight *flight) {
+
+    Passenger * passenger = new Passenger;
+
+    printSummaryPassenger();
+
+    do {
+        try {
+            passenger = choosePassenger();
+        }
+        catch (const InvalidPassenger &i) {
+            i.print();
+            continue;
+        }
+        break;
+
+    } while (true);
+
+
 
 }
 
@@ -1272,14 +1284,12 @@ Airplane * Application::readAirplane(string &a){
 
     newAirplane->setCapacity(temp);
 
+    vector<unsigned int> f;
     next(st, a, ";");
 
-    if (st == "no_flights") return newAirplane;
-
-    vector<unsigned int> f;
     while (st != ""){
         int fid;
-        try {next(fid, st, ",");} catch(InvalidFormat) {
+        try {next(fid, a, ";");} catch(InvalidFormat) {
             cout << "Please insert the Airplane data in the correct format.\n";
         }
         f.push_back((unsigned int)fid);
@@ -1293,7 +1303,6 @@ Airplane * Application::readAirplane(string &a){
     }
 
     newAirplane->setFlights(flights);
-    newAirplane->print();
 
     return newAirplane;
 
@@ -1313,12 +1322,11 @@ Flight *Application::readFlight(string &f) {
 
     } else if (type == 'r') {
         //Rented Flight
-        newFlight = new RentedFlight;
 
+        newFlight = new RentedFlight;
     } else throw InvalidFlight(0);
 
     f = f.substr(1);
-
     int temp;
     try { next(temp, f, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Flight data in the correct format.\n";
@@ -1367,24 +1375,24 @@ Flight *Application::readFlight(string &f) {
     } else {
 
         next(st, f, ";");
-
-        if (st == "no_passengers") return newFlight;
-
         PassengerMap pmap;
         while (st != ""){
             string st1;
-            next(st1, st, ",");
+            next(st1, f, ",");
             string seat;
             next(seat, st1, "-");
             int elem;
             try {next(elem, st1, "-");} catch(InvalidFormat) {
                 cout << "Please insert the Flight data in the correct format.\n";
             }
+
             Passenger * p = this->company.passengerById((unsigned int)elem);
 
 
             pmap.emplace(seat, p);
         }
+
+
 
         newFlight->setPassengers(pmap);
 
@@ -1421,20 +1429,17 @@ Passenger *Application::readPassenger(string &p) {
 
     next(st, p, ";");
 
-    /*try {
+    try {
         Date d(st);
     } catch (InvalidFormat) {
         cout << "Please insert the correct Date format.\n";
-    }*/
-
-    newPassenger->setDateOfBirth(st);
-
+    }
 
     if (type == 'c') {
         next(st, p, ";");
 
         try { next(temp, p, ";"); } catch (InvalidFormat) {
-            cout << temp << endl;
+
             cout << "Please insert the Passenger data in the correct format.\n";
         }
 
@@ -1447,16 +1452,23 @@ Passenger *Application::readPassenger(string &p) {
 }
 
 void Application::loadPassengerFile() {
-
+    
     string p;
 
     if (passengersFilepath == "") throw InvalidFilePath("empty");
 
     ifstream passFile(passengersFilepath);
+
     if (!passFile) throw InvalidFilePath("fail");
+
+    cout << "olaaa\n";
+
     while (getline(passFile, p)){
+        cout << p << endl;
         this->company.addPassenger(readPassenger(p));
     }
+
+
     passFile.close();
 
 }
@@ -1466,35 +1478,5 @@ string Application::inputFilePath(string s) {
     cout << "Insert " << s << "'s filename: ";
     getline(cin, input);
     return input;
-}
-
-void Application::loadFlightFile() {
-
-    string f;
-
-    if (flightsFilepath == "") throw InvalidFilePath("empty");
-
-    ifstream flFile(flightsFilepath);
-    if (!flFile) throw InvalidFilePath("fail");
-    while (getline(flFile, f)){
-        this->company.addFlight(readFlight(f));
-    }
-    flFile.close();
-
-}
-
-void Application::loadAirplaneFile() {
-
-    string a;
-
-    if (airplanesFilepath == "") throw InvalidFilePath("empty");
-
-    ifstream airFile(airplanesFilepath);
-    if (!airFile) throw InvalidFilePath("fail");
-    while (getline(airFile, a)){
-        this->company.addAirplane(readAirplane(a));
-    }
-    airFile.close();
-
 }
 

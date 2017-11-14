@@ -58,6 +58,16 @@ void InvalidFlight::printDuplicate() const {
 
 }
 
+InvalidSeat::InvalidSeat(string seat) {
+
+	this->seat = seat;
+}
+
+void InvalidSeat::print() const {
+
+	cout << seat << " is and invalid seat on the flight. Reenter.\n";
+}
+
 OverlapingFlight::OverlapingFlight() {}
 
 void OverlapingFlight::print() const {

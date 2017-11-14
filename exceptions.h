@@ -5,7 +5,8 @@
 #ifndef AEDA_FEUP_PROJECT_EXCEPTIONS_H
 #define AEDA_FEUP_PROJECT_EXCEPTIONS_H
 
-
+#include <string>
+using namespace std;
 
 class InvalidFormat {
 public:
@@ -56,6 +57,16 @@ public:
     void print() const;
     void printDuplicate() const;
 
+};
+
+class InvalidSeat {
+
+private:
+	string seat;
+
+public:
+	InvalidSeat(string seat);
+	void print() const;
 };
 
 class OverlapingFlight {

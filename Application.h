@@ -8,6 +8,8 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <map>
+#include <string>
 #include "Company.h"
 
 
@@ -157,7 +159,7 @@ public:
     void airplaneUpdateModel(Airplane * airplane);
     void airplaneUpdateCapacity(Airplane * airplane);
 
-
+	
     void flightShow(Airplane * airplane);
     void flightCreate(Airplane * airplane);
     void flightDelete(Airplane * airplane);
@@ -169,6 +171,7 @@ public:
     void flightAddPassenger(Flight * flight);
     void flightDeletePassenger(Flight * flight);
     void flightUpdateBuyer(Flight * flight);
+	PassengerMap::iterator chooseSeat(Flight *flight);
 
     //file functions
     string inputFilePath(string s);
