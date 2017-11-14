@@ -296,15 +296,137 @@ void Application::flightsMenu(Airplane *airplane) {
     } while (op != 9);
 
 }
+Passenger * Application::newCustomer() {
+	string foo;
+	string name, dateOfBirth, job;
+	int id, nYear;
+
+	while (true) {
+
+		cout << "Normal passenger or passenger with card? (n/c)\n";
+		getline(cin, foo);
+		if ((foo == "n") || (foo == "c"))
+			break;
+		else
+			cout << "Invalid option.\n";
+
+	}
+
+	cout << "Insert the new passenger information: \n\n";
+
+	do {
+
+		do {
+
+			cout << "Insert id: ";
+			if (validArg(id)) break;
+
+		} while (true);
+
+		try {
+			validPassenger(id);
+		}
+		catch (const InvalidPassenger &i) {
+			i.printDuplicate();
+			continue;
+		}
+
+		break;
+
+	} while (true);
+
+
+	cout << "Name: ";
+	getline(cin, name);
+
+	cout << "Date of Birth: (DD/MM/YYYY): ";
+	getline(cin, dateOfBirth);
+
+	if (foo == "n") {
+
+		Passenger *newpassenger = new Passenger(id, name, dateOfBirth);
+		company.addPassenger(newpassenger);
+		cout << "Passenger successfully added\n";
+		passengersChanged = true;
+		return newpassenger;
+	}
+	else if (foo == "c") {
+
+		cout << "Job: ";
+		getline(cin, job);
+		normalize(job);
+
+		nYear = 0;
+
+		PassengerWithCard *newpassenger = new PassengerWithCard(id, name, dateOfBirth, job, nYear);
+		company.addPassenger(newpassenger);
+		cout << "Passenger successfully added\n";
+		passengersChanged = true;
+		return newpassenger;
+	}
+}
 
 void Application::bookingsMenu() {
-
+	string menuhelper;
+	int id, op;
+	Passenger* a;
+	cout << "[BOOKING MANAGEMENT MENU]\n\n";
     cout << "Are you a new costumer? (y/n)\n";
-    //...
-    //...
-    //..
+	getline(cin, menuhelper);
+	normalize(menuhelper);
+	do {
+		if (menuhelper == "y") {
+			cout << endl;
+			a = newCustomer();
+			break;
+		}
+		else if (menuhelper == "n") {
+			printSummaryPassenger();
+			a = choosePassenger();
+			break;
+		}
+		else {
+			cout << "Invalid option. Reenter." << endl;
+		}
+	} while (true);
+	cout << endl;
+	do {
+		cout << "[BOOKING MANAGEMENT MENU]\n\n";
+		cout << "[1]- Show my scheduled flights";
+		cout << "[2]- Book a Flight";
+		cout << "[3]- Return a flight ticket";
+		//TODO:CHECK IF THERE IS ANYTHING ELSE TO INSERT HERE
+		cout << "[9]- Back.\n\n";
+		do {
+			cout << "Insert the desired option: ";
+			if ((cin >> op) && ((op >= 1 && op <= 3) || op == 9)) {
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				break;
+			}
+			else {
+				cerr << "Invalid option.\n";
+				cin.clear();
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+		} while (true);
+
+		switch (op) {
+		case 1:
+			break;
+		
+		}
+
+	} while (op != 9);
 
 }
+/*
+void Application::showAllFlights(Passenger *p) {
+	for (size_t i = 0; i < company.get; i++)
+	{
+
+	}
+}
+*/
 
 void Application::printSummaryPassenger() {
 
