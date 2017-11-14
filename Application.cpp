@@ -124,6 +124,16 @@ void Application::filesMenu() {
         switch (op) {
             case 1:
                 //TODO function to load passenger's file
+
+                passengersFilepath = inputFilePath("passenger");
+
+                try {
+                    loadPassengerFile();
+                } catch (InvalidFilePath &in){
+                    in.print();
+                }
+
+
                 break;
             case 2:
                 //TODO funtion to load airplanes's file
@@ -647,7 +657,7 @@ void Application::airplaneCreate() {
 
     do {
         cout << "Capacity: ";
-        if (validArg(capacity)) break;
+        if (validArg(capacity) && (capacity & 6) == 0) break;
     } while (true);
 
     Airplane *newairplane = new Airplane(id, model, capacity);
@@ -1053,7 +1063,7 @@ void Application::airplaneUpdateCapacity(Airplane *airplane) {
     cout << "The current capacity for the chosen airplane is '" << airplane->getCapacity() << "'.\n";
     do {
         cout << "Insert the new capacity : ";
-        if (!validArg(newcapacity)) continue;
+        if (!validArg(newcapacity)  && (newcapacity & 6) == 0) continue;
         else break;
 
     } while (true);
@@ -1084,7 +1094,25 @@ void Application::flightUpdateBuyer(Flight *flight) {
 
     Passenger *passenger = new Passenger;
     cout << "The current buyer for the chosen flight is:\n";
+    flight->getBuyer()->print();
 
+    printSummaryPassenger();
+
+    do {
+        try {
+            passenger = choosePassenger();
+        }
+        catch (const InvalidPassenger &i) {
+            i.print();
+            continue;
+        }
+        break;
+
+    } while (true);
+
+    flight->setBuyer(passenger);
+    flightsChanged = true;
+    cout << "Buyer updated successfully\n";
 }
 
 void Application::flightDeletePassenger(Flight *flight) {
@@ -1109,6 +1137,24 @@ void Application::flightDeletePassenger(Flight *flight) {
 }
 
 void Application::flightAddPassenger(Flight *flight) {
+
+    Passenger * passenger = new Passenger;
+
+    printSummaryPassenger();
+
+    do {
+        try {
+            passenger = choosePassenger();
+        }
+        catch (const InvalidPassenger &i) {
+            i.print();
+            continue;
+        }
+        break;
+
+    } while (true);
+
+
 
 }
 
@@ -1155,9 +1201,49 @@ void Application::flightUpdateMenu(Airplane *airplane) {
                 }
             } while (true);
 
-
+            switch (op) {
+                case 1:
+                    flightUpdatePrice(flight);
+                    break;
+                case 2:
+                    flightUpdateBuyer(flight);
+                    break;
+            }
         }
 
+        if (foo == "c") {
+
+            cout << "[FLIGHT UPDATE MENU]\n\n";
+            cout << "[1]- Change flight price.\n";
+            cout << "[2]- Add passenger.\n";
+            cout << "[3]- Delete passenger.\n";
+            cout << "[9]- Back.\n\n";
+
+            do {
+                cout << "Insert the desired option: ";
+                if (cin >> op && ((op >= 1 && op <= 3) || op == 9)) {
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    break;
+                } else {
+                    cerr << "Invalid option.\n";
+                    cin.clear();
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
+            } while (true);
+
+
+            switch (op) {
+                case 1:
+                    flightUpdatePrice(flight);
+                    break;
+                case 3:
+                    flightAddPassenger(flight);
+                    break;
+                case 4:
+                    flightDeletePassenger(flight);
+                    break;
+            }
+        }
     }while(op != 9);
 }
 
@@ -1350,3 +1436,30 @@ Passenger *Application::readPassenger(string &p) {
 
     return newPassenger;
 }
+
+void Application::loadPassengerFile() {
+    
+    string p;
+
+    if (passengersFilepath == "") throw InvalidFilePath("empty");
+
+    ifstream passFile(passengersFilepath);
+
+    if (!passFile) throw InvalidFilePath("fail");
+
+    while (getline(passFile, p)){
+        cout << p << endl;
+        this->company.addPassenger(readPassenger(p));
+    }
+
+    passFile.close();
+
+}
+
+string Application::inputFilePath(string s) {
+    string input;
+    cout << "Insert " << s << "'s filename: ";
+    getline(cin, input);
+    return input;
+}
+
