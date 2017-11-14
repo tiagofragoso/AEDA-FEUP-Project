@@ -428,9 +428,9 @@ void Application::bookingsMenu() {
 	cout << endl;
 	do {
 		cout << "[BOOKING MANAGEMENT MENU]\n\n";
-		cout << "[1]- Show my scheduled flights";
+		cout << "[1]- Show my scheduled Flights";
 		cout << "[2]- Book a Flight";
-		cout << "[3]- Return a flight ticket";
+		cout << "[3]- Return a Flight ticket";
 		//TODO:CHECK IF THERE IS ANYTHING ELSE TO INSERT HERE
 		cout << "[9]- Back.\n\n";
 		do {
@@ -448,28 +448,59 @@ void Application::bookingsMenu() {
 
 		switch (op) {
 		case 1:
+			showAllFlights(a);
 			break;
-		
+			/*
+			case2:
+				funçãospolis;
+			*/
+		case 3:
+			returnTicket(a);
+			break;
 		}
-
 	} while (op != 9);
 
+}
+void Application::returnTicket(Passenger *p){
+	int id;
+	string seat;
+	showAllFlights(p);
+	do {
+		cout << "Insert the ID of the flight you would like to return the ticket: ";
+		if (!validArg(id)) continue;
+		else break;
+	} while (true);
+	PassengerMap::iterator it;
+	for (size_t i = 0; i < company.getFlights().size() ; i++)
+	{
+		if (company.getFlights().at(i)->getId() == id) {
+			for (it = company.getFlights().at(i)->getPassengers().begin(); it != company.getFlights().at(i)->getPassengers().end(); it++)
+			{
+				if (it->second->getId == p->getId) {
+					seat = it->first;
+					company.getFlights().at(i)->getPassengers().erase(it);
+					cout << "The seat "<< seat <<" that you had on that flight has been returned";
+				}
+			}
+		}
+	}
 }
 
 void Application::showAllFlights(Passenger *p) {
 	PassengerMap::iterator it;
-	Passenger *a;
+	Passenger *b;
 	for (size_t i = 0; i < company.getFlights().size(); i++)
 	{
 		
 		for (it = company.getFlights().at(i)->getPassengers().begin(); it != company.getFlights().at(i)->getPassengers().end(); it++)
-		{
-			a = it->second;
-			if (a->getId == p->getId) {
+		{	
+			b = it->second;
+			if (b->getId == p->getId) {
 				cout << "Flight ID: " << company.getFlights().at(i)->getId << " Departure: " << company.getFlights().at(i)->getDeparture() << " Destination: " << company.getFlights().at(i)->getDestination << " Time to flight: " << company.getFlights().at(i)->getTime_to_flight;
 			}
 		}
 	}
+	cout << endl;
 }
 
 

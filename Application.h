@@ -173,6 +173,7 @@ public:
     void flightUpdateBuyer(Flight * flight);
 	PassengerMap::iterator chooseSeat(Flight *flight);
 	Passenger * newCustomer();
+	void returnTicket(Passenger *p);
 
     //file functions
     string inputFilePath(string s);
