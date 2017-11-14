@@ -7,7 +7,9 @@
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include "Company.h"
+
 
 
 using namespace std;
@@ -172,6 +174,8 @@ public:
     Airplane * readAirplane(string &a);
     Passenger * readPassenger(string &p);
     Flight * readFlight(string &f);
+    void loadPassengerFile();
+
 };
 
 

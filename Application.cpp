@@ -1326,3 +1326,22 @@ Passenger *Application::readPassenger(string &p) {
 
     return newPassenger;
 }
+
+void Application::loadPassengerFile() {
+
+    ifstream passFile;
+    string p;
+
+    if (passengersFilepath == "") throw InvalidFilePath("empty");
+
+    passFile.open(passengersFilepath);
+
+    if (passFile.fail()) throw InvalidFilePath("fail");
+
+    while (!passFile.eof()){
+        getline(passFile, p);
+        this->company.addPassenger(readPassenger(p));
+    }
+
+
+}
