@@ -177,3 +177,8 @@ ComercialFlight::ComercialFlight(unsigned int id, string departure, string desti
     PassengerMap passengers;
     this->passengers = passengers;
 }
+
+void ComercialFlight::addPassenger(string seat, Passenger *passenger) {
+
+    passengers[seat] = passenger;
+}

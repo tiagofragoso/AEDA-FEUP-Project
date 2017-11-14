@@ -1,3 +1,5 @@
+#include <iomanip>
+#include <vector>
 #include "Application.h"
 #include "exceptions.h"
 
@@ -449,7 +451,7 @@ void Application::bookingsMenu() {
 		switch (op) {
 		case 1:
 			break;
-		
+
 		}
 
 	} while (op != 9);
@@ -1274,8 +1276,10 @@ void Application::flightUpdateBuyer(Flight *flight) {
 }
 
 PassengerMap::iterator Application::chooseSeat(Flight *flight) {
+
     PassengerMap::iterator it;
     string seat_to_be_removed;
+
     cout << "Please insert the seat you would like to remove : ";
     getline(cin, seat_to_be_removed);
     it = flight->getPassengers().find(seat_to_be_removed);
@@ -1311,9 +1315,80 @@ void Application::flightDeletePassenger(Flight *flight) {
     cout << "The passenger was removed from the flight\n";
 }
 
-void Application::flightAddPassenger(Flight *flight) {
+vector<string> Application::availableSeats(Flight *flight, int capacity) {
+
+    vector <string> seats;
+    string line;
+
+    for (size_t i = 0; i < capacity / 6; i++) {
+
+
+        line = to_string(i);
+
+        for (size_t j = 0; j < 5; j++) {
+
+            string seat = "A";
+
+            seat.at(0) = seat.at(0) + i;
+
+            if (flight->getPassengers().find(line + seat) == flight->getPassengers().end())
+                seats.push_back(line + seat);
+        }
+    }
+
+    return seats;
+}
+
+
+void Application::printSeats(int capacity, vector<string> seats) {
+
+    string na = "N/A";
+
+    string line;
+
+    for (size_t i = 0; i < capacity / 6; i++) {
+
+
+        line = to_string(i);
+
+        for (size_t j = 0; j < 5; j++) {
+
+            string seat = "A";
+
+            seat.at(0) = seat.at(0) + i;
+
+            auto it = find(seats.begin(), seats.end(), line + seat);
+            if (it == seats.end())
+                cout << na << setw(5) << " ";
+            else
+                cout << line + seat << setw(5) << " ";
+        }
+
+        cout << endl;
+    }
+
+}
+
+string Application::chooseSeat(vector<string> seats) {
+
+    string seat;
+    cout << "Insert the chosen seat: ";
+    getline(cin, seat);
+
+    auto it = find(seats.begin(), seats.end(), seat);
+    if (it == seats.end())
+        throw InvalidSeat(seat);
+
+    return seat;
+
+}
+
+
+void Application::flightAddPassenger(Flight *flight, int capacity) {
 
     Passenger * passenger = new Passenger;
+    vector <string> seats;
+    string seat;
 
     printSummaryPassenger();
 
@@ -1328,7 +1403,17 @@ void Application::flightAddPassenger(Flight *flight) {
         break;
 
     } while (true);
-    
+
+    cout << "Available seats: \n";
+
+    seats = availableSeats(flight, capacity);
+    printSeats(capacity, seats);
+    seat = chooseSeat(seats);
+    flight->addPassenger(seat, passenger);
+
+    cout << "Passenger added successfully\n";
+
+
 }
 
 
@@ -1411,7 +1496,7 @@ void Application::flightUpdateMenu(Airplane *airplane) {
                     flightUpdatePrice(flight);
                     break;
                 case 3:
-                    flightAddPassenger(flight);
+                    flightAddPassenger(flight, airplane->getCapacity());
                     break;
                 case 4:
                     flightDeletePassenger(flight);
@@ -1669,4 +1754,6 @@ void Application::loadAirplaneFile() {
     airFile.close();
 
 }
+
+
 

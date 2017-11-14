@@ -66,6 +66,7 @@ public:
     virtual PassengerMap getPassengers() const = 0;
     virtual void setBuyer(Passenger * passenger) = 0;
     virtual void setPassengers(PassengerMap passengers) = 0;
+    virtual void addPassenger(string seat, Passenger * passenger) = 0;
 
     bool operator==(const Flight &f);
     bool operator<(const Flight &f);
@@ -91,6 +92,7 @@ public:
     void setBuyer(Passenger * buyer);
     void setPassengers(PassengerMap passengers);
     void print();
+    void addPassenger(string seat, Passenger * passenger) {}
 
 };
 
@@ -112,6 +114,7 @@ public:
     //set methods
     void setBuyer(Passenger * buyer);
     void setPassengers(PassengerMap passengers);
+    void addPassenger(string seat, Passenger * passenger);
 
     void print();
 };
