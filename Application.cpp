@@ -487,6 +487,7 @@ void Application::returnTicket(Passenger *p){
 								cout << endl;
 								company.getFlights().at(i)->getPassengers().erase(it);
 								cout << "The seat " << seat << " that you had on that flight has been returned";
+								flightsChanged = true;
 								break;
 							}
 							else if (removehelper == "n") {
@@ -510,6 +511,7 @@ void Application::returnTicket(Passenger *p){
 					cout << endl;
 					company.getFlights().at(i)->setBuyer(nullptr);
 					cout << "Your rental of flight " << company.getFlights().at(i)->getId() << "has been removed" << endl;
+					flightsChanged = true;
 					break;
 				}
 				else if (removehelper == "n") {
@@ -1386,6 +1388,7 @@ void Application::flightDeletePassenger(Flight *flight) {
     } while (true);
     flight->getPassengers().erase(it);
     cout << "The passenger was removed from the flight\n";
+	flightsChanged = true;
 }
 
 void Application::flightAddPassenger(Flight *flight) {
