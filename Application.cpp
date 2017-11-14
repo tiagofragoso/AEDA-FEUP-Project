@@ -463,7 +463,7 @@ void Application::bookingsMenu() {
 }
 void Application::returnTicket(Passenger *p){
 	int id;
-	string seat;
+	string seat, removehelper;
 	showAllFlights(p);
 	do {
 		cout << "Insert the ID of the flight you would like to return the ticket: ";
@@ -474,14 +474,51 @@ void Application::returnTicket(Passenger *p){
 	for (size_t i = 0; i < company.getFlights().size() ; i++)
 	{
 		if (company.getFlights().at(i)->getId() == id) {
-			for (it = company.getFlights().at(i)->getPassengers().begin(); it != company.getFlights().at(i)->getPassengers().end(); it++)
-			{
-				if (it->second->getId == p->getId) {
-					seat = it->first;
-					company.getFlights().at(i)->getPassengers().erase(it);
-					cout << "The seat "<< seat <<" that you had on that flight has been returned";
+			if (company.getFlights().at(i)->getType() == "c"){
+				for (it = company.getFlights().at(i)->getPassengers().begin(); it != company.getFlights().at(i)->getPassengers().end(); it++)
+				{
+					if (it->second->getId() == p->getId()) {
+						seat = it->first;
+						cout << "Would you like to remove seat " << seat << " ?(Y/N)\n";
+						getline(cin, removehelper);
+						normalize(removehelper);
+						do {
+							if (removehelper == "y") {
+								cout << endl;
+								company.getFlights().at(i)->getPassengers().erase(it);
+								cout << "The seat " << seat << " that you had on that flight has been returned";
+								break;
+							}
+							else if (removehelper == "n") {
+								break;
+							}
+							else {
+								cout << "Invalid option. Reenter." << endl;
+							}
+						} while (true);
+						removehelper.clear();
+					}
 				}
 			}
+		}
+		else if (company.getFlights().at(i)->getType() == "r") {
+			cout << "Do you want to remove your rental of flight " << company.getFlights().at(i)->getId() << " ?(Y/N)\n";
+			getline(cin, removehelper);
+			normalize(removehelper);
+			do {
+				if (removehelper == "y") {
+					cout << endl;
+					company.getFlights().at(i)->setBuyer(nullptr);
+					cout << "Your rental of flight " << company.getFlights().at(i)->getId() << "has been removed" << endl;
+					break;
+				}
+				else if (removehelper == "n") {
+					break;
+				}
+				else {
+					cout << "Invalid option. Reenter." << endl;
+				}
+			} while (true);
 		}
 	}
 }
@@ -495,8 +532,8 @@ void Application::showAllFlights(Passenger *p) {
 		for (it = company.getFlights().at(i)->getPassengers().begin(); it != company.getFlights().at(i)->getPassengers().end(); it++)
 		{	
 			b = it->second;
-			if (b->getId == p->getId) {
-				cout << "Flight ID: " << company.getFlights().at(i)->getId << " Departure: " << company.getFlights().at(i)->getDeparture() << " Destination: " << company.getFlights().at(i)->getDestination << " Time to flight: " << company.getFlights().at(i)->getTime_to_flight;
+			if (b->getId() == p->getId()) {
+				cout << "Flight ID: " << company.getFlights().at(i)->getId() << " Departure: " << company.getFlights().at(i)->getDeparture() << " Destination: " << company.getFlights().at(i)->getDestination() << " Time to flight: " << company.getFlights().at(i)->getTime_to_flight();
 			}
 		}
 	}
