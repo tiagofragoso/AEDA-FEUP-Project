@@ -1,6 +1,7 @@
 //
 // Created by Mariana on 10/11/2017.
 //
+#include <string>
 
 #ifndef AEDA_FEUP_PROJECT_EXCEPTIONS_H
 #define AEDA_FEUP_PROJECT_EXCEPTIONS_H
@@ -44,6 +45,16 @@ public:
     void print() const;
     void printDuplicate() const;
 
+};
+
+class InvalidSeat {
+
+private:
+	string seat;
+
+public:
+	InvalidSeat(string seat);
+	void print() const;
 };
 
 class OverlapingFlight {

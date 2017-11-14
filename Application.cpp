@@ -705,7 +705,7 @@ void Application::flightCreate(Airplane *airplane) {
     normalize(destination);
 
     do {
-        cout << "Duartion (h): ";
+        cout << "Duration (h): ";
         if (validArg(duration)) break;
     } while (true);
 
@@ -1088,7 +1088,24 @@ void Application::flightUpdateBuyer(Flight *flight) {
 }
 
 void Application::flightDeletePassenger(Flight *flight) {
-
+	
+	PassengerMap::iterator it;
+	for (it = flight->getPassengers.begin(); it != flight->getPassengers.end(); it++)
+	{
+		cout << it->first << " : ";
+		it->second->printSummary();
+		cout << endl;
+	}
+	string seat_to_be_removed;
+	cout << "Please insert the seat you would like to remove : "; 
+	getline(cin, seat_to_be_removed);
+	it = flight->getPassengers.find(seat_to_be_removed);
+	if (it == flight->getPassengers.end())
+		throw (InvalidSeat(seat_to_be_removed));
+	else {
+		flight->getPassengers.erase(it);
+		cout << "The passenger was removed from the flight";
+	}
 }
 
 void Application::flightAddPassenger(Flight *flight) {
