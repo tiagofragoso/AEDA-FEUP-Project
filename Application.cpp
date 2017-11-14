@@ -472,23 +472,24 @@ void Application::returnTicket(Passenger *p){
 		if (!validArg(id)) continue;
 		else break;
 	} while (true);
-	PassengerMap::iterator it;
+
 	for (size_t i = 0; i < company.getFlights().size() ; i++)
 	{
 		if (company.getFlights().at(i)->getId() == id) {
 			if (company.getFlights().at(i)->getType() == "c"){
-				for (it = company.getFlights().at(i)->getPassengers().begin(); it != company.getFlights().at(i)->getPassengers().end(); it++)
+				for (auto const &pass: this->company.getFlights().at(i)->getPassengers())
 				{
-					if (it->second->getId() == p->getId()) {
-						seat = it->first;
-						cout << "Would you like to remove seat " << seat << " ?(Y/N)\n";
+					if (pass.second == p) {
+						seat = pass.first;
+						cout << "Would you like to remove seat " << pass.first << " ?(Y/N)\n";
 						getline(cin, removehelper);
 						normalize(removehelper);
 						do {
 							if (removehelper == "y") {
 								cout << endl;
+                                auto it = this->company.getFlights().at(i)->getPassengers().find(pass.first);
 								company.getFlights().at(i)->getPassengers().erase(it);
-								cout << "The seat " << seat << " that you had on that flight has been returned";
+								cout << "The seat " << seat << " that you had on that flight has been returned.\n";
 								flightsChanged = true;
 								break;
 							}
@@ -503,6 +504,7 @@ void Application::returnTicket(Passenger *p){
 					}
 				}
 			}
+            break;
 		}
 		else if (company.getFlights().at(i)->getType() == "r") {
 			cout << "Do you want to remove your rental of flight " << company.getFlights().at(i)->getId() << " ?(Y/N)\n";
@@ -1404,7 +1406,7 @@ vector<string> Application::availableSeats(Flight *flight, int capacity) {
     vector <string> seats;
     string line;
     string place;
-    PassengerMap passengers = flight->getPassengers();
+    PassengerMap & passengers = flight->getPassengers();
 
     for (size_t i = 0; i < capacity / 6; i++) {
 

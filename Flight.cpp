@@ -89,7 +89,7 @@ void Flight::setId(unsigned int id) {
     this->id = id;
 }
 
-ostream &operator<<(ostream &o, const Flight *f) {
+ostream &operator<<(ostream &o, Flight *f) {
     o << f->getType() << to_string(f->id) << "; " << f->departure << "; " << f->destination << "; " << to_string(f->time_to_flight) << "; " << to_string(f->basePrice) << "; " << to_string(f->duration) << "; ";
     if (f->getType() == "c"){
         unsigned int i = f->getPassengers().size();
@@ -121,7 +121,7 @@ Passenger * RentedFlight::getBuyer() const {
     return this-> buyer;
 }
 
-PassengerMap RentedFlight::getPassengers() const {
+PassengerMap & RentedFlight::getPassengers() {
 
     PassengerMap c;
     return c;
@@ -151,7 +151,7 @@ ComercialFlight::ComercialFlight() : Flight(0, "", "", 0, 0, 0){
 ComercialFlight::ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, map<string, Passenger *> passengers) : Flight(id, departure, destination, time_to_flight, basePrice, duration), passengers(passengers) {}
 
 
-PassengerMap ComercialFlight::getPassengers() const {
+PassengerMap & ComercialFlight::getPassengers() {
 
     return this->passengers;
 }

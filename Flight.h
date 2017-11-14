@@ -63,14 +63,14 @@ public:
     void printSummary();
     virtual void print() = 0;
     virtual Passenger * getBuyer() const = 0;
-    virtual PassengerMap getPassengers() const = 0;
+    virtual PassengerMap & getPassengers() = 0;
     virtual void setBuyer(Passenger * passenger) = 0;
     virtual void setPassengers(PassengerMap passengers) = 0;
     virtual void addPassenger(string seat, Passenger * passenger) = 0;
 
     bool operator==(const Flight &f);
     bool operator<(const Flight &f);
-    friend ostream & operator<<(ostream & o, const Flight * f);
+    friend ostream & operator<<(ostream & o, Flight * f);
 
 
 };
@@ -86,7 +86,7 @@ public:
 
     //get Methods
     Passenger * getBuyer() const;
-    PassengerMap getPassengers() const;
+    PassengerMap & getPassengers();
     string getType() const { return "r"; }
 
     //set Methods
@@ -109,7 +109,7 @@ public:
 
     //get methods
     Passenger * getBuyer() const;
-    PassengerMap getPassengers() const;
+    PassengerMap & getPassengers();
     string getType() const { return "c"; }
 
     //set methods
