@@ -11,11 +11,6 @@ using namespace std;
 class Airplane {
 
 private:
-	/** @name Airplane data-members*/
-	/** @{
-	*
-	*/
-
 	/**
 	 * @brief string model of the Airplane
 	 */
@@ -32,7 +27,6 @@ private:
 	 * @brief vector <Flight*> vector with the pointer to the Flights of the Airplane
 	 */
 	vector < Flight * > flights;
-	/** @} end of Airplane data-members */
 
 public:
 	/**

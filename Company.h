@@ -19,11 +19,6 @@ using namespace std;
 class Company {
 
 private:
-	/** @name Company data-members*/
-	/** @{ 
-	*
-	*/
-
 	/**
 	* @brief string name of the company object
 	*/
@@ -36,11 +31,10 @@ private:
 	* @brief vector with pointers to all the Passengers of the company
 	*/
 	vector <Passenger*> passengers;
-	/** @} end of Company data-members */
-
+	/**
+	 * @brief vector with pointers to all the Flights of the company
+	 */
     vector<Flight*> flights;
-
-	/** @} end of Company data-members */
 
 public:
 

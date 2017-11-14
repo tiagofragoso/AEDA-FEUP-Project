@@ -92,7 +92,7 @@ Passenger::Passenger() {
 
 PassengerWithCard::PassengerWithCard() : Passenger(){
 
-    Card * c;
+    Card * c = new Card;
     card = c;
 }
 
