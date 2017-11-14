@@ -1,12 +1,12 @@
 //
 // Created by Mariana on 10/11/2017.
 //
-#include <string>
 
 #ifndef AEDA_FEUP_PROJECT_EXCEPTIONS_H
 #define AEDA_FEUP_PROJECT_EXCEPTIONS_H
 
-
+#include <string>
+using namespace std;
 
 class InvalidFormat {
 public:
