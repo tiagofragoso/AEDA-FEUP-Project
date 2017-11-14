@@ -647,7 +647,7 @@ void Application::airplaneCreate() {
 
     do {
         cout << "Capacity: ";
-        if (validArg(capacity)) break;
+        if (validArg(capacity) && (capacity & 6) == 0) break;
     } while (true);
 
     Airplane *newairplane = new Airplane(id, model, capacity);
@@ -1053,7 +1053,7 @@ void Application::airplaneUpdateCapacity(Airplane *airplane) {
     cout << "The current capacity for the chosen airplane is '" << airplane->getCapacity() << "'.\n";
     do {
         cout << "Insert the new capacity : ";
-        if (!validArg(newcapacity)) continue;
+        if (!validArg(newcapacity)  && (newcapacity & 6) == 0) continue;
         else break;
 
     } while (true);
@@ -1110,6 +1110,24 @@ void Application::flightDeletePassenger(Flight *flight) {
 }
 
 void Application::flightAddPassenger(Flight *flight) {
+
+    Passenger * passenger = new Passenger;
+
+    printSummaryPassenger();
+
+    do {
+        try {
+            passenger = choosePassenger();
+        }
+        catch (const InvalidPassenger &i) {
+            i.print();
+            continue;
+        }
+        break;
+
+    } while (true);
+
+
 
 }
 
