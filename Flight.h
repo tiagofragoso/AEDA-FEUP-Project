@@ -15,11 +15,29 @@ typedef std::map<string, Passenger* > PassengerMap;
 class Flight {
 
 private:
+    /**
+     * @brief unsigned int id of the Flight
+     */
     unsigned int id;
+    /**
+     * @brief string departure location
+     */
     string departure;
+    /**
+     * @brief string destination location
+     */
     string destination;
+    /**
+     * @brief unsigned int time_to_flight time until the Flight takes off
+     */
     unsigned int time_to_flight;
+    /**
+     * @brief unsigned int basePrice of the Flight object
+     */
     unsigned int basePrice;
+    /**
+     * @brief unsigned int duration of the Flight
+     */
     unsigned int duration;
 
 public:
@@ -44,7 +62,9 @@ public:
 
     void printSummary();
     virtual void print() = 0;
-    virtual void setBuyer(unsigned int id) = 0;
+    virtual Passenger * getBuyer() const = 0;
+    virtual PassengerMap getPassengers() const = 0;
+    virtual void setBuyer(Passenger * passenger) = 0;
     virtual void setPassengers(PassengerMap passengers) = 0;
 
     bool operator==(const Flight &f);
@@ -64,11 +84,12 @@ public:
 
     //get Methods
     Passenger * getBuyer() const;
+    PassengerMap getPassengers() const;
     string getType() const { return "r"; }
 
     //set Methods
     void setBuyer(Passenger * buyer);
-    void setPassengers(PassengerMap passengers){};
+    void setPassengers(PassengerMap passengers);
     void print();
 
 };
@@ -84,12 +105,13 @@ public:
     ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, PassengerMap passengers);
 
     //get methods
+    Passenger * getBuyer() const;
     PassengerMap getPassengers() const;
     string getType() const { return "c"; }
 
     //set methods
+    void setBuyer(Passenger * buyer);
     void setPassengers(PassengerMap passengers);
-    void setBuyer(unsigned int id){};
 
     void print();
 };

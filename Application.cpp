@@ -1133,19 +1133,19 @@ void Application::flightUpdateMenu(Airplane *airplane) {
 
 
         }
-    } while (true);
 
+    }while(op != 9);
 }
 
 
-Airplane *Application::readAirplane(string &a) {
+Airplane * Application::readAirplane(string &a){
 
-    Airplane *newAirplane = new Airplane;
+    Airplane * newAirplane = new Airplane;
 
     int temp;
     string st;
 
-    try { next(temp, a, ";"); } catch (InvalidFormat) {
+    try {next(temp, a, ";");} catch(InvalidFormat) {
         cout << "Please insert the Airplane data in the correct format.\n";
     }
 
@@ -1154,7 +1154,7 @@ Airplane *Application::readAirplane(string &a) {
     next(st, a, ";");
     newAirplane->setModel(st);
 
-    try { next(temp, a, ";"); } catch (InvalidFormat) {
+    try {next(temp, a, ";");} catch(InvalidFormat) {
         cout << "Please insert the Airplane data in the correct format.\n";
     }
 
@@ -1163,18 +1163,18 @@ Airplane *Application::readAirplane(string &a) {
     vector<unsigned int> f;
     next(st, a, ";");
 
-    while (st != "") {
+    while (st != ""){
         int fid;
-        try { next(fid, a, ";"); } catch (InvalidFormat) {
+        try {next(fid, a, ";");} catch(InvalidFormat) {
             cout << "Please insert the Airplane data in the correct format.\n";
         }
-        f.push_back((unsigned int) fid);
+        f.push_back((unsigned int)fid);
     }
 
     vector<Flight *> flights;
 
-    for (auto const &id:f) {
-        Flight *fp = this->company.flightById(id);
+    for (auto const &id:f){
+        Flight* fp = this->company.flightById(id);
         if (fp != nullptr) flights.push_back(fp);
     }
 
@@ -1191,6 +1191,7 @@ Flight *Application::readFlight(string &f) {
     Flight *newFlight;
 
     if (type == 'c') {
+
         //Comercial Flight
 
         newFlight = new ComercialFlight;
@@ -1251,21 +1252,22 @@ Flight *Application::readFlight(string &f) {
 
         next(st, f, ";");
         PassengerMap pmap;
-        while (st != "") {
+        while (st != ""){
             string st1;
             next(st1, f, ",");
             string seat;
             next(seat, st1, "-");
             int elem;
-            try { next(elem, st1, "-"); } catch (InvalidFormat) {
+            try {next(elem, st1, "-");} catch(InvalidFormat) {
                 cout << "Please insert the Flight data in the correct format.\n";
             }
 
-            Passenger *p = this->company.passengerById((unsigned int) elem);
+            Passenger * p = this->company.passengerById((unsigned int)elem);
 
 
             pmap.emplace(seat, p);
         }
+
 
 
         newFlight->setPassengers(pmap);
@@ -1311,7 +1313,9 @@ Passenger *Application::readPassenger(string &p) {
 
     if (type == 'c') {
         next(st, p, ";");
+
         try { next(temp, p, ";"); } catch (InvalidFormat) {
+
             cout << "Please insert the Passenger data in the correct format.\n";
         }
 
