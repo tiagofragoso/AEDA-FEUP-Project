@@ -1430,10 +1430,13 @@ void Application::loadPassengerFile() {
 
     if (!passFile) throw InvalidFilePath("fail");
 
+    cout << "olaaa\n";
+
     while (getline(passFile, p)){
         cout << p << endl;
         this->company.addPassenger(readPassenger(p));
     }
+
 
     passFile.close();
 
