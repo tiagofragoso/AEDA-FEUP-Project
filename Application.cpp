@@ -455,14 +455,23 @@ void Application::bookingsMenu() {
 	} while (op != 9);
 
 }
-/*
-void Application::showAllFlights(Passenger *p) {
-	for (size_t i = 0; i < company.get; i++)
-	{
 
+void Application::showAllFlights(Passenger *p) {
+	PassengerMap::iterator it;
+	Passenger *a;
+	for (size_t i = 0; i < company.getFlights().size(); i++)
+	{
+		
+		for (it = company.getFlights().at(i)->getPassengers().begin(); it != company.getFlights().at(i)->getPassengers().end(); it++)
+		{
+			a = it->second;
+			if (a->getId == p->getId) {
+				cout << "Flight ID: " << company.getFlights().at(i)->getId << " Departure: " << company.getFlights().at(i)->getDeparture() << " Destination: " << company.getFlights().at(i)->getDestination << " Time to flight: " << company.getFlights().at(i)->getTime_to_flight;
+			}
+		}
 	}
 }
-*/
+
 
 void Application::printSummaryPassenger() {
 
