@@ -82,6 +82,20 @@ bool Passenger::operator==(const Passenger &p) {
     else return false;
 }
 
+Passenger::Passenger() {
+
+    id = 0;
+    name = "";
+    dateOfBirth = "";
+
+}
+
+PassengerWithCard::PassengerWithCard() : Passenger(){
+
+    Card * c;
+    card = c;
+}
+
 void PassengerWithCard::print() {
 
     cout << "Id: " << Passenger::getId() << endl;
