@@ -1132,58 +1132,56 @@ void Application::flightUpdateMenu(Airplane *airplane) {
             } while (true);
 
 
-	} while (true);
+        }
+    } while (true);
 
-
-	flight->setBasePrice(newPrice);
-	flightsChanged = true;
-	cout << "Flight base price updated successfully.\n";
-}
 }
 
-Airplane * readAirplane(string &a){
 
-  Airplane newAirplane;
 
-  int temp;
-  string st;
+Airplane * Application::readAirplane(string &a){
 
-  try {next(temp, a, ";");} catch(InvalidFormat) {
-    cout << "Please insert the Airplane data in the correct format.\n";
-  }
+    Airplane * newAirplane = new Airplane;
 
-  newAirplane.setId(temp);
+    int temp;
+    string st;
 
-next(st, a, ";");
-newAirplane->setModel(st);
-
-try {next(temp, a, ";");} catch(InvalidFormat) {
-    cout << "Please insert the Airplane data in the correct format.\n";
-}
-
-newAirplane->setCapacity(temp);
-
-vector<unsigned int> f;
-next(st, a, ";");
-
-while (st != ""){
-    int fid;
-    try {next(fid, a, ";");} catch(InvalidFormat) {
+    try {next(temp, a, ";");} catch(InvalidFormat) {
         cout << "Please insert the Airplane data in the correct format.\n";
     }
-    f.push_back((unsigned int)fid);
-}
 
-vector<Flight *> flights;
+    newAirplane->setId(temp);
 
-for (auto const &id:f){
-    Flight* fp = this->company.flightById(id);
-    if (fp != nullptr) flights.push_back(fp);
-}
+    next(st, a, ";");
+    newAirplane->setModel(st);
 
-newAirplane->setFlights(flights);
+    try {next(temp, a, ";");} catch(InvalidFormat) {
+        cout << "Please insert the Airplane data in the correct format.\n";
+    }
 
-return newAirplane;
+    newAirplane->setCapacity(temp);
+
+    vector<unsigned int> f;
+    next(st, a, ";");
+
+    while (st != ""){
+        int fid;
+        try {next(fid, a, ";");} catch(InvalidFormat) {
+            cout << "Please insert the Airplane data in the correct format.\n";
+        }
+        f.push_back((unsigned int)fid);
+    }
+
+    vector<Flight *> flights;
+
+    for (auto const &id:f){
+        Flight* fp = this->company.flightById(id);
+        if (fp != nullptr) flights.push_back(fp);
+    }
+
+    newAirplane->setFlights(flights);
+
+    return newAirplane;
 
 }
 
@@ -1195,16 +1193,16 @@ Flight *Application::readFlight(string &f) {
     char type = f.at(0);
     Flight * newFlight;
 
-   if (type == 'c'){
-       //Comercial Flight
+    if (type == 'c'){
+        //Comercial Flight
 
         newFlight = new ComercialFlight;
 
-   } else if (type == 'r'){
-       //Rented Flight
+    } else if (type == 'r'){
+        //Rented Flight
 
-       newFlight = new RentedFlight;
-   } else throw InvalidFlight(0);
+        newFlight = new RentedFlight;
+    } else throw InvalidFlight(0);
 
     f = f.substr(1);
     int temp;
@@ -1253,24 +1251,28 @@ Flight *Application::readFlight(string &f) {
         if (p != nullptr) newFlight->setBuyer(p);
 
     } else {
-/*
+
         next(st, f, ";");
-        vector<unsigned int> pid;
+        PassengerMap pmap;
         while (st != ""){
+            string st1;
+            next(st1, f, ",");
+            string seat;
+            next(seat, st1, "-");
             int elem;
-            try {next(elem, f, ",");} catch(InvalidFormat) {
+            try {next(elem, st1, "-");} catch(InvalidFormat) {
                 cout << "Please insert the Flight data in the correct format.\n";
             }
 
-            pid.push_back((unsigned int)elem);
-        }
-        vector<Passenger *>pass;
-        for (auto const &id:pid){
-            Passenger * p = this->company.passengerById(id);
-            if (p != nullptr) pass.push_back(p);
+            Passenger * p = this->company.passengerById((unsigned int)elem);
+
+
+            pmap.emplace(seat, p);
         }
 
-        newFlight->setPassengers()*/
+
+
+        newFlight->setPassengers(pmap);
 
     }
 
@@ -1314,7 +1316,7 @@ Passenger *Application::readPassenger(string &p) {
     if (type == 'c'){
         next(st, p, ";");
         try {next(temp, p, ";");} catch(InvalidFormat) {
-                cout << "Please insert the Passenger data in the correct format.\n";
+            cout << "Please insert the Passenger data in the correct format.\n";
         }
 
         Card* c = new Card(st, temp);
