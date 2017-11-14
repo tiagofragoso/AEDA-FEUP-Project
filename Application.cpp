@@ -817,7 +817,10 @@ void Application::airplaneCreate() {
 
     do {
         cout << "Capacity: ";
-        if (validArg(capacity)) break;
+        if (!validArg(capacity)) continue;
+        else if (capacity % 6 == 0) break;
+        else cout << "Capacity must be a multiple of 6.\n";
+
     } while (true);
 
     Airplane *newairplane = new Airplane(id, model, capacity);
@@ -1224,7 +1227,8 @@ void Application::airplaneUpdateCapacity(Airplane *airplane) {
     do {
         cout << "Insert the new capacity : ";
         if (!validArg(newcapacity)) continue;
-        else break;
+        else if (newcapacity % 6 == 0) break;
+        else cout << "Capacity must be a multiple of 6.\n";
 
     } while (true);
 
@@ -1294,10 +1298,10 @@ PassengerMap::iterator Application::chooseSeat(Flight *flight) {
 void Application::flightDeletePassenger(Flight *flight) {
 
     PassengerMap::iterator it;
-    for (it = flight->getPassengers().begin(); it != flight->getPassengers().end(); it++)
+    for (auto p : flight->getPassengers())
     {
-        cout << it->first << " : ";
-        it->second->printSummary();
+        cout << p.first << " : ";
+        p.second->printSummary();
         cout << endl;
     }
     do {
@@ -1319,22 +1323,37 @@ vector<string> Application::availableSeats(Flight *flight, int capacity) {
 
     vector <string> seats;
     string line;
+    string place;
+    PassengerMap passengers = flight->getPassengers();
 
     for (size_t i = 0; i < capacity / 6; i++) {
 
 
-        line = to_string(i);
+        line = to_string(i+1);
 
-        for (size_t j = 0; j < 5; j++) {
+        for (size_t j = 0; j < 6; j++) {
 
             string seat = "A";
 
-            seat.at(0) = seat.at(0) + i;
+            seat.at(0) += j;
 
-            if (flight->getPassengers().find(line + seat) == flight->getPassengers().end())
-                seats.push_back(line + seat);
+
+            place = line + seat;
+
+            if(flight->getPassengers().empty()) {
+
+                seats.push_back(place);
+                continue;
+            }
+
+            if (passengers.find(place) != passengers.end()) {
+              continue;
+            } else {
+                seats.push_back(place);
+            }
         }
     }
+
 
     return seats;
 }
@@ -1349,19 +1368,19 @@ void Application::printSeats(int capacity, vector<string> seats) {
     for (size_t i = 0; i < capacity / 6; i++) {
 
 
-        line = to_string(i);
+        line = to_string(i+1);
 
-        for (size_t j = 0; j < 5; j++) {
+        for (size_t j = 0; j < 6; j++) {
 
             string seat = "A";
 
-            seat.at(0) = seat.at(0) + i;
+            seat.at(0) += j;
 
             auto it = find(seats.begin(), seats.end(), line + seat);
             if (it == seats.end())
-                cout << na << setw(5) << " ";
+                cout << setw(5) << na << " ";
             else
-                cout << line + seat << setw(5) << " ";
+                cout << setw(5) << line + seat << " ";
         }
 
         cout << endl;
@@ -1400,6 +1419,7 @@ void Application::flightAddPassenger(Flight *flight, int capacity) {
             i.print();
             continue;
         }
+
         break;
 
     } while (true);
@@ -1408,7 +1428,23 @@ void Application::flightAddPassenger(Flight *flight, int capacity) {
 
     seats = availableSeats(flight, capacity);
     printSeats(capacity, seats);
-    seat = chooseSeat(seats);
+
+    if (seats.size() == 0) {
+        cout << "There are no available seats.\n";
+        return;
+    }
+    do {
+        try {
+            seat = chooseSeat(seats);
+        }
+        catch (const InvalidSeat &s) {
+            s.print();
+            continue;
+        }
+
+        break;
+
+    } while (true);
     flight->addPassenger(seat, passenger);
 
     cout << "Passenger added successfully\n";
@@ -1490,19 +1526,19 @@ void Application::flightUpdateMenu(Airplane *airplane) {
                 }
             } while (true);
 
-
             switch (op) {
                 case 1:
                     flightUpdatePrice(flight);
                     break;
-                case 3:
+                case 2:
                     flightAddPassenger(flight, airplane->getCapacity());
                     break;
-                case 4:
+                case 3:
                     flightDeletePassenger(flight);
                     break;
             }
         }
+
     }while(op != 9);
 }
 

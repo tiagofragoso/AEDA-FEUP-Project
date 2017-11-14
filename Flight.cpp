@@ -154,9 +154,13 @@ void ComercialFlight::setBuyer(Passenger *buyer) {
 
 void ComercialFlight::print() {
 
+    Flight::print();
+
     cout << "Passengers:\n";
 
-    Flight::print();
+    if (passengers.size() == 0)
+        cout << "There are no passengers in this flight.\n";
+    else {
 
     for (auto& p : passengers) {
 
@@ -165,6 +169,8 @@ void ComercialFlight::print() {
         cout << p.first << " ";
 
         passenger->printSummary();
+    }
+
     }
 
 }
