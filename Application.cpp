@@ -63,7 +63,7 @@ void Application::mainMenu() {
                         if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N' || auxOp == 'y' || auxOp == 'n')) {
                             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                             if (auxOp == 'Y') {
-                                //TODO functions to update files.
+                                saveAllFiles();
                                 cout << "Press any key to continue...";
                                 getchar();
                                 break;
@@ -165,7 +165,7 @@ void Application::filesMenu() {
                         if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N' || auxOp == 'y' || auxOp == 'n')) {
                             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                             if (auxOp == 'Y') {
-                                //TODO functions to update files.
+                                saveAllFiles();
                                 cout << "Press any key to continue...";
                                 getchar();
                                 break;
@@ -430,9 +430,9 @@ void Application::bookingsMenu() {
 	cout << endl;
 	do {
 		cout << "[BOOKING MANAGEMENT MENU]\n\n";
-		cout << "[1]- Show my scheduled flights";
+		cout << "[1]- Show my scheduled Flights";
 		cout << "[2]- Book a Flight";
-		cout << "[3]- Return a flight ticket";
+		cout << "[3]- Return a Flight ticket";
 		//TODO:CHECK IF THERE IS ANYTHING ELSE TO INSERT HERE
 		cout << "[9]- Back.\n\n";
 		do {
@@ -450,27 +450,106 @@ void Application::bookingsMenu() {
 
 		switch (op) {
 		case 1:
+			showAllFlights(a);
 			break;
-
+			/*
+			case2:
+				funçãospolis;
+			*/
+		case 3:
+			returnTicket(a);
+			break;
 		}
-
 	} while (op != 9);
 
 }
-/*
-void Application::showAllFlights(Passenger *p) {
-	for (size_t i = 0; i < company.get; i++)
+void Application::returnTicket(Passenger *p){
+	int id;
+	string seat, removehelper;
+	showAllFlights(p);
+	do {
+		cout << "Insert the ID of the flight you would like to return the ticket: ";
+		if (!validArg(id)) continue;
+		else break;
+	} while (true);
+	PassengerMap::iterator it;
+	for (size_t i = 0; i < company.getFlights().size() ; i++)
 	{
-
+		if (company.getFlights().at(i)->getId() == id) {
+			if (company.getFlights().at(i)->getType() == "c"){
+				for (it = company.getFlights().at(i)->getPassengers().begin(); it != company.getFlights().at(i)->getPassengers().end(); it++)
+				{
+					if (it->second->getId() == p->getId()) {
+						seat = it->first;
+						cout << "Would you like to remove seat " << seat << " ?(Y/N)\n";
+						getline(cin, removehelper);
+						normalize(removehelper);
+						do {
+							if (removehelper == "y") {
+								cout << endl;
+								company.getFlights().at(i)->getPassengers().erase(it);
+								cout << "The seat " << seat << " that you had on that flight has been returned";
+								flightsChanged = true;
+								break;
+							}
+							else if (removehelper == "n") {
+								break;
+							}
+							else {
+								cout << "Invalid option. Reenter." << endl;
+							}
+						} while (true);
+						removehelper.clear();
+					}
+				}
+			}
+		}
+		else if (company.getFlights().at(i)->getType() == "r") {
+			cout << "Do you want to remove your rental of flight " << company.getFlights().at(i)->getId() << " ?(Y/N)\n";
+			getline(cin, removehelper);
+			normalize(removehelper);
+			do {
+				if (removehelper == "y") {
+					cout << endl;
+					company.getFlights().at(i)->setBuyer(nullptr);
+					cout << "Your rental of flight " << company.getFlights().at(i)->getId() << "has been removed" << endl;
+					flightsChanged = true;
+					break;
+				}
+				else if (removehelper == "n") {
+					break;
+				}
+				else {
+					cout << "Invalid option. Reenter." << endl;
+				}
+			} while (true);
+		}
 	}
 }
-*/
+
+void Application::showAllFlights(Passenger *p) {
+	PassengerMap::iterator it;
+	Passenger *b;
+	for (size_t i = 0; i < company.getFlights().size(); i++)
+	{
+		
+		for (it = company.getFlights().at(i)->getPassengers().begin(); it != company.getFlights().at(i)->getPassengers().end(); it++)
+		{	
+			b = it->second;
+			if (b->getId() == p->getId()) {
+				cout << "Flight ID: " << company.getFlights().at(i)->getId() << " Departure: " << company.getFlights().at(i)->getDeparture() << " Destination: " << company.getFlights().at(i)->getDestination() << " Time to flight: " << company.getFlights().at(i)->getTime_to_flight();
+			}
+		}
+	}
+	cout << endl;
+}
+
 
 void Application::printSummaryPassenger() {
 
     cout << "PASSENGER SUMMARY\n\n";
 
-    for (auto &passenger : company.getPassangers()) {
+    for (auto &passenger : company.getPassengers()) {
         passenger->printSummary();
     }
 
@@ -506,7 +585,7 @@ Passenger *Application::choosePassenger() {
 
     } while (true);
 
-    for (auto &passenger : company.getPassangers()) {
+    for (auto &passenger : company.getPassengers()) {
 
         if (passenger->getId() == pId) {
             cpassenger = passenger;
@@ -563,7 +642,7 @@ Flight *Application::chooseFlight(Airplane *airplane) {
 
 void Application::passengerShow() {
 
-    if (company.getPassangers().size() == 0) {
+    if (company.getPassengers().size() == 0) {
         cout << "There are no passengers.\n";
         return;
     }
@@ -681,7 +760,7 @@ void Application::flightShow(Airplane *airplane) {
 
 void Application::validPassenger(int id) {
 
-    for (auto &passenger : company.getPassangers()) {
+    for (auto &passenger : company.getPassengers()) {
 
         if (passenger->getId() == id)
             throw InvalidPassenger(id);
@@ -1317,6 +1396,7 @@ void Application::flightDeletePassenger(Flight *flight) {
     } while (true);
     flight->getPassengers().erase(it);
     cout << "The passenger was removed from the flight\n";
+	flightsChanged = true;
 }
 
 vector<string> Application::availableSeats(Flight *flight, int capacity) {
@@ -1791,5 +1871,75 @@ void Application::loadAirplaneFile() {
 
 }
 
+void Application::saveAllFiles() {
+    if (airplanesChanged) {
 
+        if (airplanesFilepath.empty()) airplanesFilepath = inputFilePath("airplane");
+
+        try {saveAirplaneFile();} catch(InvalidFilePath &in){in.print();}
+
+    }
+
+    if (flightsChanged){
+
+        if (flightsFilepath.empty()) flightsFilepath = inputFilePath("flight");
+
+        try {saveFlightFile();} catch(InvalidFilePath &in){in.print();}
+
+    }
+
+    if (passengersChanged){
+
+        if (passengersFilepath.empty()) passengersFilepath = inputFilePath("passenger");
+
+        try {savePassengerFile();} catch(InvalidFilePath &in){in.print();}
+
+    }
+
+    cout << "All changes were saved.\n";
+
+
+}
+
+void Application::saveAirplaneFile() {
+
+    ofstream airFile(airplanesFilepath);
+
+    if (!airFile) throw InvalidFilePath("fail");
+    for (size_t i = 0; i < this->company.getFleet().size(); i++){
+        airFile << this->company.getFleet().at(i);
+        if (i != this->company.getFleet().size() - 1) airFile << endl;
+    }
+
+    airFile.close();
+
+}
+
+void Application::saveFlightFile() {
+
+    ofstream fFile(flightsFilepath);
+
+    if (!fFile) throw InvalidFilePath("fail");
+    for (size_t i = 0; i < this->company.getFlights().size(); i++){
+        fFile << this->company.getFlights().at(i);
+        if (i != this->company.getFlights().size() - 1) fFile << endl;
+    }
+
+    fFile.close();
+
+}
+
+void Application::savePassengerFile() {
+
+    ofstream passFile(passengersFilepath);
+
+    if (!passFile) throw InvalidFilePath("fail");
+    for (size_t i = 0; i < this->company.getPassengers().size(); i++){
+        passFile << this->company.getPassengers().at(i);
+        if (i != this->company.getPassengers().size() - 1)  passFile << endl;
+    }
+
+    passFile.close();
+
+}
 

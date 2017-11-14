@@ -176,6 +176,7 @@ public:
 	Passenger * newCustomer();
     vector<string> availableSeats(Flight * flight, int capacity);
     void printSeats(int capacity, vector<string> seats);
+	void returnTicket(Passenger *p);
 
     //file functions
     string inputFilePath(string s);
@@ -185,7 +186,10 @@ public:
     void loadPassengerFile();
     void loadFlightFile();
     void loadAirplaneFile();
-    void saveFiles();
+    void saveAirplaneFile();
+    void saveFlightFile();
+    void savePassengerFile();
+    void saveAllFiles();
 
 
 };

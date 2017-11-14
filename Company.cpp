@@ -35,7 +35,7 @@ vector<Airplane*> Company::getFleet() const
 	return this->fleet;
 }
 
-vector<Passenger*> Company::getPassangers() const
+vector<Passenger*> Company::getPassengers() const
 {
 	return this->passengers;
 }

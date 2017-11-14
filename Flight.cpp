@@ -89,6 +89,25 @@ void Flight::setId(unsigned int id) {
     this->id = id;
 }
 
+ostream &operator<<(ostream &o, const Flight *f) {
+    o << f->getType() << to_string(f->id) << "; " << f->departure << "; " << f->destination << "; " << to_string(f->time_to_flight) << "; " << to_string(f->basePrice) << "; " << to_string(f->duration) << "; ";
+    if (f->getType() == "c"){
+        unsigned int i = f->getPassengers().size();
+        if (i > 0){
+        for(auto const &p: f->getPassengers()){
+            o << p.first << "-" << to_string(p.second->getId());
+            i--;
+            if (i != 0) o << ", ";
+        }
+
+        } else o << "no_passengers";
+    } else {
+        if (f->getBuyer() != nullptr) o << to_string(f->getBuyer()->getId());
+        else o << "no_passengers";
+    }
+    return o;
+}
+
 RentedFlight::RentedFlight() : Flight(0, "", "", 0, 0, 0){
 
     Passenger * p = new Passenger;
