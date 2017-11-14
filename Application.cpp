@@ -1114,7 +1114,18 @@ void Application::flightUpdateBuyer(Flight *flight) {
     flightsChanged = true;
     cout << "Buyer updated successfully\n";
 }
-
+PassengerMap::iterator Application::chooseSeat(Flight *flight) {
+	PassengerMap::iterator it;
+	string seat_to_be_removed;
+	cout << "Please insert the seat you would like to remove : ";
+	getline(cin, seat_to_be_removed);
+	it = flight->getPassengers().find(seat_to_be_removed);
+	if (it == flight->getPassengers().end())
+		throw (InvalidSeat(seat_to_be_removed));
+	else {
+		return it;
+	}
+}
 void Application::flightDeletePassenger(Flight *flight) {
 	
 	PassengerMap::iterator it;
@@ -1124,16 +1135,19 @@ void Application::flightDeletePassenger(Flight *flight) {
 		it->second->printSummary();
 		cout << endl;
 	}
-	string seat_to_be_removed;
-	cout << "Please insert the seat you would like to remove : "; 
-	getline(cin, seat_to_be_removed);
-	it = flight->getPassengers().find(seat_to_be_removed);
-	if (it == flight->getPassengers().end())
-		throw (InvalidSeat(seat_to_be_removed));
-	else {
-		flight->getPassengers().erase(it);
-		cout << "The passenger was removed from the flight";
-	}
+	do {
+		try {
+			it = chooseSeat(flight);
+		}
+		catch (const InvalidSeat &it) {
+			it.print();
+			continue;
+		}
+		break;
+
+	} while (true);
+	flight->getPassengers().erase(it);
+	cout << "The passenger was removed from the flight";
 }
 
 void Application::flightAddPassenger(Flight *flight) {
