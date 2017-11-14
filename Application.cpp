@@ -1075,7 +1075,7 @@ void Application::flightUpdatePrice(Flight *flight) {
 
 void Application::flightUpdateBuyer(Flight *flight) {
 
-    Passenger * passenger;
+    Passenger *passenger;
     cout << "The current buyer for the chosen flight is:\n";
 
 }
@@ -1133,10 +1133,9 @@ void Application::flightUpdateMenu(Airplane *airplane) {
 
 
         }
-    } while (true);
 
+    }while(op != 9);
 }
-
 
 
 Airplane * Application::readAirplane(string &a){
@@ -1186,19 +1185,18 @@ Airplane * Application::readAirplane(string &a){
 }
 
 
-
-
 Flight *Application::readFlight(string &f) {
 
     char type = f.at(0);
-    Flight * newFlight;
+    Flight *newFlight;
 
-    if (type == 'c'){
+    if (type == 'c') {
+
         //Comercial Flight
 
         newFlight = new ComercialFlight;
 
-    } else if (type == 'r'){
+    } else if (type == 'r') {
         //Rented Flight
 
         newFlight = new RentedFlight;
@@ -1206,7 +1204,7 @@ Flight *Application::readFlight(string &f) {
 
     f = f.substr(1);
     int temp;
-    try {next(temp, f, ";");} catch(InvalidFormat) {
+    try { next(temp, f, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Flight data in the correct format.\n";
     }
 
@@ -1222,31 +1220,31 @@ Flight *Application::readFlight(string &f) {
 
     newFlight->setDestination(st);
 
-    try {next(temp, f, ";");} catch(InvalidFormat) {
+    try { next(temp, f, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Flight data in the correct format.\n";
     }
 
     newFlight->setTime_to_flight((unsigned int) temp);
 
-    try {next(temp, f, ";");} catch(InvalidFormat) {
+    try { next(temp, f, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Flight data in the correct format.\n";
     }
 
     newFlight->setBasePrice((unsigned int) temp);
 
-    try {next(temp, f, ";");} catch(InvalidFormat) {
+    try { next(temp, f, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Flight data in the correct format.\n";
     }
 
     newFlight->setDuration((unsigned int) temp);
 
-    if (type == 'r'){
+    if (type == 'r') {
 
-        try {next(temp, f, ";");} catch(InvalidFormat) {
+        try { next(temp, f, ";"); } catch (InvalidFormat) {
             cout << "Please insert the Flight data in the correct format.\n";
         }
 
-        Passenger * p = this->company.passengerById((unsigned int)temp);
+        Passenger *p = this->company.passengerById((unsigned int) temp);
 
         if (p != nullptr) newFlight->setBuyer(p);
 
@@ -1281,7 +1279,7 @@ Flight *Application::readFlight(string &f) {
 }
 
 Passenger *Application::readPassenger(string &p) {
-    Passenger * newPassenger;
+    Passenger *newPassenger;
 
     char type = p.at(0);
 
@@ -1293,7 +1291,7 @@ Passenger *Application::readPassenger(string &p) {
     p = p.substr(1);
 
     int temp;
-    try {next(temp, p, ";");} catch(InvalidFormat) {
+    try { next(temp, p, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Passenger data in the correct format.\n";
     }
 
@@ -1313,13 +1311,15 @@ Passenger *Application::readPassenger(string &p) {
         cout << "Please insert the correct Date format.\n";
     }
 
-    if (type == 'c'){
+    if (type == 'c') {
         next(st, p, ";");
-        try {next(temp, p, ";");} catch(InvalidFormat) {
+
+        try { next(temp, p, ";"); } catch (InvalidFormat) {
+
             cout << "Please insert the Passenger data in the correct format.\n";
         }
 
-        Card* c = new Card(st, temp);
+        Card *c = new Card(st, temp);
         newPassenger->setCard(c);
 
     }
