@@ -180,6 +180,9 @@ public:
     Passenger * readPassenger(string &p);
     Flight * readFlight(string &f);
     void loadPassengerFile();
+    void loadFlightFile();
+    void loadAirplaneFile();
+    void saveFiles();
 
 
 };

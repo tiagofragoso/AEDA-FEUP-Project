@@ -108,3 +108,7 @@ Passenger *Company::passengerById(unsigned int id) {
     }
     return nullptr;
 }
+
+void Company::addFlight(Flight *f) {
+    this->flights.push_back(f);
+}

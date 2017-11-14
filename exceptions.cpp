@@ -91,7 +91,7 @@ void ConnectionFlight::print() const {
 
 void InvalidFilePath::print() {
     if (type == "empty") cout << "File path is empty.\n";
-    else if (type == "invalid") cout << "Failed to open file.\n";
+    else if (type == "fail") cout << "Failed to open file.\n";
 }
 
 InvalidFilePath::InvalidFilePath(std::string type): type(type) {}
