@@ -1075,7 +1075,7 @@ void Application::flightUpdatePrice(Flight *flight) {
 
 void Application::flightUpdateBuyer(Flight *flight) {
 
-    Passenger *passenger;
+    Passenger *passenger = new Passenger;
     cout << "The current buyer for the chosen flight is:\n";
 
 }
