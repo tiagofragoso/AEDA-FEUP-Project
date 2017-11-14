@@ -54,7 +54,7 @@ void Application::mainMenu() {
                 bookingsMenu();
                 break;
             case 0:
-                if (passengersChanged || airplanesChanged) {
+                if (passengersChanged || airplanesChanged || flightsChanged) {
                     cout << "There are changes to be deployed to the files.\n";
                     do {
                         cout << "Would you like to save those changes (Y/N) ? ";
@@ -99,12 +99,19 @@ void Application::filesMenu() {
             cout << "('" << airplanesFilepath << "' loaded).";
         }
         cout << endl;
-        cout << "[3]- Save all changes to files.\n";
+        cout << "[3]- Load flight file ";
+        if (flightsFilepath.empty()) {
+            cout << "(No file loaded).";
+        } else {
+            cout << "('" << flightsFilepath << "' loaded).";
+        }
+        cout << endl;
+        cout << "[4]- Save all changes to files.\n";
         cout << "[9]- Back.\n\n";
 
         do {
             cout << "Insert the desired option: ";
-            if (cin >> op && ((op >= 0 && op <= 3) || op == 9)) {
+            if (cin >> op && ((op >= 0 && op <= 4) || op == 9)) {
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 validOp = true;
             } else {
@@ -122,9 +129,9 @@ void Application::filesMenu() {
                 //TODO funtion to load airplanes's file
                 break;
             case 3:
-                //TODO funtion to save changes
-                cout << "Press any key to continue...";
-                getchar();
+                //TODO function to load flight's file
+            case 4:
+                //TODO function to save file changes
                 break;
         }
     } while (op != 9);
@@ -272,7 +279,7 @@ void Application::flightsMenu(Airplane *airplane) {
                 flightDelete(airplane);
                 break;
             case 4:
-                //TODO flights update (chamar outro menu), nao esquecer adicionar e eliminar passageiros
+                flightUpdateMenu(airplane);
                 break;
         }
 
