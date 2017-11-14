@@ -73,7 +73,7 @@ public:
 	* @brief Gets a vector of pointers to the passengers of the company
 	* @return vector <Passenger*> with the pointers to the Passengers of the company
 	*/
-	vector <Passenger*> getPassangers() const;
+	vector <Passenger*> getPassengers() const;
 
 	//set methods
 	/**

@@ -78,7 +78,7 @@ public:
 	 */
 //TODO: CHECK HOW TO DOCUMENT VIRTUAL FUNCTIONS
     virtual void print();
-    virtual string getType();
+    virtual string getType() const;
     virtual Card *  getCard() const;
     virtual void setCard(Card * card);
 	/**
@@ -87,6 +87,8 @@ public:
 	 * @return true upon sucess matching the 2 Passenger objects ids and false otherwise
 	 */
 	bool operator==(const Passenger &p);
+
+	friend ostream& operator<<(ostream &o, const Passenger * p);
 };
 
 class PassengerWithCard: public Passenger {
@@ -147,7 +149,7 @@ public:
 	 * @brief Checks if the PassengerWithCard holds a card object
 	 * @return string "c" if the Passenger really has a card
 	 */
-    string getType();
+    string getType() const;
 
 };
 

@@ -121,3 +121,14 @@ void Airplane::addFlight(Flight *flight) {
 
     throw OverlapingFlight();
 }
+
+ostream &operator<<(ostream &o, const Airplane * a) {
+    o << to_string(a->id) << "; " << a->model << "; " << to_string(a->capacity) << "; ";
+    if (a->flights.size() >0 ) {
+        for (size_t i = 0; i < a->flights.size(); i++) {
+            o << to_string(a->flights.at(i)->getId());
+            if (i != a->flights.size() - 1) o << ", ";
+        }
+    } else o << "no_flights";
+    return o;
+}

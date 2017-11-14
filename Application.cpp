@@ -61,7 +61,7 @@ void Application::mainMenu() {
                         if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N' || auxOp == 'y' || auxOp == 'n')) {
                             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                             if (auxOp == 'Y') {
-                                //TODO functions to update files.
+                                saveAllFiles();
                                 cout << "Press any key to continue...";
                                 getchar();
                                 break;
@@ -163,7 +163,7 @@ void Application::filesMenu() {
                         if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N' || auxOp == 'y' || auxOp == 'n')) {
                             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                             if (auxOp == 'Y') {
-                                //TODO functions to update files.
+                                saveAllFiles();
                                 cout << "Press any key to continue...";
                                 getchar();
                                 break;
@@ -177,7 +177,7 @@ void Application::filesMenu() {
                         }
                     } while (true);
                 } else cout << "There are no changes to be deployed.\n";
-                
+
                 break;
         }
     } while (op != 9);
@@ -346,7 +346,7 @@ void Application::printSummaryPassenger() {
 
     cout << "PASSENGER SUMMARY\n\n";
 
-    for (auto &passenger : company.getPassangers()) {
+    for (auto &passenger : company.getPassengers()) {
         passenger->printSummary();
     }
 
@@ -382,7 +382,7 @@ Passenger *Application::choosePassenger() {
 
     } while (true);
 
-    for (auto &passenger : company.getPassangers()) {
+    for (auto &passenger : company.getPassengers()) {
 
         if (passenger->getId() == pId) {
             cpassenger = passenger;
@@ -439,7 +439,7 @@ Flight *Application::chooseFlight(Airplane *airplane) {
 
 void Application::passengerShow() {
 
-    if (company.getPassangers().size() == 0) {
+    if (company.getPassengers().size() == 0) {
         cout << "There are no passengers.\n";
         return;
     }
@@ -557,7 +557,7 @@ void Application::flightShow(Airplane *airplane) {
 
 void Application::validPassenger(int id) {
 
-    for (auto &passenger : company.getPassangers()) {
+    for (auto &passenger : company.getPassengers()) {
 
         if (passenger->getId() == id)
             throw InvalidPassenger(id);
@@ -1494,6 +1494,78 @@ void Application::loadAirplaneFile() {
         this->company.addAirplane(readAirplane(a));
     }
     airFile.close();
+
+}
+
+void Application::saveAllFiles() {
+    if (airplanesChanged) {
+
+        if (airplanesFilepath.empty()) airplanesFilepath = inputFilePath("airplane");
+
+        try {saveAirplaneFile();} catch(InvalidFilePath &in){in.print();}
+
+    }
+
+    if (flightsChanged){
+
+        if (flightsFilepath.empty()) flightsFilepath = inputFilePath("flight");
+
+        try {saveFlightFile();} catch(InvalidFilePath &in){in.print();}
+
+    }
+
+    if (passengersChanged){
+
+        if (passengersFilepath.empty()) passengersFilepath = inputFilePath("passenger");
+
+        try {savePassengerFile();} catch(InvalidFilePath &in){in.print();}
+
+    }
+
+    cout << "All changes were saved.\n";
+
+
+}
+
+void Application::saveAirplaneFile() {
+
+    ofstream airFile(airplanesFilepath);
+
+    if (!airFile) throw InvalidFilePath("fail");
+    for (size_t i = 0; i < this->company.getFleet().size(); i++){
+        airFile << this->company.getFleet().at(i);
+        if (i != this->company.getFleet().size() - 1) airFile << endl;
+    }
+
+    airFile.close();
+
+}
+
+void Application::saveFlightFile() {
+
+    ofstream fFile(flightsFilepath);
+
+    if (!fFile) throw InvalidFilePath("fail");
+    for (size_t i = 0; i < this->company.getFlights().size(); i++){
+        fFile << this->company.getFlights().at(i);
+        if (i != this->company.getFlights().size() - 1) fFile << endl;
+    }
+
+    fFile.close();
+
+}
+
+void Application::savePassengerFile() {
+
+    ofstream passFile(passengersFilepath);
+
+    if (!passFile) throw InvalidFilePath("fail");
+    for (size_t i = 0; i < this->company.getPassengers().size(); i++){
+        passFile << this->company.getPassengers().at(i);
+        if (i != this->company.getPassengers().size() - 1)  passFile << endl;
+    }
+
+    passFile.close();
 
 }
 

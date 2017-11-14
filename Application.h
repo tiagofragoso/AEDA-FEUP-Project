@@ -181,7 +181,10 @@ public:
     void loadPassengerFile();
     void loadFlightFile();
     void loadAirplaneFile();
-    void saveFiles();
+    void saveAirplaneFile();
+    void saveFlightFile();
+    void savePassengerFile();
+    void saveAllFiles();
 
 
 };

@@ -32,7 +32,7 @@ void Passenger::setDateOfBirth(string dateOfBirth)
     this->dateOfBirth = dateOfBirth;
 }
 
-string Passenger::getType() {
+string Passenger::getType() const{
 
     return "n";
 }
@@ -90,6 +90,14 @@ Passenger::Passenger() {
 
 }
 
+ostream &operator<<(ostream &o, const Passenger *p) {
+    o << p->getType() << p->getId() << "; " << p->getName() << "; " << p->getDateOfBirth();
+    if (p->getType() == "c" && p->getCard() != nullptr){
+        o << "; " << p->getCard()->getJob() << "; " << to_string(p->getCard()->getAvgYrFlights());
+    }
+    return o;
+}
+
 PassengerWithCard::PassengerWithCard() : Passenger(){
 
     Card * c = new Card;
@@ -107,7 +115,7 @@ void PassengerWithCard::print() {
 
 }
 
-string PassengerWithCard::getType() {
+string PassengerWithCard::getType() const{
 
     return "c";
 }

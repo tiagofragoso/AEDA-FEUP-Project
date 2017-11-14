@@ -69,6 +69,7 @@ public:
 
     bool operator==(const Flight &f);
     bool operator<(const Flight &f);
+    friend ostream & operator<<(ostream & o, const Flight * f);
 
 
 };

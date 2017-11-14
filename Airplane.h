@@ -117,6 +117,8 @@ public:
      * @param flight Flight * flight
      */
     void addFlight(Flight * flight);
+
+	friend ostream & operator<<(ostream & o, const Airplane * a);
 };
 
 #endif //AEDA_FEUP_PROJECT_AIRPLANE_H
