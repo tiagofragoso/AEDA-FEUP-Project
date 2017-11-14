@@ -124,6 +124,16 @@ void Application::filesMenu() {
         switch (op) {
             case 1:
                 //TODO function to load passenger's file
+
+                passengersFilepath = inputFilePath("passenger");
+
+                try {
+                    loadPassengerFile();
+                } catch (InvalidFilePath &in){
+                    in.print();
+                }
+
+
                 break;
             case 2:
                 //TODO funtion to load airplanes's file
@@ -1409,3 +1419,30 @@ Passenger *Application::readPassenger(string &p) {
 
     return newPassenger;
 }
+
+void Application::loadPassengerFile() {
+    
+    string p;
+
+    if (passengersFilepath == "") throw InvalidFilePath("empty");
+
+    ifstream passFile(passengersFilepath);
+
+    if (!passFile) throw InvalidFilePath("fail");
+
+    while (getline(passFile, p)){
+        cout << p << endl;
+        this->company.addPassenger(readPassenger(p));
+    }
+
+    passFile.close();
+
+}
+
+string Application::inputFilePath(string s) {
+    string input;
+    cout << "Insert " << s << "'s filename: ";
+    getline(cin, input);
+    return input;
+}
+

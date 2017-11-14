@@ -5,9 +5,21 @@
 #ifndef AEDA_FEUP_PROJECT_EXCEPTIONS_H
 #define AEDA_FEUP_PROJECT_EXCEPTIONS_H
 
+
+
 class InvalidFormat {
 public:
     InvalidFormat();
+};
+
+class InvalidFilePath {
+private:
+    std::string type;
+
+public:
+    InvalidFilePath();
+    InvalidFilePath(std::string type);
+    void print();
 };
 
 class InvalidPassenger {

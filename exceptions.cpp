@@ -79,3 +79,9 @@ void ConnectionFlight::print() const {
     cout << "It is not possible to delete this flight.\n";
 }
 
+void InvalidFilePath::print() {
+    if (type == "empty") cout << "File path is empty.\n";
+    else if (type == "invalid") cout << "Failed to open file.\n";
+}
+
+InvalidFilePath::InvalidFilePath(std::string type): type(type) {}
