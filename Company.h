@@ -119,9 +119,13 @@ public:
 	* @param newairplane Airplane newairplane it will be included in the data member fleet of the company
 	*/
 
+	void addFlight(Flight * f);
+
 	Flight * flightById(unsigned int id);
 
     Passenger * passengerById(unsigned int id);
+
+	vector<Flight *> getFlights(){return flights;}
 
 };
 
