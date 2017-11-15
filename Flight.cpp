@@ -1,4 +1,5 @@
 #include "Flight.h"
+#include <iomanip>
 
 Flight::Flight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration): id(id), departure(departure),
                 destination(destination), time_to_flight(time_to_flight), basePrice(basePrice), duration(duration) {}
@@ -55,10 +56,7 @@ void Flight::setDuration(unsigned int duration)
 
 void Flight::printSummary() {
 
-    cout << "Id: " << id;
-    cout << " Departure: " << departure;
-    cout << " Destination: " << destination;
-    cout << " Time to flight: " << time_to_flight << endl;
+    cout << setw(9) << id << setw(3) << " " << setw(9) << departure << setw(3) << " " << setw(11) << destination << setw(3) << " " << setw(14) << time_to_flight << endl;
 
 }
 
@@ -121,7 +119,7 @@ Passenger * RentedFlight::getBuyer() const {
     return this-> buyer;
 }
 
-PassengerMap & RentedFlight::getPassengers() {
+PassengerMap& RentedFlight::getPassengers() {
 
     PassengerMap c;
     return c;

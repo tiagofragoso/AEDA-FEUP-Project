@@ -64,8 +64,7 @@ void Application::mainMenu() {
                             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                             if (auxOp == 'Y') {
                                 saveAllFiles();
-                                cout << "Press any key to continue...";
-                                getchar();
+                                pause();
                                 break;
                             } else {
                                 break;
@@ -136,6 +135,7 @@ void Application::filesMenu() {
                 } catch (InvalidFilePath &in){
                     in.print();
                 }
+                pause();
                 break;
             case 2:
                 //flightsFilepath = inputFilePath("flight");
@@ -148,6 +148,7 @@ void Application::filesMenu() {
                     f->print();
                     cout << endl;
                 }
+                pause();
                 break;
             case 3:
                 //airplanesFilepath = inputFilePath("airplane");
@@ -156,6 +157,7 @@ void Application::filesMenu() {
                 } catch (InvalidFilePath &in){
                     in.print();
                 }
+                pause();
                 break;
             case 4:
 
@@ -166,8 +168,7 @@ void Application::filesMenu() {
                             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                             if (auxOp == 'Y') {
                                 saveAllFiles();
-                                cout << "Press any key to continue...";
-                                getchar();
+                                pause();
                                 break;
                             } else {
                                 break;
@@ -179,7 +180,6 @@ void Application::filesMenu() {
                         }
                     } while (true);
                 } else cout << "There are no changes to be deployed.\n";
-
                 break;
         }
     } while (op != 9);
@@ -213,12 +213,15 @@ void Application::passengersMenu() {
         switch (op) {
             case 1:
                 passengerShow();
+                pause();
                 break;
             case 2:
                 passengerCreate();
+                pause();
                 break;
             case 3:
                 passengerDelete();
+                pause();
                 break;
             case 4:
                 passengerUpdateMenu();
@@ -257,15 +260,19 @@ void Application::airplanesMenu() {
         switch (op) {
             case 1:
                 airplaneShow();
+                pause();
                 break;
             case 2:
                 airplaneCreate();
+                pause();
                 break;
             case 3:
                 airplaneDelete();
+                pause();
                 break;
             case 4:
                 airplaneUpdateMenu();
+                pause();
                 break;
             case 5:
                 Airplane *airplane;
@@ -319,12 +326,15 @@ void Application::flightsMenu(Airplane *airplane) {
         switch (op) {
             case 1:
                 flightShow(airplane);
+                pause();
                 break;
             case 2:
                 flightCreate(airplane);
+                pause();
                 break;
             case 3:
                 flightDelete(airplane);
+                pause();
                 break;
             case 4:
                 flightUpdateMenu(airplane);
@@ -407,7 +417,7 @@ Passenger * Application::newCustomer() {
 void Application::bookingsMenu() {
 	string menuhelper;
 	int id, op;
-	Passenger* a;
+	Passenger* passenger;
 	cout << "[BOOKING MANAGEMENT MENU]\n\n";
     cout << "Are you a new costumer? (y/n)\n";
 	getline(cin, menuhelper);
@@ -415,12 +425,12 @@ void Application::bookingsMenu() {
 	do {
 		if (menuhelper == "y") {
 			cout << endl;
-			a = newCustomer();
+			passenger = newCustomer();
 			break;
 		}
 		else if (menuhelper == "n") {
 			printSummaryPassenger();
-			a = choosePassenger();
+			passenger = choosePassenger();
 			break;
 		}
 		else {
@@ -430,9 +440,9 @@ void Application::bookingsMenu() {
 	cout << endl;
 	do {
 		cout << "[BOOKING MANAGEMENT MENU]\n\n";
-		cout << "[1]- Show my scheduled Flights\n";
-		cout << "[2]- Book a Flight\n";
-		cout << "[3]- Return a Flight ticket\n";
+		cout << "[1]- Show my scheduled Flights.\n";
+		cout << "[2]- Book a Flight.\n";
+		cout << "[3]- Return a Flight ticket.\n";
 		cout << "[9]- Back.\n\n";
 		do {
 			cout << "Insert the desired option: ";
@@ -449,14 +459,16 @@ void Application::bookingsMenu() {
 
 		switch (op) {
 		case 1:
-			showAllFlights(a);
-			break;
+            showAllFlights(passenger);
+            pause();
+            break;
 			/*
 			case2:
 				funçãospolis;
 			*/
 		case 3:
-			returnTicket(a);
+			returnTicket(passenger);
+            pause();
 			break;
 		}
 	} while (op != 9);
@@ -545,29 +557,39 @@ void Application::printSummaryPassenger() {
 
     cout << "PASSENGER SUMMARY\n\n";
 
+    cout << std::left;
+    cout << setw(12) << "Passenger ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13) << "Date of Birth\n";
     for (auto &passenger : company.getPassengers()) {
         passenger->printSummary();
     }
 
+    cout << endl;
 }
 
 void Application::printSummaryAirplane() {
 
     cout << "AIRPLANE SUMMARY\n\n";
 
+    cout << std::left;
+    cout << setw(11) << "Airplane ID\n";
+
     for (auto &airplane : company.getFleet()) {
         airplane->printSummary();
     }
+    cout << endl;
 }
 
 void Application::printSummaryFlight(Airplane *airplane) {
 
     cout << "FLIGHT SUMMARY\n\n";
+    cout << std::left;
+    cout << setw(9) << "Flight ID" << setw(3) << " " << setw(9) << "Departure" << setw(3) << " " << setw(11) << "Destination" << setw(3) << " " << setw(14) << "Time to flight\n";
 
     for (auto &flight : airplane->getFlights()) {
 
         flight->printSummary();
     }
+    cout << endl;
 }
 
 Passenger *Application::choosePassenger() {
@@ -1007,6 +1029,11 @@ void Application::flightCreate(Airplane *airplane) {
 
 void Application::passengerDelete() {
 
+    if (company.getPassengers().size() == 0) {
+        cout << "There are no passengers.\n";
+        return;
+    }
+
     printSummaryPassenger();
     Passenger *passenger;
     do {
@@ -1027,6 +1054,13 @@ void Application::passengerDelete() {
 }
 
 void Application::airplaneDelete() {
+
+    if (company.getFleet().size() == 0) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
 
     printSummaryAirplane();
     Airplane *airplane;
@@ -1049,6 +1083,11 @@ void Application::airplaneDelete() {
 }
 
 void Application::flightDelete(Airplane *airplane) {
+
+    if (airplane->getFlights().size() == 0) {
+        cout << "There are no flights in this airplane.\n";
+        return;
+    }
 
     printSummaryFlight(airplane);
     Flight *flight;
@@ -1082,6 +1121,11 @@ void Application::flightDelete(Airplane *airplane) {
 }
 
 void Application::passengerUpdateMenu() {
+
+    if (company.getPassengers().size() == 0) {
+        cout << "There are no passengers.\n";
+        return;
+    }
 
     printSummaryPassenger();
     int op;
@@ -1224,6 +1268,13 @@ void Application::passengerUpdateNYear(Passenger *passenger) {
 }
 
 void Application::airplaneUpdateMenu() {
+
+    if (company.getFleet().size() == 0) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
 
     printSummaryAirplane();
     int op;
@@ -1530,6 +1581,11 @@ void Application::flightAddPassenger(Flight *flight, int capacity) {
 
 
 void Application::flightUpdateMenu(Airplane *airplane) {
+
+    if (airplane->getFlights().size() == 0) {
+        cout << "There are no flights in this airplane.\n";
+        return;
+    }
 
     printSummaryFlight(airplane);
     int op;

@@ -1,4 +1,5 @@
 #include "Passenger.h"
+#include <iomanip>
 
 Passenger::Passenger(unsigned int id, string name, string dateOfBirth) : id(id), name(name), dateOfBirth(dateOfBirth)
 {
@@ -68,7 +69,9 @@ void PassengerWithCard::setCard(Card *card) {
 }
 
 void Passenger::printSummary() {
-    cout << "Id: " << id << " Name: " << name << endl;
+
+    cout << std::left;
+    cout << setw(12) << id << setw(3) << " " << setw(30) << name << setw(3) << " " << setw(13) << dateOfBirth << endl;
 }
 
 
