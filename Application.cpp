@@ -1029,6 +1029,11 @@ void Application::flightCreate(Airplane *airplane) {
 
 void Application::passengerDelete() {
 
+    if (company.getPassengers().size() == 0) {
+        cout << "There are no passengers.\n";
+        return;
+    }
+
     printSummaryPassenger();
     Passenger *passenger;
     do {
@@ -1049,6 +1054,13 @@ void Application::passengerDelete() {
 }
 
 void Application::airplaneDelete() {
+
+    if (company.getFleet().size() == 0) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
 
     printSummaryAirplane();
     Airplane *airplane;
@@ -1071,6 +1083,11 @@ void Application::airplaneDelete() {
 }
 
 void Application::flightDelete(Airplane *airplane) {
+
+    if (airplane->getFlights().size() == 0) {
+        cout << "There are no flights in this airplane.\n";
+        return;
+    }
 
     printSummaryFlight(airplane);
     Flight *flight;
@@ -1104,6 +1121,11 @@ void Application::flightDelete(Airplane *airplane) {
 }
 
 void Application::passengerUpdateMenu() {
+
+    if (company.getPassengers().size() == 0) {
+        cout << "There are no passengers.\n";
+        return;
+    }
 
     printSummaryPassenger();
     int op;
@@ -1246,6 +1268,13 @@ void Application::passengerUpdateNYear(Passenger *passenger) {
 }
 
 void Application::airplaneUpdateMenu() {
+
+    if (company.getFleet().size() == 0) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
 
     printSummaryAirplane();
     int op;
@@ -1552,6 +1581,11 @@ void Application::flightAddPassenger(Flight *flight, int capacity) {
 
 
 void Application::flightUpdateMenu(Airplane *airplane) {
+
+    if (airplane->getFlights().size() == 0) {
+        cout << "There are no flights in this airplane.\n";
+        return;
+    }
 
     printSummaryFlight(airplane);
     int op;
