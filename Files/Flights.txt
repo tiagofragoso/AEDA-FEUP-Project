@@ -1,0 +1,2 @@
+c1; Porto; Paris; 3; 37; 2; 1A-1, 2A-3
+r2; Porto; Pyongyang; 5; 7000; 15; 2

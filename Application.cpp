@@ -443,7 +443,6 @@ void Application::bookingsMenu() {
 		cout << "[1]- Show my scheduled Flights.\n";
 		cout << "[2]- Book a Flight.\n";
 		cout << "[3]- Return a Flight ticket.\n";
-		//TODO:CHECK IF THERE IS ANYTHING ELSE TO INSERT HERE
 		cout << "[9]- Back.\n\n";
 		do {
 			cout << "Insert the desired option: ";
