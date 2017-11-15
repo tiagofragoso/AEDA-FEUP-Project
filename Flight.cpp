@@ -121,7 +121,7 @@ Passenger * RentedFlight::getBuyer() const {
     return this-> buyer;
 }
 
-PassengerMap & RentedFlight::getPassengers() {
+PassengerMap& RentedFlight::getPassengers() {
 
     PassengerMap c;
     return c;
