@@ -18,6 +18,9 @@ private:
     int avgYrFlights;
 
 public:
+    /**
+     * @brief Default Constructor of a Card object
+     */
 	Card() {}
     /**
      * @brief Constructor of a Card object using the job and the average number of Flights per year
