@@ -39,6 +39,7 @@ private:
      * @brief unsigned int duration of the Flight
      */
     unsigned int duration;
+	unsigned int capacity;
 
 public:
 	/**
@@ -49,8 +50,9 @@ public:
 	 * @param time_to_flight
 	 * @param basePrice
 	 * @param duration
+	 * @param capacity
 	 */
-    Flight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration);
+	Flight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration);
 
     //get Methods
     /**
@@ -89,6 +91,7 @@ public:
      */
     virtual string getType() const = 0;
 
+	unsigned int getCapacity() const;
     //set Methods
     /**
      * @brief Sets the departure of the Flight to the one passed as parameter
