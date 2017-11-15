@@ -90,7 +90,8 @@ void Application::filesMenu() {
         cout << "[FILE MANAGEMENT MENU]\n\n";
 
         cout << "NOTE:\n*Please load the files in the following order: Passengers-Flights-Airplanes.\n";
-        cout << "*Loading multiple files for the same category will try to merge data, which may cause data overlapping.\n\n";
+        cout
+                << "*Loading multiple files for the same category will try to merge data, which may cause data overlapping.\n\n";
 
         cout << "[1]- Load passengers file ";
         if (passengersFilepath.empty()) {
@@ -133,7 +134,7 @@ void Application::filesMenu() {
                 //passengersFilepath = inputFilePath("passenger");
                 try {
                     loadPassengerFile();
-                } catch (InvalidFilePath &in){
+                } catch (InvalidFilePath &in) {
                     in.print();
                 }
                 break;
@@ -141,19 +142,15 @@ void Application::filesMenu() {
                 //flightsFilepath = inputFilePath("flight");
                 try {
                     loadFlightFile();
-                } catch(InvalidFilePath &in){
+                } catch (InvalidFilePath &in) {
                     in.print();
-                }
-                for (auto const &f: this->company.getFlights()){
-                    f->print();
-                    cout << endl;
                 }
                 break;
             case 3:
                 //airplanesFilepath = inputFilePath("airplane");
                 try {
                     loadAirplaneFile();
-                } catch (InvalidFilePath &in){
+                } catch (InvalidFilePath &in) {
                     in.print();
                 }
                 break;
@@ -161,7 +158,8 @@ void Application::filesMenu() {
 
                 if (passengersChanged || airplanesChanged || flightsChanged) {
                     do {
-                        cout << "Saving all changes will replace the data in the files with the current state of the application. Proceed (Y/N) ? ";
+                        cout
+                                << "Saving all changes will replace the data in the files with the current state of the application. Proceed (Y/N) ? ";
                         if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N' || auxOp == 'y' || auxOp == 'n')) {
                             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                             if (auxOp == 'Y') {
@@ -334,210 +332,184 @@ void Application::flightsMenu(Airplane *airplane) {
     } while (op != 9);
 
 }
-Passenger * Application::newCustomer() {
-	string foo;
-	string name, dateOfBirth, job;
-	int id, nYear;
 
-	while (true) {
+Passenger *Application::newCustomer() {
+    string foo;
+    string name, dateOfBirth, job;
+    int id, nYear;
 
-		cout << "Normal passenger or passenger with card? (n/c)\n";
-		getline(cin, foo);
-		if ((foo == "n") || (foo == "c"))
-			break;
-		else
-			cout << "Invalid option.\n";
+    while (true) {
 
-	}
+        cout << "Normal passenger or passenger with card? (n/c)\n";
+        getline(cin, foo);
+        if ((foo == "n") || (foo == "c"))
+            break;
+        else
+            cout << "Invalid option.\n";
 
-	cout << "Insert the new passenger information: \n\n";
+    }
 
-	do {
+    cout << "Insert the new passenger information: \n\n";
 
-		do {
-
-			cout << "Insert id: ";
-			if (validArg(id)) break;
-
-		} while (true);
-
-		try {
-			validPassenger(id);
-		}
-		catch (const InvalidPassenger &i) {
-			i.printDuplicate();
-			continue;
-		}
-
-		break;
-
-	} while (true);
-
-
-	cout << "Name: ";
-	getline(cin, name);
-
-	cout << "Date of Birth: (DD/MM/YYYY): ";
-	getline(cin, dateOfBirth);
-
-	if (foo == "n") {
-
-		Passenger *newpassenger = new Passenger(id, name, dateOfBirth);
-		company.addPassenger(newpassenger);
-		cout << "Passenger successfully added\n";
-		passengersChanged = true;
-		return newpassenger;
-	}
-	else if (foo == "c") {
-
-		cout << "Job: ";
-		getline(cin, job);
-		normalize(job);
-
-		nYear = 0;
-
-		PassengerWithCard *newpassenger = new PassengerWithCard(id, name, dateOfBirth, job, nYear);
-		company.addPassenger(newpassenger);
-		cout << "Passenger successfully added\n";
-		passengersChanged = true;
-		return newpassenger;
-	}
-}
-
-void Application::bookingsMenu() {
-	string menuhelper;
-	int id, op;
-	Passenger* a;
-	cout << "[BOOKING MANAGEMENT MENU]\n\n";
-    cout << "Are you a new costumer? (y/n)\n";
-	getline(cin, menuhelper);
-	normalize(menuhelper);
-	do {
-		if (menuhelper == "y") {
-			cout << endl;
-			a = newCustomer();
-			break;
-		}
-		else if (menuhelper == "n") {
-			printSummaryPassenger();
-			a = choosePassenger();
-			break;
-		}
-		else {
-			cout << "Invalid option. Reenter." << endl;
-		}
-	} while (true);
-	cout << endl;
-	do {
-		cout << "[BOOKING MANAGEMENT MENU]\n\n";
-		cout << "[1]- Show my scheduled Flights\n";
-		cout << "[2]- Book a Flight\n";
-		cout << "[3]- Return a Flight ticket\n";
-		cout << "[9]- Back.\n\n";
-		do {
-			cout << "Insert the desired option: ";
-			if ((cin >> op) && ((op >= 1 && op <= 3) || op == 9)) {
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				break;
-			}
-			else {
-				cerr << "Invalid option.\n";
-				cin.clear();
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			}
-		} while (true);
-
-		switch (op) {
-		case 1:
-			showAllFlights(a);
-			break;
-			/*
-			case2:
-				funçãospolis;
-			*/
-		case 3:
-			returnTicket(a);
-			break;
-		}
-	} while (op != 9);
-
-}
-void Application::returnTicket(Passenger *p) {
-    int id;
-    string seat, removehelper;
-    showAllFlights(p);
     do {
-        cout << "Insert the ID of the flight you would like to return the ticket: ";
-        if (!validArg(id)) continue;
-        else break;
+
+        do {
+
+            cout << "Insert id: ";
+            if (validArg(id)) break;
+
+        } while (true);
+
+        try {
+            validPassenger(id);
+        }
+        catch (const InvalidPassenger &i) {
+            i.printDuplicate();
+            continue;
+        }
+
+        break;
+
     } while (true);
 
-    for (size_t i = 0; i < company.getFlights().size(); i++) {
-        if (company.getFlights().at(i)->getId() == id) {
-            if (company.getFlights().at(i)->getType() == "c") {
-                for (auto const &pass: this->company.getFlights().at(i)->getPassengers()) {
-                    if (pass.second == p) {
-                        seat = pass.first;
-                        cout << "Would you like to remove seat " << pass.first << " ?(Y/N)\n";
-                        getline(cin, removehelper);
-                        normalize(removehelper);
-                        do {
-                            if (removehelper == "y") {
-                                cout << endl;
-                                auto it = this->company.getFlights().at(i)->getPassengers().find(pass.first);
-                                company.getFlights().at(i)->getPassengers().erase(it);
-                                cout << "The seat " << seat << " that you had on that flight has been returned.\n";
-                                flightsChanged = true;
-                                break;
-                            } else if (removehelper == "n") {
-                                break;
-                            } else {
-                                cout << "Invalid option. Reenter." << endl;
-                            }
-                        } while (true);
-                        removehelper.clear();
-                    }
-                }
-            } else if (company.getFlights().at(i)->getType() == "r") {
-                cout << "Do you want to remove your rental of flight " << company.getFlights().at(i)->getId()
-                     << " ?(Y/N)\n";
-                getline(cin, removehelper);
-                normalize(removehelper);
-                do {
-                    if (removehelper == "y") {
-                        cout << endl;
-                        company.getFlights().at(i)->setBuyer(nullptr);
-                        cout << "Your rental of flight " << company.getFlights().at(i)->getId() << "has been removed"
-                             << endl;
-                        flightsChanged = true;
-                        break;
-                    } else if (removehelper == "n") {
-                        break;
-                    } else {
-                        cout << "Invalid option. Reenter." << endl;
-                    }
-                } while (true);
-            }
-            break;
-        }
+
+    cout << "Name: ";
+    getline(cin, name);
+
+    cout << "Date of Birth: (DD/MM/YYYY): ";
+    getline(cin, dateOfBirth);
+
+    if (foo == "n") {
+
+        Passenger *newpassenger = new Passenger(id, name, dateOfBirth);
+        company.addPassenger(newpassenger);
+        cout << "Passenger successfully added\n";
+        passengersChanged = true;
+        return newpassenger;
+    } else if (foo == "c") {
+
+        cout << "Job: ";
+        getline(cin, job);
+        normalize(job);
+
+        nYear = 0;
+
+        PassengerWithCard *newpassenger = new PassengerWithCard(id, name, dateOfBirth, job, nYear);
+        company.addPassenger(newpassenger);
+        cout << "Passenger successfully added\n";
+        passengersChanged = true;
+        return newpassenger;
     }
 }
 
-void Application::showAllFlights(Passenger *p) {
-	PassengerMap::iterator it;
-	Passenger *b;
-	for (size_t i = 0; i < company.getFlights().size(); i++)
-	{
-		
-		for (it = company.getFlights().at(i)->getPassengers().begin(); it != company.getFlights().at(i)->getPassengers().end(); it++)
-		{	
-			b = it->second;
-			if (b->getId() == p->getId()) {
-				cout << "Flight ID: " << company.getFlights().at(i)->getId() << " Departure: " << company.getFlights().at(i)->getDeparture() << " Destination: " << company.getFlights().at(i)->getDestination() << " Time to flight: " << company.getFlights().at(i)->getTime_to_flight();
-			}
-		}
-	}
-	cout << endl;
+void Application::bookingsMenu() {
+    string menuhelper;
+    int id, op;
+    Passenger *passenger;
+    cout << "[BOOKING MANAGEMENT MENU]\n\n";
+    do {
+        cout << "Is the customer new (Y/N)? ";
+        getline(cin, menuhelper);
+        if (menuhelper != "") normalize(menuhelper);
+        if (menuhelper == "y") {
+            cout << endl;
+            passenger = newCustomer();
+            break;
+        } else if (menuhelper == "n") {
+            printSummaryPassenger();
+            try { passenger = choosePassenger(); } catch (InvalidPassenger &ip) { ip.print(); }
+            break;
+        } else {
+            cout << "Invalid option. Reenter." << endl;
+        }
+    } while (true);
+    cout << endl;
+    do {
+        cout << "[BOOKING MANAGEMENT MENU]\n\n";
+        cout << "[1]- Show my scheduled Flights\n";
+        cout << "[2]- Book a Flight\n";
+        cout << "[3]- Return a Flight ticket\n";
+        cout << "[9]- Back.\n\n";
+        do {
+            cout << "Insert the desired option: ";
+            if ((cin >> op) && ((op >= 1 && op <= 3) || op == 9)) {
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                break;
+            } else {
+                cerr << "Invalid option.\n";
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+        } while (true);
+
+        switch (op) {
+            case 1:
+                showAllTickets(getTickets(passenger));
+                break;
+                /*
+                case2:
+                    funçãospolis;
+                */
+            case 3:
+                returnTicket(passenger);
+                break;
+        }
+    } while (op != 9);
+
+}
+
+void Application::returnTicket(Passenger *p) {
+    int id;
+    vector<pair<string, Flight *> > v = getTickets(p);
+    showAllTickets(v);
+    if (v.size() == 0) return;
+    do {
+        cout << "Please choose the ticket you wish to return: ";
+        if (!validArg(id)) continue;
+        else if (id >= 1 && id <= v.size()) break;
+        cout << "Invalid input. Reenter.\n";
+    } while (true);
+
+    pair<string, Flight *> selectedTicket = v.at(id - 1);
+
+    if (selectedTicket.second->getType() == "c") {
+
+        auto it = selectedTicket.second->getPassengers().find(selectedTicket.first);
+
+        selectedTicket.second->getPassengers().erase(it);
+
+        cout << "Your ticket for seat " << selectedTicket.first << " from ";
+
+    } else {
+
+        selectedTicket.second->setBuyer(nullptr);
+
+        cout << "Your full reservation of";
+
+    }
+
+    flightsChanged = true;
+
+    cout << " Flight " << selectedTicket.second->getId() << " was successfully removed.\n";
+
+}
+
+void Application::showAllTickets(vector<pair<string, Flight *> > const &v) const {
+    unsigned int i = 1;
+    cout << std::left;
+    if (v.size() > 0) {
+        cout << setw(5) << " " << setw(9) << "Flight ID" << setw(3) << " " << setw(4) << "Seat" << setw(3) << " "
+             << setw(15) << "Departure" << setw(3) << " " << setw(15) << "Destination" << endl;
+        for (auto const &t: v) {
+            cout << "[" << i << "]- ";
+            cout << setw(9) << to_string(t.second->getId()) << setw(3) << " " << setw(4) << t.first << setw(3) << " "
+                 << setw(15) << t.second->getDeparture() << setw(3) << " " << setw(15) << t.second->getDestination()
+                 << setw(3)
+                 << " " << "Flight in " << to_string(t.second->getTime_to_flight()) << "h" << endl;
+            i++;
+        }
+    } else cout << "Selected passenger has no booked tickets.\n";
+    cout << endl;
 }
 
 
@@ -1373,8 +1345,7 @@ PassengerMap::iterator Application::chooseSeat(Flight *flight) {
 void Application::flightDeletePassenger(Flight *flight) {
 
     PassengerMap::iterator it;
-    for (auto p : flight->getPassengers())
-    {
+    for (auto p : flight->getPassengers()) {
         cout << p.first << " : ";
         p.second->printSummary();
         cout << endl;
@@ -1392,20 +1363,20 @@ void Application::flightDeletePassenger(Flight *flight) {
     } while (true);
     flight->getPassengers().erase(it);
     cout << "The passenger was removed from the flight\n";
-	flightsChanged = true;
+    flightsChanged = true;
 }
 
 vector<string> Application::availableSeats(Flight *flight, int capacity) {
 
-    vector <string> seats;
+    vector<string> seats;
     string line;
     string place;
-    PassengerMap & passengers = flight->getPassengers();
+    PassengerMap &passengers = flight->getPassengers();
 
     for (size_t i = 0; i < capacity / 6; i++) {
 
 
-        line = to_string(i+1);
+        line = to_string(i + 1);
 
         for (size_t j = 0; j < 6; j++) {
 
@@ -1416,14 +1387,14 @@ vector<string> Application::availableSeats(Flight *flight, int capacity) {
 
             place = line + seat;
 
-            if(flight->getPassengers().empty()) {
+            if (flight->getPassengers().empty()) {
 
                 seats.push_back(place);
                 continue;
             }
 
             if (passengers.find(place) != passengers.end()) {
-              continue;
+                continue;
             } else {
                 seats.push_back(place);
             }
@@ -1444,7 +1415,7 @@ void Application::printSeats(int capacity, vector<string> seats) {
     for (size_t i = 0; i < capacity / 6; i++) {
 
 
-        line = to_string(i+1);
+        line = to_string(i + 1);
 
         for (size_t j = 0; j < 6; j++) {
 
@@ -1481,8 +1452,8 @@ string Application::chooseSeat(vector<string> seats) {
 
 void Application::flightAddPassenger(Flight *flight, int capacity) {
 
-    Passenger * passenger = new Passenger;
-    vector <string> seats;
+    Passenger *passenger = new Passenger;
+    vector<string> seats;
     string seat;
 
     printSummaryPassenger();
@@ -1615,18 +1586,18 @@ void Application::flightUpdateMenu(Airplane *airplane) {
             }
         }
 
-    }while(op != 9);
+    } while (op != 9);
 }
 
 
-Airplane * Application::readAirplane(string &a){
+Airplane *Application::readAirplane(string &a) {
 
-    Airplane * newAirplane = new Airplane;
+    Airplane *newAirplane = new Airplane;
 
     int temp;
     string st;
 
-    try {next(temp, a, ";");} catch(InvalidFormat) {
+    try { next(temp, a, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Airplane data in the correct format.\n";
     }
 
@@ -1635,7 +1606,7 @@ Airplane * Application::readAirplane(string &a){
     next(st, a, ";");
     newAirplane->setModel(st);
 
-    try {next(temp, a, ";");} catch(InvalidFormat) {
+    try { next(temp, a, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Airplane data in the correct format.\n";
     }
 
@@ -1646,23 +1617,22 @@ Airplane * Application::readAirplane(string &a){
     if (st == "no_flights") return newAirplane;
 
     vector<unsigned int> f;
-    while (st != ""){
+    while (st != "") {
         int fid;
-        try {next(fid, st, ",");} catch(InvalidFormat) {
+        try { next(fid, st, ","); } catch (InvalidFormat) {
             cout << "Please insert the Airplane data in the correct format.\n";
         }
-        f.push_back((unsigned int)fid);
+        f.push_back((unsigned int) fid);
     }
 
     vector<Flight *> flights;
 
-    for (auto const &id:f){
-        Flight* fp = this->company.flightById(id);
+    for (auto const &id:f) {
+        Flight *fp = this->company.flightById(id);
         if (fp != nullptr) flights.push_back(fp);
     }
 
     newAirplane->setFlights(flights);
-    newAirplane->print();
 
     return newAirplane;
 
@@ -1740,16 +1710,16 @@ Flight *Application::readFlight(string &f) {
         if (st == "no_passengers") return newFlight;
 
         PassengerMap pmap;
-        while (st != ""){
+        while (st != "") {
             string st1;
             next(st1, st, ",");
             string seat;
             next(seat, st1, "-");
             int elem;
-            try {next(elem, st1, "-");} catch(InvalidFormat) {
+            try { next(elem, st1, "-"); } catch (InvalidFormat) {
                 cout << "Please insert the Flight data in the correct format.\n";
             }
-            Passenger * p = this->company.passengerById((unsigned int)elem);
+            Passenger *p = this->company.passengerById((unsigned int) elem);
 
 
             pmap.emplace(seat, p);
@@ -1823,7 +1793,7 @@ void Application::loadPassengerFile() {
 
     ifstream passFile(passengersFilepath);
     if (!passFile) throw InvalidFilePath("fail");
-    while (getline(passFile, p)){
+    while (getline(passFile, p)) {
         this->company.addPassenger(readPassenger(p));
     }
     passFile.close();
@@ -1845,7 +1815,7 @@ void Application::loadFlightFile() {
 
     ifstream flFile(flightsFilepath);
     if (!flFile) throw InvalidFilePath("fail");
-    while (getline(flFile, f)){
+    while (getline(flFile, f)) {
         this->company.addFlight(readFlight(f));
     }
     flFile.close();
@@ -1860,7 +1830,7 @@ void Application::loadAirplaneFile() {
 
     ifstream airFile(airplanesFilepath);
     if (!airFile) throw InvalidFilePath("fail");
-    while (getline(airFile, a)){
+    while (getline(airFile, a)) {
         this->company.addAirplane(readAirplane(a));
     }
     airFile.close();
@@ -1872,23 +1842,23 @@ void Application::saveAllFiles() {
 
         if (airplanesFilepath.empty()) airplanesFilepath = inputFilePath("airplane");
 
-        try {saveAirplaneFile();} catch(InvalidFilePath &in){in.print();}
+        try { saveAirplaneFile(); } catch (InvalidFilePath &in) { in.print(); }
 
     }
 
-    if (flightsChanged){
+    if (flightsChanged) {
 
         if (flightsFilepath.empty()) flightsFilepath = inputFilePath("flight");
 
-        try {saveFlightFile();} catch(InvalidFilePath &in){in.print();}
+        try { saveFlightFile(); } catch (InvalidFilePath &in) { in.print(); }
 
     }
 
-    if (passengersChanged){
+    if (passengersChanged) {
 
         if (passengersFilepath.empty()) passengersFilepath = inputFilePath("passenger");
 
-        try {savePassengerFile();} catch(InvalidFilePath &in){in.print();}
+        try { savePassengerFile(); } catch (InvalidFilePath &in) { in.print(); }
 
     }
 
@@ -1902,7 +1872,7 @@ void Application::saveAirplaneFile() {
     ofstream airFile(airplanesFilepath);
 
     if (!airFile) throw InvalidFilePath("fail");
-    for (size_t i = 0; i < this->company.getFleet().size(); i++){
+    for (size_t i = 0; i < this->company.getFleet().size(); i++) {
         airFile << this->company.getFleet().at(i);
         if (i != this->company.getFleet().size() - 1) airFile << endl;
     }
@@ -1916,7 +1886,7 @@ void Application::saveFlightFile() {
     ofstream fFile(flightsFilepath);
 
     if (!fFile) throw InvalidFilePath("fail");
-    for (size_t i = 0; i < this->company.getFlights().size(); i++){
+    for (size_t i = 0; i < this->company.getFlights().size(); i++) {
         fFile << this->company.getFlights().at(i);
         if (i != this->company.getFlights().size() - 1) fFile << endl;
     }
@@ -1930,12 +1900,29 @@ void Application::savePassengerFile() {
     ofstream passFile(passengersFilepath);
 
     if (!passFile) throw InvalidFilePath("fail");
-    for (size_t i = 0; i < this->company.getPassengers().size(); i++){
+    for (size_t i = 0; i < this->company.getPassengers().size(); i++) {
         passFile << this->company.getPassengers().at(i);
-        if (i != this->company.getPassengers().size() - 1)  passFile << endl;
+        if (i != this->company.getPassengers().size() - 1) passFile << endl;
     }
 
     passFile.close();
+
+}
+
+vector<pair<string, Flight *> > Application::getTickets(Passenger *p) {
+    vector<pair<string, Flight *> > tickets;
+
+    for (auto const &f: company.getFlights()) {
+        if (f->getType() == "c")
+            for (auto const &pass: f->getPassengers()) {
+                if (pass.second->getId() == p->getId()) tickets.emplace_back(pass.first, f);
+            }
+        else {
+            if (*(f->getBuyer()) == *p) tickets.emplace_back("ALL", f);
+        }
+    }
+
+    return tickets;
 
 }
 

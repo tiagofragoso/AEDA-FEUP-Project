@@ -10,6 +10,7 @@
 #include <fstream>
 #include <map>
 #include <string>
+#include <utility>
 #include "Company.h"
 
 
@@ -159,7 +160,7 @@ public:
     void airplaneUpdateModel(Airplane * airplane);
     void airplaneUpdateCapacity(Airplane * airplane);
 
-	void showAllFlights(Passenger *p);
+	void showAllTickets(vector<pair<string, Flight *> > const &v) const;
     void flightShow(Airplane * airplane);
     void flightCreate(Airplane * airplane);
     void flightDelete(Airplane * airplane);
@@ -177,6 +178,7 @@ public:
     vector<string> availableSeats(Flight * flight, int capacity);
     void printSeats(int capacity, vector<string> seats);
 	void returnTicket(Passenger *p);
+    vector< pair<string, Flight*> > getTickets(Passenger *p);
 
     //file functions
     string inputFilePath(string s);
