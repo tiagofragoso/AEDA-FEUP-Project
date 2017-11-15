@@ -430,10 +430,9 @@ void Application::bookingsMenu() {
 	cout << endl;
 	do {
 		cout << "[BOOKING MANAGEMENT MENU]\n\n";
-		cout << "[1]- Show my scheduled Flights";
-		cout << "[2]- Book a Flight";
-		cout << "[3]- Return a Flight ticket";
-		//TODO:CHECK IF THERE IS ANYTHING ELSE TO INSERT HERE
+		cout << "[1]- Show my scheduled Flights\n";
+		cout << "[2]- Book a Flight\n";
+		cout << "[3]- Return a Flight ticket\n";
 		cout << "[9]- Back.\n\n";
 		do {
 			cout << "Insert the desired option: ";
