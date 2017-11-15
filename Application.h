@@ -50,7 +50,7 @@ private:
 
 public:
     /**
-     * @brief Constructor of an "empty" Application object
+     * @brief Default constructor of an Application object
      */
     Application();
 

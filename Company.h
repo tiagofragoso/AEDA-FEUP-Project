@@ -39,7 +39,7 @@ private:
 public:
 
 	/**
-	 * @brief Constructor of an empty Company object
+	 * @brief Default Constructor of a Company object
 	 */
     Company();  
 	/**
