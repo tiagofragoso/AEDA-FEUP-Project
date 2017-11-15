@@ -415,7 +415,7 @@ void Application::bookingsMenu() {
 
     string menuhelper;
     int id, op;
-    Passenger *passenger;
+	Passenger *passenger = new Passenger;
     cout << "[BOOKING MANAGEMENT MENU]\n\n";
     do {
         cout << "Is the customer new (Y/N)? ";
@@ -457,19 +457,79 @@ void Application::bookingsMenu() {
                 showAllTickets(getTickets(passenger));
                 pause();
                 break;
-                /*
                 case2:
-                    funçãospolis;
-                */
+                    bookFlight(passenger);
+					pause();
+					break;
             case 3:
                 returnTicket(passenger);
                 pause();
                 break;
         }
     } while (op != 9);
-
 }
+void Application::bookFlight(Passenger *p) {
+	string menuhelper;
+	do {
+		cout << "Do you wish to book a Rented or Commercial Flight (R/C) ? ";
+		getline(cin, menuhelper);
+		if (menuhelper != "") normalize(menuhelper);
+		if (menuhelper == "r" || menuhelper == "c") {
+			bookFlightWithType(p, menuhelper);
+			break;
+		}
+		else {
+			cout << "Invalid option. Reenter." << endl;
+		}
+	} while (true);
+	cout << endl;
+}
+void Application::printAllFlightsWithType(string type){
 
+	for (auto const &f : company.getFlights()) {
+		if (f->getType() == "r" && type == "r") {
+			f->printSummary();
+		}
+		if (type == "c" && f->getType() == "c") {
+			f->printSummary();
+		}
+	}
+}
+Flight* Application::chooseFlight(unsigned int id, string type) {
+	Flight* flight;
+	for (auto const &f : company.getFlights()) {
+		if (f->getType() == type && f->getId() == id)
+			return f;
+	}
+	throw(InvalidFlight(id));
+}
+void Application::bookFlightWithType(Passenger *p, string type) {
+	printAllFlightsWithType(type);
+	int id;
+	string menuhelper;
+	Flight * flight;
+	do {
+		cout << "Please insert the ID of the flight you wish to book: ";
+		if (!validArg(id)) continue;
+		else {
+			try
+			{
+				flight = chooseFlight(id, type);
+				break;
+			}
+			catch (const InvalidFlight &in)
+			{
+				in.print();
+			}
+		}
+	} while (true);
+	if (type == "c")
+		flightAddPassenger(flight, p);
+	else {
+		flight->setBuyer(p);
+		cout << "You have rented the flight with the ID " << id << "!";
+	}
+}
 void Application::returnTicket(Passenger *p) {
     int id;
     vector<pair<string, Flight *> > v = getTickets(p);
@@ -1500,27 +1560,18 @@ string Application::chooseSeat(vector<string> seats) {
 
 }
 
+void Application::flightAddPassenger(Flight *flight, Passenger *passenger) {
+	vector <string> seats;
+	int capacity;
+	string seat;
 
-void Application::flightAddPassenger(Flight *flight, int capacity) {
-
-    Passenger *passenger = new Passenger;
-    vector<string> seats;
-    string seat;
-
-    printSummaryPassenger();
-
-    do {
-        try {
-            passenger = choosePassenger();
-        }
-        catch (const InvalidPassenger &i) {
-            i.print();
-            continue;
-        }
-
-        break;
-
-    } while (true);
+	for (auto const &a : company.getFleet()) {
+		for (auto const&f : a->getFlights()) {
+			if (*f == *flight) {
+				capacity = a->getCapacity();
+			}
+		}
+	}
 
     cout << "Available seats: \n";
 
@@ -1546,8 +1597,6 @@ void Application::flightAddPassenger(Flight *flight, int capacity) {
     flight->addPassenger(seat, passenger);
 
     cout << "Passenger added successfully\n";
-
-
 }
 
 
@@ -1613,8 +1662,7 @@ void Application::flightUpdateMenu(Airplane *airplane) {
 
             cout << "[FLIGHT UPDATE MENU]\n\n";
             cout << "[1]- Change flight price.\n";
-            cout << "[2]- Add passenger.\n";
-            cout << "[3]- Delete passenger.\n";
+            cout << "[2]- Delete passenger.\n";
             cout << "[9]- Back.\n\n";
 
             do {
@@ -1634,9 +1682,6 @@ void Application::flightUpdateMenu(Airplane *airplane) {
                     flightUpdatePrice(flight);
                     break;
                 case 2:
-                    flightAddPassenger(flight, airplane->getCapacity());
-                    break;
-                case 3:
                     flightDeletePassenger(flight);
                     break;
             }

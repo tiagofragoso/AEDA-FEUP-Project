@@ -169,7 +169,7 @@ public:
     Flight * chooseFlight(Airplane * airplane);
     void validFlight(int id);
     void flightUpdatePrice(Flight * flight);
-    void flightAddPassenger(Flight * flight, int capacity);
+    void flightAddPassenger(Flight * flight, Passenger* passenger);
     void flightDeletePassenger(Flight * flight);
     void flightUpdateBuyer(Flight * flight);
 	PassengerMap::iterator chooseSeat(Flight *flight);
@@ -179,6 +179,10 @@ public:
     void printSeats(int capacity, vector<string> seats);
 	void returnTicket(Passenger *p);
     vector< pair<string, Flight*> > getTickets(Passenger *p);
+	void bookFlight(Passenger *p);
+	void bookFlightWithType(Passenger *p, string type);
+	void printAllFlightsWithType(string type);
+	Flight* chooseFlight(unsigned int id, string type);
 
     //file functions
     string inputFilePath(string s);
