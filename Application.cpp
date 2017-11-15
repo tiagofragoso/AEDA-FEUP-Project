@@ -557,29 +557,39 @@ void Application::printSummaryPassenger() {
 
     cout << "PASSENGER SUMMARY\n\n";
 
+    cout << std::left;
+    cout << setw(12) << "Passenger ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13) << "Date of Birth\n";
     for (auto &passenger : company.getPassengers()) {
         passenger->printSummary();
     }
 
+    cout << endl;
 }
 
 void Application::printSummaryAirplane() {
 
     cout << "AIRPLANE SUMMARY\n\n";
 
+    cout << std::left;
+    cout << setw(11) << "Airplane ID\n";
+
     for (auto &airplane : company.getFleet()) {
         airplane->printSummary();
     }
+    cout << endl;
 }
 
 void Application::printSummaryFlight(Airplane *airplane) {
 
     cout << "FLIGHT SUMMARY\n\n";
+    cout << std::left;
+    cout << setw(9) << "Flight ID" << setw(3) << " " << setw(9) << "Departure" << setw(3) << " " << setw(11) << "Destination" << setw(3) << " " << setw(14) << "Time to flight\n";
 
     for (auto &flight : airplane->getFlights()) {
 
         flight->printSummary();
     }
+    cout << endl;
 }
 
 Passenger *Application::choosePassenger() {

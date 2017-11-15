@@ -1,5 +1,6 @@
 #include "Airplane.h"
 #include "exceptions.h"
+#include <iomanip>
 
 Airplane::Airplane() {}
 
@@ -59,7 +60,7 @@ void Airplane::setFlights(vector<Flight*> flights)
 
 void Airplane::printSummary() {
 
-    cout << "Id: " << id << endl;
+    cout << setw(11) << id << endl;
 }
 
 void Airplane::print() {
