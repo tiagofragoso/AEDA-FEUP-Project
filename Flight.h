@@ -9,7 +9,7 @@
 
 using namespace std;
 
-typedef std::map<string, Passenger* > PassengerMap;
+typedef std::map<string, Passenger*, std::less<string> > PassengerMap;
 
 
 class Flight {
