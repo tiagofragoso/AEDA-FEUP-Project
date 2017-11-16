@@ -517,7 +517,7 @@ float Application::ticketPrice(Passenger *p, Flight *f, string type) {
 void Application::printAllFlightsWithType(Passenger *p, string type){
 	bool once = true;
 	for (auto const &f : company.getFlights()) {
-		if (f->getType() == "r" && type == "r") {
+		if (f->getType() == "r" && type == "r" && f->getBuyer()!= nullptr) {
 			if (once) {
 				cout << setw(5) << " " << setw(9) << "Flight ID" << setw(3) << " "
 					<< setw(15) << "Departure" << setw(3) << " " << setw(15) << "Destination" << setw(3) << " " << setw(15) << "Price" << endl;
@@ -1053,12 +1053,12 @@ void Application::flightCreate(Airplane *airplane) {
     normalize(destination);
 
     do {
-        cout << "Duartion (h): ";
+        cout << "Duration (h): ";
         if (validArg(duration)) break;
     } while (true);
 
     do {
-        cout << "Base price (€): ";
+        cout << "Base price (in euros): ";
         if (validArg(price)) break;
     } while (true);
 
