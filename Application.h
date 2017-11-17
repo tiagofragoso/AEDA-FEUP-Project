@@ -11,6 +11,7 @@
 #include <map>
 #include <string>
 #include <algorithm>
+#include <utility>
 #include "Company.h"
 
 
@@ -51,7 +52,7 @@ private:
 
 public:
     /**
-     * @brief Constructor of an "empty" Application object
+     * @brief Default constructor of an Application object
      */
     Application();
 
@@ -168,7 +169,7 @@ public:
     void airplaneUpdateModel(Airplane * airplane);
     void airplaneUpdateCapacity(Airplane * airplane);
 
-	void showAllFlights(Passenger *p);
+	void showAllTickets(vector<pair<string, Flight *> > const &v) const;
     void flightShow(Airplane * airplane);
     void flightCreate(Airplane * airplane);
     void flightDelete(Airplane * airplane);
@@ -177,7 +178,7 @@ public:
     Flight * chooseFlight(Airplane * airplane);
     void validFlight(int id);
     void flightUpdatePrice(Flight * flight);
-    void flightAddPassenger(Flight * flight, int capacity);
+    void flightAddPassenger(Flight * flight, Passenger* passenger);
     void flightDeletePassenger(Flight * flight);
     void flightUpdateBuyer(Flight * flight);
 	PassengerMap::iterator chooseSeat(Flight *flight);
@@ -186,7 +187,12 @@ public:
     vector<string> availableSeats(Flight * flight, int capacity);
     void printSeats(int capacity, vector<string> seats);
 	void returnTicket(Passenger *p);
-
+    vector< pair<string, Flight*> > getTickets(Passenger *p);
+	void bookFlight(Passenger *p);
+	void bookFlightWithType(Passenger *p, string type);
+	void printAllFlightsWithType( Passenger *p , string type);
+	Flight* chooseFlight(unsigned int id, string type);
+	float ticketPrice(Passenger *p, Flight *f, string type);
     //file functions
     string inputFilePath(string s);
     Airplane * readAirplane(string &a);

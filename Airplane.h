@@ -30,7 +30,7 @@ private:
 
 public:
 	/**
-	 * @brief Constructor of an empty Airplane object
+	 * @brief Default Constructor of an Airplane object
 	 */
 	Airplane();
 	/**

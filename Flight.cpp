@@ -28,6 +28,10 @@ unsigned int Flight::getDuration() const
 {
     return this->duration;
 }
+unsigned int Flight::getCapacity() const
+{
+	return this->capacity;
+}
 
 void Flight::setDeparture(string departure)
 {

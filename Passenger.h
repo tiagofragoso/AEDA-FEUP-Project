@@ -26,6 +26,9 @@ private:
 	string dateOfBirth;
 
 public:
+	/**
+	 * @brief Default Constructor of a Passenger object
+	 */
     Passenger();
 
 	/**
@@ -49,7 +52,7 @@ public:
 	string getName() const;
 	/**
 	 * @brief Gets the Date of birth of a Passenger
-	 * @return Date Date struct countaining the Date of birth of a Passenger
+	 * @return string countaining the Date of birth of a Passenger
 	 */
 	string getDateOfBirth() const;
 
@@ -94,18 +97,14 @@ public:
 class PassengerWithCard: public Passenger {
 
 private:
-	/** @name PassengerWithCard data-members*/
-	/** @{
-    *
-    */
 	/**
 	 * @brief Card pointer to a Card object of a Passenger
 	 */
 	Card *card;
-	/** @} end of PassengerWithCard data-members */
-
 public:
-
+	/**
+ 	* @brief Default constructor of a PassengerWithCard object
+ 	*/
     PassengerWithCard();
 
 	/**
