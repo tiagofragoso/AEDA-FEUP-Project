@@ -119,4 +119,10 @@ public:
 
     void print();
 };
+
+bool compFId(Flight * f1, Flight * f2);
+bool compFPriceL(Flight * f1, Flight * f2);
+bool compFPriceH(Flight * f1, Flight * f2);
+bool compFTime(Flight * f1, Flight * f2);
+bool compFDest(Flight * f1, Flight * f2);
 #endif //AEDA_FEUP_PROJECT_FLIGHT_H

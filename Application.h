@@ -10,6 +10,7 @@
 #include <fstream>
 #include <map>
 #include <string>
+#include <algorithm>
 #include "Company.h"
 
 
@@ -84,6 +85,14 @@ public:
      * @brief Menu to manage bookings
      */
     void bookingsMenu();
+    void listsMenu();
+
+    void printListPassengers(vector<Passenger *> passengers, type t);
+    void printListAirplane(vector<Airplane *> airplanes, type t);
+    void printListFlights(vector<Flight *> flights, string type);
+
+
+
 
     /** @} end of Application Menu member-functions */
 

@@ -27,11 +27,12 @@ void Application::mainMenu() {
         cout << "[2]- Passenger management.\n";
         cout << "[3]- Airplane management.\n";
         cout << "[4]- Bookings.\n";
+        cout << "[5]- Lists.\n";
         cout << "[0]- Quit.\n\n";
 
         do {
             cout << "Insert the desired option: ";
-            if ((cin >> op) && op >= 0 && op <= 4) {
+            if ((cin >> op) && op >= 0 && op <= 5) {
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 break;
             } else {
@@ -45,15 +46,23 @@ void Application::mainMenu() {
         switch (op) {
             case 1:
                 filesMenu();
+                pause();
                 break;
             case 2:
                 passengersMenu();
+                pause();
                 break;
             case 3:
                 airplanesMenu();
+                pause();
                 break;
             case 4:
                 bookingsMenu();
+                pause();
+                break;
+            case 5:
+                listsMenu();
+                pause();
                 break;
             case 0:
                 if (passengersChanged || airplanesChanged || flightsChanged) {
@@ -80,6 +89,137 @@ void Application::mainMenu() {
 
     } while (op != 0);
 }
+
+
+void Application::listsMenu() {
+
+    int op;
+    char auxOp;
+    do {
+        cout << "[LISTS MENU]\n\n";
+        cout << "Passenger lists.\n";
+        cout << "[1]- Passengers by name.\n";
+        cout << "[2]- Passengers by id.\n";
+        cout << "[3]- Passengers by age.\n";
+        cout << "Airplane lists.\n";
+        cout << "[4]- Airplanes by id.\n";
+        cout << "Flights lists.\n";
+        cout << "[5]- Flights by id.\n";
+        cout << "[6]- Flights by price (low to high).\n";
+        cout << "[7]- Flights by price (high to low).\n";
+        cout << "[8]- Flights by time to flight.\n";
+        cout << "[9]- Flights by destination.\n";
+        cout << "[0]- Quit.\n\n";
+
+        do {
+            cout << "Insert the desired option: ";
+            if ((cin >> op) && op >= 0 && op <= 10) {
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                break;
+            } else {
+                cerr << "Invalid option.\n";
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+        } while (true);
+
+
+        switch (op) {
+            case 1:
+                printListPassengers(company.getPassengers(), PNAME);
+                pause();
+                break;
+            case 2:
+                printListPassengers(company.getPassengers(), PID);
+                pause();
+                break;
+            case 3:
+                printListPassengers(company.getPassengers(), PAGE);
+                pause();
+                break;
+            case 4:
+                printListAirplane(company.getFleet(), AID);
+                pause();
+                break;
+            case 5:
+                pause();
+                break;
+            case 0:
+                if (passengersChanged || airplanesChanged || flightsChanged) {
+                    cout << "There are changes to be deployed to the files.\n";
+                    do {
+                        cout << "Would you like to save those changes (Y/N) ? ";
+                        if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N' || auxOp == 'y' || auxOp == 'n')) {
+                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            if (auxOp == 'Y') {
+                                saveAllFiles();
+                                pause();
+                                break;
+                            } else {
+                                break;
+                            }
+                        } else {
+                            cerr << "Invalid option.\n";
+                            cin.clear();
+                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        }
+                    } while (true);
+                }
+        }
+
+    } while (op != 0);
+}
+
+void Application::printListPassengers(vector<Passenger *> passengers, type t) {
+
+    string title;
+    switch(t) {
+
+        case PID:
+            sort(passengers.begin(), passengers.end(), compPID);
+            title = "Passengers by id:\n";
+            break;
+        case PNAME:
+            sort(passengers.begin(), passengers.end(), compPNAME);
+            title = "Passengers by name:\n";
+            break;
+        case PAGE:
+            sort(passengers.begin(), passengers.end(), compPAGE);
+            title = "Passengers by age:\n";
+            break;
+    }
+
+    cout << title;
+    cout << std::left;
+    cout << setw(12) << "Passenger ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13) << "Date of Birth\n";
+    for (auto &passenger : passengers) {
+
+        passenger->printSummary();
+    }
+
+}
+
+void Application::printListAirplane(vector<Airplane *> airplanes, type t) {
+
+    string title;
+    switch(t) {
+
+        case AID:
+            sort(airplanes.begin(), airplanes.end(), compAId);
+            title = "Airplane by id:\n";
+            break;
+    }
+
+    cout << title;
+    cout << std::left;
+    cout << setw(11) << "Airplane ID\n";
+
+    for (auto &airplane : airplanes) {
+
+        airplane->printSummary();
+    }
+}
+
 
 void Application::filesMenu() {
     int op;
@@ -1994,4 +2134,5 @@ void Application::savePassengerFile() {
     passFile.close();
 
 }
+
 

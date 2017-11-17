@@ -121,4 +121,6 @@ public:
 	friend ostream & operator<<(ostream & o, const Airplane * a);
 };
 
+bool compAId(Airplane * a1, Airplane * a2);
+
 #endif //AEDA_FEUP_PROJECT_AIRPLANE_H

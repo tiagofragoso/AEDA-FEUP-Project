@@ -133,3 +133,9 @@ ostream &operator<<(ostream &o, const Airplane * a) {
     } else o << "no_flights";
     return o;
 }
+
+bool compAId(Airplane *a1, Airplane *a2) {
+
+    return (a1->getId() < a2->getId());
+}
+

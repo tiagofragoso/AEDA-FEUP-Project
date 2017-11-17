@@ -6,13 +6,26 @@
 #include <vector>
 #include <map>
 
-
 using namespace std;
 /** @name Date Struct*/
 /** @{
  *
  * Struct that saves the information about a Passenger year, month and day of birth
  */
+
+enum type {
+    PID = 1,
+    PNAME = 2,
+    PAGE = 3,
+    AID = 4,
+    ACAP = 5,
+    FID = 6,
+    FPRICEL = 7,
+    FPRICEH = 8,
+    FDEST = 9,
+    FTIME = 10
+};
+
 struct Date{
     unsigned int day = 0;
     unsigned int month = 0;
@@ -43,6 +56,8 @@ void pause();
 void normalize(string &s);
 void next(int &elem, string &piece, string separator);
 void next(string &piece, string &line, string separator);
+
+
 
 
 #endif /* SRC_HELPER_H_ */

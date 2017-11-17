@@ -1,5 +1,6 @@
 #include "Passenger.h"
 #include <iomanip>
+#include <string>
 
 Passenger::Passenger(unsigned int id, string name, string dateOfBirth) : id(id), name(name), dateOfBirth(dateOfBirth)
 {
@@ -122,3 +123,40 @@ string PassengerWithCard::getType() const{
 
     return "c";
 }
+
+//Compare functions
+
+bool compPID(Passenger * p1, Passenger * p2) {
+
+    return (p1->getId() < p2->getId());
+
+}
+
+bool compPNAME(Passenger *p1, Passenger *p2) {
+
+    return (p1->getName() < p2->getName());
+}
+
+bool compPAGE(Passenger *p1, Passenger *p2) {
+
+    string year1 = p1->getDateOfBirth().substr(6,4);
+    string year2 = p2->getDateOfBirth().substr(6,4);
+    string month1 = p1->getDateOfBirth().substr(3,2);
+    string month2 = p2->getDateOfBirth().substr(3,2);
+    string day1 = p1->getDateOfBirth().substr(0,2);
+    string day2 = p2->getDateOfBirth().substr(0,2);
+
+    if (year1 < year2)
+        return false;
+    if (year1 > year2)
+        return true;
+    if (month1 < month2)
+        return false;
+    if (month1 > month2)
+        return true;
+    if (day1 < day2)
+        return false;
+    if (day1 > day2)
+        return true;
+}
+
