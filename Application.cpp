@@ -457,7 +457,7 @@ void Application::bookingsMenu() {
                 showAllTickets(getTickets(passenger));
                 pause();
                 break;
-                case2:
+                case 2:
                     bookFlight(passenger);
 					pause();
 					break;
