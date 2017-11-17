@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "Flight.h"
+#include "exceptions.h"
 
 using namespace std;
 

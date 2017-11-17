@@ -20,23 +20,14 @@ using namespace std;
 
 class Application {
 
+    typedef void(Company::*Menu)(void);
+
 private:
     /**
      * @brief Company company
      */
     Company company;
-    /**
-     * @brief bool passengersChanged is true when Passengers vector has changed and false otherwise
-     */
-    bool passengersChanged;
-    /**
-     * @brief bool airplanesChanged is true when Airplanes vector has changed and false otherwise
-     */
-    bool airplanesChanged;
-    /**
-     * @brief bool flightsChanged is true when Flights vector has changed and false otherwise
-     */
-    bool flightsChanged;
+
     /**
      * @brief string passengersFilepath is the name of the file containing the Passengers information
      */
@@ -90,7 +81,7 @@ public:
 
     void printListPassengers(vector<Passenger *> passengers, type t);
     void printListAirplane(vector<Airplane *> airplanes, type t);
-    void printListFlights(vector<Flight *> flights, string type);
+    void printListFlights(vector<Flight *> flights, type t);
 
 
 
@@ -104,95 +95,22 @@ public:
     */
 
     /**
-    * @brief Prints the total information of a desired Passenger
-    */
-    void passengerShow();
-    /**
-     * @brief Creates a new Passenger and adds it to the Company vector passengers after validating the information
-     */
-    void passengerCreate();
-    /**
-     * @brief Deletes the pretended Passenger from the Company vector containing the passengers
-     */
-    void passengerDelete();
-    /**
      * @brief Selects a menu that allows the user to Update information relative to a Passenger (name, date of birth, job and average number of flights per year)
      */
     void passengerUpdateMenu();
-    /**
-     * @brief Prints a summary of a Passenger object
-     */
-    void printSummaryPassenger();
-    /**
-     * @brief Searches the passengers vector for the id inserted by the user and returns the pretended Passenger
-     * @return Passenger*
-     */
-    Passenger * choosePassenger();
-    /**
-     * @brief Checks if the id is in the vector of passengers, if it is an exception is thrown
-     * @param id int id
-     */
-    void validPassenger(int id);
-    /**
-     * @brief Updates the name of the passenger passed as parameter to the one inserted by the user
-     * @param *passenger Passenger *passenger
-     */
-    void passengerUpdateName(Passenger * passenger);
-    /**
-     * @brief Updates the date of birth of the passenger passed as parameter to the one inserted by the user
-     * @param *passenger Passenger *passenger
-     */
-    void passengerUpdateDateOfBirth(Passenger * passenger);
-    /**
-     * @brief Updates the job of the passenger passed as parameter to the one inserted by the user
-     * @param *passenger Passenger *passenger
-     */
-    void passengerUpdateJob(Passenger * passenger);
-    /**
-     * @brief Updates the average number of flights per year of the passenger passed as parameter to the one inserted by the user
-     * @param *passenger Passenger *passenger
-     */
-    void passengerUpdateNYear(Passenger * passenger);
 
     /** @} end of Application using Passengers member-functions */
 
-    
+
 
     //airplane functions
-    void airplaneShow();
-    void airplaneCreate();
-    void airplaneDelete();
-    void airplaneUpdateMenu();
-    void printSummaryAirplane();
-    Airplane * chooseAirplane();
-    void validAirplane(int id);
-    void airplaneUpdateModel(Airplane * airplane);
-    void airplaneUpdateCapacity(Airplane * airplane);
 
-	void showAllTickets(vector<pair<string, Flight *> > const &v) const;
-    void flightShow(Airplane * airplane);
-    void flightCreate(Airplane * airplane);
-    void flightDelete(Airplane * airplane);
+    void airplaneUpdateMenu();
+
+
+
     void flightUpdateMenu(Airplane * airplane);
-    void printSummaryFlight(Airplane * airplane);
-    Flight * chooseFlight(Airplane * airplane);
-    void validFlight(int id);
-    void flightUpdatePrice(Flight * flight);
-    void flightAddPassenger(Flight * flight, Passenger* passenger);
-    void flightDeletePassenger(Flight * flight);
-    void flightUpdateBuyer(Flight * flight);
-	PassengerMap::iterator chooseSeat(Flight *flight);
-    string chooseSeat(vector<string> seats);
-	Passenger * newCustomer();
-    vector<string> availableSeats(Flight * flight, int capacity);
-    void printSeats(int capacity, vector<string> seats);
-	void returnTicket(Passenger *p);
-    vector< pair<string, Flight*> > getTickets(Passenger *p);
-	void bookFlight(Passenger *p);
-	void bookFlightWithType(Passenger *p, string type);
-	void printAllFlightsWithType( Passenger *p , string type);
-	Flight* chooseFlight(unsigned int id, string type);
-	float ticketPrice(Passenger *p, Flight *f, string type);
+
     //file functions
     string inputFilePath(string s);
     Airplane * readAirplane(string &a);

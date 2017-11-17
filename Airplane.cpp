@@ -1,5 +1,4 @@
 #include "Airplane.h"
-#include "exceptions.h"
 #include <iomanip>
 
 Airplane::Airplane() {}

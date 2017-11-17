@@ -7,7 +7,6 @@
 #include <string>
 
 using namespace std;
-
 // Input tester
 bool validArg(int & variable) {
 	size_t index = 0;

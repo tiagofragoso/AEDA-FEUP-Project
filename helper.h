@@ -13,6 +13,9 @@ using namespace std;
  * Struct that saves the information about a Passenger year, month and day of birth
  */
 
+
+
+
 enum type {
     PID = 1,
     PNAME = 2,
