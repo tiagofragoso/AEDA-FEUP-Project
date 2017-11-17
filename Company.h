@@ -207,7 +207,7 @@ public:
 	void airplaneUpdateModel(Airplane * airplane);
 	void airplaneUpdateCapacity(Airplane * airplane);
 
-	void showAllTickets(vector<pair<string, Flight *> > const &v) const;
+	void showAllTickets(Passenger * passenger);
 	void flightShow(Airplane * airplane);
 	void flightCreate(Airplane * airplane);
 	void flightDelete(Airplane * airplane);

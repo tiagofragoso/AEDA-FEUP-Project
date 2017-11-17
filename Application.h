@@ -20,7 +20,12 @@ using namespace std;
 
 class Application {
 
-    typedef void(Company::*Menu)(void);
+    typedef void(Company::*companyFunction)(void);
+    typedef void(Application::*appFunction)(void);
+    typedef void(Application::*appFunctionType)(type t);
+    typedef void(Company::*companyFunctionAirplane)(Airplane * airplane);
+    typedef void(Company::*companyFunctionPassenger)(Passenger * passenger);
+    typedef void(Company::*companyFunctionFlight)(Flight * flight);
 
 private:
     /**
@@ -40,6 +45,17 @@ private:
     * @brief string flightsFilepath is the name of the file containing the Flights information
     */
     string flightsFilepath;
+    map<string, appFunction> menuMain;
+    map<string, appFunction> menuFiles;
+    map<string, companyFunction> menuPassengers;
+    map<string, companyFunction> menuAirplanes;
+    map<string, appFunctionType> menuLists;
+    map<string, companyFunctionAirplane> menuFlights;
+    map<string, companyFunctionPassenger> menuBookings;
+    map<string, companyFunctionAirplane> menuAirplaneUpdate;
+    map<string, companyFunctionFlight> menuFlightsUpdate;
+    map<string, companyFunctionPassenger> menuPassengersUpdate;
+
 
 public:
     /**
@@ -72,16 +88,27 @@ public:
      * @brief Menu to manage the Flights of a certain Airplane passed as parameter with a pointer
      * @param *airplane Airplane *airplane
      */
-    void flightsMenu(Airplane *airplane);
+    void flightsMenu();
     /**
      * @brief Menu to manage bookings
      */
     void bookingsMenu();
     void listsMenu();
+    void setupMenus();
+    void printMainMenu();
+    void printFilesMenu();
+    void printPassengersMenu();
+    void printAirplanesMenu();
+    void printListsMenu();
+    void printFlightsMenu();
+    void printBookingsMenu();
+    void printAirplaneUpdateMenu(Airplane * airplane);
+    void printFlightUpdateMenu(Flight * flight);
+    void printPassengerUpdateMenu(Passenger * passenger);
 
-    void printListPassengers(vector<Passenger *> passengers, type t);
-    void printListAirplane(vector<Airplane *> airplanes, type t);
-    void printListFlights(vector<Flight *> flights, type t);
+    void printListPassengers(type t);
+    void printListAirplane(type t);
+    void printListFlights(type t);
 
 
 
@@ -123,6 +150,8 @@ public:
     void saveFlightFile();
     void savePassengerFile();
     void saveAllFiles();
+    void saveChanges();
+    void exitMenu();
 
 
 };

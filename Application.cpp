@@ -14,141 +14,436 @@ Application::Application() {
 
 }
 
+void Application::setupMenus() {
+
+    //main menu
+    menuMain["1"] = &Application::filesMenu;
+    menuMain["2"] = &Application::passengersMenu;
+    menuMain["3"] = &Application::airplanesMenu;
+    menuMain["4"] = &Application::bookingsMenu;
+    menuMain["5"] = &Application::listsMenu;
+    menuMain["0"] = &Application::exitMenu;
+
+    //files menu
+    menuFiles["1"] = &Application::loadPassengerFile;
+    menuFiles["2"] = &Application::loadAirplaneFile;
+    menuFiles["3"] = &Application::loadFlightFile;
+    menuFiles["4"] = &Application::saveChanges;
+
+    //passengers Menu
+    menuPassengers["1"] = &Company::passengerShow;
+    menuPassengers["2"] = &Company::passengerCreate;
+    menuPassengers["3"] = &Company::passengerDelete;
+
+    //airplanes menu
+    menuAirplanes["1"] = &Company::airplaneShow;
+    menuAirplanes["2"] = &Company::airplaneCreate;
+    menuAirplanes["3"] = &Company::airplaneDelete;
+
+    //lists menu
+    menuLists["1"] = &Application::printListPassengers;
+    menuLists["2"] = &Application::printListPassengers;
+    menuLists["3"] = &Application::printListPassengers;
+    menuLists["4"] = &Application::printListAirplane;
+    menuLists["5"] = &Application::printListFlights;
+    menuLists["6"] = &Application::printListFlights;
+    menuLists["7"] = &Application::printListFlights;
+    menuLists["8"] = &Application::printListFlights;
+    menuLists["9"] = &Application::printListFlights;
+
+    //flights menu
+    menuFlights["1"] = &Company::flightShow;
+    menuFlights["2"] = &Company::flightCreate;
+    menuFlights["3"] = &Company::flightDelete;
+
+    //bookings menu
+    menuBookings["1"] = &Company::showAllTickets;
+    menuBookings["2"] = &Company::bookFlight;
+    menuBookings["3"] = &Company::returnTicket;
+
+    //airplanes update menu
+    menuAirplaneUpdate["1"] = &Company::airplaneUpdateModel;
+    menuAirplaneUpdate["2"] = &Company::airplaneUpdateCapacity;
+
+    //flights update menu
+    menuFlightsUpdate["1c"] = &Company::flightUpdatePrice;
+    menuFlightsUpdate["1r"] = &Company::flightUpdatePrice;
+    menuFlightsUpdate["2r"] = &Company::flightUpdateBuyer;
+    menuFlightsUpdate["2c"] = &Company::flightDeletePassenger;
+
+    //passengers update menu
+    menuPassengersUpdate["1n"] = &Company::passengerUpdateName;
+    menuPassengersUpdate["1c"] = &Company::passengerUpdateName;
+    menuPassengersUpdate["2n"] = &Company::passengerUpdateDateOfBirth;
+    menuPassengersUpdate["2c"] = &Company::passengerUpdateDateOfBirth;
+    menuPassengersUpdate["3c"] = &Company::passengerUpdateJob;
+    menuPassengersUpdate["4c"] = &Company::passengerUpdateNYear;
+
+}
+
+void Application::printMainMenu() {
+
+    cout << "\n[MAIN MENU]\n\n";
+    cout << "[1]- File management.\n";
+    cout << "[2]- Passenger management.\n";
+    cout << "[3]- Airplane management.\n";
+    cout << "[4]- Bookings.\n";
+    cout << "[5]- Lists.\n";
+    cout << "[0]- Quit.\n\n";
+
+}
+
+void Application::printFilesMenu() {
+
+    cout << "\n[FILE MANAGEMENT MENU]\n\n";
+
+    cout << "NOTE:\n*Please load the files in the following order: Passengers-Flights-Airplanes.\n";
+    cout
+            << "*Loading multiple files for the same category will try to merge data, which may cause data overlapping.\n\n";
+
+    cout << "[1]- Load passengers file ";
+    if (passengersFilepath.empty()) {
+        cout << "(No file loaded).";
+    } else {
+        cout << "('" << passengersFilepath << "' loaded).";
+    }
+    cout << endl;
+    cout << "[2]- Load flight file ";
+    if (flightsFilepath.empty()) {
+        cout << "(No file loaded).";
+    } else {
+        cout << "('" << flightsFilepath << "' loaded).";
+    }
+    cout << endl;
+    cout << "[3]- Load airplane file ";
+    if (airplanesFilepath.empty()) {
+        cout << "(No file loaded).";
+    } else {
+        cout << "('" << airplanesFilepath << "' loaded).";
+    }
+    cout << endl;
+    cout << "[4]- Save all changes to files.\n";
+    cout << "[9]- Back.\n\n";
+
+}
+
+void Application::printPassengersMenu() {
+
+    cout << "\n[PASSENGER MANAGEMENT MENU]\n\n";
+    cout << "[1]- Show passenger info.\n";
+    cout << "[2]- Create new passenger.\n";
+    cout << "[3]- Delete passenger.\n";
+    cout << "[4]- Update passenger.\n";
+    cout << "[9]- Back.\n\n";
+
+}
+
+
+void Application::printAirplanesMenu() {
+
+    cout << "\n[AIRPLANES MANAGEMENT MENU]\n\n";
+    cout << "[1]- Show airplane info.\n";
+    cout << "[2]- Create new airplane.\n";
+    cout << "[3]- Delete airplane.\n";
+    cout << "[4]- Update airplane.\n";
+    cout << "[5]- Flights management.\n";
+    cout << "[9]- Back.\n\n";
+}
+
+void Application::printListsMenu() {
+
+    cout << "[LISTS MENU]\n\n";
+    cout << "Passenger lists.\n\n";
+    cout << "[1]- Passengers by id.\n";
+    cout << "[2]- Passengers by name.\n";
+    cout << "[3]- Passengers by age.\n\n";
+    cout << "Airplane lists.\n\n";
+    cout << "[4]- Airplanes by id.\n\n";
+    cout << "Flights lists.\n\n";
+    cout << "[5]- Flights by id.\n";
+    cout << "[6]- Flights by price (low to high).\n";
+    cout << "[7]- Flights by price (high to low).\n";
+    cout << "[8]- Flights by destination.\n";
+    cout << "[9]- Flights by time to flight.\n";
+    cout << "[0]- Back.\n\n";
+}
+
+void Application::printFlightsMenu() {
+
+    cout << "[FLIGHT MANAGEMENT MENU]\n\n";
+    cout << "[1]- Show flight info.\n";
+    cout << "[2]- Create new flight.\n";
+    cout << "[3]- Delete flight.\n";
+    cout << "[4]- Update flight.\n";
+    cout << "[9]- Back.\n\n";
+}
+
+void Application::printBookingsMenu() {
+
+    cout << "[BOOKING MANAGEMENT MENU]\n\n";
+    cout << "[1]- Show my scheduled Flights\n";
+    cout << "[2]- Book a Flight\n";
+    cout << "[3]- Return a Flight ticket\n";
+    cout << "[9]- Back.\n\n";
+}
+
+void Application::printAirplaneUpdateMenu(Airplane *airplane) {
+
+    cout << "Airplane selected: \n\n";
+    airplane->print();
+    cout << "[AIRPLANE UPDATE MENU]\n\n";
+    cout << "[1]- Change airplane model.\n";
+    cout << "[2]- Change airplane capacity.\n";
+    cout << "[9]- Back.\n\n";
+
+}
+
+void Application::printFlightUpdateMenu(Flight *flight) {
+
+    string foo;
+    cout << "Flight selected: \n\n";
+    flight->print();
+    foo = flight->getType();
+
+    if (foo == "r") {
+
+        cout << "[FLIGHT UPDATE MENU]\n\n";
+        cout << "[1]- Change flight price.\n";
+        cout << "[2]- Change flight buyer.\n";
+        cout << "[9]- Back.\n\n";
+
+    }
+
+    if (foo == "c") {
+
+        cout << "[FLIGHT UPDATE MENU]\n\n";
+        cout << "[1]- Change flight price.\n";
+        cout << "[2]- Delete passenger.\n";
+        cout << "[9]- Back.\n\n";
+    }
+}
+
+void Application::printPassengerUpdateMenu(Passenger *passenger) {
+
+    cout << "Passenger selected: \n\n";
+    passenger->print();
+    cout << "[PASSENGER UPDATE MENU]\n\n";
+    cout << "[1]- Change passenger name.\n";
+    cout << "[2]- Change passenger date of birth.\n";
+
+    if (passenger->getType() == "c") {
+
+
+        cout << "[3]- Change passenger job.\n";
+        cout << "[4]- Change passenger number of flights/year.\n";
+
+    }
+    cout << "[9]- Back.\n\n";
+}
+
+void Application::exitMenu() {
+
+    saveChanges();
+    exit(0);
+
+}
 
 void Application::mainMenu() {
 
-    int op;
-    char auxOp;
+    string op;
+
+    setupMenus();
+
+
     do {
-        cout << "[MAIN MENU]\n\n";
-        cout << "[1]- File management.\n";
-        cout << "[2]- Passenger management.\n";
-        cout << "[3]- Airplane management.\n";
-        cout << "[4]- Bookings.\n";
-        cout << "[5]- Lists.\n";
-        cout << "[0]- Quit.\n\n";
+
+        printMainMenu();
+
+        do {
+
+            cout << "Insert the desired option: ";
+            getline(cin, op);
+            if (op == "" || menuMain.find(op) == menuMain.end()) {
+                cout << "Invalid option.\n";
+            } else break;
+        } while(true);
+
+        (this->*menuMain[op])();
+
+    }while (true);
+
+}
+
+
+
+
+void Application::filesMenu() {
+
+    string op;
+
+    do {
+
+        printFilesMenu();
 
         do {
             cout << "Insert the desired option: ";
-            if ((cin >> op) && op >= 0 && op <= 5) {
+            getline(cin, op);
+            if (op == "" || menuFiles.find(op) == menuFiles.end()) {
+                if (op == "9") return;
+                cout << "Invalid option.\n";
+            } else break;
+
+        } while (true);
+
+        try {
+            (this->*menuFiles[op])();
+        }
+        catch (InvalidFilePath &i) {
+            i.print();
+            continue;
+        }
+
+        pause();
+
+    }while(true);
+
+}
+
+void Application::saveChanges() {
+
+    char auxOp;
+    if (company.getPassengersChanged() || company.getAirplanesChanged() || company.getFlightsChanged()) {
+        cout << "There are changes to be deployed to the files.\n";
+        do {
+            cout << "Would you like to save those changes (Y/N) ? ";
+            if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N' || auxOp == 'y' || auxOp == 'n')) {
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                break;
+                if (auxOp == 'Y') {
+                    saveAllFiles();
+                    pause();
+                    break;
+                } else {
+                    break;
+                }
             } else {
                 cerr << "Invalid option.\n";
                 cin.clear();
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
         } while (true);
+    }
+}
+
+void Application::passengersMenu() {
+
+    string op;
+
+    do {
+
+        printPassengersMenu();
+
+        do {
+
+            cout << "Insert the desired option: ";
+            getline(cin, op);
+            if (op == "" || menuPassengers.find(op) == menuPassengers.end()) {
+
+                if (op == "9") return;
+                if (op == "4") break;
+                cout << "Invalid option.\n";
+            }else break;
 
 
-        switch (op) {
-            case 1:
-                filesMenu();
-                pause();
-                break;
-            case 2:
-                passengersMenu();
-                pause();
-                break;
-            case 3:
-                airplanesMenu();
-                pause();
-                break;
-            case 4:
-                bookingsMenu();
-                pause();
-                break;
-            case 5:
-                listsMenu();
-                pause();
-                break;
-            case 0:
-                if (company.getPassengersChanged() || company.getAirplanesChanged() || company.getFlightsChanged()) {
-                    cout << "There are changes to be deployed to the files.\n";
-                    do {
-                        cout << "Would you like to save those changes (Y/N) ? ";
-                        if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N' || auxOp == 'y' || auxOp == 'n')) {
-                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                            if (auxOp == 'Y') {
-                                saveAllFiles();
-                                pause();
-                                break;
-                            } else {
-                                break;
-                            }
-                        } else {
-                            cerr << "Invalid option.\n";
-                            cin.clear();
-                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                        }
-                    } while (true);
-                }
+        }while(true);
+
+        if (op == "4") {
+            passengerUpdateMenu();
+            continue;
         }
 
-    } while (op != 0);
+        (company.*menuPassengers[op])();
+        pause();
+
+    }while(true);
+}
+
+void Application::airplanesMenu() {
+
+    string op;
+
+    do {
+
+        printAirplanesMenu();
+
+        do {
+
+            cout << "Insert the desired option: ";
+            getline(cin, op);
+            if (op == "" || menuAirplanes.find(op) == menuAirplanes.end()) {
+
+                if (op == "9") return;
+                if (op == "4" || op == "5") break;
+                cout << "Invalid option.\n";
+            }else break;
+
+
+        }while (true);
+
+        if (op == "4") {
+            airplaneUpdateMenu();
+            continue;
+        }
+
+        if (op == "5") {
+            flightsMenu();
+            continue;
+        }
+
+        (company.*menuAirplanes[op])();
+        pause();
+
+    }while(true);
+
 }
 
 
 void Application::listsMenu() {
 
-    int op;
-    char auxOp;
+    string op;
+
     do {
-        cout << "[LISTS MENU]\n\n";
-        cout << "Passenger lists.\n";
-        cout << "[1]- Passengers by name.\n";
-        cout << "[2]- Passengers by id.\n";
-        cout << "[3]- Passengers by age.\n";
-        cout << "Airplane lists.\n";
-        cout << "[4]- Airplanes by id.\n";
-        cout << "Flights lists.\n";
-        cout << "[5]- Flights by id.\n";
-        cout << "[6]- Flights by price (low to high).\n";
-        cout << "[7]- Flights by price (high to low).\n";
-        cout << "[8]- Flights by time to flight.\n";
-        cout << "[9]- Flights by destination.\n";
-        cout << "[10]- Exit.\n\n";
+
+        printListsMenu();
 
         do {
+
             cout << "Insert the desired option: ";
-            if ((cin >> op) && op >= 0 && op <= 10) {
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                break;
-            } else {
-                cerr << "Invalid option.\n";
-                cin.clear();
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            }
-        } while (true);
+            getline(cin, op);
+            if (op == "" || menuLists.find(op) == menuLists.end()) {
 
+                if (op == "0") return;
+                cout << "Invalid option.\n";
+            }else break;
 
-        switch (op) {
-            case 1:
-                printListPassengers(company.getPassengers(), PNAME);
-                pause();
-                break;
-            case 2:
-                printListPassengers(company.getPassengers(), PID);
-                pause();
-                break;
-            case 3:
-                printListPassengers(company.getPassengers(), PAGE);
-                pause();
-                break;
-            case 4:
-                printListAirplane(company.getFleet(), AID);
-                pause();
-                break;
-            case 5:
-                pause();
-                break;
-        }
+        }while (true);
 
-    } while (op != 0);
+        (this->*menuLists[op])(static_cast<type>(stoi(op)));
+        pause();
+
+    }while(true);
+
 }
 
-void Application::printListPassengers(vector<Passenger *> passengers, type t) {
+void Application::printListPassengers(type t) {
 
+    if (company.getPassengers().empty()) {
+
+        cout << "There are no passengers.\n";
+        return;
+
+    }
+
+    vector<Passenger *> passengers = company.getPassengers();
     string title;
     switch(t) {
 
@@ -176,8 +471,16 @@ void Application::printListPassengers(vector<Passenger *> passengers, type t) {
 
 }
 
-void Application::printListAirplane(vector<Airplane *> airplanes, type t) {
+void Application::printListAirplane(type t) {
 
+    if (company.getFleet().empty()) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
+
+    vector<Airplane *> airplanes;
     string title;
     switch(t) {
 
@@ -197,273 +500,73 @@ void Application::printListAirplane(vector<Airplane *> airplanes, type t) {
     }
 }
 
+void Application::printListFlights(type t) {
 
-void Application::filesMenu() {
-    int op;
-    char auxOp;
-    do {
-        bool validOp = false;
-        cout << "[FILE MANAGEMENT MENU]\n\n";
+    if (company.getFlights().empty()) {
 
-        cout << "NOTE:\n*Please load the files in the following order: Passengers-Flights-Airplanes.\n";
-        cout
-                << "*Loading multiple files for the same category will try to merge data, which may cause data overlapping.\n\n";
+        cout << "There are no flights.\n";
+        return;
 
-        cout << "[1]- Load passengers file ";
-        if (passengersFilepath.empty()) {
-            cout << "(No file loaded).";
-        } else {
-            cout << "('" << passengersFilepath << "' loaded).";
-        }
-        cout << endl;
-        cout << "[2]- Load flight file ";
-        if (flightsFilepath.empty()) {
-            cout << "(No file loaded).";
-        } else {
-            cout << "('" << flightsFilepath << "' loaded).";
-        }
-        cout << endl;
-        cout << "[3]- Load airplane file ";
-        if (airplanesFilepath.empty()) {
-            cout << "(No file loaded).";
-        } else {
-            cout << "('" << airplanesFilepath << "' loaded).";
-        }
-        cout << endl;
-        cout << "[4]- Save all changes to files.\n";
-        cout << "[9]- Back.\n\n";
+    }
 
-        do {
-            cout << "Insert the desired option: ";
-            if (cin >> op && ((op >= 0 && op <= 4) || op == 9)) {
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                validOp = true;
-            } else {
-                cerr << "Invalid option.\n";
-                cin.clear();
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            }
-        } while (!validOp);
-
-        switch (op) {
-            case 1:
-                //passengersFilepath = inputFilePath("passenger");
-                try {
-                    loadPassengerFile();
-                } catch (InvalidFilePath &in) {
-                    in.print();
-                }
-                pause();
-                break;
-            case 2:
-                //flightsFilepath = inputFilePath("flight");
-                try {
-                    loadFlightFile();
-                } catch (InvalidFilePath &in) {
-                    in.print();
-                }
-                break;
-            case 3:
-                //airplanesFilepath = inputFilePath("airplane");
-                try {
-                    loadAirplaneFile();
-                } catch (InvalidFilePath &in) {
-                    in.print();
-                }
-                pause();
-                break;
-            case 4:
-
-                if (company.getPassengersChanged() || company.getAirplanesChanged() || company.getFlightsChanged()) {
-                    do {
-                        cout
-                                << "Saving all changes will replace the data in the files with the current state of the application. Proceed (Y/N) ? ";
-                        if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N' || auxOp == 'y' || auxOp == 'n')) {
-                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                            if (auxOp == 'Y') {
-                                saveAllFiles();
-                                pause();
-                                break;
-                            } else {
-                                break;
-                            }
-                        } else {
-                            cerr << "Invalid option.\n";
-                            cin.clear();
-                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                        }
-                    } while (true);
-                } else cout << "There are no changes to be deployed.\n";
-                break;
-        }
-    } while (op != 9);
 }
 
-void Application::passengersMenu() {
+void Application::flightsMenu() {
 
-    int op;
-
-    do {
-        cout << "[PASSENGER MANAGEMENT MENU]\n\n";
-        cout << "[1]- Show passenger info.\n";
-        cout << "[2]- Create new passenger.\n";
-        cout << "[3]- Delete passenger.\n";
-        cout << "[4]- Update passenger.\n";
-        //provavelmente mais cenas tipo varios tipos de listagens
-        cout << "[9]- Back.\n\n";
-
-        do {
-            cout << "Insert the desired option: ";
-            if ((cin >> op) && ((op >= 1 && op <= 4) || op == 9)) {
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                break;
-            } else {
-                cerr << "Invalid option.\n";
-                cin.clear();
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            }
-        } while (true);
-
-        switch (op) {
-            case 1:
-                company.passengerShow();
-                pause();
-                break;
-            case 2:
-                company.passengerCreate();
-                pause();
-                break;
-            case 3:
-                company.passengerDelete();
-                pause();
-                break;
-            case 4:
-                passengerUpdateMenu();
-                break;
-        }
-
-    } while (op != 9);
-}
-
-void Application::airplanesMenu() {
-
-    int op;
+    string op;
+    Airplane *airplane;
+    company.printSummaryAirplane();
 
     do {
-        cout << "[AIRPLANES MANAGEMENT MENU]\n\n";
-        cout << "[1]- Show airplane info.\n";
-        cout << "[2]- Create new airplane.\n";
-        cout << "[3]- Delete airplane.\n";
-        cout << "[4]- Update airplane.\n";
-        cout << "[5]- Flights management.\n";
-        //provavelmente mais cenas tipo varios tipos de listagens
-        cout << "[9]- Back.\n\n";
-
-        do {
-            cout << "Insert the desired option: ";
-            if ((cin >> op) && ((op >= 1 && op <= 5) || op == 9)) {
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                break;
-            } else {
-                cerr << "Invalid option.\n";
-                cin.clear();
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            }
-        } while (true);
-
-        switch (op) {
-            case 1:
-                company.airplaneShow();
-                pause();
-                break;
-            case 2:
-                company.airplaneCreate();
-                pause();
-                break;
-            case 3:
-                company.airplaneDelete();
-                pause();
-                break;
-            case 4:
-                airplaneUpdateMenu();
-                pause();
-                break;
-            case 5:
-                Airplane *airplane;
-                company.printSummaryAirplane();
-                do {
-                    try {
-                        airplane = company.chooseAirplane();
-                    }
-                    catch (const InvalidAirplane &i) {
-                        i.print();
-                        continue;
-                    }
-
-                    airplane->print();
-                    cout << endl;
-                    break;
-                } while (true);
-
-                flightsMenu(airplane);
-                break;
+        try {
+            airplane = company.chooseAirplane();
+        }
+        catch (const InvalidAirplane &i) {
+            i.print();
+            continue;
         }
 
-    } while (op != 9);
-}
-
-void Application::flightsMenu(Airplane *airplane) {
-
-    int op;
+        airplane->print();
+        cout << endl;
+        break;
+    } while (true);
 
     do {
-        cout << "[FLIGHT MANAGEMENT MENU]\n\n";
-        cout << "[1]- Show flight info.\n";
-        cout << "[2]- Create new flight.\n";
-        cout << "[3]- Delete flight.\n";
-        cout << "[4]- Update flight.\n";
-        //provavelmente mais cenas tipo varios tipos de listagens
-        cout << "[9]- Back.\n\n";
+
+        printFlightsMenu();
 
         do {
-            cout << "Insert the desired option: ";
-            if ((cin >> op) && ((op >= 1 && op <= 4) || op == 9)) {
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                break;
-            } else {
-                cerr << "Invalid option.\n";
-                cin.clear();
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            }
-        } while (true);
 
-        switch (op) {
-            case 1:
-                company.flightShow(airplane);
-                pause();
-                break;
-            case 2:
-                company.flightCreate(airplane);
-                pause();
-                break;
-            case 3:
-                company.flightDelete(airplane);
-                pause();
-                break;
-            case 4:
-                flightUpdateMenu(airplane);
-                break;
+            cout << "Insert the desired option: ";
+            getline(cin, op);
+            if (op == "" || menuFlights.find(op) == menuFlights.end()) {
+
+                if (op == "9") return;
+                if (op == "4") break;
+                cout << "Invalid option.\n";
+            }else break;
+
+
+        }while(true);
+
+        if (op == "4") {
+            flightUpdateMenu(airplane);
+            continue;
         }
 
-    } while (op != 9);
+        (company.*menuFlights[op])(airplane);
+        pause();
 
+    }while(true);
 }
 
 void Application::bookingsMenu() {
 
     string menuhelper;
-    int id, op;
+    int id;
 	Passenger *passenger = new Passenger;
+
+    //É PRECISO ARRANJAR ISTO ESTÁ CONFUSO
     cout << "[BOOKING MANAGEMENT MENU]\n\n";
     do {
         cout << "Is the customer new (Y/N)? ";
@@ -482,39 +585,27 @@ void Application::bookingsMenu() {
         }
     } while (true);
     cout << endl;
+
+    string op;
+
     do {
-        cout << "[BOOKING MANAGEMENT MENU]\n\n";
-        cout << "[1]- Show my scheduled Flights\n";
-        cout << "[2]- Book a Flight\n";
-        cout << "[3]- Return a Flight ticket\n";
-        cout << "[9]- Back.\n\n";
+
+        printBookingsMenu();
+
         do {
             cout << "Insert the desired option: ";
-            if ((cin >> op) && ((op >= 1 && op <= 3) || op == 9)) {
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                break;
-            } else {
-                cerr << "Invalid option.\n";
-                cin.clear();
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            }
+            getline(cin, op);
+            if (op == "" || menuBookings.find(op) == menuBookings.end()) {
+                if (op == "9") return;
+                cout << "Invalid option.\n";
+            } else break;
+
         } while (true);
 
-        switch (op) {
-            case 1:
-                company.showAllTickets(company.getTickets(passenger));
-                pause();
-                break;
-            case 2:
-                company.bookFlight(passenger);
-                pause();
-                break;
-            case 3:
-                company.returnTicket(passenger);
-                pause();
-                break;
-        }
-    } while (op != 9);
+        (company.*menuBookings[op])(passenger);
+        pause();
+
+    }while(true);
 }
 
 
@@ -527,7 +618,7 @@ void Application::passengerUpdateMenu() {
     }
 
     company.printSummaryPassenger();
-    int op;
+    string op, op1;
     Passenger *passenger;
     do {
         try {
@@ -542,69 +633,24 @@ void Application::passengerUpdateMenu() {
     } while (true);
 
     do {
-        cout << "Passenger selected: \n\n";
-        passenger->print();
-        cout << "[PASSENGER UPDATE MENU]\n\n";
-        cout << "[1]- Change passenger name.\n";
-        cout << "[2]- Change passenger date of birth.\n";
 
-        if (passenger->getType() == "c") {
+        printPassengerUpdateMenu(passenger);
 
+        do {
+            cout << "Insert the desired option: ";
+            getline(cin, op);
+            op1 = op + passenger->getType();
+            if (op == "" || menuPassengersUpdate.find(op1) == menuPassengersUpdate.end()) {
+                if (op == "9") return;
+                cout << "Invalid option.\n";
+            } else break;
 
-            cout << "[3]- Change passenger job.\n";
-            cout << "[4]- Change passenger number of flights/year.\n";
+        } while (true);
 
-        }
-        cout << "[9]- Back.\n\n";
+        (company.*menuPassengersUpdate[op1])(passenger);
+        pause();
 
-        if (passenger->getType() == "c") {
-
-            do {
-                cout << "Insert the desired option: ";
-                if (cin >> op && ((op >= 1 && op <= 4) || op == 9)) {
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    break;
-                } else {
-                    cerr << "Invalid option.\n";
-                    cin.clear();
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                }
-            } while (true);
-
-        }
-
-        if (passenger->getType() == "n") {
-
-            do {
-                cout << "Insert the desired option: ";
-                if (cin >> op && ((op >= 1 && op <= 2) || op == 9)) {
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    break;
-                } else {
-                    cerr << "Invalid option.\n";
-                    cin.clear();
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                }
-            } while (true);
-
-        }
-
-        switch (op) {
-            case 1:
-                company.passengerUpdateName(passenger);
-                break;
-            case 2:
-                company.passengerUpdateDateOfBirth(passenger);
-                break;
-            case 3:
-                company.passengerUpdateJob(passenger);
-                break;
-            case 4:
-                company.passengerUpdateNYear(passenger);
-                break;
-        }
-
-    } while (op != 9);
+    }while(true);
 }
 
 
@@ -619,7 +665,7 @@ void Application::airplaneUpdateMenu() {
     }
 
     company.printSummaryAirplane();
-    int op;
+    string op;
     Airplane *airplane;
     do {
         try {
@@ -635,36 +681,23 @@ void Application::airplaneUpdateMenu() {
     } while (true);
 
     do {
-        cout << "Airplane selected: \n\n";
-        airplane->print();
-        cout << "[AIRPLANE UPDATE MENU]\n\n";
-        cout << "[1]- Change airplane model.\n";
-        cout << "[2]- Change airplane capacity.\n";
-        cout << "[9]- Back.\n\n";
+
+        printAirplaneUpdateMenu(airplane);
 
         do {
             cout << "Insert the desired option: ";
-            if (cin >> op && ((op >= 1 && op <= 2) || op == 9)) {
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                break;
-            } else {
-                cerr << "Invalid option.\n";
-                cin.clear();
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            }
+            getline(cin, op);
+            if (op == "" || menuAirplaneUpdate.find(op) == menuAirplaneUpdate.end()) {
+                if (op == "9") return;
+                cout << "Invalid option.\n";
+            } else break;
+
         } while (true);
 
-        switch (op) {
-            case 1:
-                company.airplaneUpdateModel(airplane);
-                break;
-            case 2:
-                company.airplaneUpdateCapacity(airplane);
-                break;
+        (company.*menuAirplaneUpdate[op])(airplane);
+        pause();
 
-        }
-
-    } while (op != 9);
+    }while(true);
 }
 
 
@@ -678,8 +711,7 @@ void Application::flightUpdateMenu(Airplane *airplane) {
     }
 
     company.printSummaryFlight(airplane);
-    int op;
-    string foo;
+    string op, op1;
     Flight *flight;
     do {
         try {
@@ -695,69 +727,26 @@ void Application::flightUpdateMenu(Airplane *airplane) {
     } while (true);
 
     do {
-        cout << "Flight selected: \n\n";
-        flight->print();
-        foo = flight->getType();
 
-        if (foo == "r") {
+        printFlightUpdateMenu(flight);
 
-            cout << "[FLIGHT UPDATE MENU]\n\n";
-            cout << "[1]- Change flight price.\n";
-            cout << "[2]- Change flight buyer.\n";
-            cout << "[9]- Back.\n\n";
+        do {
+            cout << "Insert the desired option: ";
+            getline(cin, op);
+            op1 = op + flight->getType();
+            if (op == "" || menuFlightsUpdate.find(op1) == menuFlightsUpdate.end()) {
+                if (op == "9") return;
+                cout << "Invalid option.\n";
+            } else break;
 
-            do {
-                cout << "Insert the desired option: ";
-                if (cin >> op && ((op >= 1 && op <= 2) || op == 9)) {
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    break;
-                } else {
-                    cerr << "Invalid option.\n";
-                    cin.clear();
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                }
-            } while (true);
+        } while (true);
 
-            switch (op) {
-                case 1:
-                    company.flightUpdatePrice(flight);
-                    break;
-                case 2:
-                    company.flightUpdateBuyer(flight);
-                    break;
-            }
-        }
+        (company.*menuFlightsUpdate[op1])(flight);
+        pause();
 
-        if (foo == "c") {
+    }while(true);
 
-            cout << "[FLIGHT UPDATE MENU]\n\n";
-            cout << "[1]- Change flight price.\n";
-            cout << "[2]- Delete passenger.\n";
-            cout << "[9]- Back.\n\n";
 
-            do {
-                cout << "Insert the desired option: ";
-                if (cin >> op && ((op >= 1 && op <= 3) || op == 9)) {
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    break;
-                } else {
-                    cerr << "Invalid option.\n";
-                    cin.clear();
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                }
-            } while (true);
-
-            switch (op) {
-                case 1:
-                    company.flightUpdatePrice(flight);
-                    break;
-                case 2:
-                    company.flightDeletePassenger(flight);
-                    break;
-            }
-        }
-
-    } while (op != 9);
 }
 
 
@@ -958,6 +947,8 @@ Passenger *Application::readPassenger(string &p) {
 
 void Application::loadPassengerFile() {
 
+    //passengersFilepath = inputFilePath("passenger");
+
     string p;
 
     if (passengersFilepath == "") throw InvalidFilePath("empty");
@@ -982,6 +973,8 @@ void Application::loadFlightFile() {
 
     string f;
 
+    //flightsFilepath = inputFilePath("flight");
+
     if (flightsFilepath == "") throw InvalidFilePath("empty");
 
     ifstream flFile(flightsFilepath);
@@ -994,6 +987,8 @@ void Application::loadFlightFile() {
 }
 
 void Application::loadAirplaneFile() {
+
+    //airplanesFilepath = inputFilePath("airplane");
 
     string a;
 
@@ -1079,5 +1074,6 @@ void Application::savePassengerFile() {
     passFile.close();
 
 }
+
 
 

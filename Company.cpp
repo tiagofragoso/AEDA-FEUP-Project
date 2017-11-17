@@ -750,7 +750,7 @@ void Company::bookFlightWithType(Passenger *p, string type) {
 void Company::returnTicket(Passenger *p) {
     int id;
     vector<pair<string, Flight *> > v = getTickets(p);
-    showAllTickets(v);
+    showAllTickets(p);
     if (v.size() == 0) return;
     do {
         cout << "Please choose the ticket you wish to return: ";
@@ -783,7 +783,9 @@ void Company::returnTicket(Passenger *p) {
 
 }
 
-void Company::showAllTickets(vector<pair<string, Flight *> > const &v) const {
+void Company::showAllTickets(Passenger * passenger) {
+
+    vector<pair<string, Flight *> > v = getTickets(passenger);
     unsigned int i = 1;
     cout << std::left;
     if (v.size() > 0) {

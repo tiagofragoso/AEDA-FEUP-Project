@@ -21,12 +21,11 @@ enum type {
     PNAME = 2,
     PAGE = 3,
     AID = 4,
-    ACAP = 5,
-    FID = 6,
-    FPRICEL = 7,
-    FPRICEH = 8,
-    FDEST = 9,
-    FTIME = 10
+    FID = 5,
+    FPRICEL = 6,
+    FPRICEH = 7,
+    FDEST = 8,
+    FTIME = 9
 };
 
 struct Date{
