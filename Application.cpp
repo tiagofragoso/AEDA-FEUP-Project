@@ -457,7 +457,7 @@ void Application::bookingsMenu() {
                 showAllTickets(getTickets(passenger));
                 pause();
                 break;
-                case 2:
+            case 2:
                     bookFlight(passenger);
 					pause();
 					break;
@@ -484,15 +484,61 @@ void Application::bookFlight(Passenger *p) {
 	} while (true);
 	cout << endl;
 }
-void Application::printAllFlightsWithType(string type){
-
+float Application::ticketPrice(Passenger *p, Flight *f, string type) {
+	float price;
+	if (p->getType() == "c") {
+		if (type == "r") {
+			price = f->getCapacity() * (f->getBasePrice() * ((100 - p->getCard()->getAvgYrFlights()) / 100));
+		}
+		else {
+			if (f->getPassengers().size() < f->getCapacity() && f->getTime_to_flight() < 48) {
+				price = 0.9*f->getBasePrice() * (100 - p->getCard()->getAvgYrFlights()) / 100;
+			}
+			else { 
+			price =	f->getBasePrice() * (100 - p->getCard()->getAvgYrFlights()) / 100;
+			}
+		}
+	}
+	else {
+		if (type == "r") {
+			price = f->getCapacity() * f->getBasePrice();
+		}
+		else {
+			if (f->getPassengers().size() < f->getCapacity() && f->getTime_to_flight() < 48) {
+				price = 0.9*f->getBasePrice();
+			}
+			else {
+				price = f->getBasePrice();
+			}
+		}
+	}
+	return price;
+}
+void Application::printAllFlightsWithType(Passenger *p, string type){
+	bool once = true;
 	for (auto const &f : company.getFlights()) {
-		if (f->getType() == "r" && type == "r") {
-			f->printSummary();
+		if (f->getType() == "r" && type == "r" && f->getBuyer()!= nullptr) {
+			if (once) {
+				cout << setw(5) << " " << setw(9) << "Flight ID" << setw(3) << " "
+					<< setw(15) << "Departure" << setw(3) << " " << setw(15) << "Destination" << setw(3) << " " << setw(15) << "Price" << endl;
+				once = false;
+			}
+				cout << setw(9) << to_string(f->getId()) << setw(3) << " "
+					<< setw(15) << f->getDeparture() << setw(3) << " " << setw(15) << f->getDestination()
+					<< setw(3)
+					<< " " << "Flight in " << to_string(f->getTime_to_flight()) << "h" << setw(3) << " " << setw(15) << ticketPrice(p,f,type) << endl;
 		}
-		if (type == "c" && f->getType() == "c") {
-			f->printSummary();
-		}
+		 else if (f->getType() == "c" && type == "c") {
+			 if (once) {
+				 cout << setw(5) << " " << setw(9) << "Flight ID" << setw(3) << " "
+					 << setw(15) << "Departure" << setw(3) << " " << setw(15) << "Destination" << setw(3) << " " << setw(15) << "Price" << endl;
+				 once = false;
+			 }
+			 cout << setw(9) << to_string(f->getId()) << setw(3) << " "
+				 << setw(15) << f->getDeparture() << setw(3) << " " << setw(15) << f->getDestination()
+				 << setw(3)
+				 << " " << "Flight in " << to_string(f->getTime_to_flight()) << "h" << setw(3) << " " << setw(15) << ticketPrice(p, f, type) << endl;
+		 }
 	}
 }
 Flight* Application::chooseFlight(unsigned int id, string type) {
@@ -504,7 +550,7 @@ Flight* Application::chooseFlight(unsigned int id, string type) {
 	throw(InvalidFlight(id));
 }
 void Application::bookFlightWithType(Passenger *p, string type) {
-	printAllFlightsWithType(type);
+	printAllFlightsWithType(p ,type);
 	int id;
 	string menuhelper;
 	Flight * flight;
@@ -1007,12 +1053,12 @@ void Application::flightCreate(Airplane *airplane) {
     normalize(destination);
 
     do {
-        cout << "Duartion (h): ";
+        cout << "Duration (h): ";
         if (validArg(duration)) break;
     } while (true);
 
     do {
-        cout << "Base price (€): ";
+        cout << "Base price (in euros): ";
         if (validArg(price)) break;
     } while (true);
 

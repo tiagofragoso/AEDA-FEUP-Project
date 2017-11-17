@@ -181,9 +181,9 @@ public:
     vector< pair<string, Flight*> > getTickets(Passenger *p);
 	void bookFlight(Passenger *p);
 	void bookFlightWithType(Passenger *p, string type);
-	void printAllFlightsWithType(string type);
+	void printAllFlightsWithType( Passenger *p , string type);
 	Flight* chooseFlight(unsigned int id, string type);
-
+	float ticketPrice(Passenger *p, Flight *f, string type);
     //file functions
     string inputFilePath(string s);
     Airplane * readAirplane(string &a);
