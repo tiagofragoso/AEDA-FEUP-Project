@@ -100,7 +100,6 @@ bool Airplane::operator==(const Airplane &a1) {
 void Airplane::addFlight(Flight *flight) {
 
     if (flights.size() == 0) {
-
         flights.push_back(flight);
         return;
     }
@@ -109,6 +108,7 @@ void Airplane::addFlight(Flight *flight) {
     Flight * lelem = flights.at(flights.size()-1);
 
     if ((flight->getTime_to_flight()+flight->getDuration()) < elem1->getTime_to_flight() && flight->getDestination() == elem1->getDeparture()) {
+
 
         flights.insert(flights.begin(), flight);
         return;

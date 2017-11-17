@@ -657,24 +657,24 @@ float Application::ticketPrice(Passenger *p, Flight *f, string type) {
 void Application::printAllFlightsWithType(Passenger *p, string type){
 	bool once = true;
 	for (auto const &f : company.getFlights()) {
-		if (f->getType() == "r" && type == "r" && f->getBuyer()!= nullptr) {
+		if (f->getType() == "r" && type == "r" && f->getBuyer()== nullptr) {
 			if (once) {
-				cout << setw(5) << " " << setw(9) << "Flight ID" << setw(3) << " "
+				cout << "Flight ID" << setw(3) << " "
 					<< setw(15) << "Departure" << setw(3) << " " << setw(15) << "Destination" << setw(3) << " " << setw(15) << "Price" << endl;
 				once = false;
 			}
-				cout << setw(9) << to_string(f->getId()) << setw(3) << " "
+				cout << to_string(f->getId()) << setw(3) << " "
 					<< setw(15) << f->getDeparture() << setw(3) << " " << setw(15) << f->getDestination()
 					<< setw(3)
 					<< " " << "Flight in " << to_string(f->getTime_to_flight()) << "h" << setw(3) << " " << setw(15) << ticketPrice(p,f,type) << endl;
 		}
 		 else if (f->getType() == "c" && type == "c") {
 			 if (once) {
-				 cout << setw(5) << " " << setw(9) << "Flight ID" << setw(3) << " "
+				 cout  << "Flight ID" << setw(3) << " "
 					 << setw(15) << "Departure" << setw(3) << " " << setw(15) << "Destination" << setw(3) << " " << setw(15) << "Price" << endl;
 				 once = false;
 			 }
-			 cout << setw(9) << to_string(f->getId()) << setw(3) << " "
+			 cout << to_string(f->getId()) << setw(3) << " "
 				 << setw(15) << f->getDeparture() << setw(3) << " " << setw(15) << f->getDestination()
 				 << setw(3)
 				 << " " << "Flight in " << to_string(f->getTime_to_flight()) << "h" << setw(3) << " " << setw(15) << ticketPrice(p, f, type) << endl;
@@ -1232,6 +1232,7 @@ void Application::flightCreate(Airplane *airplane) {
     try {
 
         airplane->addFlight(flight);
+		company.addFlight(flight);
 
     } catch (const OverlapingFlight &f) {
 
