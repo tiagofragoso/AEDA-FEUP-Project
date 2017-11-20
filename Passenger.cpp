@@ -51,7 +51,7 @@ PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOf
 {
 }
 
-PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear) : Passenger(id, name, dateOfBirth) {
+PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear = 0) : Passenger(id, name, dateOfBirth) {
 
     Card* c = new Card(job, nYear);
     card = c;

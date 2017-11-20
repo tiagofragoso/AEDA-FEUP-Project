@@ -71,6 +71,11 @@ public:
     /**
      * @brief Main menu with the following options: File, Passenger, Airplane management, Booking and quit
      */
+
+    static const string AIRPLANE_IDENTIFIER;
+    static const string FLIGHT_IDENTIFIER;
+    static const string PASSENGER_IDENTIFIER;
+
     void mainMenu();
     /**
      * @brief Menu that allows the user to manage the files
@@ -146,14 +151,21 @@ public:
     void loadPassengerFile();
     void loadFlightFile();
     void loadAirplaneFile();
-    void saveAirplaneFile();
-    void saveFlightFile();
-    void savePassengerFile();
     void saveAllFiles();
     void saveChanges();
     void exitMenu();
 
+    template <class T>
+    void saveFile(string &path, vector<T>objects){
+        ofstream file(path);
 
+        if (!file) throw InvalidFilePath("fail");
+        for (size_t i = 0; i < objects.size(); i++) {
+            file << objects.at(i);
+            if (i != objects.size() - 1) file << endl;
+        }
+        file.close();
+    }
 };
 
 

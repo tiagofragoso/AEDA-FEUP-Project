@@ -15,7 +15,7 @@ private:
     /**
      * @brief int Average flights the Passenger that holds this card takes per year
      */
-    int avgYrFlights;
+    int avgYrFlights = 0;
 
 public:
     /**
@@ -27,7 +27,7 @@ public:
      * @param job
      * @param nYear
      */
-    Card(string job, int nYear);
+    Card(string job, int nYear = 0);
     /**
      * @brief Gets the job of the Card object
      * @return string job listed in the Card

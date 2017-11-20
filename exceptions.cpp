@@ -94,4 +94,4 @@ void InvalidFilePath::print() {
     else if (type == "fail") cout << "Failed to open file.\n";
 }
 
-InvalidFilePath::InvalidFilePath(std::string type): type(type) {}
+InvalidFilePath::InvalidFilePath(string type): type(type) {}

@@ -158,7 +158,7 @@ public:
 	/**
      * @brief Creates a new Passenger and adds it to the Company vector passengers after validating the information
      */
-	void passengerCreate();
+	Passenger* passengerCreate();
 	/**
      * @brief Deletes the pretended Passenger from the Company vector containing the passengers
      */
@@ -222,17 +222,18 @@ public:
 	void flightUpdateBuyer(Flight * flight);
 	PassengerMap::iterator chooseSeat(Flight *flight);
 	string chooseSeat(vector<string> seats);
-	Passenger * newCustomer();
 	vector<string> availableSeats(Flight * flight, unsigned int capacity);
 	void printSeats(unsigned int capacity, vector<string> seats);
 	void returnTicket(Passenger *p);
 	vector< pair<string, Flight*> > getTickets(Passenger *p);
 	void bookFlight(Passenger *p);
 	void bookFlightWithType(Passenger *p, string type);
-	void printAllFlightsWithType( Passenger *p , string type);
-	Flight* chooseFlight(unsigned int id, string type);
+	void printFlightsForBook(Passenger *p, string type, vector<Flight *> &fvector);
+	Flight* chooseFlight(unsigned int id, vector<Flight*> &fvector);
 	float ticketPrice(Passenger *p, Flight *f, string type);
     vector<Flight *> getFlightsWithType(string type);
+    void sortPassengers();
+    void passengerCreateWrapper();
 
 };
 

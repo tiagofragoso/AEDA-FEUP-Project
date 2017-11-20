@@ -2,6 +2,10 @@
 #include <vector>
 #include "Application.h"
 
+static const string AIRPLANE_IDENTIFIER = "airplane";
+static const string FLIGHT_IDENTIFIER = "flight";
+static const string PASSENGER_IDENTIFIER = "passenger";
+
 
 
 Application::Application() {
@@ -32,7 +36,7 @@ void Application::setupMenus() {
 
     //passengers Menu
     menuPassengers["1"] = &Company::passengerShow;
-    menuPassengers["2"] = &Company::passengerCreate;
+    menuPassengers["2"] = &Company::passengerCreateWrapper;
     menuPassengers["3"] = &Company::passengerDelete;
 
     //airplanes menu
@@ -569,14 +573,14 @@ void Application::bookingsMenu() {
     //É PRECISO ARRANJAR ISTO ESTÁ CONFUSO
     cout << "[BOOKING MANAGEMENT MENU]\n\n";
     do {
-        cout << "Is the customer new (Y/N)? ";
+        cout << "Do you wish to book a flight for an existing customer(Y/N)? ";
         getline(cin, menuhelper);
         if (menuhelper != "") normalize(menuhelper);
-        if (menuhelper == "y") {
+        if (menuhelper == "n") {
             cout << endl;
-            passenger = company.newCustomer();
+            passenger = company.passengerCreate();
             break;
-        } else if (menuhelper == "n") {
+        } else if (menuhelper == "y") {
             company.printSummaryPassenger();
             try { passenger = company.choosePassenger(); } catch (InvalidPassenger &ip) { ip.print(); }
             break;
@@ -949,9 +953,16 @@ Passenger *Application::readPassenger(string &p) {
     return newPassenger;
 }
 
+string Application::inputFilePath(string s) {
+    string input;
+    cout << "Insert " << s << "'s filename: ";
+    getline(cin, input);
+    return input;
+}
+
 void Application::loadPassengerFile() {
 
-    //passengersFilepath = inputFilePath("passenger");
+    //passengersFilepath = inputFilePath(PASSENGER_IDENTIFIER);
 
     string p;
 
@@ -963,21 +974,16 @@ void Application::loadPassengerFile() {
         this->company.addPassenger(readPassenger(p));
     }
     passFile.close();
+    this->company.sortPassengers();
 
 }
 
-string Application::inputFilePath(string s) {
-    string input;
-    cout << "Insert " << s << "'s filename: ";
-    getline(cin, input);
-    return input;
-}
 
 void Application::loadFlightFile() {
 
     string f;
 
-    //flightsFilepath = inputFilePath("flight");
+    //flightsFilepath = inputFilePath(FLIGHT_IDENTIFIER);
 
     if (flightsFilepath == "") throw InvalidFilePath("empty");
 
@@ -994,7 +1000,7 @@ void Application::loadFlightFile() {
 
 void Application::loadAirplaneFile() {
 
-    //airplanesFilepath = inputFilePath("airplane");
+    //airplanesFilepath = inputFilePath(AIRPLANE_IDENTIFIER);
 
     string a;
 
@@ -1014,7 +1020,7 @@ void Application::saveAllFiles() {
 
         if (airplanesFilepath.empty()) airplanesFilepath = inputFilePath("airplane");
 
-        try { saveAirplaneFile(); } catch (InvalidFilePath &in) { in.print(); }
+        try { saveFile(airplanesFilepath, this->company.getFleet()); } catch (InvalidFilePath &in) { in.print(); }
 
     }
 
@@ -1022,7 +1028,7 @@ void Application::saveAllFiles() {
 
         if (flightsFilepath.empty()) flightsFilepath = inputFilePath("flight");
 
-        try { saveFlightFile(); } catch (InvalidFilePath &in) { in.print(); }
+        try { saveFile(flightsFilepath, this->company.getFlights()); } catch (InvalidFilePath &in) { in.print(); }
 
     }
 
@@ -1030,54 +1036,11 @@ void Application::saveAllFiles() {
 
         if (passengersFilepath.empty()) passengersFilepath = inputFilePath("passenger");
 
-        try { savePassengerFile(); } catch (InvalidFilePath &in) { in.print(); }
+        try { saveFile(passengersFilepath, this->company.getPassengers()); } catch (InvalidFilePath &in) { in.print(); }
 
     }
 
     cout << "All changes were saved.\n";
-
-
-}
-
-void Application::saveAirplaneFile() {
-
-    ofstream airFile(airplanesFilepath);
-
-    if (!airFile) throw InvalidFilePath("fail");
-    for (size_t i = 0; i < this->company.getFleet().size(); i++) {
-        airFile << this->company.getFleet().at(i);
-        if (i != this->company.getFleet().size() - 1) airFile << endl;
-    }
-
-    airFile.close();
-
-}
-
-void Application::saveFlightFile() {
-
-    ofstream fFile(flightsFilepath);
-
-    if (!fFile) throw InvalidFilePath("fail");
-    for (size_t i = 0; i < this->company.getFlights().size(); i++) {
-        fFile << this->company.getFlights().at(i);
-        if (i != this->company.getFlights().size() - 1) fFile << endl;
-    }
-
-    fFile.close();
-
-}
-
-void Application::savePassengerFile() {
-
-    ofstream passFile(passengersFilepath);
-
-    if (!passFile) throw InvalidFilePath("fail");
-    for (size_t i = 0; i < this->company.getPassengers().size(); i++) {
-        passFile << this->company.getPassengers().at(i);
-        if (i != this->company.getPassengers().size() - 1) passFile << endl;
-    }
-
-    passFile.close();
 
 }
 

@@ -9,7 +9,7 @@ string Card::getJob() const {
     return job;
 }
 
-Card::Card(string job, int nYear) {
+Card::Card(string job, int nYear = 0) {
 
     this->job = job;
     this->avgYrFlights = nYear;
