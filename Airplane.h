@@ -23,7 +23,7 @@ private:
 	/**
 	 * @brief int capacity of the Airplane
 	 */
-	int capacity;
+	unsigned int capacity;
 	/**
 	 * @brief vector <Flight*> vector with the pointer to the Flights of the Airplane
 	 */
@@ -41,14 +41,14 @@ public:
 	 * @param capacity
 	 * @param flights
 	 */
-	Airplane(unsigned int id, string name, int capacity, vector <Flight *> flights);
+	Airplane(unsigned int id, string name, unsigned int capacity, vector <Flight *> flights);
 	/**
 	 * @brief Constructor of an Airplane object with no flights
 	 * @param id
 	 * @param name
 	 * @param capacity
 	 */
-    Airplane(unsigned int id, string name, int capacity);
+    Airplane(unsigned int id, string name, unsigned int capacity);
 
 	//get Methods
 	/**

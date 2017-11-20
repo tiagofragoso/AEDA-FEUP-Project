@@ -26,8 +26,8 @@ void Application::setupMenus() {
 
     //files menu
     menuFiles["1"] = &Application::loadPassengerFile;
-    menuFiles["2"] = &Application::loadAirplaneFile;
-    menuFiles["3"] = &Application::loadFlightFile;
+    menuFiles["2"] = &Application::loadFlightFile;
+    menuFiles["3"] = &Application::loadAirplaneFile;
     menuFiles["4"] = &Application::saveChanges;
 
     //passengers Menu
@@ -789,7 +789,11 @@ Airplane *Application::readAirplane(string &a) {
 
     for (auto const &id:f) {
         Flight *fp = this->company.flightById(id);
-        if (fp != nullptr) flights.push_back(fp);
+        if (fp != nullptr) {
+            fp->setCapacity(newAirplane->getCapacity());
+            flights.push_back(fp);
+        }
+
     }
 
     newAirplane->setFlights(flights);
@@ -981,6 +985,8 @@ void Application::loadFlightFile() {
     if (!flFile) throw InvalidFilePath("fail");
     while (getline(flFile, f)) {
         this->company.addFlight(readFlight(f));
+    }
+    for (auto const &f: this->company.getFlights()){
     }
     flFile.close();
 

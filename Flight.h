@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 
+
 using namespace std;
 
 typedef std::map<string, Passenger*, std::less<string> > PassengerMap;
@@ -39,7 +40,7 @@ private:
      * @brief unsigned int duration of the Flight
      */
     unsigned int duration;
-	unsigned int capacity;
+	unsigned int capacity = 0;
 
 public:
 	/**
@@ -123,6 +124,8 @@ public:
      * @param id  unsigned int id
      */
     void setId(unsigned int id);
+
+    void setCapacity(unsigned int capacity);
 
     /**
      * @brief Prints a summary of a Flight object

@@ -110,6 +110,10 @@ ostream &operator<<(ostream &o, Flight *f) {
     return o;
 }
 
+void Flight::setCapacity(unsigned int capacity) {
+    this->capacity = capacity;
+}
+
 RentedFlight::RentedFlight() : Flight(0, "", "", 0, 0, 0){
 
     Passenger * p = new Passenger;

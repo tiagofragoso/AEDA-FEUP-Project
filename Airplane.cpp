@@ -3,11 +3,9 @@
 
 Airplane::Airplane() {}
 
-Airplane::Airplane(unsigned int id, string model, int capacity, vector<Flight *> flights)
-{
-}
+Airplane::Airplane(unsigned int id, string model, unsigned int capacity, vector<Flight *> flights) : id(id), model(model), capacity(capacity), flights(flights) {}
 
-Airplane::Airplane(unsigned int id, string model, int capacity) {
+Airplane::Airplane(unsigned int id, string model, unsigned int capacity) {
 
     this->id = id;
     this->model = model;

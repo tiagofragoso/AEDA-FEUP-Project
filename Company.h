@@ -13,6 +13,7 @@
 #include "helper.h"
 #include "exceptions.h"
 #include "Airplane.h"
+#include <cmath>
 
 using namespace std;
 
@@ -222,8 +223,8 @@ public:
 	PassengerMap::iterator chooseSeat(Flight *flight);
 	string chooseSeat(vector<string> seats);
 	Passenger * newCustomer();
-	vector<string> availableSeats(Flight * flight, int capacity);
-	void printSeats(int capacity, vector<string> seats);
+	vector<string> availableSeats(Flight * flight, unsigned int capacity);
+	void printSeats(unsigned int capacity, vector<string> seats);
 	void returnTicket(Passenger *p);
 	vector< pair<string, Flight*> > getTickets(Passenger *p);
 	void bookFlight(Passenger *p);
@@ -231,6 +232,7 @@ public:
 	void printAllFlightsWithType( Passenger *p , string type);
 	Flight* chooseFlight(unsigned int id, string type);
 	float ticketPrice(Passenger *p, Flight *f, string type);
+    vector<Flight *> getFlightsWithType(string type);
 
 };
 

@@ -29,17 +29,17 @@ Company::Company(string name) {
 }
 string Company::getName() const
 {
-	return this->name;
+    return this->name;
 }
 
 vector<Airplane*> Company::getFleet() const
 {
-	return this->fleet;
+    return this->fleet;
 }
 
 vector<Passenger*> Company::getPassengers() const
 {
-	return this->passengers;
+    return this->passengers;
 }
 
 bool Company::getPassengersChanged() const {
@@ -114,7 +114,7 @@ void Company::removeAirplane(Airplane *airplane) {
 
 Flight * Company::flightById(unsigned int id) {
     for (auto const &f: flights){
-        if (f->getId() == id) return (Flight *) f;
+        if (f->getId() == id) return f;
     }
     return nullptr;
 }
@@ -523,10 +523,13 @@ void Company::airplaneDelete() {
         break;
 
     } while (true);
-    removeAirplane(airplane);
-    cout << "Airplane deleted sucessfully.\n ";
-    airplanesChanged = true;
-    flightsChanged = true;
+    if (airplane->getFlights().empty()){
+        removeAirplane(airplane);
+        cout << "Airplane deleted sucessfully.\n ";
+        airplanesChanged = true;
+        flightsChanged = true;
+    } else cout << "Cannot delete an airplane with assigned flights. Please delete the flights first.\n";
+
 }
 
 void Company::airplaneUpdateModel(Airplane *airplane) {
@@ -546,7 +549,7 @@ void Company::airplaneUpdateCapacity(Airplane *airplane) {
     if (airplane->getFlights().size() != 0) {
 
         cout
-                << "There are assigned seats in at least one flight in this airplane, if you want to change its capacity delete the flight\n";
+                << "There are assigned seats in at least one flight in this airplane, if you want to change its capacity delete the flight first.\n";
         return;
 
     }
@@ -562,7 +565,7 @@ void Company::airplaneUpdateCapacity(Airplane *airplane) {
 
     } while (true);
 
-    airplane->setCapacity(newcapacity);
+    airplane->setCapacity((unsigned int)newcapacity);
     airplanesChanged = true;
     cout << "Airplane capacity updated successfully.\n";
 
@@ -668,6 +671,9 @@ float Company::ticketPrice(Passenger *p, Flight *f, string type) {
                 price =	f->getBasePrice() * (100 - p->getCard()->getAvgYrFlights()) / 100;
             }
         }
+
+
+
     }
     else {
         if (type == "r") {
@@ -682,44 +688,53 @@ float Company::ticketPrice(Passenger *p, Flight *f, string type) {
             }
         }
     }
+
+    price = trunc(round(price*100.0))/100.0;
     return price;
 }
+
+vector<Flight *> Company::getFlightsWithType(string type) {
+    vector<Flight *> f;
+
+    if (type == "ALL") return this->flights;
+    else {
+        for (auto const &fl: this->flights){
+            if ((fl->getType() == type) && (fl->getBuyer() == nullptr)) f.push_back(fl);
+        }
+    }
+
+    return f;
+
+}
+
+
 void Company::printAllFlightsWithType(Passenger *p, string type){
-    bool once = true;
-    for (auto const &f : flights) {
-        if (f->getType() == "r" && type == "r" && f->getBuyer()== nullptr) {
-            if (once) {
-                cout << "Flight ID" << setw(3) << " "
-                     << setw(15) << "Departure" << setw(3) << " " << setw(15) << "Destination" << setw(3) << " " << setw(15) << "Price" << endl;
-                once = false;
-            }
-            cout << to_string(f->getId()) << setw(3) << " "
-                 << setw(15) << f->getDeparture() << setw(3) << " " << setw(15) << f->getDestination()
-                 << setw(3)
-                 << " " << "Flight in " << to_string(f->getTime_to_flight()) << "h" << setw(3) << " " << setw(15) << ticketPrice(p,f,type) << endl;
+    vector<Flight *> fvector = getFlightsWithType(type);
+
+    if (!fvector.empty()){
+        cout << std::left;
+        cout << setw(9) << "Flight ID" << setw(3) << " " << setw(9) << "Departure" << setw(3) << " " << setw(11) << "Destination" << setw(3) << " " << setw(18) << "Time to flight(h)"
+             << setw(3) << " " << setw(10) << "Price(€)" << endl;
+
+        for (auto const &fl: fvector){
+            cout << std::left;
+            cout << setw(9) << fl->getId() << setw(3) << " " << setw(9) << fl->getDeparture() << setw(3) << " " << setw(11) << fl->getDestination() << setw(3) << " " << setw(18)
+                 << to_string(fl->getTime_to_flight()) + "h" << setw(3) << " " << setw(10) << std::fixed << setprecision(2)  << ticketPrice(p, fl, type) << endl;
         }
-        else if (f->getType() == "c" && type == "c") {
-            if (once) {
-                cout  << "Flight ID" << setw(3) << " "
-                      << setw(15) << "Departure" << setw(3) << " " << setw(15) << "Destination" << setw(3) << " " << setw(15) << "Price" << endl;
-                once = false;
-            }
-            cout << to_string(f->getId()) << setw(3) << " "
-                 << setw(15) << f->getDeparture() << setw(3) << " " << setw(15) << f->getDestination()
-                 << setw(3)
-                 << " " << "Flight in " << to_string(f->getTime_to_flight()) << "h" << setw(3) << " " << setw(15) << ticketPrice(p, f, type) << endl;
-        }
+
     }
 }
 
+
+
 Flight* Company::chooseFlight(unsigned int id, string type) {
-    Flight* flight;
     for (auto const &f : flights) {
         if (f->getType() == type && f->getId() == id)
             return f;
     }
     throw(InvalidFlight(id));
 }
+
 void Company::bookFlightWithType(Passenger *p, string type) {
     printAllFlightsWithType(p ,type);
     int id;
@@ -744,8 +759,9 @@ void Company::bookFlightWithType(Passenger *p, string type) {
         flightAddPassenger(flight, p);
     else {
         flight->setBuyer(p);
-        cout << "You have rented the flight with the ID " << id << "!";
+        cout << "You have rented the flight " << id << ".\n";
     }
+    flightsChanged = true;
 }
 void Company::returnTicket(Passenger *p) {
     int id;
@@ -1117,7 +1133,7 @@ void Company::flightDeletePassenger(Flight *flight) {
     flightsChanged = true;
 }
 
-vector<string> Company::availableSeats(Flight *flight, int capacity) {
+vector<string> Company::availableSeats(Flight *flight, unsigned int capacity) {
 
     vector<string> seats;
     string line;
@@ -1157,7 +1173,7 @@ vector<string> Company::availableSeats(Flight *flight, int capacity) {
 }
 
 
-void Company::printSeats(int capacity, vector<string> seats) {
+void Company::printSeats(unsigned int capacity, vector<string> seats) {
 
     string na = "N/A";
 
@@ -1202,7 +1218,7 @@ string Company::chooseSeat(vector<string> seats) {
 
 void Company::flightAddPassenger(Flight *flight, Passenger *passenger) {
     vector <string> seats;
-    int capacity;
+    unsigned int capacity;
     string seat;
 
     for (auto const &a : fleet) {
@@ -1235,8 +1251,8 @@ void Company::flightAddPassenger(Flight *flight, Passenger *passenger) {
 
     } while (true);
     flight->addPassenger(seat, passenger);
-
-    cout << "Passenger added successfully\n";
+    cout << "Booking for seat " << seat << " on flight " << flight->getId() << " successful.\n";
+    flightsChanged = true;
 }
 
 vector<pair<string, Flight *> > Company::getTickets(Passenger *p) {
@@ -1255,5 +1271,7 @@ vector<pair<string, Flight *> > Company::getTickets(Passenger *p) {
     return tickets;
 
 }
+
+
 
 
