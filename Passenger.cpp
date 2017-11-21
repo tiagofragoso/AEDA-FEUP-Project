@@ -139,12 +139,16 @@ bool compPNAME(Passenger *p1, Passenger *p2) {
 
 bool compPAGE(Passenger *p1, Passenger *p2) {
 
-    string year1 = p1->getDateOfBirth().substr(6,4);
-    string year2 = p2->getDateOfBirth().substr(6,4);
-    string month1 = p1->getDateOfBirth().substr(3,2);
-    string month2 = p2->getDateOfBirth().substr(3,2);
-    string day1 = p1->getDateOfBirth().substr(0,2);
-    string day2 = p2->getDateOfBirth().substr(0,2);
+    int year1, year2, month1, month2, day1, day2;
+
+    string data1 = p1->getDateOfBirth(), data2 = p2->getDateOfBirth();
+
+    next(day1, data1, "/");
+    next(day2, data2, "/");
+    next(month1, data1, "/");
+    next(month2, data2, "/");
+    next(year1, data1, "/");
+    next(year2, data2, "/");
 
     if (year1 < year2)
         return false;
@@ -158,5 +162,6 @@ bool compPAGE(Passenger *p1, Passenger *p2) {
         return false;
     if (day1 > day2)
         return true;
+
 }
 

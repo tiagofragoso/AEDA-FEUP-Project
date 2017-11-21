@@ -155,4 +155,5 @@ public:
 bool compPID(Passenger * p1, Passenger * p2);
 bool compPNAME(Passenger * p1, Passenger * p2);
 bool compPAGE(Passenger *p1, Passenger *p2);
+
 #endif //AEDA_FEUP_PROJECT_PASSENGER_H
