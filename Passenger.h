@@ -123,7 +123,7 @@ public:
 	 * @param job
 	 * @param nYear
 	 */
-	PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear = 0);
+	PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear);
 
 
 	//get Methods

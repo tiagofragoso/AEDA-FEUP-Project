@@ -258,7 +258,6 @@ void Application::mainMenu() {
 
     setupMenus();
 
-
     do {
 
         printMainMenu();
@@ -275,6 +274,7 @@ void Application::mainMenu() {
         (this->*menuMain[op])();
 
     }while (true);
+
 
 }
 
@@ -484,7 +484,7 @@ void Application::printListAirplane(type t) {
 
     }
 
-    vector<Airplane *> airplanes;
+    vector<Airplane *> airplanes = company.getFleet();
     string title;
     switch(t) {
 
@@ -511,6 +511,43 @@ void Application::printListFlights(type t) {
         cout << "There are no flights.\n";
         return;
 
+    }
+
+    vector<Flight *> flights = company.getFlights();
+    string title;
+    switch(t) {
+
+        case FID:
+            sort(flights.begin(), flights.end(), compFId);
+            title = "Flight by id:\n";
+            break;
+        case FPRICEL:
+            sort(flights.begin(), flights.end(), compFPriceL);
+            title = "Flight by price (low to high):\n";
+            break;
+        case FPRICEH:
+            sort(flights.begin(), flights.end(), compFPriceH);
+            title = "Flight by price (high to low):\n";
+            break;
+        case FDEST:
+            sort(flights.begin(), flights.end(), compFDest);
+            title = "Flight by destination:\n";
+            break;
+        case FTIME:
+            sort(flights.begin(), flights.end(), compFTime);
+            title = "Flight by price:\n";
+            break;
+
+    }
+
+    cout << title;
+    cout << std::left;
+    cout << setw(12) << "Passenger ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13)
+         << "Date of Birth\n";
+
+    for (auto &flight : flights) {
+
+        flight->printSummary();
     }
 
 }

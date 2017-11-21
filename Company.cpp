@@ -265,7 +265,7 @@ Passenger * Company::passengerCreate() {
         getline(cin, job);
         trimString(job);
 
-        newpassenger = new PassengerWithCard(id, name, dateOfBirth, job);
+        newpassenger = new PassengerWithCard(id, name, dateOfBirth, job, 0);
     }
         addPassenger(newpassenger);
         passengersChanged = true;

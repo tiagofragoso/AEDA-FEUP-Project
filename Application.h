@@ -1,7 +1,3 @@
-//
-// Created by Mariana on 31/10/2017.
-//
-
 #ifndef AEDA_FEUP_PROJECT_APPLICATION_H
 #define AEDA_FEUP_PROJECT_APPLICATION_H
 
@@ -100,6 +96,9 @@ public:
     void bookingsMenu();
     void listsMenu();
     void setupMenus();
+    void passengerUpdateMenu();
+    void airplaneUpdateMenu();
+    void flightUpdateMenu(Airplane * airplane);
     void printMainMenu();
     void printFilesMenu();
     void printPassengersMenu();
@@ -120,16 +119,7 @@ public:
 
     /** @} end of Application Menu member-functions */
 
-//passenger functions
-/** @name Application using Passengers member-functions*/
-    /** @{
-    *
-    */
 
-    /**
-     * @brief Selects a menu that allows the user to Update information relative to a Passenger (name, date of birth, job and average number of flights per year)
-     */
-    void passengerUpdateMenu();
 
     /** @} end of Application using Passengers member-functions */
 
@@ -137,11 +127,6 @@ public:
 
     //airplane functions
 
-    void airplaneUpdateMenu();
-
-
-
-    void flightUpdateMenu(Airplane * airplane);
 
     //file functions
     string inputFilePath(string s);

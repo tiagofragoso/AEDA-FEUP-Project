@@ -213,3 +213,34 @@ void ComercialFlight::addPassenger(string seat, Passenger *passenger) {
 
     passengers[seat] = passenger;
 }
+
+bool compFId(Flight * f1, Flight * f2) {
+
+    return f1->getId() < f2->getId();
+
+}
+
+bool compFPriceL(Flight *f1, Flight *f2) {
+
+    return f1->getBasePrice() < f2->getBasePrice();
+}
+
+bool compFPriceH(Flight *f1, Flight *f2) {
+
+    return f1->getBasePrice() > f2->getBasePrice();
+}
+
+bool compFTime(Flight *f1, Flight *f2) {
+
+    return f1->getTime_to_flight() < f2->getTime_to_flight();
+}
+
+bool compFDest(Flight *f1, Flight *f2) {
+
+    return f1->getDestination() < f2->getDestination();
+}
+
+
+
+
+

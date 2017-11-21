@@ -27,7 +27,7 @@ public:
      * @param job
      * @param nYear
      */
-    Card(string job, int nYear = 0);
+    Card(string job, int nYear);
     /**
      * @brief Gets the job of the Card object
      * @return string job listed in the Card
