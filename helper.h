@@ -13,7 +13,6 @@ using namespace std;
  * Struct that saves the information about a Passenger year, month and day of birth
  */
 
-
 enum type {
     PID = 1,
     PNAME = 2,
@@ -65,6 +64,8 @@ void normalize(string &s);
 void next(int &elem, string &piece, string separator);
 
 void next(string &piece, string &line, string separator);
+
+bool validString(string &s);
 
 template<class T>
 T binary_search_ptr(const vector<T> &v, T x, bool comp(T t1, T t2)) {

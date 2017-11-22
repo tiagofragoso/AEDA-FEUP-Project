@@ -12,21 +12,9 @@ using namespace std;
 class Airplane {
 
 private:
-	/**
-	 * @brief string model of the Airplane
-	 */
 	string model;
-	/**
-	 * @brief unsigned int id number of the Airplane
-	 */
 	unsigned int id;
-	/**
-	 * @brief int capacity of the Airplane
-	 */
 	unsigned int capacity;
-	/**
-	 * @brief vector <Flight*> vector with the pointer to the Flights of the Airplane
-	 */
 	vector < Flight * > flights;
 
 public:
@@ -52,22 +40,22 @@ public:
 
 	//get Methods
 	/**
-	 * @brief  Used to get the Model of the Airplane
+	 * @brief  Gets the Model of the Airplane
 	 * @return string model of the Airplane
 	 */
 	string getModel() const;
 	/**
-	 * @brief Used to get the ID of the Airplane
+	 * @brief Gets the ID of the Airplane
 	 * @return unsigned int ID of the Airplanes
 	 */
 	unsigned int getId() const;
 	/**
-	 * @brief Used to get the capacity of the Airplane
+	 * @brief Gets the capacity of the Airplane
 	 * @return unsigned int capacity of the Airplane
 	 */
 	unsigned int getCapacity() const;
 	/**
-	 * @brief Used to get the vector with the pointers to all the flights of an Airplane
+	 * @brief Gets the vector with the pointers to all the flights of an Airplane
 	 * @return vector <Flight *> pointers to the flights of an Airplane
 	 */
 	vector <Flight *> getFlights() const;
@@ -119,9 +107,21 @@ public:
      */
     void addFlight(Flight * flight);
 
+	/**
+	 * @brief overload of the operator << for obejcts of class Airplane
+	 * @param o ostream o&
+	 * @param a Airplane * a
+	 * @return ostream&
+	 */
 	friend ostream & operator<<(ostream & o, const Airplane * a);
 };
 
+/**
+ * @Comapres two objects of class Airplane based on their id
+ * @param a1 Airplane * a1
+ * @param a2 Airplane * a2
+ * @return returns true if a1's id is less than a2's id
+ */
 bool compAId(Airplane * a1, Airplane * a2);
 
 #endif //AEDA_FEUP_PROJECT_AIRPLANE_H

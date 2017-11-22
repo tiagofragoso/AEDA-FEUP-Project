@@ -8,13 +8,7 @@ using namespace std;
 class Card{
 
 private:
-    /**
-     * @brief string Job of the Passenger who holds the card
-     */
     string job;
-    /**
-     * @brief int Average flights the Passenger that holds this card takes per year
-     */
     int avgYrFlights = 0;
 
 public:

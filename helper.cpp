@@ -113,6 +113,19 @@ void next(int &elem, string &piece, string separator){
 	if (i != elemstring.length() || err) throw InvalidFormat();
 }
 
+bool validString(string &s) {
+
+	getline(cin , s);
+
+	if (s == "") {
+		cout << "Invalid input. Reenter.\n";
+		return false;
+	}
+
+	return true;
+
+}
+
 Date::Date(string &s) {
 	int temp;
 	try {

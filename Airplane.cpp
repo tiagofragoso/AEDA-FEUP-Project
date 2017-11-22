@@ -14,43 +14,35 @@ Airplane::Airplane(unsigned int id, string model, unsigned int capacity) {
     flights = v;
 }
 
-string Airplane::getModel() const
-{
+string Airplane::getModel() const {
 	return this->model;
 }
 
-unsigned int Airplane::getId() const
-{
+unsigned int Airplane::getId() const {
 	return this->id;
 }
 
-unsigned int Airplane::getCapacity() const
-{
+unsigned int Airplane::getCapacity() const {
 	return this->capacity;
 }
 
-vector<Flight *> Airplane::getFlights() const
-{
+vector<Flight *> Airplane::getFlights() const {
 	return this->flights;
 }
 
-void Airplane::setModel(string model)
-{
+void Airplane::setModel(string model) {
     this->model = model;
 }
 
-void Airplane::setId(unsigned int id)
-{
+void Airplane::setId(unsigned int id) {
 	this->id = id;
 }
 
-void Airplane::setCapacity(unsigned int capacity)
-{
+void Airplane::setCapacity(unsigned int capacity) {
     this->capacity = capacity;
 }
 
-void Airplane::setFlights(vector<Flight*> flights)
-{
+void Airplane::setFlights(vector<Flight*> flights) {
     this->flights = flights;
 }
 

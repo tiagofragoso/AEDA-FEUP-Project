@@ -1032,6 +1032,7 @@ void Application::loadFlightFile() {
     for (auto const &f: this->company.getFlights()){
     }
     flFile.close();
+    this->company.sortFlights();
 
 }
 
@@ -1049,6 +1050,7 @@ void Application::loadAirplaneFile() {
         this->company.addAirplane(readAirplane(a));
     }
     airFile.close();
+    this->company.sortAirplanes();
 
 }
 

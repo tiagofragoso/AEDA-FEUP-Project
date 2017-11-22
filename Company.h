@@ -43,16 +43,16 @@ private:
     vector<Flight*> flights;
 
 	/**
-* @brief bool passengersChanged is true when Passengers vector has changed and false otherwise
-*/
+    * @brief bool passengersChanged is true when Passengers vector has changed and false otherwise
+    */
 	static bool passengersChanged;
-/**
- * @brief bool airplanesChanged is true when Airplanes vector has changed and false otherwise
- */
+    /**
+    * @brief bool airplanesChanged is true when Airplanes vector has changed and false otherwise
+    */
 	static bool airplanesChanged;
-/**
- * @brief bool flightsChanged is true when Flights vector has changed and false otherwise
- */
+    /**
+     * @brief bool flightsChanged is true when Flights vector has changed and false otherwise
+    */
 	static bool flightsChanged;
 
 
@@ -233,6 +233,8 @@ public:
 	float ticketPrice(Passenger *p, Flight *f, string type);
     vector<Flight *> getFlightsWithType(string type);
     void sortPassengers();
+    void sortAirplanes();
+    void sortFlights();
     void passengerCreateWrapper();
 
 };

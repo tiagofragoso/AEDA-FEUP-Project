@@ -171,8 +171,13 @@ void Company::passengerShow() {
     string foo;
     Passenger *passenger;
     do {
-        cout << "Do you wish to view detailed information about a passenger (Y/N)?: ";
-        getline(cin, foo);
+        do {
+            cout << "Do you wish to view detailed information about a passenger (Y/N)?: ";
+            if (!validString(foo)) continue;
+            else break;
+
+        } while (true);
+
         normalize(foo);
         if (foo == "y") {
             cout << endl;
@@ -217,8 +222,13 @@ Passenger * Company::passengerCreate() {
 
     while (true) {
 
-        cout << "Normal passenger or passenger with card? (n/c)\n";
-        getline(cin, foo);
+        do {
+            cout << "Normal passenger or passenger with card? (n/c)\n";
+            if (!validString(foo)) continue;
+            else break;
+
+        } while (true);
+
         if ((foo == "n") || (foo == "c"))
             break;
         else
@@ -250,28 +260,43 @@ Passenger * Company::passengerCreate() {
     } while (true);
 
 
-    cout << "Name: ";
-    getline(cin, name);
 
-    cout << "Date of Birth: (DD/MM/YYYY): ";
-    getline(cin, dateOfBirth);
+    do {
+        cout << "Name: ";
+        if (!validString(name)) continue;
+        else break;
+
+    } while (true);
+
+
+    do {
+        cout << "Date of Birth: (DD/MM/YYYY): ";
+        if (!validString(dateOfBirth)) continue;
+        else break;
+
+    } while (true);
 
     Passenger *newpassenger;
 
     if (foo == "n") newpassenger = new Passenger(id, name, dateOfBirth);
     else if (foo == "c") {
 
-        cout << "Job: ";
-        getline(cin, job);
+        do {
+            cout << "Job: ";
+            if (!validString(job)) continue;
+            else break;
+
+        } while (true);
         trimString(job);
 
         newpassenger = new PassengerWithCard(id, name, dateOfBirth, job, 0);
     }
-        addPassenger(newpassenger);
-        passengersChanged = true;
-        this->sortPassengers();
-        cout << "Passenger successfully added\n";
-        return newpassenger;
+    addPassenger(newpassenger);
+    sortPassengers();
+    passengersChanged = true;
+    this->sortPassengers();
+    cout << "Passenger successfully added\n";
+    return newpassenger;
 }
 
 void Company::passengerDelete() {
@@ -304,8 +329,13 @@ void Company::passengerUpdateName(Passenger *passenger) {
 
     string newName;
     cout << "The current name for the chosen passenger is '" << passenger->getName() << "'.\n";
-    cout << "Insert new name: ";
-    getline(cin, newName);
+
+    do {
+        cout << "Insert new name: ";
+        if (!validString(newName)) continue;
+        else break;
+
+    } while (true);
     passenger->setName(newName);
     passengersChanged = true;
     cout << "Passenger name updated successfully.\n";
@@ -316,8 +346,12 @@ void Company::passengerUpdateDateOfBirth(Passenger *passenger) {
 
     string newDateOfBirth;
     cout << "The current date of birth for the chosen passenger is '" << passenger->getDateOfBirth() << "'.\n";
-    cout << "Insert the new date of birth (DD/MM/YYYY): ";
-    getline(cin, newDateOfBirth);
+    do {
+        cout << "Insert the new date of birth (DD/MM/YYYY): ";
+        if (!validString(newDateOfBirth)) continue;
+        else break;
+
+    } while (true);
     passenger->setDateOfBirth(newDateOfBirth);
     passengersChanged = true;
     cout << "Passenger date of birth updated successfully.\n";
@@ -331,8 +365,12 @@ void Company::passengerUpdateJob(Passenger *passenger) {
     string newJob;
 
     cout << "The current job for the chosen passenger is '" << card->getJob() << "'.\n";
-    cout << "Insert the new job: ";
-    getline(cin, newJob);
+    do {
+        cout << "Insert the new job: ";
+        if (!validString(newJob)) continue;
+        else break;
+
+    } while (true);
     card->setJob(newJob);
     passengersChanged = true;
     cout << "Passenger job updated successfully.\n";
@@ -406,8 +444,14 @@ void Company::airplaneShow() {
     string foo;
     Airplane *airplane;
     do {
-        cout << "Do you wish to view detailed information about an airplane (Y/N)?: ";
-        getline(cin, foo);
+
+        do {
+            cout << "Do you wish to view detailed information about an airplane (Y/N)?: ";
+            if (!validString(foo)) continue;
+            else break;
+
+        } while (true);
+
         normalize(foo);
         if (foo == "y") {
             cout << endl;
@@ -470,8 +514,12 @@ void Company::airplaneCreate() {
 
     } while (true);
 
-    cout << "Model: ";
-    getline(cin, model);
+    do {
+        cout << "Model: ";
+        if (!validString(model)) continue;
+        else break;
+
+    } while (true);
 
     do {
         cout << "Capacity: ";
@@ -483,6 +531,7 @@ void Company::airplaneCreate() {
 
     Airplane *newairplane = new Airplane(id, model, capacity);
     addAirplane(newairplane);
+    sortAirplanes();
     cout << "Airplane successfully added\n";
     airplanesChanged = true;
 }
@@ -523,8 +572,12 @@ void Company::airplaneUpdateModel(Airplane *airplane) {
 
     string newModel;
     cout << "The current model for the chosen airplane is '" << airplane->getModel() << "'.\n";
-    cout << "Insert new model: ";
-    getline(cin, newModel);
+    do {
+        cout << "Insert new model: ";
+        if (!validString(newModel)) continue;
+        else break;
+
+    } while (true);
     airplane->setModel(newModel);
     airplanesChanged = true;
     cout << "Airplane model updated successfully.\n";
@@ -560,8 +613,12 @@ void Company::airplaneUpdateCapacity(Airplane *airplane) {
 void Company::bookFlight(Passenger *p) {
     string menuhelper;
     do {
-        cout << "Do you wish to book a Rented or Commercial Flight (R/C) ? ";
-        getline(cin, menuhelper);
+        do {
+            cout << "Do you wish to book a Rented or Commercial Flight (R/C) ? ";
+            if (!validString(menuhelper)) continue;
+            else break;
+
+        } while (true);
         if (menuhelper != "") normalize(menuhelper);
         if (menuhelper == "r" || menuhelper == "c") {
             bookFlightWithType(p, menuhelper);
@@ -782,8 +839,12 @@ void Company::flightShow(Airplane *airplane) {
     string foo;
     Flight *flight;
     do {
-        cout << "Do you wish to view detailed information about a flight (Y/N)?: ";
-        getline(cin, foo);
+        do {
+            cout << "Do you wish to view detailed information about a flight (Y/N)?: ";
+            if (!validString(foo)) continue;
+            else break;
+
+        } while (true);
         normalize(foo);
         if (foo == "y") {
             cout << endl;
@@ -832,8 +893,12 @@ void Company::flightCreate(Airplane *airplane) {
 
     while (true) {
 
-        cout << "Comercial flight or rented flight? (c/r)\n";
-        getline(cin, foo);
+        do {
+            cout << "Comercial flight or rented flight? (c/r)\n";
+            if (!validString(foo)) continue;
+            else break;
+
+        } while (true);
         if ((foo == "c") || (foo == "r"))
             break;
         else
@@ -862,12 +927,20 @@ void Company::flightCreate(Airplane *airplane) {
         break;
     } while (true);
 
-    cout << "City of departure: ";
-    getline(cin, departure);
+    do {
+        cout << "City of departure: ";
+        if (!validString(departure)) continue;
+        else break;
+
+    } while (true);
     normalize(departure);
 
-    cout << "City of arrival: ";
-    getline(cin, destination);
+    do {
+        cout << "City of arrival: ";
+        if (!validString(destination)) continue;
+        else break;
+
+    } while (true);
     normalize(destination);
 
     do {
@@ -918,6 +991,7 @@ void Company::flightCreate(Airplane *airplane) {
         return;
     }
 
+    sortFlights();
     airplanesChanged = true;
     cout << "Flight added successfully\n";
 
@@ -1008,8 +1082,13 @@ PassengerMap::iterator Company::chooseSeat(Flight *flight) {
     PassengerMap::iterator it;
     string seat_to_be_removed;
 
-    cout << "Please insert the seat you would like to remove : ";
-    getline(cin, seat_to_be_removed);
+    do {
+        cout << "Please insert the seat you would like to remove : ";
+        if (!validString(seat_to_be_removed)) continue;
+        else break;
+
+    } while (true);
+
     it = flight->getPassengers().find(seat_to_be_removed);
     if (it == flight->getPassengers().end())
         throw (InvalidSeat(seat_to_be_removed));
@@ -1115,8 +1194,12 @@ void Company::printSeats(unsigned int capacity, vector<string> seats) {
 string Company::chooseSeat(vector<string> seats) {
 
     string seat;
-    cout << "Insert the chosen seat: ";
-    getline(cin, seat);
+    do {
+        cout << "Insert the chosen seat: ";
+        if (!validString(seat)) continue;
+        else break;
+
+    } while (true);
 
     auto it = find(seats.begin(), seats.end(), seat);
     if (it == seats.end())
@@ -1188,6 +1271,15 @@ void Company::sortPassengers() {
 
 void Company::passengerCreateWrapper() {
     passengerCreate();
+}
+
+void Company::sortAirplanes() {
+    sort(fleet.begin(), fleet.end(), compAId);
+}
+
+void Company::sortFlights() {
+
+    sort(flights.begin(), flights.end(), compFId);
 }
 
 

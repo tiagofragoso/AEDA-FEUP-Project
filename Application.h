@@ -114,19 +114,7 @@ public:
     void printListAirplane(type t);
     void printListFlights(type t);
 
-
-
-
     /** @} end of Application Menu member-functions */
-
-
-
-    /** @} end of Application using Passengers member-functions */
-
-
-
-    //airplane functions
-
 
     //file functions
     string inputFilePath(string s);

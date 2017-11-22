@@ -12,17 +12,8 @@ using namespace std;
 class Passenger {
 
 private:
-	/**
-	 * @brief int ID of the Passenger
-	 */
 	int id;
-	/**
-	 * @brief string Name of the Passenger
-	 */
 	string name;
-	/**
-	 * @brief Date Struct Date of birth of the Passenger
-	 */
 	string dateOfBirth;
 
 public:
@@ -52,7 +43,7 @@ public:
 	string getName() const;
 	/**
 	 * @brief Gets the Date of birth of a Passenger
-	 * @return string countaining the Date of birth of a Passenger
+	 * @return string containing the Date of birth of a Passenger
 	 */
 	string getDateOfBirth() const;
 
@@ -69,7 +60,7 @@ public:
 	void setName(string name);
 	/**
 	 * @brief Sets the Date of Birth of the Passenger object to the passed parameter
-	 * @param dateofBirth Date struct dateofBirth
+	 * @param string containing the Date of birth of a Passenger
 	 */
 	void setDateOfBirth(string dateOfBirth);
 	/**
@@ -79,8 +70,12 @@ public:
 	/**
 	 * @brief Prints the id, name and the date of birth of a Passenger object
 	 */
-//TODO: CHECK HOW TO DOCUMENT VIRTUAL FUNCTIONS
     virtual void print();
+    //TODO: CHECK HOW TO DOCUMENT VIRTUAL FUNCTIONS
+    /**
+     * @brief checks if the object is a Passenger ou a PassengerWithCard
+     * @return string "n" if it is a Passenger, "c" if it is a PassengerWithCard
+     */
     virtual string getType() const;
     virtual Card *  getCard() const;
     virtual void setCard(Card * card);
@@ -91,6 +86,12 @@ public:
 	 */
 	bool operator==(const Passenger &p);
 
+    /**
+     * @brief overload of the operator << for obejcts of class Passenger
+     * @param o ostream &o
+     * @param p const Passenger *p
+     * @return ostream&
+     */
 	friend ostream& operator<<(ostream &o, const Passenger * p);
 };
 
@@ -152,8 +153,28 @@ public:
 
 };
 
+/**
+* @brief compares two objects of class Passenger based on their id
+ * @param p1 Passenger * p1
+ * @param p2 Passenger * p2
+ * @return returns true if p1's id is less than p2's id, false otherwise
+ */
 bool compPID(Passenger * p1, Passenger * p2);
+
+/**
+ * @brief compares two objects of class Passenger based on their name
+ * @param p1 Passenger * p1
+ * @param p2 Passenger * p2
+ * @return returns true if p1's name is less than p2's name, false otherwise
+ */
 bool compPNAME(Passenger * p1, Passenger * p2);
+
+/**
+ * @brief compares two objects of class Passenger based on their age
+ * @param p1 Passenger * p1
+ * @param p2 Passenger * p2
+ * @return returns true if p1 is younger than p2
+ */
 bool compPAGE(Passenger *p1, Passenger *p2);
 
 #endif //AEDA_FEUP_PROJECT_PASSENGER_H
