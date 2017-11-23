@@ -898,7 +898,6 @@ void Company::flightCreate(Airplane *airplane) {
         else break;
 
     } while (true);
-    normalize(departure);
 
     do {
         cout << "City of arrival: ";
@@ -906,7 +905,6 @@ void Company::flightCreate(Airplane *airplane) {
         else break;
 
     } while (true);
-    normalize(destination);
 
     do {
         cout << "Duration (h): ";
