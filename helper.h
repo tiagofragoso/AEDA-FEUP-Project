@@ -20,6 +20,7 @@ enum type {
     FTIME = 9
 };
 
+
 /**
  * @brief checks if input is valid
  * @param variable

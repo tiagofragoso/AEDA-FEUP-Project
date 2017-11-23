@@ -47,8 +47,8 @@ void pause() {
 }
 
 void normalize(string &s){
-    for (int i = 0; i < s.size(); i++) {
-        s.at(i) = tolower(s.at(i));
+    for (auto &c: s) {
+        c = tolower(c);
     }
     trimString(s);
 }
@@ -74,7 +74,7 @@ void next(int &elem, string &piece, string separator){
 
 		elem = stoi(elemstring, &i);
 
-	} catch (std::invalid_argument){
+	} catch (std::invalid_argument &i){
 		err = true;
 	}
 
@@ -83,7 +83,7 @@ void next(int &elem, string &piece, string separator){
 
 bool validString(string &s) {
 
-	getline(cin , s);
+	getline(cin, s);
 
 	if (s == "") {
 		cout << "Invalid input. Reenter.\n";
@@ -91,5 +91,4 @@ bool validString(string &s) {
 	}
 
 	return true;
-
 }

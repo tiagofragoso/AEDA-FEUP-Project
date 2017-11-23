@@ -7,6 +7,8 @@
 
 using namespace std;
 
+InvalidFormat::InvalidFormat() {}
+
 InvalidPassenger::InvalidPassenger(unsigned int id) {
 
     this->id = id;
@@ -68,12 +70,16 @@ void InvalidSeat::print() const {
 	cout << seat << " is and invalid seat on the flight. Reenter.\n";
 }
 
+OverlappingFlight::OverlappingFlight() {}
 
-void OverlapingFlight::print() const {
+
+void OverlappingFlight::print() const {
 
     cout << "It is not possible to add this flight to this plane.\n";
 
 }
+
+ConnectionFlight::ConnectionFlight() {}
 
 void ConnectionFlight::print() const {
 

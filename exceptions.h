@@ -115,13 +115,13 @@ public:
 	void print() const;
 };
 
-class OverlapingFlight {
+class OverlappingFlight {
 
 public:
 	/**
 	 * @brief constructor for exception OverlapingFlight
 	 */
-    OverlapingFlight();
+    OverlappingFlight();
 	/**
 	 * @brief prints exception message (overlaping flight)
 	 */

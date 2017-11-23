@@ -120,7 +120,7 @@ public:
     /**
      * @brief Purely virtual function used in both of the subclasses
      */
-    virtual void print() const = 0;
+    virtual void print() const;
     /**
      * @brief Purely virtual function redefined in the Rented Flight subclass
      * @return Passenger* Pointer to a Passenger object
@@ -205,7 +205,7 @@ public:
      * @brief Inherited from the superclass to be used in CommercialFlight
      * @return PassengerMap& (reference to a PassengerMap)
      */
-    PassengerMap & getPassengers() const;
+    PassengerMap & getPassengers();
     /**
      * @brief Used to know if a Flight object is Rented or Commercial
      * @return "r" string "r"
@@ -237,7 +237,7 @@ public:
 
 };
 
-class ComercialFlight : public Flight {
+class CommercialFlight : public Flight {
 
 private:
     PassengerMap passengers;
@@ -246,7 +246,7 @@ public:
     /**
      * @brief Default Constructor of a CommercialFlight object
      */
-    ComercialFlight();
+    CommercialFlight();
     /**
      * @brief Constructor of a CommercialFlight object with the Data-members of the superclass
      * @param id
@@ -256,7 +256,7 @@ public:
      * @param basePrice
      * @param duration
      */
-    ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration);
+    CommercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration);
     /**
      * @brief Constructor of a CommercialFlight object with the Data-members inherited from the superclass plus the PassengerMap from this CommercialFlight class
      * @param id
@@ -267,7 +267,7 @@ public:
      * @param duration
      * @param passengers
      */
-    ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, PassengerMap passengers);
+    CommercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, PassengerMap passengers);
 
     //get methods
     /**
@@ -279,7 +279,7 @@ public:
      * @ Gets the PassengerMap(map with the seats and the passengers) of a CommercialFlight
      * @return PassengerMap PassengerMap&
      */
-    PassengerMap & getPassengers() const;
+    PassengerMap & getPassengers();
     /**
       * @brief Used to know if a Flight object is Rented or Commercial
       * @return string "c"

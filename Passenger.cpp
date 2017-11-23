@@ -38,7 +38,7 @@ Card* Passenger::getCard() const{
     return nullptr;
 }
 
-void Passenger::setCard(Card *card) {}
+void Passenger::setCard(Card *card) {return;}
 
 
 PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOfBirth, Card *card) : Passenger(id, name, dateOfBirth), card(card) {
@@ -48,7 +48,6 @@ PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOf
 
     card = new Card(job, nYear);
 }
-
 
 
 Card* PassengerWithCard::getCard() const {
@@ -73,9 +72,7 @@ void Passenger::print() const {
 }
 
 bool Passenger::operator==(const Passenger &p) {
-    if(id == p.getId())
-        return true;
-    else return false;
+    return id == p.getId();
 }
 
 Passenger::Passenger() {
@@ -96,8 +93,7 @@ ostream &operator<<(ostream &o, const Passenger *p) {
 
 PassengerWithCard::PassengerWithCard() : Passenger(){
 
-    Card * c = new Card;
-    card = c;
+    card = new Card;
 }
 
 void PassengerWithCard::print() const {

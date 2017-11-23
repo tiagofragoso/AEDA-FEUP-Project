@@ -148,56 +148,57 @@ void RentedFlight::print() const{
 
 void RentedFlight::setPassengers(PassengerMap passengers) {}
 
-ComercialFlight::ComercialFlight() : Flight(0, "", "", 0, 0, 0){
+CommercialFlight::CommercialFlight() : Flight(0, "", "", 0, 0, 0){
     PassengerMap p;
     passengers = p;
 }
 
-ComercialFlight::ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, map<string, Passenger *> passengers) : Flight(id, departure, destination, time_to_flight, basePrice, duration), passengers(passengers) {}
+CommercialFlight::CommercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, map<string, Passenger *> passengers) : Flight(id, departure, destination, time_to_flight, basePrice, duration), passengers(passengers) {}
 
 
-PassengerMap & ComercialFlight::getPassengers() {
+PassengerMap & CommercialFlight::getPassengers() {
 
     return passengers;
 }
 
-Passenger * ComercialFlight::getBuyer() const {
+Passenger * CommercialFlight::getBuyer() const {
 
     return nullptr;
 }
 
 
-void ComercialFlight::setPassengers(PassengerMap passengers) {
+void CommercialFlight::setPassengers(PassengerMap passengers) {
 
     this->passengers = passengers;
 }
 
-void ComercialFlight::setBuyer(Passenger *buyer) {}
 
-void ComercialFlight::print() const {
+void CommercialFlight::setBuyer(Passenger *buyer) {}
+
+void CommercialFlight::print() const {
 
     Flight::print();
 
     cout << "Passengers:\n";
 
-    if (passengers.size() == 0)
+    if (passengers.empty())
         cout << "There are no passengers in this flight.\n";
     else {
 
-    for (auto& p : passengers) {
+        for (auto& p : passengers) {
 
-        Passenger* passenger = p.second;
+            Passenger* passenger = p.second;
 
-        cout << p.first << " ";
+            cout << p.first << " ";
 
-        passenger->printSummary();
-    }
+            passenger->printSummary();
+        }
 
     }
 
 }
 
-ComercialFlight::ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight,
+CommercialFlight::CommercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight,
                                  unsigned int basePrice, unsigned int duration) : Flight(id, departure, destination,
                                                                                          time_to_flight, basePrice,
                                                                                          duration) {
@@ -206,7 +207,7 @@ ComercialFlight::ComercialFlight(unsigned int id, string departure, string desti
     this->passengers = passengers;
 }
 
-void ComercialFlight::addPassenger(string seat, Passenger *passenger) {
+void CommercialFlight::addPassenger(string seat, Passenger *passenger) {
 
     passengers[seat] = passenger;
 }
