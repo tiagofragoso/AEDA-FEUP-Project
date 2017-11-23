@@ -1028,10 +1028,12 @@ void Application::loadPassengerFile() {
     while (getline(passFile, p)) {
         if (p.empty()) continue;
         Passenger *passenger = readPassenger(p);
-        if (p != nullptr) this->company.addPassenger(passenger);
+        if (passenger != nullptr) this->company.addPassenger(passenger);
     }
     passFile.close();
     this->company.sortPassengers();
+
+
 
 }
 
@@ -1058,6 +1060,8 @@ void Application::loadFlightFile() {
     flFile.close();
     this->company.sortFlights();
 
+    cout << "File successfully loaded.\n";
+
 }
 
 void Application::loadAirplaneFile() {
@@ -1080,6 +1084,8 @@ void Application::loadAirplaneFile() {
     }
     airFile.close();
     this->company.sortAirplanes();
+
+    cout << "File successfully loaded.\n";
 
 }
 

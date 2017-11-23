@@ -1,1 +1,10 @@
 1; A321; 36; 1, 2
+2; A380; 30; no_flights
+3; A399; 12; no_flights
+4; A321; 36; no_flights
+5; Z101; 6; no_flights
+6; A399; 12; no_flights
+7; A380; 30; no_flights
+8; X111; 24; no_flights
+9; Z101; 6; no_flights
+10; X111; 24; no_flights
