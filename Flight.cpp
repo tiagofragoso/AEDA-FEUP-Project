@@ -58,13 +58,13 @@ void Flight::setDuration(unsigned int duration)
     this->duration = duration;
 }
 
-void Flight::printSummary() {
+void Flight::printSummary() const {
 
     cout << setw(9) << id << setw(3) << " " << setw(9) << departure << setw(3) << " " << setw(11) << destination << setw(3) << " " << setw(14) << time_to_flight << endl;
 
 }
 
-void Flight::print() {
+void Flight::print() const {
 
     cout << "Id: " << id << endl;
     cout << "Departure: " << departure << endl;
@@ -116,8 +116,7 @@ void Flight::setCapacity(unsigned int capacity) {
 
 RentedFlight::RentedFlight() : Flight(0, "", "", 0, 0, 0){
 
-    Passenger * p = new Passenger;
-    buyer = p;
+    buyer = new Passenger;
 }
 
 RentedFlight::RentedFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, Passenger *buyer) : Flight(id, departure, destination, time_to_flight, basePrice, duration), buyer(buyer) {}
@@ -139,7 +138,7 @@ void RentedFlight::setBuyer(Passenger *buyer) {
     this->buyer = buyer;
 }
 
-void RentedFlight::print() {
+void RentedFlight::print() const{
 
     Flight::print();
     cout << "Buyer: ";
@@ -159,7 +158,7 @@ CommercialFlight::CommercialFlight(unsigned int id, string departure, string des
 
 PassengerMap & CommercialFlight::getPassengers() {
 
-    return this->passengers;
+    return passengers;
 }
 
 Passenger * CommercialFlight::getBuyer() const {
@@ -173,11 +172,10 @@ void CommercialFlight::setPassengers(PassengerMap passengers) {
     this->passengers = passengers;
 }
 
-void CommercialFlight::setBuyer(Passenger *buyer) {
 
-}
+void CommercialFlight::setBuyer(Passenger *buyer) {}
 
-void CommercialFlight::print() {
+void CommercialFlight::print() const {
 
     Flight::print();
 
@@ -187,14 +185,14 @@ void CommercialFlight::print() {
         cout << "There are no passengers in this flight.\n";
     else {
 
-    for (auto& p : passengers) {
+        for (auto& p : passengers) {
 
-        Passenger* passenger = p.second;
+            Passenger* passenger = p.second;
 
-        cout << p.first << " ";
+            cout << p.first << " ";
 
-        passenger->printSummary();
-    }
+            passenger->printSummary();
+        }
 
     }
 

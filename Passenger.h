@@ -66,12 +66,11 @@ public:
 	/**
  	* @brief Prints the id  and the name of the Passenger
  	*/
-    void printSummary();
+    void printSummary() const;
 	/**
 	 * @brief Prints the id, name and the date of birth of a Passenger object
 	 */
-    virtual void print();
-    //TODO: CHECK HOW TO DOCUMENT VIRTUAL FUNCTIONS
+    virtual void print() const;
     /**
      * @brief checks if the object is a Passenger ou a PassengerWithCard
      * @return string "n" if it is a Passenger, "c" if it is a PassengerWithCard
@@ -85,7 +84,6 @@ public:
 	 * @return true upon sucess matching the 2 Passenger objects ids and false otherwise
 	 */
 	bool operator==(const Passenger &p);
-
     /**
      * @brief overload of the operator << for obejcts of class Passenger
      * @param o ostream &o
@@ -143,8 +141,7 @@ public:
 	/**
  	* @brief Prints the ID, name, Date of birth, job and the average number of flights per year of a PassengerWithCard
  	*/
-    void print();
-	//TODO: IMPORTANT, CHECK THIS PART WHIS SPOLIS
+    void print() const;
 	/**
 	 * @brief Checks if the PassengerWithCard holds a card object
 	 * @return string "c" if the Passenger really has a card

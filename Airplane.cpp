@@ -47,12 +47,12 @@ void Airplane::setFlights(vector<Flight*> flights) {
 }
 
 
-void Airplane::printSummary() {
+void Airplane::printSummary() const {
 
     cout << setw(11) << id << endl;
 }
 
-void Airplane::print() {
+void Airplane::print() const {
 
     cout << "Id: " << id << endl;
     cout << "Model: " << model  << endl;
@@ -107,7 +107,7 @@ void Airplane::addFlight(Flight *flight) {
         return;
     }
 
-    throw OverlapingFlight();
+    throw OverlappingFlight();
 }
 
 ostream &operator<<(ostream &o, const Airplane * a) {

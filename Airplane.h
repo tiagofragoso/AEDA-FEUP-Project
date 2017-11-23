@@ -84,11 +84,11 @@ public:
 	/**
  	* @brief Prints the id of the Airplane
  	*/
-    void printSummary();
+    void printSummary() const;
 	/**
 	 * @brief Prints the id, model and capacity of an Airplane object
 	 */
-    void print();
+    void print() const;
 	/**
 	 * @brief overload of the operator == to match Airplane objects
 	 * @param a1 const Airplane &a1
@@ -117,7 +117,7 @@ public:
 };
 
 /**
- * @Comapres two objects of class Airplane based on their id
+ * @brief Compares two objects of class Airplane based on their id
  * @param a1 Airplane * a1
  * @param a2 Airplane * a2
  * @return returns true if a1's id is less than a2's id

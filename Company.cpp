@@ -981,7 +981,7 @@ void Company::flightCreate(Airplane *airplane) {
         airplane->addFlight(flight);
         addFlight(flight);
 
-    } catch (const OverlapingFlight &f) {
+    } catch (const OverlappingFlight &f) {
 
         f.print();
         return;
