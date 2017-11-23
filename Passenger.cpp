@@ -63,7 +63,9 @@ void PassengerWithCard::setCard(Card *card) {
 void Passenger::printSummary() const {
 
     cout << std::left;
-    cout << setw(12) << id << setw(3) << " " << setw(30) << name << setw(3) << " " << setw(13) << dateOfBirth << endl;
+    cout << setw(12) << id << setw(3) << " " << setw(30) << name << setw(3) << " ";
+    this->printDoB();
+    cout << endl;
 }
 
 
@@ -89,6 +91,15 @@ ostream &operator<<(ostream &o, const Passenger *p) {
         o << "; " << p->getCard()->getJob() << "; " << to_string(p->getCard()->getAvgYrFlights());
     }
     return o;
+}
+
+void Passenger::printDoB() const{
+    int d, m ,y;
+    string dob = this->dateOfBirth;
+    next(d, dob, "/");
+    next(m, dob, "/");
+    next(y, dob, "/");
+    cout << std::right << setfill('0') << setw(2) << to_string(d) << "/" << setfill('0') << setw(2) << setw(2) << to_string(m) << "/" << setfill('0') << setw(2) << setw(4) << to_string(y) << resetiosflags(std::ios::showbase) << setfill(' ');
 }
 
 PassengerWithCard::PassengerWithCard() : Passenger(){

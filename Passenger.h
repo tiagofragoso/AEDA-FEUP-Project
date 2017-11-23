@@ -78,6 +78,7 @@ public:
     virtual string getType() const;
     virtual Card *  getCard() const;
     virtual void setCard(Card * card);
+	void printDoB() const;
 	/**
 	 * @brief overload of the operator == to match Passenger objects
 	 * @param p const Passenger &p
