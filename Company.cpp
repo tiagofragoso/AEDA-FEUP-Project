@@ -962,7 +962,7 @@ void Company::flightCreate(Airplane *airplane) {
 
 void Company::flightDelete(Airplane *airplane) {
 
-    if (airplane->getFlights().empty() == 0) {
+    if (airplane->getFlights().empty()) {
         cout << "There are no flights in this airplane.\n";
         return;
     }
