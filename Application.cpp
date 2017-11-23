@@ -1033,6 +1033,8 @@ void Application::loadPassengerFile() {
     passFile.close();
     this->company.sortPassengers();
 
+
+
 }
 
 
@@ -1058,6 +1060,8 @@ void Application::loadFlightFile() {
     flFile.close();
     this->company.sortFlights();
 
+    cout << "File successfully loaded.\n";
+
 }
 
 void Application::loadAirplaneFile() {
@@ -1080,6 +1084,8 @@ void Application::loadAirplaneFile() {
     }
     airFile.close();
     this->company.sortAirplanes();
+
+    cout << "File successfully loaded.\n";
 
 }
 

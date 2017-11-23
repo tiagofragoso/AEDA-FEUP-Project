@@ -1,3 +1,18 @@
-n1; Mariana Aguiar; 22/5/1998
-c2; Tiago Fragoso; 16/10/1998; Estudante; 0
-c3; Joao Malheiro; 17/4/1997; Sande de queijinho; 2
+c13617471; Mariana Aguiar; 22/5/1998; Bricklayer; 7
+c15091119; Tiago Fragoso; 16/10/1998; Student; 0
+c15148612; Joao Malheiro; 17/4/1997;  Singer; 2
+c17942881; Simão Santos; 5/3/1998; Eternal student; 3
+n14095521; Beatriz Mendes; 7/11/1998
+n21113409; Gonçalo Bernardo; 28/2/1998
+n12009487; Tiago Castro; 18/4/1998
+n17833321; Pedro Lopes; 30/4/1998
+c10009322; Diogo Yaguas; 14/3/1998; PR; 4
+c19992109; Miguel Duarte; 24/10/1998; Tutor; 10
+n12344599; Maria Viana; 7/2/1998
+n18883212; Daniel Gomes; 9/4/1998
+c13329879; António Cruz; 23/9/1998; Memer; 2
+c11459900; Inês Marques; 22/2/1998; Vegetarian; 5
+c19803328; Teresa Ferreira; 3/6/1998; Animal lover; 1
+n12490990; Francisco Miranda; 9/1/1998
+n13421313; Joana Ramos; 2/11/1998
+n11113321; Joana Silva; 19/5/1998
