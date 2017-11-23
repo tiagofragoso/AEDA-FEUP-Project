@@ -1,8 +1,13 @@
 #include "Company.h"
+#include "Application.h"
 
 bool Company::passengersChanged = false;
 bool Company::airplanesChanged = false;
 bool Company::flightsChanged = false;
+
+const string Company::AIRPLANE_IDENTIFIER = "airplane";
+const string Company::FLIGHT_IDENTIFIER = "flight";
+const string Company::PASSENGER_IDENTIFIER = "passenger";
 
 Company::Company() {
 
@@ -1243,6 +1248,14 @@ void Company::sortAirplanes() {
 void Company::sortFlights() {
 
     sort(flights.begin(), flights.end(), compFId);
+}
+
+void Company::clearData(string identifier) {
+
+    if (identifier == Company::PASSENGER_IDENTIFIER) passengers.clear();
+    else if (identifier == Company::FLIGHT_IDENTIFIER) flights.clear();
+    else if (identifier == Company::AIRPLANE_IDENTIFIER) fleet.clear();
+
 }
 
 

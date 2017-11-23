@@ -2,18 +2,13 @@
 #include <vector>
 #include "Application.h"
 
-static const string AIRPLANE_IDENTIFIER = "airplane";
-static const string FLIGHT_IDENTIFIER = "flight";
-static const string PASSENGER_IDENTIFIER = "passenger";
-
-
 Application::Application() {
 
     Company c = Company("TAP");
     company = c;
-    passengersFilepath = "../Files/Passengers.txt";
-    airplanesFilepath = "../Files/Airplanes.txt";
-    flightsFilepath = "../Files/Flights.txt";
+    passengersFilepath = "";
+    airplanesFilepath = "";
+    flightsFilepath = "";
 
 }
 
@@ -101,8 +96,8 @@ void Application::printFilesMenu() const {
     cout << "\n[FILE MANAGEMENT MENU]\n\n";
 
     cout << "NOTE:\n*Please load the files in the following order: Passengers-Flights-Airplanes.\n";
-    cout
-            << "*Loading multiple files for the same category will try to merge data, which may cause data overlapping.\n\n";
+    cout << "*Loading multiple files for the same category will erase previous data.\n";
+    cout << "*If you must reload a file, please reload all other files in the previously stated load order.\n\n";
 
     cout << "[1]- Load passengers file ";
     if (passengersFilepath.empty()) {
@@ -1013,7 +1008,7 @@ string Application::inputFilePath(string s) {
 
 void Application::loadPassengerFile() {
 
-    //passengersFilepath = inputFilePath(PASSENGER_IDENTIFIER);
+    passengersFilepath = inputFilePath(Company::PASSENGER_IDENTIFIER);
 
     string p;
 
@@ -1024,6 +1019,7 @@ void Application::loadPassengerFile() {
         passengersFilepath.clear();
         throw InvalidFilePath("fail");
     }
+    this->company.clearData(Company::PASSENGER_IDENTIFIER);
     while (getline(passFile, p)) {
         if (p.empty()) continue;
         Passenger *passenger = readPassenger(p);
@@ -1041,7 +1037,7 @@ void Application::loadFlightFile() {
 
     string f;
 
-    //flightsFilepath = inputFilePath(FLIGHT_IDENTIFIER);
+    flightsFilepath = inputFilePath(Company::FLIGHT_IDENTIFIER);
 
     if (flightsFilepath == "") throw InvalidFilePath("empty");
 
@@ -1050,6 +1046,7 @@ void Application::loadFlightFile() {
         flightsFilepath.clear();
         throw InvalidFilePath("fail");
     }
+    this->company.clearData(Company::FLIGHT_IDENTIFIER);
     while (getline(flFile, f)) {
         if (f.empty()) continue;
         Flight *flight = readFlight(f);
@@ -1065,7 +1062,7 @@ void Application::loadFlightFile() {
 
 void Application::loadAirplaneFile() {
 
-    //airplanesFilepath = inputFilePath(AIRPLANE_IDENTIFIER);
+    airplanesFilepath = inputFilePath(Company::AIRPLANE_IDENTIFIER);
 
     string a;
 
@@ -1076,6 +1073,7 @@ void Application::loadAirplaneFile() {
         airplanesFilepath.clear();
         throw InvalidFilePath("fail");
     }
+    this->company.clearData(Company::AIRPLANE_IDENTIFIER);
     while (getline(airFile, a)) {
         if (a.empty()) continue;
         Airplane *airplane = readAirplane(a);

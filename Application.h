@@ -51,9 +51,7 @@ public:
     /**
      * @brief Main menu with the following options: File, Passenger, Airplane management, Booking and quit
      */
-    static const string AIRPLANE_IDENTIFIER;
-    static const string FLIGHT_IDENTIFIER;
-    static const string PASSENGER_IDENTIFIER;
+
     /**
      * @brief main Menu
      */

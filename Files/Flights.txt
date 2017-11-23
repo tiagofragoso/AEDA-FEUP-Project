@@ -5,7 +5,7 @@ c4; London; Porto; 16; 27; 3; no_passengers
 r5; Porto; New York; 8; 400; 8; no_passengers
 c6; Faro; Berlin; 48; 55; 4; no_passengers
 c7; Porto; London; 20; 95; 3; no_passengers
-c8; London, Tokyo; 24; 300; 12; no_passengers
+c8; London; Tokyo; 24; 300; 12; no_passengers
 c9; New York; San Francisco; 20; 145; 7; no_passengers
 r10; San Francisco; Sydney; 28; 8000; 15; no_passengers
 c11; Berlin; Oslo; 56; 200; 3; no_passengers
