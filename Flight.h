@@ -121,6 +121,7 @@ public:
      * @brief Purely virtual function used in both of the subclasses
      */
     virtual void print() const;
+    void printList() const;
     /**
      * @brief Purely virtual function redefined in the Rented Flight subclass
      * @return Passenger* Pointer to a Passenger object

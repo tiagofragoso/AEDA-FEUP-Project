@@ -60,8 +60,13 @@ void Flight::setDuration(unsigned int duration)
 
 void Flight::printSummary() const {
 
-    cout << setw(9) << id << setw(3) << " " << setw(9) << departure << setw(3) << " " << setw(11) << destination << setw(3) << " " << setw(14) << time_to_flight << endl;
+    cout << setw(9) << id << setw(3) << " " << setw(15) << departure << setw(3) << " " << setw(15) << destination << setw(3) << " " << setw(14) << time_to_flight << endl;
 
+}
+
+void Flight::printList() const {
+
+    cout << setw(9) << id << setw(3) << " " << setw(15) << departure << setw(3) << " " << setw(15) << destination << setw(3) << " " << setw(18) << time_to_flight << setw(3) << " " << setw(9) << basePrice << endl;
 }
 
 void Flight::print() const {

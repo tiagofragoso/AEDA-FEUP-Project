@@ -536,11 +536,11 @@ void Application::printListFlights(type t) {
     cout << title;
     cout << std::left;
     cout << setw(9) << "Flight ID" << setw(3) << " " << setw(15) << "Departure" << setw(3) << " " << setw(15)
-         << "Destination" << setw(3) << " " << setw(14) << "Time to flight\n";
+         << "Destination" << setw(3) << " " << setw(17) << "Time to flight (h)" << setw(3) << " " << setw(9) << "Price (€)\n";
 
     for (auto &flight : flights) {
 
-        flight->printSummary();
+        flight->printList();
     }
 
 }
