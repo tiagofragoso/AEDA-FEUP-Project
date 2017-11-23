@@ -490,7 +490,7 @@ void Application::printListAirplane(type t) {
 
     cout << title;
     cout << std::left;
-    cout << setw(11) << "Airplane ID\n";
+    cout << setw(11) << "Airplane ID" << setw(3) << " " << setw(7) << "Model" << setw(3) << " " << setw(7) << "Capacity\n";
 
     for (auto &airplane : airplanes) {
 
@@ -536,8 +536,8 @@ void Application::printListFlights(type t) {
 
     cout << title;
     cout << std::left;
-    cout << setw(12) << "Passenger ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13)
-         << "Date of Birth\n";
+    cout << setw(9) << "Flight ID" << setw(3) << " " << setw(9) << "Departure" << setw(3) << " " << setw(11)
+         << "Destination" << setw(3) << " " << setw(14) << "Time to flight\n";
 
     for (auto &flight : flights) {
 
