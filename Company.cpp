@@ -764,7 +764,7 @@ void Company::printSummaryFlight(Airplane *airplane) {
 
     cout << "FLIGHT SUMMARY\n\n";
     cout << std::left;
-    cout << setw(9) << "Flight ID" << setw(3) << " " << setw(9) << "Departure" << setw(3) << " " << setw(11)
+    cout << setw(9) << "Flight ID" << setw(3) << " " << setw(15) << "Departure" << setw(3) << " " << setw(15)
          << "Destination" << setw(3) << " " << setw(14) << "Time to flight\n";
 
     for (auto &flight : airplane->getFlights()) {
@@ -967,7 +967,7 @@ void Company::flightCreate(Airplane *airplane) {
 
 void Company::flightDelete(Airplane *airplane) {
 
-    if (airplane->getFlights().empty() == 0) {
+    if (airplane->getFlights().empty()) {
         cout << "There are no flights in this airplane.\n";
         return;
     }
