@@ -84,7 +84,7 @@ void Application::setupMenus() {
 
 }
 
-void Application::printMainMenu() {
+void Application::printMainMenu() const {
 
     cout << "\n[MAIN MENU]\n\n";
     cout << "[1]- File management.\n";
@@ -96,7 +96,7 @@ void Application::printMainMenu() {
 
 }
 
-void Application::printFilesMenu() {
+void Application::printFilesMenu() const {
 
     cout << "\n[FILE MANAGEMENT MENU]\n\n";
 
@@ -130,7 +130,7 @@ void Application::printFilesMenu() {
 
 }
 
-void Application::printPassengersMenu() {
+void Application::printPassengersMenu() const {
 
     cout << "\n[PASSENGER MANAGEMENT MENU]\n\n";
     cout << "[1]- Show passenger info.\n";
@@ -142,7 +142,7 @@ void Application::printPassengersMenu() {
 }
 
 
-void Application::printAirplanesMenu() {
+void Application::printAirplanesMenu() const {
 
     cout << "\n[AIRPLANES MANAGEMENT MENU]\n\n";
     cout << "[1]- Show airplane info.\n";
@@ -153,7 +153,7 @@ void Application::printAirplanesMenu() {
     cout << "[9]- Back.\n\n";
 }
 
-void Application::printListsMenu() {
+void Application::printListsMenu() const {
 
     cout << "[LISTS MENU]\n\n";
     cout << "Passenger lists.\n\n";
@@ -171,7 +171,7 @@ void Application::printListsMenu() {
     cout << "[0]- Back.\n\n";
 }
 
-void Application::printFlightsMenu() {
+void Application::printFlightsMenu() const {
 
     cout << "[FLIGHT MANAGEMENT MENU]\n\n";
     cout << "[1]- Show flight info.\n";
@@ -181,7 +181,7 @@ void Application::printFlightsMenu() {
     cout << "[9]- Back.\n\n";
 }
 
-void Application::printBookingsMenu() {
+void Application::printBookingsMenu() const {
 
     cout << "[BOOKING MANAGEMENT MENU]\n\n";
     cout << "[1]- Show my scheduled Flights\n";
@@ -190,7 +190,7 @@ void Application::printBookingsMenu() {
     cout << "[9]- Back.\n\n";
 }
 
-void Application::printAirplaneUpdateMenu(Airplane *airplane) {
+void Application::printAirplaneUpdateMenu(Airplane *airplane) const {
 
     cout << "Airplane selected: \n\n";
     airplane->print();
@@ -201,7 +201,7 @@ void Application::printAirplaneUpdateMenu(Airplane *airplane) {
 
 }
 
-void Application::printFlightUpdateMenu(Flight *flight) {
+void Application::printFlightUpdateMenu(Flight *flight) const {
 
     string foo;
     cout << "Flight selected: \n\n";
@@ -226,7 +226,7 @@ void Application::printFlightUpdateMenu(Flight *flight) {
     }
 }
 
-void Application::printPassengerUpdateMenu(Passenger *passenger) {
+void Application::printPassengerUpdateMenu(Passenger *passenger) const {
 
     cout << "Passenger selected: \n\n";
     passenger->print();
@@ -489,7 +489,7 @@ void Application::printListAirplane(type t) {
 
     cout << title;
     cout << std::left;
-    cout << setw(11) << "Airplane ID\n";
+    cout << setw(11) << "Airplane ID" << setw(3) << " " << setw(7) << "Model" << setw(3) << " " << setw(7) << "Capacity\n";
 
     for (auto &airplane : airplanes) {
 
@@ -535,8 +535,8 @@ void Application::printListFlights(type t) {
 
     cout << title;
     cout << std::left;
-    cout << setw(12) << "Passenger ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13)
-         << "Date of Birth\n";
+    cout << setw(9) << "Flight ID" << setw(3) << " " << setw(9) << "Departure" << setw(3) << " " << setw(11)
+         << "Destination" << setw(3) << " " << setw(14) << "Time to flight\n";
 
     for (auto &flight : flights) {
 

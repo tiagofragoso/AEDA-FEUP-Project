@@ -24,22 +24,9 @@ class Application {
     typedef void(Company::*companyFunctionFlight)(Flight * flight);
 
 private:
-    /**
-     * @brief Company company
-     */
     Company company;
-
-    /**
-     * @brief string passengersFilepath is the name of the file containing the Passengers information
-     */
     string passengersFilepath;
-    /**
-    * @brief string airplanesFilepath is the name of the file containing the Airplanes information
-    */
     string airplanesFilepath;
-    /**
-    * @brief string flightsFilepath is the name of the file containing the Flights information
-    */
     string flightsFilepath;
     map<string, appFunction> menuMain;
     map<string, appFunction> menuFiles;
@@ -52,26 +39,24 @@ private:
     map<string, companyFunctionFlight> menuFlightsUpdate;
     map<string, companyFunctionPassenger> menuPassengersUpdate;
 
-
 public:
     /**
      * @brief Default constructor of an Application object
      */
     Application();
-
     /** @name Application Menu member-functions*/
     /** @{
     *
     */
-
     /**
      * @brief Main menu with the following options: File, Passenger, Airplane management, Booking and quit
      */
-
     static const string AIRPLANE_IDENTIFIER;
     static const string FLIGHT_IDENTIFIER;
     static const string PASSENGER_IDENTIFIER;
-
+    /**
+     * @brief main Menu
+     */
     void mainMenu();
     /**
      * @brief Menu that allows the user to manage the files
@@ -99,16 +84,16 @@ public:
     void passengerUpdateMenu();
     void airplaneUpdateMenu();
     void flightUpdateMenu(Airplane * airplane);
-    void printMainMenu();
-    void printFilesMenu();
-    void printPassengersMenu();
-    void printAirplanesMenu();
-    void printListsMenu();
-    void printFlightsMenu();
-    void printBookingsMenu();
-    void printAirplaneUpdateMenu(Airplane * airplane);
-    void printFlightUpdateMenu(Flight * flight);
-    void printPassengerUpdateMenu(Passenger * passenger);
+    void printMainMenu() const ;
+    void printFilesMenu() const;
+    void printPassengersMenu() const;
+    void printAirplanesMenu() const;
+    void printListsMenu() const;
+    void printFlightsMenu() const;
+    void printBookingsMenu() const;
+    void printAirplaneUpdateMenu(Airplane * airplane) const;
+    void printFlightUpdateMenu(Flight * flight) const;
+    void printPassengerUpdateMenu(Passenger * passenger) const;
 
     void printListPassengers(type t);
     void printListAirplane(type t);

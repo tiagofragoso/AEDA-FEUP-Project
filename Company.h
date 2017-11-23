@@ -139,7 +139,7 @@ public:
 
     Passenger * passengerById(unsigned int id);
 
-	vector<Flight *> getFlights(){return flights;}
+	vector<Flight *> getFlights() const {return flights;}
 
 	//Management menus
 

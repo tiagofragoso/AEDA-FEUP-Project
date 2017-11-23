@@ -49,7 +49,7 @@ void Airplane::setFlights(vector<Flight*> flights) {
 
 void Airplane::printSummary() const {
 
-    cout << setw(11) << id << endl;
+    cout << setw(11) << id << setw(3) << " " << setw(7) << model << setw(3) << " " << setw(7) << capacity << endl;
 }
 
 void Airplane::print() const {

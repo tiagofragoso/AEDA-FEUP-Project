@@ -395,10 +395,10 @@ void Company::passengerUpdateNYear(Passenger *passenger) {
 
 void Company::printSummaryAirplane() {
 
-    cout << "AIRPLANE SUMMARY\n\n";
+    cout << "AIRPLANE INFORMATION\n\n";
 
     cout << std::left;
-    cout << setw(11) << "Airplane ID\n";
+    cout << setw(11) << "Airplane ID" << setw(3) << " " << setw(7) << "Model" << setw(3) << " " << setw(7) << "Capacity\n";
 
     for (auto &airplane : fleet) {
         airplane->printSummary();
@@ -438,37 +438,6 @@ void Company::airplaneShow() {
 
     printSummaryAirplane();
     string foo;
-    Airplane *airplane;
-    do {
-
-        do {
-            cout << "Do you wish to view detailed information about an airplane (Y/N)?: ";
-            if (!validString(foo)) continue;
-            else break;
-
-        } while (true);
-
-        normalize(foo);
-        if (foo == "y") {
-            cout << endl;
-            do {
-                try {
-                    airplane = chooseAirplane();
-                }
-                catch (const InvalidAirplane &i) {
-                    i.print();
-                    continue;
-                }
-
-                airplane->print();
-                break;
-            } while (true);
-
-        } else if (foo == "n") break;
-        else {
-            cout << "Invalid option. Reenter." << endl;
-        }
-    } while (true);
     cout << endl;
 
 }
@@ -929,7 +898,6 @@ void Company::flightCreate(Airplane *airplane) {
         else break;
 
     } while (true);
-    normalize(departure);
 
     do {
         cout << "City of arrival: ";
@@ -937,7 +905,6 @@ void Company::flightCreate(Airplane *airplane) {
         else break;
 
     } while (true);
-    normalize(destination);
 
     do {
         cout << "Duration (h): ";
