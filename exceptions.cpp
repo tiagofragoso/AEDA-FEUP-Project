@@ -68,19 +68,10 @@ void InvalidSeat::print() const {
 	cout << seat << " is and invalid seat on the flight. Reenter.\n";
 }
 
-OverlapingFlight::OverlapingFlight() {}
 
 void OverlapingFlight::print() const {
 
     cout << "It is not possible to add this flight to this plane.\n";
-
-}
-
-InvalidFormat::InvalidFormat() {
-
-}
-
-ConnectionFlight::ConnectionFlight() {
 
 }
 

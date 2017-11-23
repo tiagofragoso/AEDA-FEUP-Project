@@ -16,29 +16,11 @@ typedef std::map<string, Passenger*, std::less<string> > PassengerMap;
 class Flight {
 
 private:
-    /**
-     * @brief unsigned int id of the Flight
-     */
     unsigned int id;
-    /**
-     * @brief string departure location
-     */
     string departure;
-    /**
-     * @brief string destination location
-     */
     string destination;
-    /**
-     * @brief unsigned int time_to_flight time until the Flight takes off
-     */
     unsigned int time_to_flight;
-    /**
-     * @brief unsigned int basePrice of the Flight object
-     */
     unsigned int basePrice;
-    /**
-     * @brief unsigned int duration of the Flight
-     */
     unsigned int duration;
 	unsigned int capacity = 0;
 
@@ -78,7 +60,7 @@ public:
     unsigned int getTime_to_flight() const;
     /**
      * @brief Gets the base price of the Flight object
-     * @return  unsigned int base price of the Flight
+     * @return unsigned int base price of the Flight
      */
     unsigned int getBasePrice() const;
     /**
@@ -91,9 +73,11 @@ public:
      * @return string
      */
     virtual string getType() const = 0;
-
+    /**
+     * @brief returns capacity of flight
+     * @return unsigned int
+     */
 	unsigned int getCapacity() const;
-    //set Methods
     /**
      * @brief Sets the departure of the Flight to the one passed as parameter
      * @param departure string departure
@@ -121,20 +105,22 @@ public:
     void setDuration(unsigned int duration);
     /**
      * @brief Sets the ID of the Flight to the one passed as parameter
-     * @param id  unsigned int id
+     * @param id unsigned int id
      */
     void setId(unsigned int id);
-
+    /**
+     * @brief Sets the capacity of the Flight to the one passed as parameter
+     * @param capacity unsigned int capacity
+     */
     void setCapacity(unsigned int capacity);
-
     /**
      * @brief Prints a summary of a Flight object
      */
-    void printSummary();
+    void printSummary() const;
     /**
      * @brief Purely virtual function used in both of the subclasses
      */
-    virtual void print() = 0;
+    virtual void print() const = 0;
     /**
      * @brief Purely virtual function redefined in the Rented Flight subclass
      * @return Passenger* Pointer to a Passenger object
@@ -190,9 +176,6 @@ public:
 class RentedFlight : public Flight {
 
 private:
-    /**
-     * @brief Pointer to the Passenger object that is the buyer of the RentedFlight
-     */
     Passenger * buyer;
 
 public:
@@ -222,7 +205,7 @@ public:
      * @brief Inherited from the superclass to be used in CommercialFlight
      * @return PassengerMap& (reference to a PassengerMap)
      */
-    PassengerMap & getPassengers();
+    PassengerMap & getPassengers() const;
     /**
      * @brief Used to know if a Flight object is Rented or Commercial
      * @return "r" string "r"
@@ -232,7 +215,7 @@ public:
     //set Methods
     /**
      * @brief Sets the buyer of a RentedFlight to the one passed as a parameter
-     * @param buyer  Passenger* buyer
+     * @param buyer Passenger* buyer
      */
     void setBuyer(Passenger * buyer);
 
@@ -244,7 +227,7 @@ public:
     /**
      * @brief Prints the Information of the RentedFlight. Data-members inherited from the Flight class and the buyer from this one
      */
-    void print();
+    void print() const;
     /**
      * @brief Inherited from the superclass to be used in CommercialFlight
      * @param seat
@@ -257,9 +240,6 @@ public:
 class ComercialFlight : public Flight {
 
 private:
-    /**
-     * @brief passengers PassengerMap with all the Passengers in the Flight
-     */
     PassengerMap passengers;
 
 public:
@@ -292,23 +272,23 @@ public:
     //get methods
     /**
      * @brief Inherited from the superclass used in RentedFlight
-     * @return Passenger*
+     * @return Passenger * passenger
      */
     Passenger * getBuyer() const;
     /**
      * @ Gets the PassengerMap(map with the seats and the passengers) of a CommercialFlight
      * @return PassengerMap PassengerMap&
      */
-    PassengerMap & getPassengers();
+    PassengerMap & getPassengers() const;
     /**
       * @brief Used to know if a Flight object is Rented or Commercial
-      * @return "c" string "c"
+      * @return string "c"
       */
     string getType() const { return "c"; }
     //set methods
     /**
     * @brief Inherited from the super class used in RentedFlight class
-    * @param buyer Passenger *buyer
+    * @param Passenger *buyer
     */
     void setBuyer(Passenger * buyer);
     /**
@@ -325,12 +305,42 @@ public:
     /**
      * @brief Prints the Information of the RentedFlight. Data-members inherited from the Flight class and the passengers from the PassengerMap
      */
-    void print();
+    void print() const;
 };
 
+/**
+ * @brief Compares two objects of class Flight based of their id
+ * @param f1
+ * @param f2
+ * @return returns true if f1's id is less than f2's id
+ */
 bool compFId(Flight * f1, Flight * f2);
+/**
+ * @brief Compares two objects of class Flight based on their price (low to high)
+ * @param f1
+ * @param f2
+ * @return returns true if f1's price is less than f2's price
+ */
 bool compFPriceL(Flight * f1, Flight * f2);
+/**
+ * @brief Compares two objects of class Flight based on their price (high to low)
+ * @param f1
+ * @param f2
+ * @return returns true is f1's price is greater than f2's price
+ */
 bool compFPriceH(Flight * f1, Flight * f2);
+/**
+ * @brief Compares two objects of class Flight based on their Time to flight
+ * @param f1
+ * @param f2
+ * @return returns true if f1's time to flight is less than f2's time to flight
+ */
 bool compFTime(Flight * f1, Flight * f2);
+/**
+ * @brief Compares two objects of class Flight based on their destination
+ * @param f1
+ * @param f2
+ * @return returns true if f1's destination is less than f2's destination
+ */
 bool compFDest(Flight * f1, Flight * f2);
 #endif //AEDA_FEUP_PROJECT_FLIGHT_H

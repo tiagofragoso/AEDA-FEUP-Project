@@ -1,12 +1,9 @@
 #include "helper.h"
 #include "Airplane.h"
-#include "exceptions.h"
 #include "Company.h"
-#include <iostream>
-#include <iomanip>
-#include <string>
 
 using namespace std;
+
 // Input tester
 bool validArg(int & variable) {
 	size_t index = 0;
@@ -31,35 +28,6 @@ bool validArg(int & variable) {
 
 		if (variable <= 0) success = false;
 	}
-
-	if (!success) cout << "Invalid input. Reenter.\n";
-	return success;
-}
-
-// Input tester with end bool
-bool validArg(int &variable, bool &end) {
-	size_t index = 0;
-	bool success = true;
-	string input;
-	getline(cin, input);
-	if (input == "") {
-		end = true;
-		success = false;
-		return success;
-	}
-	trimString(input);
-
-	try {
-		variable = stoi(input, &index);
-
-	}
-	catch (const std::invalid_argument& ia) {
-		success = false;
-	}
-
-	if (index != input.length()) success = false;
-
-	if (variable <= 0) success = false;
 
 	if (!success) cout << "Invalid input. Reenter.\n";
 	return success;
@@ -124,28 +92,4 @@ bool validString(string &s) {
 
 	return true;
 
-}
-
-Date::Date(string &s) {
-	int temp;
-	try {
-		next(temp, s, "/");
-	} catch (InvalidFormat) {
-		cout << "Please insert the correct date.\n";
-	}
-	this->day = temp;
-	temp = 0;
-	try {
-		next(temp, s, "/");
-	} catch (InvalidFormat) {
-		cout << "Please insert the correct date.\n";
-	}
-	this->month = temp;
-	temp = 0;
-	try {
-		next(temp, s, "/");
-	} catch (InvalidFormat) {
-		cout << "Please insert the correct date.\n";
-	}
-	this->year = temp;
 }

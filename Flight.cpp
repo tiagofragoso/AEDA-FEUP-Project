@@ -58,13 +58,13 @@ void Flight::setDuration(unsigned int duration)
     this->duration = duration;
 }
 
-void Flight::printSummary() {
+void Flight::printSummary() const {
 
     cout << setw(9) << id << setw(3) << " " << setw(9) << departure << setw(3) << " " << setw(11) << destination << setw(3) << " " << setw(14) << time_to_flight << endl;
 
 }
 
-void Flight::print() {
+void Flight::print() const {
 
     cout << "Id: " << id << endl;
     cout << "Departure: " << departure << endl;
@@ -116,8 +116,7 @@ void Flight::setCapacity(unsigned int capacity) {
 
 RentedFlight::RentedFlight() : Flight(0, "", "", 0, 0, 0){
 
-    Passenger * p = new Passenger;
-    buyer = p;
+    buyer = new Passenger;
 }
 
 RentedFlight::RentedFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, Passenger *buyer) : Flight(id, departure, destination, time_to_flight, basePrice, duration), buyer(buyer) {}
@@ -139,7 +138,7 @@ void RentedFlight::setBuyer(Passenger *buyer) {
     this->buyer = buyer;
 }
 
-void RentedFlight::print() {
+void RentedFlight::print() const{
 
     Flight::print();
     cout << "Buyer: ";
@@ -159,7 +158,7 @@ ComercialFlight::ComercialFlight(unsigned int id, string departure, string desti
 
 PassengerMap & ComercialFlight::getPassengers() {
 
-    return this->passengers;
+    return passengers;
 }
 
 Passenger * ComercialFlight::getBuyer() const {
@@ -173,11 +172,9 @@ void ComercialFlight::setPassengers(PassengerMap passengers) {
     this->passengers = passengers;
 }
 
-void ComercialFlight::setBuyer(Passenger *buyer) {
+void ComercialFlight::setBuyer(Passenger *buyer) {}
 
-}
-
-void ComercialFlight::print() {
+void ComercialFlight::print() const {
 
     Flight::print();
 

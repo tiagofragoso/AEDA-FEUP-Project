@@ -16,8 +16,8 @@ using namespace std;
 
 class Application {
 
-    typedef void(Company::*companyFunction)(void);
-    typedef void(Application::*appFunction)(void);
+    typedef void(Company::*companyFunction)();
+    typedef void(Application::*appFunction)();
     typedef void(Application::*appFunctionType)(type t);
     typedef void(Company::*companyFunctionAirplane)(Airplane * airplane);
     typedef void(Company::*companyFunctionPassenger)(Passenger * passenger);

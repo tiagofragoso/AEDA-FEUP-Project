@@ -2,21 +2,17 @@
 #include <iomanip>
 #include <string>
 
-Passenger::Passenger(unsigned int id, string name, string dateOfBirth) : id(id), name(name), dateOfBirth(dateOfBirth)
-{
-}
+Passenger::Passenger(unsigned int id, string name, string dateOfBirth) : id(id), name(name), dateOfBirth(dateOfBirth) {}
 
 unsigned int Passenger::getId() const {
     return this->id;
 }
 
-string Passenger::getName() const
-{
+string Passenger::getName() const {
 	return this->name;
 }
 
-string Passenger::getDateOfBirth() const
-{
+string Passenger::getDateOfBirth() const {
 	return this->dateOfBirth;
 }
 
@@ -24,13 +20,11 @@ void Passenger::setId(unsigned int id) {
     this->id = id;
 }
 
-void Passenger::setName(string name)
-{
+void Passenger::setName(string name) {
   this->name = name;
 }
 
-void Passenger::setDateOfBirth(string dateOfBirth)
-{
+void Passenger::setDateOfBirth(string dateOfBirth) {
     this->dateOfBirth = dateOfBirth;
 }
 
@@ -47,14 +41,12 @@ Card* Passenger::getCard() const{
 void Passenger::setCard(Card *card) {}
 
 
-PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOfBirth, Card *card) : Passenger(id, name, dateOfBirth), card(card)
-{
+PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOfBirth, Card *card) : Passenger(id, name, dateOfBirth), card(card) {
 }
 
 PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear = 0) : Passenger(id, name, dateOfBirth) {
 
-    Card* c = new Card(job, nYear);
-    card = c;
+    card = new Card(job, nYear);
 }
 
 
@@ -69,14 +61,14 @@ void PassengerWithCard::setCard(Card *card) {
 	this->card = card;
 }
 
-void Passenger::printSummary() {
+void Passenger::printSummary() const {
 
     cout << std::left;
     cout << setw(12) << id << setw(3) << " " << setw(30) << name << setw(3) << " " << setw(13) << dateOfBirth << endl;
 }
 
 
-void Passenger::print() {
+void Passenger::print() const {
     cout << "Id: " << id << endl << "Name: " << name << endl << "Date of Birth: " << dateOfBirth << endl;
 }
 
@@ -108,7 +100,7 @@ PassengerWithCard::PassengerWithCard() : Passenger(){
     card = c;
 }
 
-void PassengerWithCard::print() {
+void PassengerWithCard::print() const {
 
     cout << "Id: " << Passenger::getId() << endl;
     cout << "Name: " << Passenger::getName() << endl;
