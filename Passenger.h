@@ -12,7 +12,7 @@ using namespace std;
 class Passenger {
 
 private:
-	int id;
+	unsigned int id;
 	string name;
 	string dateOfBirth;
 

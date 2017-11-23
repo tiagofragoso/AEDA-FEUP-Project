@@ -80,15 +80,13 @@ void Airplane::removeFlight(Flight * flight) {
 
 bool Airplane::operator==(const Airplane &a1) {
 
-    if (id == a1.getId())
-        return true;
-    else return false;
+    return id == a1.getId();
 
 }
 
 void Airplane::addFlight(Flight *flight) {
 
-    if (flights.size() == 0) {
+    if (flights.empty()) {
         flights.push_back(flight);
         return;
     }
@@ -114,7 +112,7 @@ void Airplane::addFlight(Flight *flight) {
 
 ostream &operator<<(ostream &o, const Airplane * a) {
     o << to_string(a->id) << "; " << a->model << "; " << to_string(a->capacity) << "; ";
-    if (a->flights.size() >0 ) {
+    if (!a->flights.empty()) {
         for (size_t i = 0; i < a->flights.size(); i++) {
             o << to_string(a->flights.at(i)->getId());
             if (i != a->flights.size() - 1) o << ", ";

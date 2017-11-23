@@ -61,20 +61,12 @@ public:
 	/**
 	 * @brief Default Constructor of a Company object
 	 */
-    Company();  
-	/**
-	 * @brief Constructor of a Company object with all of its data members
-	 * @param name
-	 * @param fleet
-	 * @param passengers
-	 * @param flights
-	 */
-	Company(string name, vector <Airplane*> fleet, vector <Passenger*> passengers);
+    Company();
 	/**
 	 * @brief Constructor of a Company object only defining its name
 	 * @param name
 	 */
-    Company(string name); 
+    explicit Company(string name);
 
 
 	//get methods

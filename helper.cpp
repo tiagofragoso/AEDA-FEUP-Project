@@ -79,8 +79,8 @@ void pause() {
 }
 
 void normalize(string &s){
-    for (int i = 0; i < s.size(); i++) {
-        s.at(i) = tolower(s.at(i));
+    for (auto &c: s) {
+        c = tolower(c);
     }
     trimString(s);
 }
@@ -106,7 +106,7 @@ void next(int &elem, string &piece, string separator){
 
 		elem = stoi(elemstring, &i);
 
-	} catch (std::invalid_argument){
+	} catch (std::invalid_argument &i){
 		err = true;
 	}
 
@@ -124,28 +124,4 @@ bool validString(string &s) {
 
 	return true;
 
-}
-
-Date::Date(string &s) {
-	int temp;
-	try {
-		next(temp, s, "/");
-	} catch (InvalidFormat) {
-		cout << "Please insert the correct date.\n";
-	}
-	this->day = temp;
-	temp = 0;
-	try {
-		next(temp, s, "/");
-	} catch (InvalidFormat) {
-		cout << "Please insert the correct date.\n";
-	}
-	this->month = temp;
-	temp = 0;
-	try {
-		next(temp, s, "/");
-	} catch (InvalidFormat) {
-		cout << "Please insert the correct date.\n";
-	}
-	this->year = temp;
 }

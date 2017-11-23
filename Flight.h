@@ -254,7 +254,7 @@ public:
 
 };
 
-class ComercialFlight : public Flight {
+class CommercialFlight : public Flight {
 
 private:
     /**
@@ -266,7 +266,7 @@ public:
     /**
      * @brief Default Constructor of a CommercialFlight object
      */
-    ComercialFlight();
+    CommercialFlight();
     /**
      * @brief Constructor of a CommercialFlight object with the Data-members of the superclass
      * @param id
@@ -276,7 +276,7 @@ public:
      * @param basePrice
      * @param duration
      */
-    ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration);
+    CommercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration);
     /**
      * @brief Constructor of a CommercialFlight object with the Data-members inherited from the superclass plus the PassengerMap from this CommercialFlight class
      * @param id
@@ -287,7 +287,7 @@ public:
      * @param duration
      * @param passengers
      */
-    ComercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, PassengerMap passengers);
+    CommercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration, PassengerMap passengers);
 
     //get methods
     /**

@@ -14,10 +14,6 @@ Company::Company() {
 
 }
 
-Company::Company(string name, vector<Airplane *> fleet, vector<Passenger *> passengers) {
-
-}
-
 Company::Company(string name) {
 
     this->name = name;
@@ -110,14 +106,14 @@ Flight *Company::flightById(unsigned int id) {
     for (auto const &f: flights) {
         if (f->getId() == id) return f;
     }
-    return nullptr;
+    throw InvalidFlight(id);
 }
 
 Passenger *Company::passengerById(unsigned int id) {
     for (auto const &p: passengers) {
         if (p->getId() == id) return (Passenger *) p;
     }
-    return nullptr;
+    throw InvalidPassenger(id);
 }
 
 void Company::addFlight(Flight *f) {
@@ -162,7 +158,7 @@ Passenger *Company::choosePassenger() {
 
 void Company::passengerShow() {
 
-    if (passengers.size() == 0) {
+    if (passengers.empty()) {
         cout << "There are no passengers.\n";
         return;
     }
@@ -218,7 +214,7 @@ Passenger * Company::passengerCreate() {
 
     string foo;
     string name, dateOfBirth, job;
-    int id, nYear;
+    int id;
 
     while (true) {
 
@@ -433,7 +429,7 @@ Airplane *Company::chooseAirplane() {
 
 void Company::airplaneShow() {
 
-    if (fleet.size() == 0) {
+    if (fleet.empty()) {
 
         cout << "There are no airplanes.\n";
         return;
@@ -538,7 +534,7 @@ void Company::airplaneCreate() {
 
 void Company::airplaneDelete() {
 
-    if (fleet.size() == 0) {
+    if (fleet.empty()) {
 
         cout << "There are no airplanes.\n";
         return;
@@ -586,7 +582,7 @@ void Company::airplaneUpdateModel(Airplane *airplane) {
 
 void Company::airplaneUpdateCapacity(Airplane *airplane) {
 
-    if (airplane->getFlights().size() != 0) {
+    if (!airplane->getFlights().empty()) {
 
         cout << "There are assigned seats in at least one flight in this airplane, if you want to change its capacity delete the flight first.\n";
         return;
@@ -619,7 +615,7 @@ void Company::bookFlight(Passenger *p) {
             else break;
 
         } while (true);
-        if (menuhelper != "") normalize(menuhelper);
+        if (!menuhelper.empty()) normalize(menuhelper);
         if (menuhelper == "r" || menuhelper == "c") {
             bookFlightWithType(p, menuhelper);
             break;
@@ -737,7 +733,7 @@ void Company::returnTicket(Passenger *p) {
     int id;
     vector<pair<string, Flight *> > v = getTickets(p);
     showAllTickets(p);
-    if (v.size() == 0) return;
+    if (v.empty()) return;
     do {
         cout << "Please choose the ticket you wish to return: ";
         if (!validArg(id)) continue;
@@ -745,7 +741,7 @@ void Company::returnTicket(Passenger *p) {
         cout << "Invalid input. Reenter.\n";
     } while (true);
 
-    pair<string, Flight *> selectedTicket = v.at(id - 1);
+    pair<string, Flight *> selectedTicket = static_cast<pair<string, Flight *> &&>(v.at(id - 1));
 
     if (selectedTicket.second->getType() == "c") {
 
@@ -774,7 +770,7 @@ void Company::showAllTickets(Passenger *passenger) {
     vector<pair<string, Flight *> > v = getTickets(passenger);
     unsigned int i = 1;
     cout << std::left;
-    if (v.size() > 0) {
+    if (!v.empty()) {
         cout << setw(5) << " " << setw(9) << "Flight ID" << setw(3) << " " << setw(4) << "Seat" << setw(3) << " "
              << setw(15) << "Departure" << setw(3) << " " << setw(15) << "Destination" << endl;
         for (auto const &t: v) {
@@ -977,7 +973,7 @@ void Company::flightCreate(Airplane *airplane) {
         flight = new RentedFlight(id, departure, destination, time_to_flight, price, duration, buyer);
 
     } else
-        flight = new ComercialFlight(id, departure, destination, time_to_flight, price, duration);
+        flight = new CommercialFlight(id, departure, destination, time_to_flight, price, duration);
 
 
     try {
@@ -999,7 +995,7 @@ void Company::flightCreate(Airplane *airplane) {
 
 void Company::flightDelete(Airplane *airplane) {
 
-    if (airplane->getFlights().size() == 0) {
+    if (airplane->getFlights().empty() == 0) {
         cout << "There are no flights in this airplane.\n";
         return;
     }
@@ -1054,7 +1050,7 @@ void Company::flightUpdatePrice(Flight *flight) {
 
 void Company::flightUpdateBuyer(Flight *flight) {
 
-    Passenger *passenger = new Passenger;
+    Passenger *passenger;
     cout << "The current buyer for the chosen flight is:\n";
     flight->getBuyer()->print();
 
@@ -1227,7 +1223,7 @@ void Company::flightAddPassenger(Flight *flight, Passenger *passenger) {
     seats = availableSeats(flight, capacity);
     printSeats(capacity, seats);
 
-    if (seats.size() == 0) {
+    if (seats.empty()) {
         cout << "There are no available seats.\n";
         return;
     }

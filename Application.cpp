@@ -7,7 +7,6 @@ static const string FLIGHT_IDENTIFIER = "flight";
 static const string PASSENGER_IDENTIFIER = "passenger";
 
 
-
 Application::Application() {
 
     Company c = Company("TAP");
@@ -269,16 +268,14 @@ void Application::mainMenu() {
             if (op == "" || menuMain.find(op) == menuMain.end()) {
                 cout << "Invalid option.\n";
             } else break;
-        } while(true);
+        } while (true);
 
         (this->*menuMain[op])();
 
-    }while (true);
+    } while (true);
 
 
 }
-
-
 
 
 void Application::filesMenu() {
@@ -292,7 +289,7 @@ void Application::filesMenu() {
         do {
             cout << "Insert the desired option: ";
             getline(cin, op);
-            if (op == "" || menuFiles.find(op) == menuFiles.end()) {
+            if (op.empty() || menuFiles.find(op) == menuFiles.end()) {
                 if (op == "9") return;
                 cout << "Invalid option.\n";
             } else break;
@@ -309,7 +306,7 @@ void Application::filesMenu() {
 
         pause();
 
-    }while(true);
+    } while (true);
 
 }
 
@@ -350,15 +347,15 @@ void Application::passengersMenu() {
 
             cout << "Insert the desired option: ";
             getline(cin, op);
-            if (op == "" || menuPassengers.find(op) == menuPassengers.end()) {
+            if (op.empty() || menuPassengers.find(op) == menuPassengers.end()) {
 
                 if (op == "9") return;
                 if (op == "4") break;
                 cout << "Invalid option.\n";
-            }else break;
+            } else break;
 
 
-        }while(true);
+        } while (true);
 
         if (op == "4") {
             passengerUpdateMenu();
@@ -368,7 +365,7 @@ void Application::passengersMenu() {
         (company.*menuPassengers[op])();
         pause();
 
-    }while(true);
+    } while (true);
 }
 
 void Application::airplanesMenu() {
@@ -383,15 +380,15 @@ void Application::airplanesMenu() {
 
             cout << "Insert the desired option: ";
             getline(cin, op);
-            if (op == "" || menuAirplanes.find(op) == menuAirplanes.end()) {
+            if (op.empty() || menuAirplanes.find(op) == menuAirplanes.end()) {
 
                 if (op == "9") return;
                 if (op == "4" || op == "5") break;
                 cout << "Invalid option.\n";
-            }else break;
+            } else break;
 
 
-        }while (true);
+        } while (true);
 
         if (op == "4") {
             airplaneUpdateMenu();
@@ -406,7 +403,7 @@ void Application::airplanesMenu() {
         (company.*menuAirplanes[op])();
         pause();
 
-    }while(true);
+    } while (true);
 
 }
 
@@ -423,18 +420,18 @@ void Application::listsMenu() {
 
             cout << "Insert the desired option: ";
             getline(cin, op);
-            if (op == "" || menuLists.find(op) == menuLists.end()) {
+            if (op.empty() || menuLists.find(op) == menuLists.end()) {
 
                 if (op == "0") return;
                 cout << "Invalid option.\n";
-            }else break;
+            } else break;
 
-        }while (true);
+        } while (true);
 
         (this->*menuLists[op])(static_cast<type>(stoi(op)));
         pause();
 
-    }while(true);
+    } while (true);
 
 }
 
@@ -449,7 +446,7 @@ void Application::printListPassengers(type t) {
 
     vector<Passenger *> passengers = company.getPassengers();
     string title;
-    switch(t) {
+    switch (t) {
 
         case PID:
             sort(passengers.begin(), passengers.end(), compPID);
@@ -467,7 +464,8 @@ void Application::printListPassengers(type t) {
 
     cout << title;
     cout << std::left;
-    cout << setw(12) << "Passenger ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13) << "Date of Birth\n";
+    cout << setw(12) << "Passenger ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13)
+         << "Date of Birth\n";
     for (auto &passenger : passengers) {
 
         passenger->printSummary();
@@ -486,13 +484,9 @@ void Application::printListAirplane(type t) {
 
     vector<Airplane *> airplanes = company.getFleet();
     string title;
-    switch(t) {
 
-        case AID:
-            sort(airplanes.begin(), airplanes.end(), compAId);
-            title = "Airplane by id:\n";
-            break;
-    }
+    sort(airplanes.begin(), airplanes.end(), compAId);
+    title = "Airplane by id:\n";
 
     cout << title;
     cout << std::left;
@@ -515,7 +509,7 @@ void Application::printListFlights(type t) {
 
     vector<Flight *> flights = company.getFlights();
     string title;
-    switch(t) {
+    switch (t) {
 
         case FID:
             sort(flights.begin(), flights.end(), compFId);
@@ -580,15 +574,15 @@ void Application::flightsMenu() {
 
             cout << "Insert the desired option: ";
             getline(cin, op);
-            if (op == "" || menuFlights.find(op) == menuFlights.end()) {
+            if (op.empty() || menuFlights.find(op) == menuFlights.end()) {
 
                 if (op == "9") return;
                 if (op == "4") break;
                 cout << "Invalid option.\n";
-            }else break;
+            } else break;
 
 
-        }while(true);
+        } while (true);
 
         if (op == "4") {
             flightUpdateMenu(airplane);
@@ -598,21 +592,19 @@ void Application::flightsMenu() {
         (company.*menuFlights[op])(airplane);
         pause();
 
-    }while(true);
+    } while (true);
 }
 
 void Application::bookingsMenu() {
 
     string menuhelper;
-    int id;
-	Passenger *passenger = new Passenger;
+    Passenger *passenger;
 
-    //É PRECISO ARRANJAR ISTO ESTÁ CONFUSO
     cout << "[BOOKING MANAGEMENT MENU]\n\n";
     do {
         cout << "Do you wish to book a flight for an existing customer(Y/N)? ";
         getline(cin, menuhelper);
-        if (menuhelper != "") normalize(menuhelper);
+        if (!menuhelper.empty()) normalize(menuhelper);
         if (menuhelper == "n") {
             cout << endl;
             passenger = company.passengerCreate();
@@ -636,7 +628,7 @@ void Application::bookingsMenu() {
         do {
             cout << "Insert the desired option: ";
             getline(cin, op);
-            if (op == "" || menuBookings.find(op) == menuBookings.end()) {
+            if (op.empty() || menuBookings.find(op) == menuBookings.end()) {
                 if (op == "9") return;
                 cout << "Invalid option.\n";
             } else break;
@@ -646,14 +638,13 @@ void Application::bookingsMenu() {
         (company.*menuBookings[op])(passenger);
         pause();
 
-    }while(true);
+    } while (true);
 }
-
 
 
 void Application::passengerUpdateMenu() {
 
-    if (company.getPassengers().size() == 0) {
+    if (company.getPassengers().empty()) {
         cout << "There are no passengers.\n";
         return;
     }
@@ -681,7 +672,7 @@ void Application::passengerUpdateMenu() {
             cout << "Insert the desired option: ";
             getline(cin, op);
             op1 = op + passenger->getType();
-            if (op == "" || menuPassengersUpdate.find(op1) == menuPassengersUpdate.end()) {
+            if (op.empty() || menuPassengersUpdate.find(op1) == menuPassengersUpdate.end()) {
                 if (op == "9") return;
                 cout << "Invalid option.\n";
             } else break;
@@ -691,14 +682,13 @@ void Application::passengerUpdateMenu() {
         (company.*menuPassengersUpdate[op1])(passenger);
         pause();
 
-    }while(true);
+    } while (true);
 }
-
 
 
 void Application::airplaneUpdateMenu() {
 
-    if (company.getFleet().size() == 0) {
+    if (company.getFleet().empty()) {
 
         cout << "There are no airplanes.\n";
         return;
@@ -728,7 +718,7 @@ void Application::airplaneUpdateMenu() {
         do {
             cout << "Insert the desired option: ";
             getline(cin, op);
-            if (op == "" || menuAirplaneUpdate.find(op) == menuAirplaneUpdate.end()) {
+            if (op.empty() || menuAirplaneUpdate.find(op) == menuAirplaneUpdate.end()) {
                 if (op == "9") return;
                 cout << "Invalid option.\n";
             } else break;
@@ -738,15 +728,13 @@ void Application::airplaneUpdateMenu() {
         (company.*menuAirplaneUpdate[op])(airplane);
         pause();
 
-    }while(true);
+    } while (true);
 }
-
-
 
 
 void Application::flightUpdateMenu(Airplane *airplane) {
 
-    if (airplane->getFlights().size() == 0) {
+    if (airplane->getFlights().empty()) {
         cout << "There are no flights in this airplane.\n";
         return;
     }
@@ -775,7 +763,7 @@ void Application::flightUpdateMenu(Airplane *airplane) {
             cout << "Insert the desired option: ";
             getline(cin, op);
             op1 = op + flight->getType();
-            if (op == "" || menuFlightsUpdate.find(op1) == menuFlightsUpdate.end()) {
+            if (op.empty() || menuFlightsUpdate.find(op1) == menuFlightsUpdate.end()) {
                 if (op == "9") return;
                 cout << "Invalid option.\n";
             } else break;
@@ -785,7 +773,7 @@ void Application::flightUpdateMenu(Airplane *airplane) {
         (company.*menuFlightsUpdate[op1])(flight);
         pause();
 
-    }while(true);
+    } while (true);
 
 
 }
@@ -793,13 +781,14 @@ void Application::flightUpdateMenu(Airplane *airplane) {
 
 Airplane *Application::readAirplane(string &a) {
 
-    Airplane *newAirplane = new Airplane;
+    Airplane *newAirplane;
 
     int temp;
     string st;
 
     try { next(temp, a, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Airplane data in the correct format.\n";
+        return nullptr;
     }
 
     newAirplane->setId(temp);
@@ -809,6 +798,7 @@ Airplane *Application::readAirplane(string &a) {
 
     try { next(temp, a, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Airplane data in the correct format.\n";
+        return nullptr;
     }
 
     newAirplane->setCapacity(temp);
@@ -822,6 +812,7 @@ Airplane *Application::readAirplane(string &a) {
         int fid;
         try { next(fid, st, ","); } catch (InvalidFormat) {
             cout << "Please insert the Airplane data in the correct format.\n";
+            return nullptr;
         }
         f.push_back((unsigned int) fid);
     }
@@ -829,11 +820,17 @@ Airplane *Application::readAirplane(string &a) {
     vector<Flight *> flights;
 
     for (auto const &id:f) {
-        Flight *fp = this->company.flightById(id);
-        if (fp != nullptr) {
-            fp->setCapacity(newAirplane->getCapacity());
-            flights.push_back(fp);
+        Flight *fp;
+
+        try {
+            fp = this->company.flightById(id);
+        } catch (InvalidFlight &i) {
+            cout << "Invalid flight.\n";
+            return nullptr;
         }
+
+        fp->setCapacity(newAirplane->getCapacity());
+        flights.push_back(fp);
 
     }
 
@@ -853,19 +850,20 @@ Flight *Application::readFlight(string &f) {
 
         //Comercial Flight
 
-        newFlight = new ComercialFlight;
+        newFlight = new CommercialFlight;
 
     } else if (type == 'r') {
         //Rented Flight
         newFlight = new RentedFlight;
 
-    } else throw InvalidFlight(0);
+    }
 
     f = f.substr(1);
 
     int temp;
     try { next(temp, f, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Flight data in the correct format.\n";
+        return nullptr;
     }
 
     newFlight->setId((unsigned int) temp);
@@ -882,18 +880,21 @@ Flight *Application::readFlight(string &f) {
 
     try { next(temp, f, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Flight data in the correct format.\n";
+        return nullptr;
     }
 
     newFlight->setTime_to_flight((unsigned int) temp);
 
     try { next(temp, f, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Flight data in the correct format.\n";
+        return nullptr;
     }
 
     newFlight->setBasePrice((unsigned int) temp);
 
     try { next(temp, f, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Flight data in the correct format.\n";
+        return nullptr;
     }
 
     newFlight->setDuration((unsigned int) temp);
@@ -902,11 +903,20 @@ Flight *Application::readFlight(string &f) {
 
         try { next(temp, f, ";"); } catch (InvalidFormat) {
             cout << "Please insert the Flight data in the correct format.\n";
+            return nullptr;
         }
 
-        Passenger *p = this->company.passengerById((unsigned int) temp);
+        Passenger *p;
 
-        if (p != nullptr) newFlight->setBuyer(p);
+        try {
+            p = this->company.passengerById((unsigned int) temp);
+        } catch (InvalidPassenger &i) {
+            cout << "Invalid buyer in flight.\n";
+            return nullptr;
+        }
+
+
+        newFlight->setBuyer(p);
 
     } else {
 
@@ -915,6 +925,7 @@ Flight *Application::readFlight(string &f) {
         if (st == "no_passengers") return newFlight;
 
         PassengerMap pmap;
+
         while (st != "") {
             string st1;
             next(st1, st, ",");
@@ -923,8 +934,17 @@ Flight *Application::readFlight(string &f) {
             int elem;
             try { next(elem, st1, "-"); } catch (InvalidFormat) {
                 cout << "Please insert the Flight data in the correct format.\n";
+                return nullptr;
             }
-            Passenger *p = this->company.passengerById((unsigned int) elem);
+
+            Passenger *p;
+
+            try {
+                p = this->company.passengerById((unsigned int) elem);
+            } catch (InvalidPassenger &i) {
+                cout << "Invalid passenger on flight.\n";
+                return nullptr;
+            }
 
 
             pmap.emplace(seat, p);
@@ -945,7 +965,7 @@ Passenger *Application::readPassenger(string &p) {
 
     if (type == 'c') newPassenger = new PassengerWithCard;
     else if (type == 'n') newPassenger = new Passenger;
-    else throw InvalidPassenger(0);
+    else return nullptr;
 
 
     p = p.substr(1);
@@ -953,6 +973,7 @@ Passenger *Application::readPassenger(string &p) {
     int temp;
     try { next(temp, p, ";"); } catch (InvalidFormat) {
         cout << "Please insert the Passenger data in the correct format.\n";
+        return nullptr;
     }
 
     newPassenger->setId((unsigned int) temp);
@@ -965,12 +986,6 @@ Passenger *Application::readPassenger(string &p) {
 
     next(st, p, ";");
 
-    /*try {
-        Date d(st);
-    } catch (InvalidFormat) {
-        cout << "Please insert the correct Date format.\n";
-    }*/
-
     newPassenger->setDateOfBirth(st);
 
 
@@ -978,8 +993,8 @@ Passenger *Application::readPassenger(string &p) {
         next(st, p, ";");
 
         try { next(temp, p, ";"); } catch (InvalidFormat) {
-            cout << temp << endl;
             cout << "Please insert the Passenger data in the correct format.\n";
+            return nullptr;
         }
 
         Card *c = new Card(st, temp);
@@ -1006,9 +1021,14 @@ void Application::loadPassengerFile() {
     if (passengersFilepath == "") throw InvalidFilePath("empty");
 
     ifstream passFile(passengersFilepath);
-    if (!passFile) throw InvalidFilePath("fail");
+    if (!passFile) {
+        passengersFilepath.clear();
+        throw InvalidFilePath("fail");
+    }
     while (getline(passFile, p)) {
-        this->company.addPassenger(readPassenger(p));
+        if (p.empty()) continue;
+        Passenger *passenger = readPassenger(p);
+        if (p != nullptr) this->company.addPassenger(passenger);
     }
     passFile.close();
     this->company.sortPassengers();
@@ -1025,12 +1045,16 @@ void Application::loadFlightFile() {
     if (flightsFilepath == "") throw InvalidFilePath("empty");
 
     ifstream flFile(flightsFilepath);
-    if (!flFile) throw InvalidFilePath("fail");
+    if (!flFile) {
+        flightsFilepath.clear();
+        throw InvalidFilePath("fail");
+    }
     while (getline(flFile, f)) {
-        this->company.addFlight(readFlight(f));
+        if (f.empty()) continue;
+        Flight *flight = readFlight(f);
+        if (flight != nullptr) this->company.addFlight(flight);
     }
-    for (auto const &f: this->company.getFlights()){
-    }
+
     flFile.close();
     this->company.sortFlights();
 
@@ -1045,9 +1069,14 @@ void Application::loadAirplaneFile() {
     if (airplanesFilepath == "") throw InvalidFilePath("empty");
 
     ifstream airFile(airplanesFilepath);
-    if (!airFile) throw InvalidFilePath("fail");
+    if (!airFile) {
+        airplanesFilepath.clear();
+        throw InvalidFilePath("fail");
+    }
     while (getline(airFile, a)) {
-        this->company.addAirplane(readAirplane(a));
+        if (a.empty()) continue;
+        Airplane *airplane = readAirplane(a);
+        if (airplane != nullptr) this->company.addAirplane(airplane);
     }
     airFile.close();
     this->company.sortAirplanes();

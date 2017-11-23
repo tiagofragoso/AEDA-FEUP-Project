@@ -25,30 +25,7 @@ enum type {
     FTIME = 9
 };
 
-struct Date {
-    unsigned int day = 0;
-    unsigned int month = 0;
-    unsigned int year = 0;
-
-    string print();
-
-    Date();
-
-    Date(string &s);
-};
-
 /** @} end of Date Struct */
-
-template<class T>
-struct less : binary_function<T, T, bool> {
-    bool operator()(const T &x, const T &y) const {
-        if (x.length() < y.length()) {
-            return true;
-        } else if (x.length() > y.length()) {
-            return false;
-        } else return (x < y);
-    }
-};
 
 
 bool validArg(int &variable);
