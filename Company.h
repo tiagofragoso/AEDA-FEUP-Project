@@ -68,6 +68,10 @@ public:
 	 */
     explicit Company(string name);
 
+	static const string AIRPLANE_IDENTIFIER;
+	static const string FLIGHT_IDENTIFIER;
+	static const string PASSENGER_IDENTIFIER;
+
 
 	//get methods
 	/**
@@ -228,6 +232,7 @@ public:
     void sortAirplanes();
     void sortFlights();
     void passengerCreateWrapper();
+	void clearData(string identifier);
 
 };
 
