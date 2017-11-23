@@ -970,6 +970,7 @@ void Company::flightDelete(Airplane *airplane) {
     printSummaryFlight(airplane);
     Flight *flight;
     do {
+
         try {
             flight = chooseFlight(airplane);
         }
@@ -981,17 +982,13 @@ void Company::flightDelete(Airplane *airplane) {
 
     } while (true);
 
-    do {
-        try {
-            airplane->removeFlight(flight);
-        }
-        catch (const ConnectionFlight &f) {
-            f.print();
-            continue;
-        }
-        break;
-
-    } while (true);
+    try {
+        airplane->removeFlight(flight);
+    }
+    catch (const ConnectionFlight &f) {
+        f.print();
+        return;
+    }
 
     cout << "Flight deleted sucessfully.\n";
     airplanesChanged = true;
