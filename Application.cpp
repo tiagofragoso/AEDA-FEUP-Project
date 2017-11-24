@@ -4,7 +4,7 @@
 
 Application::Application() {
 
-    Company c = Company("TAP");
+    Company c = Company("AirRoad");
     company = c;
     passengersFilepath = "";
     airplanesFilepath = "";
