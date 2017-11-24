@@ -6,9 +6,9 @@ Application::Application() {
 
     Company c = Company("TAP");
     company = c;
-    passengersFilepath = "";
-    airplanesFilepath = "";
-    flightsFilepath = "";
+    passengersFilepath = "../Files/Passengers.txt";
+    airplanesFilepath = "../Files/Flights.txt";
+    flightsFilepath = "../Files/Airplanes.txt";
 
 }
 

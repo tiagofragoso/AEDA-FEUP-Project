@@ -273,7 +273,18 @@ Passenger * Company::passengerCreate() {
     do {
         cout << "Date of Birth: (DD/MM/YYYY): ";
         if (!validString(dateOfBirth)) continue;
-        else break;
+        try {
+            int d, m ,y;
+            string dob = dateOfBirth;
+            next(d, dob, "/");
+            next(m, dob, "/");
+            next(y, dob, "/");
+        }
+        catch (InvalidFormat i) {
+            cout << "Insert date of birth using DD/MM/YYYY format.\n";
+            continue;
+        }
+        break;
 
     } while (true);
 
