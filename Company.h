@@ -224,7 +224,7 @@ public:
 	vector< pair<string, Flight*> > getTickets(Passenger *p);
 	void bookFlight(Passenger *p);
 	void bookFlightWithType(Passenger *p, string type);
-	void printFlightsForBook(Passenger *p, string type, vector<Flight *> &fvector);
+	void printFlightsByType(Passenger *p, string type, vector<Flight *> &fvector);
 	Flight* chooseFlight(unsigned int id, vector<Flight*> &fvector);
 	float ticketPrice(Passenger *p, Flight *f, string type);
     vector<Flight *> getFlightsWithType(string type);

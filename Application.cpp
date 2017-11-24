@@ -6,9 +6,9 @@ Application::Application() {
 
     Company c = Company("TAP");
     company = c;
-    passengersFilepath = "../Files/Passengers.txt";
-    airplanesFilepath = "../Files/Flights.txt";
-    flightsFilepath = "../Files/Airplanes.txt";
+    passengersFilepath = "";
+    airplanesFilepath = "";
+    flightsFilepath = "";
 
 }
 
@@ -593,6 +593,11 @@ void Application::bookingsMenu() {
 
     string menuhelper;
     Passenger *passenger;
+
+    if (company.getPassengers().empty()) {
+        cout << "There are no passengers.\n";
+        return;
+    }
 
     cout << "[BOOKING MANAGEMENT MENU]\n\n";
     do {
