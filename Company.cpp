@@ -940,25 +940,12 @@ void Company::flightCreate(Airplane *airplane) {
 
     if (foo == "r") {
 
-        printSummaryPassenger();
-        cout << "Chose buyer (id): ";
-        do {
-            try {
-                buyer = choosePassenger();
-            }
-            catch (const InvalidPassenger &i) {
-                i.print();
-                continue;
-            }
-            break;
-
-        } while (true);
-
-        flight = new RentedFlight(id, departure, destination, time_to_flight, price, duration, buyer);
+        flight = new RentedFlight(id, departure, destination, time_to_flight, price, duration, nullptr);
 
     } else
         flight = new CommercialFlight(id, departure, destination, time_to_flight, price, duration);
 
+    flight->setCapacity(airplane->getCapacity());
 
     try {
 
