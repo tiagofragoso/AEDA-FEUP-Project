@@ -476,6 +476,10 @@ public:
      */
     void printRestrictions(Airplane * airplane);
 
+    /**
+     * @brief Removes passenger from all flights
+     * @param passenger
+     */
     void removePassengerFromFlights(Passenger * passenger);
 
 
