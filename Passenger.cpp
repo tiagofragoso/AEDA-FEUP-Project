@@ -151,18 +151,10 @@ bool compPAGE(Passenger *p1, Passenger *p2) {
     next(year1, data1, "/");
     next(year2, data2, "/");
 
-    if (year1 < year2)
-        return false;
-    if (year1 > year2)
-        return true;
-    if (month1 < month2)
-        return false;
-    if (month1 > month2)
-        return true;
-    if (day1 < day2)
-        return false;
-    if (day1 > day2)
-        return true;
+    if (year1 != year2) return year1 > year2;
 
+    if (month1 != month2) return month1 > month2;
+
+    return day1 < day2;
 }
 
