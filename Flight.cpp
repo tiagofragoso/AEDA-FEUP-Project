@@ -133,7 +133,7 @@ Passenger * RentedFlight::getBuyer() const {
 
 PassengerMap& RentedFlight::getPassengers() {
 
-    PassengerMap c;
+    PassengerMap c = PassengerMap();
     return c;
 
 }
