@@ -470,6 +470,13 @@ public:
      */
     void removeFlight(Flight *flight);
 
+
+    /**
+     * @brief Prints time restrictions to ensure connection flights
+     * @param airplane
+     */
+    void printRestrictions(Airplane * airplane);
+
 };
 
 #endif //AEDA_FEUP_PROJECT_COMPANY_H
