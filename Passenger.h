@@ -23,7 +23,7 @@ public:
     Passenger();
 
 	/**
-	 * @brief Constructor of a PassengerWithCard object using ID, name, Date of birth, job and the number of Flights per year
+	 * @brief Constructor of a PassengerWithCard object using ID, name, Date of birth
 	 * @param id
 	 * @param name
 	 * @param dateOfBirth
@@ -72,12 +72,23 @@ public:
 	 */
     virtual void print() const;
     /**
-     * @brief checks if the object is a Passenger ou a PassengerWithCard
+     * @brief checks if the object is a Passenger or a PassengerWithCard
      * @return string "n" if it is a Passenger, "c" if it is a PassengerWithCard
      */
     virtual string getType() const;
+	/**
+	* @brief Gets the card of the passenger
+	* @return Card * pointer to a Card object related to the Passenger
+	*/
     virtual Card *  getCard() const;
+	/**
+	* @brief Sets the card of the passenger
+	* @param card Card * card 
+	*/
     virtual void setCard(Card * card);
+	/**
+	* @brief Prints the date of birth of the Passenger object
+	*/
 	void printDoB() const;
 	/**
 	 * @brief overload of the operator == to match Passenger objects
@@ -86,10 +97,10 @@ public:
 	 */
 	bool operator==(const Passenger &p);
     /**
-     * @brief overload of the operator << for obejcts of class Passenger
+     * @brief overload of the operator << for objects of class Passenger
      * @param o ostream &o
      * @param p const Passenger *p
-     * @return ostream&
+     * @return ostream
      */
 	friend ostream& operator<<(ostream &o, const Passenger * p);
 };
@@ -108,7 +119,7 @@ public:
     PassengerWithCard();
 
 	/**
-	 * @brief Constructor of a PassengerWithCard object using ID, name, Date of birth and a card object
+	 * @brief Constructor of a PassengerWithCard object using ID, name, Date of birth and a Card object
 	 * @param id
 	 * @param name
 	 * @param dateOfBirth
@@ -124,8 +135,6 @@ public:
 	 * @param nYear
 	 */
 	PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear);
-
-
 	//get Methods
 	/**
 	 * @brief Gets the card of a PassengerWithCard object
@@ -152,7 +161,7 @@ public:
 };
 
 /**
-* @brief compares two objects of class Passenger based on their id
+ * @brief compares two objects of class Passenger based on their id
  * @param p1 Passenger * p1
  * @param p2 Passenger * p2
  * @return returns true if p1's id is less than p2's id, false otherwise
@@ -171,7 +180,7 @@ bool compPNAME(Passenger * p1, Passenger * p2);
  * @brief compares two objects of class Passenger based on their age
  * @param p1 Passenger * p1
  * @param p2 Passenger * p2
- * @return returns true if p1 is younger than p2
+ * @return returns true if p1 is younger than p2, false otherwise
  */
 bool compPAGE(Passenger *p1, Passenger *p2);
 

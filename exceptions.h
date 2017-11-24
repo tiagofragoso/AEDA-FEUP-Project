@@ -18,12 +18,12 @@ private:
 
 public:
 	/**
-	 * @brief default constructor for exception InvalidPath
+	 * @brief default constructor for exception InvalidFilePath
 	 */
     InvalidFilePath();
 	/**
-	 * @brief constructor for exception InvalidPath
-	 * @param type file type
+	 * @brief constructor for exception InvalidFilePath
+	 * @param type string type
 	 */
     InvalidFilePath(std::string type);
 	/**
@@ -40,7 +40,7 @@ private:
 public:
 	/**
 	 * @brief constructor for exception InvalidPassenger
-	 * @param id
+	 * @param id unsigned int id
 	 */
     InvalidPassenger(unsigned int id);
 	/**
@@ -62,7 +62,7 @@ private:
 public:
 	/**
 	 * @brief constructor for exception InvalidAirplane
-	 * @param id
+	 * @param id unsigned int
 	 */
     InvalidAirplane(unsigned int id);
 	/**
@@ -84,7 +84,7 @@ private:
 public:
 	/**
 	 * @brief constructor for exception InvalidFlight
-	 * @param id
+	 * @param id unsigned int
 	 */
     InvalidFlight(unsigned int id);
 	/**
@@ -106,7 +106,7 @@ private:
 public:
 	/**
 	 * @brief constructor for exception InvalidSeat
-	 * @param seat
+	 * @param seat string seat
 	 */
 	InvalidSeat(string seat);
 	/**

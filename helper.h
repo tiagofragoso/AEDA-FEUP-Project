@@ -7,30 +7,30 @@
 #include <map>
 
 using namespace std;
-
+/*! enum class used on the listing menu */
 enum type {
-    PID = 1,
-    PNAME = 2,
-    PAGE = 3,
-    AID = 4,
-    FID = 5,
-    FPRICEL = 6,
-    FPRICEH = 7,
-    FDEST = 8,
-    FTIME = 9
+    PID = 1,       /*!< Passengers by ID */
+    PNAME = 2,     /*!< Passengers by name */
+    PAGE = 3,      /*!< Passengers by age */
+    AID = 4,       /*!< Airplanes by ID */
+    FID = 5,       /*!< Flights by ID */
+    FPRICEL = 6,   /*!< Flights based on Price(lowest to highest) */
+    FPRICEH = 7,   /*!< Flights based on Price(highest to lowest) */
+    FDEST = 8,     /*!< Flights by Destination city */
+    FTIME = 9      /*!< Flights by the time remaining to the time of the flight */
 };
 
 
 /**
  * @brief checks if input is valid
- * @param variable
- * @return returns true if input is valid and false otherwise
+ * @param variable int &variable
+ * @return true if input is valid and false otherwise
  */
 bool validArg(int &variable);
 
 /**
- * @brief deletes space caracters in the begining and end of the string
- * @param s string
+ * @brief deletes space characters in the begining and end of the string
+ * @param s string &s
  */
 void trimString(string &s);
 
@@ -41,19 +41,20 @@ void pause();
 
 /**
  * @brief normalizes string
- * @param s string
+ * @param s string &s
  */
 void normalize(string &s);
 
 /**
- * @param elem
- * @param piece
- * @param separator
+ * @brief separates string based on the separator
+ * @param elem int &elem
+ * @param piece string &piece
+ * @param separator string separator
  */
 void next(int &elem, string &piece, string separator);
 
 /**
- *
+ * @brief separates string based on the separator
  * @param piece
  * @param line
  * @param separator
@@ -62,8 +63,8 @@ void next(string &piece, string &line, string separator);
 
 /**
  * @brief checks if input is valid
- * @param s string
- * @return returns true if input is valid and false otherwise
+ * @param s string &s
+ * @return true if input is valid and false otherwise
  */
 bool validString(string &s);
 

@@ -33,7 +33,6 @@ public:
 	 * @param time_to_flight
 	 * @param basePrice
 	 * @param duration
-	 * @param capacity
 	 */
 	Flight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration);
 
@@ -75,7 +74,7 @@ public:
     virtual string getType() const = 0;
     /**
      * @brief returns capacity of flight
-     * @return unsigned int
+     * @return unsigned int capacity of the Flight
      */
 	unsigned int getCapacity() const;
     /**
@@ -121,6 +120,9 @@ public:
      * @brief Purely virtual function used in both of the subclasses
      */
     virtual void print() const;
+	/**
+	* @brief Prints for the lists in the lists part of the Menu
+	*/
     void printList() const;
     /**
      * @brief Purely virtual function redefined in the Rented Flight subclass
@@ -311,36 +313,36 @@ public:
 
 /**
  * @brief Compares two objects of class Flight based of their id
- * @param f1
- * @param f2
+ * @param f1 Flight* f1
+ * @param f2 Flight* f2
  * @return returns true if f1's id is less than f2's id
  */
 bool compFId(Flight * f1, Flight * f2);
 /**
  * @brief Compares two objects of class Flight based on their price (low to high)
- * @param f1
- * @param f2
+ * @param f1 Flight* f1
+ * @param f2 Flight* f2
  * @return returns true if f1's price is less than f2's price
  */
 bool compFPriceL(Flight * f1, Flight * f2);
 /**
  * @brief Compares two objects of class Flight based on their price (high to low)
- * @param f1
- * @param f2
+ * @param f1 Flight* f1
+ * @param f2 Flight* f2
  * @return returns true is f1's price is greater than f2's price
  */
 bool compFPriceH(Flight * f1, Flight * f2);
 /**
  * @brief Compares two objects of class Flight based on their Time to flight
- * @param f1
- * @param f2
+ * @param f1 Flight* f1
+ * @param f2 Flight* f2
  * @return returns true if f1's time to flight is less than f2's time to flight
  */
 bool compFTime(Flight * f1, Flight * f2);
 /**
  * @brief Compares two objects of class Flight based on their destination
- * @param f1
- * @param f2
+ * @param f1 Flight* f1
+ * @param f2 Flight* f2
  * @return returns true if f1's destination is less than f2's destination
  */
 bool compFDest(Flight * f1, Flight * f2);
