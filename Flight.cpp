@@ -2,7 +2,7 @@
 #include <iomanip>
 
 Flight::Flight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice, unsigned int duration): id(id), departure(departure),
-                destination(destination), time_to_flight(time_to_flight), basePrice(basePrice), duration(duration) {}
+                destination(destination), timeToFlight(time_to_flight), basePrice(basePrice), duration(duration) {}
 
 string Flight::getDeparture() const
 {
@@ -16,7 +16,7 @@ string Flight::getDestination() const
 
 unsigned int Flight::getTime_to_flight() const
 {
-    return this->time_to_flight;
+    return this->timeToFlight;
 }
 
 unsigned int Flight::getBasePrice() const
@@ -45,7 +45,7 @@ void Flight::setDestination(string destination)
 
 void Flight::setTime_to_flight(unsigned int time_to_flight)
 {
-    this->time_to_flight = time_to_flight;
+    this->timeToFlight = time_to_flight;
 }
 
 void Flight::setBasePrice(unsigned int basePrice)
@@ -60,13 +60,13 @@ void Flight::setDuration(unsigned int duration)
 
 void Flight::printSummary() const {
 
-    cout << setw(9) << id << setw(3) << " " << setw(15) << departure << setw(3) << " " << setw(15) << destination << setw(3) << " " << setw(14) << time_to_flight << endl;
+    cout << setw(9) << id << setw(3) << " " << setw(15) << departure << setw(3) << " " << setw(15) << destination << setw(3) << " " << setw(14) << timeToFlight << endl;
 
 }
 
 void Flight::printList() const {
 
-    cout << setw(9) << id << setw(3) << " " << setw(15) << departure << setw(3) << " " << setw(15) << destination << setw(3) << " " << setw(18) << time_to_flight << setw(3) << " " << setw(9) << basePrice << endl;
+    cout << setw(9) << id << setw(3) << " " << setw(15) << departure << setw(3) << " " << setw(15) << destination << setw(3) << " " << setw(18) << timeToFlight << setw(3) << " " << setw(9) << basePrice << endl;
 }
 
 void Flight::print() const {
@@ -74,7 +74,7 @@ void Flight::print() const {
     cout << "Id: " << id << endl;
     cout << "Departure: " << departure << endl;
     cout << "Destination: " << destination << endl;
-    cout << "Time to flight: " << time_to_flight << endl;
+    cout << "Time to flight: " << timeToFlight << endl;
     cout << "Base Price: " << basePrice << endl;
     cout << "Flight duration: " << duration << endl;
 }
@@ -89,7 +89,7 @@ bool Flight::operator==(const Flight &f) {
 
 bool Flight::operator<(const Flight &f) {
 
-    return (time_to_flight < f.getTime_to_flight());
+    return (timeToFlight < f.getTime_to_flight());
 }
 
 void Flight::setId(unsigned int id) {
@@ -97,7 +97,7 @@ void Flight::setId(unsigned int id) {
 }
 
 ostream &operator<<(ostream &o, Flight *f) {
-    o << f->getType() << to_string(f->id) << "; " << f->departure << "; " << f->destination << "; " << to_string(f->time_to_flight) << "; " << to_string(f->basePrice) << "; " << to_string(f->duration) << "; ";
+    o << f->getType() << to_string(f->id) << "; " << f->departure << "; " << f->destination << "; " << to_string(f->timeToFlight) << "; " << to_string(f->basePrice) << "; " << to_string(f->duration) << "; ";
     if (f->getType() == "c"){
         unsigned int i = f->getPassengers().size();
         if (i > 0){

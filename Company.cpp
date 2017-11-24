@@ -619,7 +619,7 @@ float Company::ticketPrice(Passenger *p, Flight *f, string type) {
     float price;
     if (p->getType() == "c") {
         if (type == "r") {
-            price = f->getCapacity() * (f->getBasePrice() * ((100 - p->getCard()->getAvgYrFlights()) / 100));
+            price = (f->getBasePrice() * ((100 - p->getCard()->getAvgYrFlights()) / 100));
         } else {
             if (f->getPassengers().size() < f->getCapacity() && f->getTime_to_flight() < 48) {
                 price = 0.9 * f->getBasePrice() * (100 - p->getCard()->getAvgYrFlights()) / 100;
@@ -630,15 +630,11 @@ float Company::ticketPrice(Passenger *p, Flight *f, string type) {
 
     } else {
         if (type == "r") {
-            price = f->getCapacity() * f->getBasePrice();
+            price = f->getBasePrice();
         } else {
-            if (f->getPassengers().size() < f->getCapacity() && f->getTime_to_flight() < 48) {
-                price = 0.9 * f->getBasePrice();
-            } else {
                 price = f->getBasePrice();
             }
         }
-    }
 
     price = trunc(round(price * 100.0)) / 100.0;
     return price;
@@ -676,7 +672,7 @@ void Company::printFlightsByType(Passenger *p, string type, vector<Flight *> &fv
                  << setw(15) << fl->getDestination() << setw(3) << " " << setw(18)
                  << to_string(fl->getTime_to_flight()) + "h" << setw(3) << " " << setw(10) << std::fixed
                  << setprecision(2) << ticketPrice(p, fl, type);
-            cout << std::left << setw(3) << " " << setw(20) << to_string(fl->getPassengers().size()) + "/" + to_string(fl->getCapacity());
+            if (type == "c") cout << std::left << setw(3) << " " << setw(20) << to_string(fl->getPassengers().size()) + "/" + to_string(fl->getCapacity());
             cout << endl;
         }
     }
@@ -944,25 +940,12 @@ void Company::flightCreate(Airplane *airplane) {
 
     if (foo == "r") {
 
-        printSummaryPassenger();
-        cout << "Chose buyer (id): ";
-        do {
-            try {
-                buyer = choosePassenger();
-            }
-            catch (const InvalidPassenger &i) {
-                i.print();
-                continue;
-            }
-            break;
-
-        } while (true);
-
-        flight = new RentedFlight(id, departure, destination, time_to_flight, price, duration, buyer);
+        flight = new RentedFlight(id, departure, destination, time_to_flight, price, duration, nullptr);
 
     } else
         flight = new CommercialFlight(id, departure, destination, time_to_flight, price, duration);
 
+    flight->setCapacity(airplane->getCapacity());
 
     try {
 
@@ -1238,6 +1221,7 @@ vector<pair<string, Flight *> > Company::getTickets(Passenger *p) {
                 if (pass.second->getId() == p->getId()) tickets.emplace_back(pass.first, f);
             }
         else {
+            if (f->getBuyer() != nullptr)
             if (*(f->getBuyer()) == *p) tickets.emplace_back("ALL", f);
         }
     }

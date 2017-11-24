@@ -19,7 +19,7 @@ private:
     unsigned int id;
     string departure;
     string destination;
-    unsigned int time_to_flight;
+    unsigned int timeToFlight;
     unsigned int basePrice;
     unsigned int duration;
 	unsigned int capacity = 0;
