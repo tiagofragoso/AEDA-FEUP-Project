@@ -915,7 +915,7 @@ Flight *Application::readFlight(string &f) {
 
     if (type == 'r') {
 
-        try { next(temp, f, ";"); } catch (InvalidFormat) {
+        try { next(temp, st, ";"); } catch (InvalidFormat) {
             cout << "Flight " << to_string(newFlight->getId())
                  << ": Please insert the Flight data in the correct format.\n";
             return nullptr;
