@@ -55,7 +55,7 @@ void Application::setupMenus() {
     menuFlights["3"] = &Company::flightDelete;
 
     //bookings menu
-    menuBookings["1"] = &Company::showAllTickets;
+    menuBookings["1"] = &Company::showAllTicketsWrapper;
     menuBookings["2"] = &Company::bookFlight;
     menuBookings["3"] = &Company::returnTicket;
 
@@ -314,7 +314,7 @@ void Application::saveChanges() {
             cout << "Would you like to save those changes (Y/N) ? ";
             if (cin >> auxOp && (auxOp == 'Y' || auxOp == 'N' || auxOp == 'y' || auxOp == 'n')) {
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                if (auxOp == 'Y') {
+                if (auxOp == 'Y' || auxOp == 'y') {
                     saveAllFiles();
                     pause();
                     break;
@@ -1011,32 +1011,24 @@ string Application::inputFilePath(string s) {
     return input;
 }
 
-void Application::loadPassengerFile() {
+/*void Application::loadAllFiles(){
 
-    passengersFilepath = inputFilePath(Company::PASSENGER_IDENTIFIER);
+    if(loadFile(Company::PASSENGER_IDENTIFIER, readPassenger)){
+        cout << "Please reload files.\n";
+        return;
+    };
 
-    string p;
+    if(loadFile(Company::FLIGHT_IDENTIFIER, readFlight)){
+        cout << "Please reload files.\n";
+        return;
+    };
 
-    if (passengersFilepath == "") throw InvalidFilePath("empty");
+    if (loadFile(Company::AIRPLANE_IDENTIFIER,readAirplane)){
+        cout << "Please reload files.\n";
+        return;
+    };
 
-    ifstream passFile(passengersFilepath);
-    if (!passFile) {
-        passengersFilepath.clear();
-        throw InvalidFilePath("fail");
-    }
-    this->company.clearData(Company::PASSENGER_IDENTIFIER);
-    while (getline(passFile, p)) {
-        if (p.empty()) continue;
-        Passenger *passenger = readPassenger(p);
-        if (passenger != nullptr) this->company.addPassenger(passenger);
-    }
-    passFile.close();
-    this->company.sortPassengers();
-
-    cout << "File successfully loaded.\n";
-
-}
-
+}*/
 
 void Application::loadFlightFile() {
 
@@ -1055,7 +1047,7 @@ void Application::loadFlightFile() {
     while (getline(flFile, f)) {
         if (f.empty()) continue;
         Flight *flight = readFlight(f);
-        if (flight != nullptr) this->company.addFlight(flight);
+        if (flight != nullptr) this->company.addObject(flight);
     }
 
     flFile.close();
@@ -1082,7 +1074,7 @@ void Application::loadAirplaneFile() {
     while (getline(airFile, a)) {
         if (a.empty()) continue;
         Airplane *airplane = readAirplane(a);
-        if (airplane != nullptr) this->company.addAirplane(airplane);
+        if (airplane != nullptr) this->company.addObject(airplane);
     }
     airFile.close();
     this->company.sortAirplanes();
@@ -1091,10 +1083,36 @@ void Application::loadAirplaneFile() {
 
 }
 
+void Application::loadPassengerFile() {
+
+    passengersFilepath = inputFilePath(Company::PASSENGER_IDENTIFIER);
+
+    string p;
+
+    if (passengersFilepath == "") throw InvalidFilePath("empty");
+
+    ifstream passFile(passengersFilepath);
+    if (!passFile) {
+        passengersFilepath.clear();
+        throw InvalidFilePath("fail");
+    }
+    this->company.clearData(Company::PASSENGER_IDENTIFIER);
+    while (getline(passFile, p)) {
+        if (p.empty()) continue;
+        Passenger *passenger = readPassenger(p);
+        if (passenger != nullptr) this->company.addObject(passenger);
+    }
+    passFile.close();
+    this->company.sortPassengers();
+
+    cout << "File successfully loaded.\n";
+
+}
+
 void Application::saveAllFiles() {
     if (company.getAirplanesChanged()) {
 
-        if (airplanesFilepath.empty()) airplanesFilepath = inputFilePath("airplane");
+        if (airplanesFilepath.empty()) airplanesFilepath = inputFilePath(Company::AIRPLANE_IDENTIFIER);
 
         try { saveFile(airplanesFilepath, this->company.getFleet()); } catch (InvalidFilePath &in) { in.print(); }
 
@@ -1102,7 +1120,7 @@ void Application::saveAllFiles() {
 
     if (company.getFlightsChanged()) {
 
-        if (flightsFilepath.empty()) flightsFilepath = inputFilePath("flight");
+        if (flightsFilepath.empty()) flightsFilepath = inputFilePath(Company::FLIGHT_IDENTIFIER);
 
         try { saveFile(flightsFilepath, this->company.getFlights()); } catch (InvalidFilePath &in) { in.print(); }
 
@@ -1110,7 +1128,7 @@ void Application::saveAllFiles() {
 
     if (company.getPassengersChanged()) {
 
-        if (passengersFilepath.empty()) passengersFilepath = inputFilePath("passenger");
+        if (passengersFilepath.empty()) passengersFilepath = inputFilePath(Company::PASSENGER_IDENTIFIER);
 
         try { saveFile(passengersFilepath, this->company.getPassengers()); } catch (InvalidFilePath &in) { in.print(); }
 

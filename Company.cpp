@@ -69,17 +69,6 @@ void Company::setPassengers(vector<Passenger *> passengers) {
 
 //Management methods
 
-void Company::addPassenger(Passenger *passenger) {
-
-    passengers.push_back(passenger);
-
-}
-
-void Company::addAirplane(Airplane *airplane) {
-    fleet.push_back(airplane);
-}
-
-
 void Company::removePassenger(Passenger *passenger) {
 
     int i = 0;
@@ -119,10 +108,6 @@ Passenger *Company::passengerById(unsigned int id) {
         if (p->getId() == id) return (Passenger *) p;
     }
     throw InvalidPassenger(id);
-}
-
-void Company::addFlight(Flight *f) {
-    this->flights.push_back(f);
 }
 
 void Company::printSummaryPassenger() {
@@ -307,7 +292,7 @@ Passenger * Company::passengerCreate() {
 
         newpassenger = new PassengerWithCard(id, name, dateOfBirth, job, 0);
     }
-    addPassenger(newpassenger);
+    addObject(newpassenger);
     sortPassengers();
     passengersChanged = true;
     this->sortPassengers();
@@ -530,7 +515,7 @@ void Company::airplaneCreate() {
     } while (true);
 
     Airplane *newairplane = new Airplane(id, model, capacity);
-    addAirplane(newairplane);
+    addObject(newairplane);
     sortAirplanes();
     cout << "Airplane successfully added\n";
     airplanesChanged = true;
@@ -736,7 +721,7 @@ void Company::bookFlightWithType(Passenger *p, string type) {
 void Company::returnTicket(Passenger *p) {
     int id;
     vector<pair<string, Flight *> > v = getTickets(p);
-    showAllTickets(p);
+    showAllTickets(p, true);
     if (v.empty()) return;
     do {
         cout << "Please choose the ticket you wish to return: ";
@@ -769,16 +754,17 @@ void Company::returnTicket(Passenger *p) {
 
 }
 
-void Company::showAllTickets(Passenger *passenger) {
+void Company::showAllTickets(Passenger *passenger, bool idx) {
 
     vector<pair<string, Flight *> > v = getTickets(passenger);
     unsigned int i = 1;
     cout << std::left;
     if (!v.empty()) {
-        cout << setw(5) << " " << setw(9) << "Flight ID" << setw(3) << " " << setw(4) << "Seat" << setw(3) << " "
+        if (idx) cout << setw(5) << " ";
+        cout <<  setw(9) << "Flight ID" << setw(3) << " " << setw(4) << "Seat" << setw(3) << " "
              << setw(15) << "Departure" << setw(3) << " " << setw(15) << "Destination" << endl;
         for (auto const &t: v) {
-            cout << "[" << i << "]- ";
+            if (idx) cout << "[" << i << "]- ";
             cout << setw(9) << to_string(t.second->getId()) << setw(3) << " " << setw(4) << t.first << setw(3) << " "
                  << setw(15) << t.second->getDeparture() << setw(3) << " " << setw(15) << t.second->getDestination()
                  << setw(3)
@@ -981,7 +967,7 @@ void Company::flightCreate(Airplane *airplane) {
     try {
 
         airplane->addFlight(flight);
-        addFlight(flight);
+        addObject(flight);
 
     } catch (const OverlappingFlight &f) {
 
@@ -1283,6 +1269,22 @@ void Company::clearData(string identifier) {
     else if (identifier == Company::FLIGHT_IDENTIFIER) flights.clear();
     else if (identifier == Company::AIRPLANE_IDENTIFIER) fleet.clear();
 
+}
+
+void Company::showAllTicketsWrapper(Passenger *p) {
+    showAllTickets(p, false);
+}
+
+void Company::addObject(Passenger *passenger) {
+    this->passengers.push_back(passenger);
+}
+
+void Company::addObject(Flight *flight) {
+    this->flights.push_back(flight);
+}
+
+void Company::addObject(Airplane *airplane) {
+    this->fleet.push_back(airplane);
 }
 
 
