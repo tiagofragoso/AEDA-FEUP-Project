@@ -67,25 +67,25 @@ public:
 
     /**
      * @brief Sets the Airplane's model to the one passed as parameter
-     * @param model string model
+     * @param string model
      */
     void setModel(string model);
 
     /**
      * @brief Sets the Airplane's ID to the one passed as parameter
-     * @param id unsigned int id
+     * @param unsigned int id
      */
     void setId(unsigned int id);
 
     /**
      * @brief Sets the Airplane's capacity to the one passed as parameter
-     * @param model string model
+     * @param string model
      */
     void setCapacity(unsigned int capacity);
 
     /**
      * @brief Sets the Airplane's flights vector to the one passed as parameter
-     * @param flights vector <Flight *> flights
+     * @param vector <\ Flight * \> flights
      */
     void setFlights(vector<Flight *> flights);
 

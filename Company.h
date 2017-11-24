@@ -127,14 +127,14 @@ public:
     void setName(string name);
 
     /**
-    * @brief Sets the fleet of the company to the passed parameter vector <Airplane> fleet
-    * @param fleet vector <Airplane> fleet
+    * @brief Sets the fleet of the company to the passed parameter vector \<Airplane * \> fleet
+    * @param fleet vector \< Airplane * \> fleet
     */
     void setFleet(vector<Airplane *> fleet);
 
     /**
-    *@brief Removes the Passenger from the data member passengers
-    *@param *passenger Passenger *passenger pointer to the Passenger object to be removed
+    * @brief Removes the Passenger from the data member passengers
+    * @param *passenger Passenger *passenger pointer to the Passenger object to be removed
     */
     void removePassenger(Passenger *passenger);
 
@@ -400,17 +400,17 @@ public:
 
     /**
     * @brief Calculates and returns the ticket price based on the Passenger, Flight and the type passed as argument
-    * @param Passenger *p
-    * @param Flight *f
-    * @param string type
+    * @param p Passenger *p
+    * @param  f Flight *f
+    * @param  type string type
     * @return float
     */
     float ticketPrice(Passenger *p, Flight *f, string type);
 
     /**
     * @brief Gets a vector of flights based on just the type of the Flight (commercial or rented) to let the user pick the one he wants afterwards
-    * @param string type
-    * @return vector<Flight *>
+    * @param type string type
+    * @return vector \< Flight * \>
     */
     vector<Flight *> getFlightsWithType(string type);
 
