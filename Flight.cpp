@@ -68,8 +68,8 @@ void Flight::print() const {
     cout << "Id: " << id << endl;
     cout << "Departure: " << departure << endl;
     cout << "Destination: " << destination << endl;
-    cout << "Time to flight: " << timeToFlight << endl;
-    cout << "Base Price: " << basePrice << endl;
+    cout << "Time to flight: " << timeToFlight << "h" << endl;
+    cout << "Base Price: " << basePrice << "€" << endl;
     cout << "Flight duration: " << duration << endl;
 }
 

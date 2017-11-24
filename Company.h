@@ -470,7 +470,14 @@ public:
      */
     void removeFlight(Flight *flight);
 
+    /**
+     * @brief Prints time restrictions to ensure connection flights
+     * @param airplane
+     */
+    void printRestrictions(Airplane * airplane);
+
     void removePassengerFromFlights(Passenger * passenger);
+
 
 };
 

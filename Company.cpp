@@ -887,8 +887,9 @@ void Company::flightCreate(Airplane *airplane) {
             break;
         else
             cout << "Invalid option.\n";
-
     }
+
+    printRestrictions(airplane);
 
     cout << "Insert new flight information: \n\n";
 
@@ -1247,9 +1248,34 @@ void Company::flightUpdatePrice(Airplane *airplane) {
 
 }
 
+
+void Company::printRestrictions(Airplane *airplane) {
+
+    if (airplane->getFlights().empty()) cout << "There are no restrictions for this flight.\n";
+    else if (airplane->getFlights().size() == 1) {
+        auto it = airplane->getFlights().begin();
+        cout
+                << "For efficiency purposes, the airplane will never fly empty. Therefore, we must apply some restrictions to flight creation.\n";
+        cout << "The plane should be ready to take off from " << (*it)->getDeparture() << " in "
+             << to_string((*it)->getTime_to_flight()) << "h and it should"
+                     " be ready to take off from " << (*it)->getDestination() << "in "
+             << to_string((*it)->getTime_to_flight() + (*it)->getDuration()) << "h.\n";
+    } else {
+        auto first = airplane->getFlights().begin();
+        auto last = first + (airplane->getFlights().size() - 1);
+        cout
+                << "For efficiency purposes, the airplane will never fly empty. Therefore, we must apply some restrictions to flight creation.\n";
+        cout << "The plane should be ready to take off from " << (*first)->getDeparture() << " in "
+             << to_string((*first)->getTime_to_flight()) << "h and it should"
+                     " be ready to take off from " << (*last)->getDestination() << " in "
+             << to_string((*last)->getTime_to_flight() + (*last)->getDuration()) << "h.\n";
+    }
+}
+
+
 void Company::removePassengerFromFlights(Passenger *passenger) {
 
-    for (auto f : flights) {
+    for (auto &f : flights) {
 
         f->removePassenger(passenger);
 
