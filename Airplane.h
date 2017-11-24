@@ -79,7 +79,7 @@ public:
 
     /**
      * @brief Sets the Airplane's capacity to the one passed as parameter
-     * @param model string model
+     * @param capacity unsigned int capacity
      */
     void setCapacity(unsigned int capacity);
 

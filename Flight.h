@@ -336,7 +336,7 @@ public:
 
     /**
     * @brief Inherited from the super class used in RentedFlight class
-    * @param Passenger *buyer
+    * @param buyer Passenger *buyer
     */
     void setBuyer(Passenger *buyer);
 

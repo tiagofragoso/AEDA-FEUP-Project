@@ -128,7 +128,7 @@ public:
 
     /**
     * @brief Sets the fleet of the company to the passed parameter vector <Airplane> fleet
-    * @param fleet vector <Airplane> fleet
+    * @param fleet vector <Airplane*> fleet
     */
     void setFleet(vector<Airplane *> fleet);
 
@@ -152,14 +152,14 @@ public:
 
     /**
     * @brief Searches the fleet for the passed argument id and return pointer to a Flight object
-    * @param unsigned int id
+    * @param id unsigned int id
     * @return Flight * pointer to the Flight object
     */
     Flight *flightById(unsigned int id);
 
     /**
     * @brief Searches the passengers vector for the passed argument id and return pointer to the desired Passenger object
-    * @param unsigned int id
+    * @param id unsigned int id
     * @return Passenger * pointer to the Passenger object
     */
     Passenger *passengerById(unsigned int id);
@@ -343,8 +343,8 @@ public:
 
     /**
     * @brief Returns the avaiable seats on the Flight passed as argument depending on the capacity passed as argument
-    * @param Flight * flight
-    * @param unsigned int capacity
+    * @param flight Flight * flight
+    * @param capacity unsigned int capacity
     * @return vector<string>
     */
     vector<string> availableSeats(Flight *flight, unsigned int capacity);
@@ -371,14 +371,14 @@ public:
 
     /**
     * @brief Auxiliar function that manages the buying of a ticket
-    * @param Passenger *p
+    * @param p Passenger *p
     */
     void bookFlight(Passenger *p);
 
     /**
     * @brief Auxiliar function that manages the buying of a ticket but already knows the type of ticket the user wants
-    * @param Passenger *p
-    * @param string type
+    * @param p Passenger *p
+    * @param type string type
     */
     void bookFlightWithType(Passenger *p, string type);
 
@@ -392,24 +392,24 @@ public:
 
     /**
     * @brief Returns a Flight pointer of the Flight ID passed as argument
-    * @param Passenger *p
-    * @param vector<Flight*> &fvector
+    * @param p Passenger *p
+    * @param fvector vector<Flight*> &fvector
     * @return Flight *
     */
     Flight *chooseFlight(unsigned int id, vector<Flight *> &fvector);
 
     /**
     * @brief Calculates and returns the ticket price based on the Passenger, Flight and the type passed as argument
-    * @param Passenger *p
-    * @param Flight *f
-    * @param string type
+    * @param p Passenger *p
+    * @param f Flight *f
+    * @param type string type
     * @return float
     */
     float ticketPrice(Passenger *p, Flight *f, string type);
 
     /**
     * @brief Gets a vector of flights based on just the type of the Flight (commercial or rented) to let the user pick the one he wants afterwards
-    * @param string type
+    * @param type string type
     * @return vector<Flight *>
     */
     vector<Flight *> getFlightsWithType(string type);

@@ -166,7 +166,7 @@ CommercialFlight::CommercialFlight() : Flight(0, "", "", 0, 0, 0) {
 }
 
 CommercialFlight::CommercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight,
-                                   unsigned int basePrice, unsigned int duration, map<string, Passenger *> passengers)
+                                   unsigned int basePrice, unsigned int duration, PassengerMap passengers)
         : Flight(id, departure, destination, time_to_flight, basePrice, duration), passengers(passengers) {}
 
 
