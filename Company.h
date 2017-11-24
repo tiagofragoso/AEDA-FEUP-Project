@@ -104,11 +104,7 @@ public:
 	* @param fleet vector <Airplane> fleet
 	*/
 	void setFleet(vector <Airplane*> fleet);
-	/**
-	*@brief Adds the passed pointer to a Passenger to the data member passengers
-	*@param *passenger Passenger *passenger pointer to the Passenger object to be added
-	*/
-	void addPassenger(Passenger *passenger);
+
 	/**
 	*@brief Removes the Passenger from the data member passengers
 	*@param *passenger Passenger *passenger pointer to the Passenger object to be removed
@@ -123,11 +119,6 @@ public:
 	//Management methods
 	//Airplane
 	/**
-	* @brief Adds the passed parameter airplane to the data member fleet of the company
-	* @param airplane Airplane airplane
-	*/
-	void addAirplane(Airplane *airplane);
-	/**
 	* @brief Removes the passed Airplane of the company fleet
 	* @param airplane Airplane airplane that indicates which Airplane to remove from the data member fleet of the company
 	*/
@@ -137,7 +128,6 @@ public:
 	* @param newairplane Airplane newairplane it will be included in the data member fleet of the company
 	*/
 
-	void addFlight(Flight * f);
 
 	Flight * flightById(unsigned int id);
 
@@ -204,7 +194,7 @@ public:
 	void airplaneUpdateModel(Airplane * airplane);
 	void airplaneUpdateCapacity(Airplane * airplane);
 
-	void showAllTickets(Passenger * passenger);
+	void showAllTickets(Passenger * passenger, bool idx);
 	void flightShow(Airplane * airplane);
 	void flightCreate(Airplane * airplane);
 	void flightDelete(Airplane * airplane);
@@ -233,6 +223,11 @@ public:
     void sortFlights();
     void passengerCreateWrapper();
 	void clearData(string identifier);
+	void showAllTicketsWrapper(Passenger *p);
+
+    void addObject(Passenger *passenger);
+    void addObject(Flight *flight);
+    void addObject(Airplane *airplane);
 
 };
 
