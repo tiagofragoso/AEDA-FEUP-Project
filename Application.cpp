@@ -99,7 +99,7 @@ void Application::printFilesMenu() const {
     cout << "*Loading multiple files for the same category will erase previous data.\n";
     cout << "*If you must reload a file, please reload all other files in the previously stated load order.\n\n";
 
-    cout << "[1]- Load passengers file ";
+    cout << "[1]- Load passenger file ";
     if (passengersFilepath.empty()) {
         cout << "(No file loaded).";
     } else {
@@ -179,7 +179,7 @@ void Application::printFlightsMenu() const {
 void Application::printBookingsMenu() const {
 
     cout << "[BOOKING MANAGEMENT MENU]\n\n";
-    cout << "[1]- Show my scheduled Flights\n";
+    cout << "[1]- Show scheduled Flights\n";
     cout << "[2]- Book a Flight\n";
     cout << "[3]- Return a Flight ticket\n";
     cout << "[9]- Back.\n\n";
@@ -455,6 +455,8 @@ void Application::printListPassengers(type t) {
             sort(passengers.begin(), passengers.end(), compPAGE);
             title = "Passengers by age:\n";
             break;
+        default:
+            return;
     }
 
     cout << title;
@@ -525,6 +527,8 @@ void Application::printListFlights(type t) {
             sort(flights.begin(), flights.end(), compFTime);
             title = "Flight by price:\n";
             break;
+        default:
+            return;
 
     }
 
