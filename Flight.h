@@ -172,6 +172,12 @@ public:
      * @param passenger
      */
     virtual void addPassenger(string seat, Passenger *passenger) = 0;
+
+    /**
+     * @brief Purely virtual function used in both of the subclasses
+     * @param passenger Passenger * passenger
+     */
+    virtual void removePassenger(Passenger * passenger) = 0;
 /** @name Flight functions to overload operators*/
     /** @{
     *
@@ -266,6 +272,12 @@ public:
      */
     void addPassenger(string seat, Passenger *passenger) {}
 
+    /**
+     * @brief Removes passenger from flight
+     * @param passenger Passenger * passenger
+     */
+    void removePassenger(Passenger * passenger);
+
 };
 
 class CommercialFlight : public Flight {
@@ -340,6 +352,12 @@ public:
      * @param passenger
      */
     void addPassenger(string seat, Passenger *passenger);
+
+    /**
+     * @brief Removes passengers from flight
+     * @param passenger Passenger * passenger
+     */
+    void removePassenger(Passenger * passenger);
 
     /**
      * @brief Prints the Information of the RentedFlight. Data-members inherited from the Flight class and the passengers from the PassengerMap
