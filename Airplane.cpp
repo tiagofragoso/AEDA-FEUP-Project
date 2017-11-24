@@ -42,7 +42,14 @@ void Airplane::setId(unsigned int id) {
 }
 
 void Airplane::setCapacity(unsigned int capacity) {
+
     this->capacity = capacity;
+
+    for (auto &f : flights) {
+
+        f->setCapacity(capacity);
+
+    }
 }
 
 void Airplane::setFlights(vector<Flight *> flights) {

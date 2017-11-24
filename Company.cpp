@@ -257,7 +257,7 @@ Passenger *Company::passengerCreate() {
     do {
         cout << "Date of Birth: (DD/MM/YYYY): ";
         if (!validString(dateOfBirth)) continue;
-        if (dateOfBirth.length() < 10) {
+        if (dateOfBirth.length() < 8) {
             cout << "Insert date of birth using DD/MM/YYYY format.\n";
             continue;
         }
@@ -350,7 +350,7 @@ void Company::passengerUpdateDateOfBirth(Passenger *passenger) {
     do {
         cout << "Insert the new date of birth (DD/MM/YYYY): ";
         if (!validString(newDateOfBirth)) continue;
-        if (newDateOfBirth.length() < 10) {
+        if (newDateOfBirth.length() < 8) {
             cout << "Insert date of birth using DD/MM/YYYY format.\n";
             continue;
         }
