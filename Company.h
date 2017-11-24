@@ -111,7 +111,7 @@ public:
 	*/
 	void removePassenger(Passenger *passenger);
 	/**
-	* @brief Sets the pointers of the Passengers of the company to the passed parameter vector <Passanger*> passengers
+	* @brief Sets the pointers of the Passengers of the company to the passed parameter vector <Passenger*> passengers
 	* @param passengers vector <Passenger*> passengers
 	*/
 	void setPassengers(vector <Passenger*> passengers);
