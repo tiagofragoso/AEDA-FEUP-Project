@@ -908,7 +908,10 @@ Flight *Application::readFlight(string &f) {
 
     next(st, f, ";");
 
-    if (st == "no_passengers") return newFlight;
+    if (st == "no_passengers") {
+        newFlight->setBuyer(nullptr);
+        return newFlight;
+    }
 
     if (type == 'r') {
 
