@@ -619,7 +619,7 @@ float Company::ticketPrice(Passenger *p, Flight *f, string type) {
     float price;
     if (p->getType() == "c") {
         if (type == "r") {
-            price = f->getCapacity() * (f->getBasePrice() * ((100 - p->getCard()->getAvgYrFlights()) / 100));
+            price = (f->getBasePrice() * ((100 - p->getCard()->getAvgYrFlights()) / 100));
         } else {
             if (f->getPassengers().size() < f->getCapacity() && f->getTime_to_flight() < 48) {
                 price = 0.9 * f->getBasePrice() * (100 - p->getCard()->getAvgYrFlights()) / 100;
@@ -630,15 +630,11 @@ float Company::ticketPrice(Passenger *p, Flight *f, string type) {
 
     } else {
         if (type == "r") {
-            price = f->getCapacity() * f->getBasePrice();
+            price = f->getBasePrice();
         } else {
-            if (f->getPassengers().size() < f->getCapacity() && f->getTime_to_flight() < 48) {
-                price = 0.9 * f->getBasePrice();
-            } else {
                 price = f->getBasePrice();
             }
         }
-    }
 
     price = trunc(round(price * 100.0)) / 100.0;
     return price;
@@ -676,7 +672,7 @@ void Company::printFlightsByType(Passenger *p, string type, vector<Flight *> &fv
                  << setw(15) << fl->getDestination() << setw(3) << " " << setw(18)
                  << to_string(fl->getTime_to_flight()) + "h" << setw(3) << " " << setw(10) << std::fixed
                  << setprecision(2) << ticketPrice(p, fl, type);
-            cout << std::left << setw(3) << " " << setw(20) << to_string(fl->getPassengers().size()) + "/" + to_string(fl->getCapacity());
+            if (type == "c") cout << std::left << setw(3) << " " << setw(20) << to_string(fl->getPassengers().size()) + "/" + to_string(fl->getCapacity());
             cout << endl;
         }
     }

@@ -1,11 +1,11 @@
-c1; Porto; Paris; 3; 37; 2; no_passengers
-r2; Porto; Pyongyang; 5; 7000; 15; no_passengers
+c1; Porto; Paris; 3; 37; 2; 1B-10009322; 2B-13617471; 2C-15091119
+r2; Porto; Pyongyang; 5; 7000; 15; 12009487
 c3; Lisbon; London; 13; 15; 3; no_passengers
 c4; London; Porto; 16; 27; 3; no_passengers
 r5; Porto; New York; 8; 400; 8; no_passengers
-c6; Faro; Berlin; 48; 55; 4; no_passengers
+c6; Faro; Berlin; 48; 55; 4; 1A-12490990
 c7; Porto; London; 20; 95; 3; no_passengers
-c8; London; Tokyo; 24; 300; 12; no_passengers
+c8; London; Tokyo; 24; 300; 12; 5F-11459900
 c9; New York; San Francisco; 20; 145; 7; no_passengers
 r10; San Francisco; Sydney; 28; 8000; 15; no_passengers
 c11; Berlin; Oslo; 56; 200; 3; no_passengers
@@ -13,15 +13,15 @@ c12; Madrid; Ibiza; 10; 40; 2; no_passengers
 c13; Ibiza; Barcelona; 13; 65; 3; no_passengers
 c14; Barcelona; Roma; 20; 80; 3; no_passengers
 c15; Roma; Dublin; 24; 120; 5; no_passengers
-c16; Dublin; Stockholm; 30; 240; 3; no_passengers
+c16; Dublin; Stockholm; 30; 240; 3; 1D-11459900
 r17; Stockholm; Orlando; 33; 3000; 13; no_passengers
 r18; Orlando; Miami; 50; 100; 1; no_passengers
-c19; Miami; Rio de Janeiro; 52; 300; 9; no_passengers
+c19; Miami; Rio de Janeiro; 52; 300; 9; 3C-12490990
 c20; Lisbon; Sao Paulo; 30; 400; 10; no_passengers
 c21; Sao Paulo; Madrid; 41; 600; 11; no_passengers
 r22; Las Vegas; Singapore; 50; 7500; 20; no_passengers
 r23; Singapore; Dubai; 75; 6000; 8; no_passengers
 c24; Milan; Copenhagen; 12; 50; 2; no_passengers
 c25; Copenhagen; Frankfurt; 15; 150; 2; no_passengers
-c26; Frankfurt; Helsinki; 18; 230; 3; no_passengers
+c26; Frankfurt; Helsinki; 18; 230; 3; 4B-10009322
 r27; London; Maldives; 78; 16000; 10; no_passengers
