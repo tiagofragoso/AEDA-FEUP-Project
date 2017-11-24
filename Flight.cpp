@@ -147,8 +147,7 @@ void RentedFlight::setBuyer(Passenger *buyer) {
 void RentedFlight::print() const {
 
     Flight::print();
-    cout << "Buyer: ";
-    buyer->printSummary();
+    cout << "Buyer: " << buyer->getName() << " - " << buyer->getId();
     cout << endl;
 }
 
