@@ -1,7 +1,3 @@
-//
-// Created by Mariana on 10/11/2017.
-//
-
 #include <iostream>
 #include "exceptions.h"
 
@@ -16,7 +12,7 @@ InvalidPassenger::InvalidPassenger(unsigned int id) {
 
 void InvalidPassenger::print() const {
 
-        cout << id << " is an invalid passenger id. Reenter.\n";
+    cout << id << " is an invalid passenger id. Reenter.\n";
 
 }
 
@@ -62,12 +58,12 @@ void InvalidFlight::printDuplicate() const {
 
 InvalidSeat::InvalidSeat(string seat) {
 
-	this->seat = seat;
+    this->seat = seat;
 }
 
 void InvalidSeat::print() const {
 
-	cout << seat << " is and invalid seat on the flight. Reenter.\n";
+    cout << seat << " is and invalid seat on the flight. Reenter.\n";
 }
 
 OverlappingFlight::OverlappingFlight() {}
@@ -87,8 +83,9 @@ void ConnectionFlight::print() const {
 }
 
 void InvalidFilePath::print() {
+
     if (type == "empty") cout << "File path is empty.\n";
     else if (type == "fail") cout << "Failed to open file.\n";
 }
 
-InvalidFilePath::InvalidFilePath(string type): type(type) {}
+InvalidFilePath::InvalidFilePath(string type) : type(type) {}

@@ -3,31 +3,34 @@
 
 Airplane::Airplane() {}
 
-Airplane::Airplane(unsigned int id, string model, unsigned int capacity, vector<Flight *> flights) : id(id), model(model), capacity(capacity), flights(flights) {}
+Airplane::Airplane(unsigned int id, string model, unsigned int capacity, vector<Flight *> flights) : id(id),
+                                                                                                     model(model),
+                                                                                                     capacity(capacity),
+                                                                                                     flights(flights) {}
 
 Airplane::Airplane(unsigned int id, string model, unsigned int capacity) {
 
     this->id = id;
     this->model = model;
     this->capacity = capacity;
-    vector<Flight* > v;
+    vector<Flight *> v;
     flights = v;
 }
 
 string Airplane::getModel() const {
-	return this->model;
+    return this->model;
 }
 
 unsigned int Airplane::getId() const {
-	return this->id;
+    return this->id;
 }
 
 unsigned int Airplane::getCapacity() const {
-	return this->capacity;
+    return this->capacity;
 }
 
 vector<Flight *> Airplane::getFlights() const {
-	return this->flights;
+    return this->flights;
 }
 
 void Airplane::setModel(string model) {
@@ -35,14 +38,14 @@ void Airplane::setModel(string model) {
 }
 
 void Airplane::setId(unsigned int id) {
-	this->id = id;
+    this->id = id;
 }
 
 void Airplane::setCapacity(unsigned int capacity) {
     this->capacity = capacity;
 }
 
-void Airplane::setFlights(vector<Flight*> flights) {
+void Airplane::setFlights(vector<Flight *> flights) {
     this->flights = flights;
 }
 
@@ -55,12 +58,12 @@ void Airplane::printSummary() const {
 void Airplane::print() const {
 
     cout << "Id: " << id << endl;
-    cout << "Model: " << model  << endl;
+    cout << "Model: " << model << endl;
     cout << "Capacity: " << capacity << endl;
 
 }
 
-void Airplane::removeFlight(Flight * flight) {
+void Airplane::removeFlight(Flight *flight) {
 
     if (flight->getId() == flights.at(0)->getId()) {
 
@@ -91,17 +94,19 @@ void Airplane::addFlight(Flight *flight) {
         return;
     }
 
-    Flight * elem1 = flights.at(0);
-    Flight * lelem = flights.at(flights.size()-1);
+    Flight *elem1 = flights.at(0);
+    Flight *lelem = flights.at(flights.size() - 1);
 
-    if ((flight->getTime_to_flight()+flight->getDuration()) < elem1->getTime_to_flight() && flight->getDestination() == elem1->getDeparture()) {
+    if ((flight->getTime_to_flight() + flight->getDuration()) < elem1->getTime_to_flight() &&
+        flight->getDestination() == elem1->getDeparture()) {
 
 
         flights.insert(flights.begin(), flight);
         return;
     }
 
-    if (flight->getTime_to_flight() > (lelem->getTime_to_flight() + lelem->getDuration()) && flight->getDeparture() == lelem->getDestination()) {
+    if (flight->getTime_to_flight() > (lelem->getTime_to_flight() + lelem->getDuration()) &&
+        flight->getDeparture() == lelem->getDestination()) {
 
         flights.push_back(flight);
         return;
@@ -110,7 +115,7 @@ void Airplane::addFlight(Flight *flight) {
     throw OverlappingFlight();
 }
 
-ostream &operator<<(ostream &o, const Airplane * a) {
+ostream &operator<<(ostream &o, const Airplane *a) {
     o << to_string(a->id) << "; " << a->model << "; " << to_string(a->capacity) << "; ";
     if (!a->flights.empty()) {
         for (size_t i = 0; i < a->flights.size(); i++) {
@@ -125,4 +130,3 @@ bool compAId(Airplane *a1, Airplane *a2) {
 
     return (a1->getId() < a2->getId());
 }
-

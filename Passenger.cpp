@@ -9,11 +9,11 @@ unsigned int Passenger::getId() const {
 }
 
 string Passenger::getName() const {
-	return this->name;
+    return this->name;
 }
 
 string Passenger::getDateOfBirth() const {
-	return this->dateOfBirth;
+    return this->dateOfBirth;
 }
 
 void Passenger::setId(unsigned int id) {
@@ -21,43 +21,46 @@ void Passenger::setId(unsigned int id) {
 }
 
 void Passenger::setName(string name) {
-  this->name = name;
+    this->name = name;
 }
 
 void Passenger::setDateOfBirth(string dateOfBirth) {
     this->dateOfBirth = dateOfBirth;
 }
 
-string Passenger::getType() const{
+string Passenger::getType() const {
 
     return "n";
 }
 
-Card* Passenger::getCard() const{
+Card *Passenger::getCard() const {
 
     return nullptr;
 }
 
-void Passenger::setCard(Card *card) {return;}
+void Passenger::setCard(Card *card) { return; }
 
 
-PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOfBirth, Card *card) : Passenger(id, name, dateOfBirth), card(card) {
+PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOfBirth, Card *card) : Passenger(id, name,
+                                                                                                               dateOfBirth),
+                                                                                                     card(card) {
 }
 
-PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear = 0) : Passenger(id, name, dateOfBirth) {
+PassengerWithCard::PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear = 0)
+        : Passenger(id, name, dateOfBirth) {
 
     card = new Card(job, nYear);
 }
 
 
-Card* PassengerWithCard::getCard() const {
+Card *PassengerWithCard::getCard() const {
 
-	return card;
+    return card;
 }
 
 void PassengerWithCard::setCard(Card *card) {
 
-	this->card = card;
+    this->card = card;
 }
 
 void Passenger::printSummary() const {
@@ -87,22 +90,24 @@ Passenger::Passenger() {
 
 ostream &operator<<(ostream &o, const Passenger *p) {
     o << p->getType() << p->getId() << "; " << p->getName() << "; " << p->getDateOfBirth();
-    if (p->getType() == "c" && p->getCard() != nullptr){
+    if (p->getType() == "c" && p->getCard() != nullptr) {
         o << "; " << p->getCard()->getJob() << "; " << to_string(p->getCard()->getAvgYrFlights());
     }
     return o;
 }
 
-void Passenger::printDoB() const{
-    int d, m ,y;
+void Passenger::printDoB() const {
+    int d, m, y;
     string dob = this->dateOfBirth;
     next(d, dob, "/");
     next(m, dob, "/");
     next(y, dob, "/");
-    cout << std::right << setfill('0') << setw(2) << to_string(d) << "/" << setfill('0') << setw(2) << setw(2) << to_string(m) << "/" << setfill('0') << setw(2) << setw(4) << to_string(y) << resetiosflags(std::ios::showbase) << setfill(' ');
+    cout << std::right << setfill('0') << setw(2) << to_string(d) << "/" << setfill('0') << setw(2) << setw(2)
+         << to_string(m) << "/" << setfill('0') << setw(2) << setw(4) << to_string(y)
+         << resetiosflags(std::ios::showbase) << setfill(' ');
 }
 
-PassengerWithCard::PassengerWithCard() : Passenger(){
+PassengerWithCard::PassengerWithCard() : Passenger() {
 
     card = new Card;
 }
@@ -120,14 +125,14 @@ void PassengerWithCard::print() const {
 
 }
 
-string PassengerWithCard::getType() const{
+string PassengerWithCard::getType() const {
 
     return "c";
 }
 
 //Compare functions
 
-bool compPID(Passenger * p1, Passenger * p2) {
+bool compPID(Passenger *p1, Passenger *p2) {
 
     return (p1->getId() < p2->getId());
 
@@ -157,4 +162,3 @@ bool compPAGE(Passenger *p1, Passenger *p2) {
 
     return day1 < day2;
 }
-

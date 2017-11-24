@@ -2,13 +2,14 @@
 #define AEDA_FEUP_PROJECT_EXCEPTIONS_H
 
 #include <string>
+
 using namespace std;
 
 class InvalidFormat {
 public:
-	/**
-	 * @brief default constructor for exception InvalidFormat
-	 */
+    /**
+     * @brief default constructor for exception InvalidFormat
+     */
     InvalidFormat();
 };
 
@@ -17,18 +18,20 @@ private:
     std::string type;
 
 public:
-	/**
-	 * @brief default constructor for exception InvalidFilePath
-	 */
+    /**
+     * @brief default constructor for exception InvalidFilePath
+     */
     InvalidFilePath();
-	/**
-	 * @brief constructor for exception InvalidFilePath
-	 * @param type string type
-	 */
+
+    /**
+     * @brief constructor for exception InvalidFilePath
+     * @param type string type
+     */
     InvalidFilePath(std::string type);
-	/**
-	 * @brief prints exception message
-	 */
+
+    /**
+     * @brief prints exception message
+     */
     void print();
 };
 
@@ -38,18 +41,20 @@ private:
     unsigned int id;
 
 public:
-	/**
-	 * @brief constructor for exception InvalidPassenger
-	 * @param id unsigned int id
-	 */
+    /**
+     * @brief constructor for exception InvalidPassenger
+     * @param id unsigned int id
+     */
     InvalidPassenger(unsigned int id);
-	/**
-	 * @brief prints exception message (invalid passenger id)
-	 */
+
+    /**
+     * @brief prints exception message (invalid passenger id)
+     */
     void print() const;
-	/**
-	 * @brief prints exception message (duplicate passenger id)
-	 */
+
+    /**
+     * @brief prints exception message (duplicate passenger id)
+     */
     void printDuplicate() const;
 
 };
@@ -60,18 +65,20 @@ private:
     unsigned int id;
 
 public:
-	/**
-	 * @brief constructor for exception InvalidAirplane
-	 * @param id unsigned int
-	 */
+    /**
+     * @brief constructor for exception InvalidAirplane
+     * @param id unsigned int
+     */
     InvalidAirplane(unsigned int id);
-	/**
-	 * @brief prints exception message (invalid airplane id)
-	 */
+
+    /**
+     * @brief prints exception message (invalid airplane id)
+     */
     void print() const;
-	/**
-	 * @brief prints exception message (duplicate airplane id)
-	 */
+
+    /**
+     * @brief prints exception message (duplicate airplane id)
+     */
     void printDuplicate() const;
 
 };
@@ -82,18 +89,20 @@ private:
     unsigned int id;
 
 public:
-	/**
-	 * @brief constructor for exception InvalidFlight
-	 * @param id unsigned int
-	 */
+    /**
+     * @brief constructor for exception InvalidFlight
+     * @param id unsigned int
+     */
     InvalidFlight(unsigned int id);
-	/**
-	 * @brief prints exception message (invalid flight id)
-	 */
+
+    /**
+     * @brief prints exception message (invalid flight id)
+     */
     void print() const;
-	/**
-	 * @brief prints exception message (duplicate flight id)
-	 */
+
+    /**
+     * @brief prints exception message (duplicate flight id)
+     */
     void printDuplicate() const;
 
 };
@@ -101,44 +110,47 @@ public:
 class InvalidSeat {
 
 private:
-	string seat;
+    string seat;
 
 public:
-	/**
-	 * @brief constructor for exception InvalidSeat
-	 * @param seat string seat
-	 */
-	InvalidSeat(string seat);
-	/**
-	 * @brief prints exception message (invalid seat)
-	 */
-	void print() const;
+    /**
+     * @brief constructor for exception InvalidSeat
+     * @param seat string seat
+     */
+    InvalidSeat(string seat);
+
+    /**
+     * @brief prints exception message (invalid seat)
+     */
+    void print() const;
 };
 
 class OverlappingFlight {
 
 public:
-	/**
-	 * @brief constructor for exception OverlapingFlight
-	 */
+    /**
+     * @brief constructor for exception OverlapingFlight
+     */
     OverlappingFlight();
-	/**
-	 * @brief prints exception message (overlaping flight)
-	 */
+
+    /**
+     * @brief prints exception message (overlaping flight)
+     */
     void print() const;
 };
 
 class ConnectionFlight {
 
 public:
-	/**
-	 * @brief constructor for exception ConnectionFlight
-	 */
+    /**
+     * @brief constructor for exception ConnectionFlight
+     */
     ConnectionFlight();
-	/**
-	 * @brief  prints exception message
-	 */
-    void print() const ;
+
+    /**
+     * @brief  prints exception message
+     */
+    void print() const;
 };
 
 #endif //AEDA_FEUP_PROJECT_EXCEPTIONS_H

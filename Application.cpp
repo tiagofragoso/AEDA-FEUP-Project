@@ -64,10 +64,7 @@ void Application::setupMenus() {
     menuAirplaneUpdate["2"] = &Company::airplaneUpdateCapacity;
 
     //flights update menu
-    menuFlightsUpdate["1c"] = &Company::flightUpdatePrice;
-    menuFlightsUpdate["1r"] = &Company::flightUpdatePrice;
-    menuFlightsUpdate["2r"] = &Company::flightUpdateBuyer;
-    menuFlightsUpdate["2c"] = &Company::flightDeletePassenger;
+    menuFlightsUpdate["1"] = &Company::flightUpdatePrice;
 
     //passengers update menu
     menuPassengersUpdate["1n"] = &Company::passengerUpdateName;
@@ -198,27 +195,11 @@ void Application::printAirplaneUpdateMenu(Airplane *airplane) const {
 
 void Application::printFlightUpdateMenu(Flight *flight) const {
 
-    string foo;
     cout << "Flight selected: \n\n";
     flight->print();
-    foo = flight->getType();
-
-    if (foo == "r") {
-
-        cout << "[FLIGHT UPDATE MENU]\n\n";
-        cout << "[1]- Change flight price.\n";
-        cout << "[2]- Change flight buyer.\n";
-        cout << "[9]- Back.\n\n";
-
-    }
-
-    if (foo == "c") {
-
-        cout << "[FLIGHT UPDATE MENU]\n\n";
-        cout << "[1]- Change flight price.\n";
-        cout << "[2]- Delete passenger.\n";
-        cout << "[9]- Back.\n\n";
-    }
+    cout << "[FLIGHT UPDATE MENU]\n\n";
+    cout << "[1]- Change flight price.\n";
+    cout << "[9]- Back.\n\n";
 }
 
 void Application::printPassengerUpdateMenu(Passenger *passenger) const {
@@ -486,7 +467,8 @@ void Application::printListAirplane(type t) {
 
     cout << title;
     cout << std::left;
-    cout << setw(11) << "Airplane ID" << setw(3) << " " << setw(7) << "Model" << setw(3) << " " << setw(7) << "Capacity\n";
+    cout << setw(11) << "Airplane ID" << setw(3) << " " << setw(7) << "Model" << setw(3) << " " << setw(7)
+         << "Capacity\n";
 
     for (auto &airplane : airplanes) {
 
@@ -535,7 +517,8 @@ void Application::printListFlights(type t) {
     cout << title;
     cout << std::left;
     cout << setw(9) << "Flight ID" << setw(3) << " " << setw(15) << "Departure" << setw(3) << " " << setw(15)
-         << "Destination" << setw(3) << " " << setw(17) << "Time to flight (h)" << setw(3) << " " << setw(9) << "Price (€)\n";
+         << "Destination" << setw(3) << " " << setw(17) << "Time to flight (h)" << setw(3) << " " << setw(9)
+         << "Price (€)\n";
 
     for (auto &flight : flights) {
 
@@ -743,7 +726,7 @@ void Application::flightUpdateMenu(Airplane *airplane) {
     }
 
     company.printSummaryFlight(airplane);
-    string op, op1;
+    string op;
     Flight *flight;
     do {
         try {
@@ -765,15 +748,14 @@ void Application::flightUpdateMenu(Airplane *airplane) {
         do {
             cout << "Insert the desired option: ";
             getline(cin, op);
-            op1 = op + flight->getType();
-            if (op.empty() || menuFlightsUpdate.find(op1) == menuFlightsUpdate.end()) {
+            if (op.empty() || menuFlightsUpdate.find(op) == menuFlightsUpdate.end()) {
                 if (op == "9") return;
                 cout << "Invalid option.\n";
             } else break;
 
         } while (true);
 
-        (company.*menuFlightsUpdate[op1])(flight);
+        (company.*menuFlightsUpdate[op])(flight);
         pause();
 
     } while (true);
@@ -961,7 +943,7 @@ Flight *Application::readFlight(string &f) {
 
     newFlight->setPassengers(pmap);
 
-return newFlight;
+    return newFlight;
 }
 
 Passenger *Application::readPassenger(string &p) {
@@ -1144,6 +1126,3 @@ void Application::saveAllFiles() {
     cout << "All changes were saved.\n";
 
 }
-
-
-

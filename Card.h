@@ -1,11 +1,12 @@
 #ifndef AEDA_FEUP_PROJECT_CARD_H
 #define AEDA_FEUP_PROJECT_CARD_H
+
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-class Card{
+class Card {
 
 private:
     string job;
@@ -15,28 +16,33 @@ public:
     /**
      * @brief Default Constructor of a Card object
      */
-	Card() {}
+    Card() {}
+
     /**
      * @brief Constructor of a Card object using the job and the average number of Flights per year
      * @param job
      * @param nYear
      */
     Card(string job, int nYear);
+
     /**
      * @brief Gets the job of the Card object
      * @return string job listed in the Card
      */
     string getJob() const;
+
     /**
      * @brief Gets the Average number of Flights per year in the Card
      * @return int avgYrFlights
      */
     int getAvgYrFlights() const;
+
     /**
      * @brief Sets the avgYrFlights of the Card to the passed parameter
      * @param nYear int nYear
      */
     void setAvgyrFlights(int nYear);
+
     /**
      * @brief Sets the job of the Card object to the passed parameter
      * @param job string job
