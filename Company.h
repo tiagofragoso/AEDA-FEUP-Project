@@ -316,6 +316,11 @@ public:
     void validFlight(int id);
 
     /**
+     * @brief calls the function flightUpdatePrice
+     */
+    void flightUpdatePrice(Airplane *airplane);
+
+    /**
     * @brief Updates the base price of the Flight passed as argument
     * @param flight Flight* flight
     */
@@ -328,12 +333,6 @@ public:
     */
     void flightAddPassenger(Flight *flight, Passenger *passenger);
 
-    /**
-    * @brief Returns the seat chosen by the user on the Flight passed as argument
-    * @param flight Flight* flight
-    * @return PassengerMap::iterator
-    */
-    PassengerMap::iterator chooseSeat(Flight *flight);
 
     /**
     * @brief Returns the seat chosen by the user on the Flight passed as argument

@@ -1021,26 +1021,6 @@ void Company::flightUpdatePrice(Flight *flight) {
     cout << "Flight base price updated successfully.\n";
 }
 
-PassengerMap::iterator Company::chooseSeat(Flight *flight) {
-
-    PassengerMap::iterator it;
-    string seat_to_be_removed;
-
-    do {
-        cout << "Please insert the seat you would like to remove : ";
-        if (!validString(seat_to_be_removed)) continue;
-        else break;
-
-    } while (true);
-
-    it = flight->getPassengers().find(seat_to_be_removed);
-    if (it == flight->getPassengers().end())
-        throw (InvalidSeat(seat_to_be_removed));
-    else {
-        return it;
-    }
-}
-
 vector<string> Company::availableSeats(Flight *flight, unsigned int capacity) {
 
     vector<string> seats;
@@ -1238,5 +1218,32 @@ void Company::removeFlight(Flight *flight) {
 
 
     }
+
+}
+
+void Company::flightUpdatePrice(Airplane *airplane) {
+
+    if (airplane->getFlights().empty()) {
+        cout << "There are no flights in this airplane.\n";
+        return;
+    }
+
+    printSummaryFlight(airplane);
+    string op;
+    Flight *flight;
+    do {
+        try {
+            flight = chooseFlight(airplane);
+        }
+        catch (const InvalidFlight &i) {
+            i.print();
+            continue;
+        }
+
+        break;
+
+    } while (true);
+
+    flightUpdatePrice(flight);
 
 }

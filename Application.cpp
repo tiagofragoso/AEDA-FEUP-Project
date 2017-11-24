@@ -53,6 +53,7 @@ void Application::setupMenus() {
     menuFlights["1"] = &Company::flightShow;
     menuFlights["2"] = &Company::flightCreate;
     menuFlights["3"] = &Company::flightDelete;
+    menuFlights["4"] = &Company::flightUpdatePrice;
 
     //bookings menu
     menuBookings["1"] = &Company::showAllTicketsWrapper;
@@ -62,9 +63,6 @@ void Application::setupMenus() {
     //airplanes update menu
     menuAirplaneUpdate["1"] = &Company::airplaneUpdateModel;
     menuAirplaneUpdate["2"] = &Company::airplaneUpdateCapacity;
-
-    //flights update menu
-    menuFlightsUpdate["1"] = &Company::flightUpdatePrice;
 
     //passengers update menu
     menuPassengersUpdate["1n"] = &Company::passengerUpdateName;
@@ -169,7 +167,7 @@ void Application::printFlightsMenu() const {
     cout << "[1]- Show flight info.\n";
     cout << "[2]- Create new flight.\n";
     cout << "[3]- Delete flight.\n";
-    cout << "[4]- Update flight.\n";
+    cout << "[4]- Update flight price.\n";
     cout << "[9]- Back.\n\n";
 }
 
@@ -191,15 +189,6 @@ void Application::printAirplaneUpdateMenu(Airplane *airplane) const {
     cout << "[2]- Change airplane capacity.\n";
     cout << "[9]- Back.\n\n";
 
-}
-
-void Application::printFlightUpdateMenu(Flight *flight) const {
-
-    cout << "Flight selected: \n\n";
-    flight->print();
-    cout << "[FLIGHT UPDATE MENU]\n\n";
-    cout << "[1]- Change flight price.\n";
-    cout << "[9]- Back.\n\n";
 }
 
 void Application::printPassengerUpdateMenu(Passenger *passenger) const {
@@ -558,17 +547,11 @@ void Application::flightsMenu() {
             if (op.empty() || menuFlights.find(op) == menuFlights.end()) {
 
                 if (op == "9") return;
-                if (op == "4") break;
                 cout << "Invalid option.\n";
             } else break;
 
 
         } while (true);
-
-        if (op == "4") {
-            flightUpdateMenu(airplane);
-            continue;
-        }
 
         (company.*menuFlights[op])(airplane);
         pause();
@@ -716,53 +699,6 @@ void Application::airplaneUpdateMenu() {
 
     } while (true);
 }
-
-
-void Application::flightUpdateMenu(Airplane *airplane) {
-
-    if (airplane->getFlights().empty()) {
-        cout << "There are no flights in this airplane.\n";
-        return;
-    }
-
-    company.printSummaryFlight(airplane);
-    string op;
-    Flight *flight;
-    do {
-        try {
-            flight = company.chooseFlight(airplane);
-        }
-        catch (const InvalidFlight &i) {
-            i.print();
-            continue;
-        }
-
-        break;
-
-    } while (true);
-
-    do {
-
-        printFlightUpdateMenu(flight);
-
-        do {
-            cout << "Insert the desired option: ";
-            getline(cin, op);
-            if (op.empty() || menuFlightsUpdate.find(op) == menuFlightsUpdate.end()) {
-                if (op == "9") return;
-                cout << "Invalid option.\n";
-            } else break;
-
-        } while (true);
-
-        (company.*menuFlightsUpdate[op])(flight);
-        pause();
-
-    } while (true);
-
-
-}
-
 
 Airplane *Application::readAirplane(string &a) {
 

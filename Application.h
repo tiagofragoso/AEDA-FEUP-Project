@@ -25,7 +25,6 @@ class Application {
 
     typedef void(Company::*companyFunctionPassenger)(Passenger *passenger);
 
-    typedef void(Company::*companyFunctionFlight)(Flight *flight);
 
 private:
     Company company;
@@ -40,7 +39,6 @@ private:
     map<string, companyFunctionAirplane> menuFlights;
     map<string, companyFunctionPassenger> menuBookings;
     map<string, companyFunctionAirplane> menuAirplaneUpdate;
-    map<string, companyFunctionFlight> menuFlightsUpdate;
     map<string, companyFunctionPassenger> menuPassengersUpdate;
 
 public:
@@ -107,12 +105,6 @@ public:
     void airplaneUpdateMenu();
 
     /**
-    * @brief Menu that allows the user to chose what atributes he wants to change on a chosen Flight on the Airplane passed as argument
-    * @param airplane Airplane * airplane
-    */
-    void flightUpdateMenu(Airplane *airplane);
-
-    /**
     * @brief Prints the Main menu
     */
     void printMainMenu() const;
@@ -152,12 +144,6 @@ public:
     * @param airplane Airplane * airplane
     */
     void printAirplaneUpdateMenu(Airplane *airplane) const;
-
-    /**
-    * @brief Prints the Menu that displays the options for updating the Flight passed as argument
-    * @param flight Flight* flight
-    */
-    void printFlightUpdateMenu(Flight *flight) const;
 
     /**
     * @brief Prints the Menu that displays the options for updating the Passenger passed as argument
