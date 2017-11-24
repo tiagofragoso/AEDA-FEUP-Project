@@ -218,7 +218,6 @@ public:
     *@brief Loads all the lines from a passenger file if the filepath is correct
     */
     void loadPassengerFile();
-    //void loadAllFiles();
     /**
     *@ brief Saves all the changes made in the execution of the program to the files
     */
@@ -251,45 +250,6 @@ public:
 
     /** @} end of Application Menu member-functions */
 
-/*    template<class T>
-    int loadFile(string identifier, T readFunc, Application* app){
-        string * path;
-        string str;
-        unsigned int iter = 0, err = 0;
-        if (identifier == Company::PASSENGER_IDENTIFIER) path = & passengersFilepath;
-        else if (identifier == Company::FLIGHT_IDENTIFIER) path = & flightsFilepath;
-        else if (identifier == Company::AIRPLANE_IDENTIFIER) path = &airplanesFilepath;
-
-        if (path->empty()) throw InvalidFilePath("empty");
-
-        ifstream file(*path);
-
-        if (!file) {
-            path->clear();
-            throw InvalidFilePath("fail");
-        }
-        this->company.clearData(identifier);
-        while (getline(file, str)) {
-            if (str.empty()) continue;
-            iter++;
-            T newT = app->(Application::*readFunc)(str);
-            if (newT != nullptr) this->company.addObject(newT);
-            else err++;
-        }
-        file.close();
-
-        if (identifier == Company::PASSENGER_IDENTIFIER) this->company.sortPassengers();
-
-        if (err == 0) cout << "File for " << identifier << " successfully loaded.\n";
-
-        else if (err == iter){
-            cout << "File for " << identifier << " not loaded.";
-            return 1;
-        }
-
-        else cout << "File for " << identifier << " partially loaded: " << to_string(err) << " errors found. You may want to reload the files.\n";
-
-    }*/
 };
 
 

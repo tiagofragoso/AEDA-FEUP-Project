@@ -936,25 +936,6 @@ string Application::inputFilePath(string s) {
     return input;
 }
 
-/*void Application::loadAllFiles(){
-
-    if(loadFile(Company::PASSENGER_IDENTIFIER, readPassenger)){
-        cout << "Please reload files.\n";
-        return;
-    };
-
-    if(loadFile(Company::FLIGHT_IDENTIFIER, readFlight)){
-        cout << "Please reload files.\n";
-        return;
-    };
-
-    if (loadFile(Company::AIRPLANE_IDENTIFIER,readAirplane)){
-        cout << "Please reload files.\n";
-        return;
-    };
-
-}*/
-
 void Application::loadFlightFile() {
 
     string f;
