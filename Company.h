@@ -318,7 +318,7 @@ public:
     /**
      * @brief calls the function flightUpdatePrice
      */
-    void flightUpdatePrice(Airplane *airplane);
+    void flightUpdatePrice(Airplane *airplanex);
 
     /**
     * @brief Updates the base price of the Flight passed as argument
@@ -469,6 +469,8 @@ public:
      * @param flight Flight * flight
      */
     void removeFlight(Flight *flight);
+
+    void removePassengerFromFlights(Passenger * passenger);
 
 };
 

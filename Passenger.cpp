@@ -160,5 +160,5 @@ bool compPAGE(Passenger *p1, Passenger *p2) {
 
     if (month1 != month2) return month1 > month2;
 
-    return day1 < day2;
+    return day1 > day2;
 }

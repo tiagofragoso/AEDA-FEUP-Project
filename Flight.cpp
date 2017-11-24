@@ -154,6 +154,13 @@ void RentedFlight::print() const {
 
 void RentedFlight::setPassengers(PassengerMap passengers) {}
 
+void RentedFlight::removePassenger(Passenger *passenger) {
+
+    if (buyer == nullptr) return;
+    if (buyer == passenger)
+        setBuyer(nullptr);
+}
+
 CommercialFlight::CommercialFlight() : Flight(0, "", "", 0, 0, 0) {
     PassengerMap p;
     passengers = p;
@@ -218,6 +225,18 @@ CommercialFlight::CommercialFlight(unsigned int id, string departure, string des
 void CommercialFlight::addPassenger(string seat, Passenger *passenger) {
 
     passengers[seat] = passenger;
+}
+
+void CommercialFlight::removePassenger(Passenger *passenger) {
+
+    if (passengers.empty()) return;
+    for (auto it = passengers.begin(); it != passengers.end();) {
+
+        if ((*it).second == passenger)
+            passengers.erase(it++);
+        else
+            it++;
+    }
 }
 
 bool compFId(Flight *f1, Flight *f2) {

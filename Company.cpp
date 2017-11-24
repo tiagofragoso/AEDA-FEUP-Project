@@ -319,6 +319,7 @@ void Company::passengerDelete() {
         break;
 
     } while (true);
+    removePassengerFromFlights(passenger);
     removePassenger(passenger);
     cout << "Passenger deleted sucessfully.\n ";
     passengersChanged = true;
@@ -620,7 +621,7 @@ float Company::ticketPrice(Passenger *p, Flight *f, string type) {
     float price;
     if (p->getType() == "c") {
         if (type == "r") {
-            price = (f->getBasePrice() * ((100 - p->getCard()->getAvgYrFlights()) / 100));
+            price = f->getBasePrice() * (100 - p->getCard()->getAvgYrFlights()) / 100;
         } else {
             if (f->getPassengers().size() < f->getCapacity() && f->getTime_to_flight() < 48) {
                 price = 0.9 * f->getBasePrice() * (100 - p->getCard()->getAvgYrFlights()) / 100;
@@ -631,8 +632,6 @@ float Company::ticketPrice(Passenger *p, Flight *f, string type) {
 
     } else {
         if (type == "r") {
-            price = f->getBasePrice();
-        } else {
             price = f->getBasePrice();
         }
     }
@@ -1246,4 +1245,13 @@ void Company::flightUpdatePrice(Airplane *airplane) {
 
     flightUpdatePrice(flight);
 
+}
+
+void Company::removePassengerFromFlights(Passenger *passenger) {
+
+    for (auto f : flights) {
+
+        f->removePassenger(passenger);
+
+    }
 }
