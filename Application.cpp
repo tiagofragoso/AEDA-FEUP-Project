@@ -455,6 +455,8 @@ void Application::printListPassengers(type t) {
             sort(passengers.begin(), passengers.end(), compPAGE);
             title = "Passengers by age:\n";
             break;
+        default:
+            return;
     }
 
     cout << title;
@@ -525,6 +527,8 @@ void Application::printListFlights(type t) {
             sort(flights.begin(), flights.end(), compFTime);
             title = "Flight by price:\n";
             break;
+        default:
+            return;
 
     }
 

@@ -98,8 +98,7 @@ public:
     void printListFlights(type t);
 
     /** @} end of Application Menu member-functions */
-
-
+    
     //file functions
     string inputFilePath(string s);
     Airplane * readAirplane(string &a);
