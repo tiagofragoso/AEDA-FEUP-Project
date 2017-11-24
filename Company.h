@@ -351,14 +351,14 @@ public:
 
     /**
     * @brief Prints the seats on the screen to show the User a more graphic layout of the seats avaiable on the Flight
-    * @param unsigned int capacity
-    * @param vector<string> seats
+    * @param capacity unsigned int capacity
+    * @param seats vector<string> seats
     */
     void printSeats(unsigned int capacity, vector<string> seats);
 
     /**
     * @brief Auxiliar function that manages the returning of a ticket
-    * @param Passenger *p
+    * @param p Passenger *p
     */
     void returnTicket(Passenger *p);
 
@@ -384,9 +384,9 @@ public:
 
     /**
     * @brief Prints the Flights of the type passed as argument from the vector and the passenger passed
-    * @param Passenger *p
-    * @param string type
-    * @param  vector<Flight *> &fvector
+    * @param p Passenger *p
+    * @param type string type
+    * @param  fvector vector<Flight *> &fvector
     */
     void printFlightsByType(Passenger *p, string type, vector<Flight *> &fvector);
 
@@ -478,7 +478,7 @@ public:
 
     /**
      * @brief Removes passenger from all flights
-     * @param passenger
+     * @param passenger Passenger * passenger
      */
     void removePassengerFromFlights(Passenger * passenger);
 

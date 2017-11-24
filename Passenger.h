@@ -64,7 +64,7 @@ public:
 
     /**
      * @brief Sets the Date of Birth of the Passenger object to the passed parameter
-     * @param string dateOfBirth string
+     * @param dateOfBirth string dateOfBirth
      */
     void setDateOfBirth(string dateOfBirth);
 

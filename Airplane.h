@@ -67,13 +67,13 @@ public:
 
     /**
      * @brief Sets the Airplane's model to the one passed as parameter
-     * @param string model
+     * @param model string model
      */
     void setModel(string model);
 
     /**
      * @brief Sets the Airplane's ID to the one passed as parameter
-     * @param unsigned int id
+     * @param id unsigned int id
      */
     void setId(unsigned int id);
 
