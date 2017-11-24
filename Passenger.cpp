@@ -111,7 +111,9 @@ void PassengerWithCard::print() const {
 
     cout << "Id: " << Passenger::getId() << endl;
     cout << "Name: " << Passenger::getName() << endl;
-    cout << "Date of Birth: " << Passenger::getDateOfBirth() << endl;
+    cout << "Date of Birth: ";
+    printDoB();
+    cout << endl;
     cout << "Job: " << card->getJob() << endl;
     cout << "Number of flights/year: " << card->getAvgYrFlights() << endl;
 

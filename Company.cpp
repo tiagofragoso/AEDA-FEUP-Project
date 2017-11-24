@@ -258,7 +258,22 @@ Passenger * Company::passengerCreate() {
     do {
         cout << "Date of Birth: (DD/MM/YYYY): ";
         if (!validString(dateOfBirth)) continue;
-        else break;
+        if (dateOfBirth.length() < 10) {
+            cout << "Insert date of birth using DD/MM/YYYY format.\n";
+            continue;
+        }
+        try {
+            int d, m ,y;
+            string dob = dateOfBirth;
+            next(d, dob, "/");
+            next(m, dob, "/");
+            next(y, dob, "/");
+        }
+        catch (InvalidFormat i) {
+            cout << "Insert date of birth using DD/MM/YYYY format.\n";
+            continue;
+        }
+        break;
 
     } while (true);
 
@@ -335,7 +350,22 @@ void Company::passengerUpdateDateOfBirth(Passenger *passenger) {
     do {
         cout << "Insert the new date of birth (DD/MM/YYYY): ";
         if (!validString(newDateOfBirth)) continue;
-        else break;
+        if (newDateOfBirth.length() < 10) {
+            cout << "Insert date of birth using DD/MM/YYYY format.\n";
+            continue;
+        }
+        try {
+            int d, m ,y;
+            string dob = newDateOfBirth;
+            next(d, dob, "/");
+            next(m, dob, "/");
+            next(y, dob, "/");
+        }
+        catch (InvalidFormat i) {
+            cout << "Insert date of birth using DD/MM/YYYY format.\n";
+            continue;
+        }
+        break;
 
     } while (true);
     passenger->setDateOfBirth(newDateOfBirth);
@@ -630,11 +660,11 @@ vector<Flight *> Company::getFlightsWithType(string type) {
 }
 
 
-void Company::printFlightsForBook(Passenger *p, string type, vector<Flight *> &fvector) {
+void Company::printFlightsByType(Passenger *p, string type, vector<Flight *> &fvector) {
 
     if (!fvector.empty()) {
         cout << std::left;
-        cout << setw(9) << "Flight ID" << setw(3) << " " << setw(9) << "Departure" << setw(3) << " " << setw(11)
+        cout << setw(9) << "Flight ID" << setw(3) << " " << setw(15) << "Departure" << setw(3) << " " << setw(15)
              << "Destination" << setw(3) << " " << setw(18) << "Time to flight(h)"
              << setw(3) << " " << setw(10) << "Price(€)";
         if (type == "c") cout << std::left << setw(3) << " " << setw(20) << "Occupancy";
@@ -642,8 +672,8 @@ void Company::printFlightsForBook(Passenger *p, string type, vector<Flight *> &f
 
         for (auto const &fl: fvector) {
             cout << std::left;
-            cout << setw(9) << fl->getId() << setw(3) << " " << setw(9) << fl->getDeparture() << setw(3) << " "
-                 << setw(11) << fl->getDestination() << setw(3) << " " << setw(18)
+            cout << setw(9) << fl->getId() << setw(3) << " " << setw(15) << fl->getDeparture() << setw(3) << " "
+                 << setw(15) << fl->getDestination() << setw(3) << " " << setw(18)
                  << to_string(fl->getTime_to_flight()) + "h" << setw(3) << " " << setw(10) << std::fixed
                  << setprecision(2) << ticketPrice(p, fl, type);
             cout << std::left << setw(3) << " " << setw(20) << to_string(fl->getPassengers().size()) + "/" + to_string(fl->getCapacity());
@@ -663,7 +693,7 @@ Flight *Company::chooseFlight(unsigned int id, vector<Flight*> &fvector) {
 
 void Company::bookFlightWithType(Passenger *p, string type) {
     vector<Flight *> fvector = getFlightsWithType(type);
-    printFlightsForBook(p, type, fvector);
+    printFlightsByType(p, type, fvector);
     int id;
     Flight *flight;
     do {
@@ -961,6 +991,7 @@ void Company::flightDelete(Airplane *airplane) {
     printSummaryFlight(airplane);
     Flight *flight;
     do {
+
         try {
             flight = chooseFlight(airplane);
         }
@@ -972,17 +1003,13 @@ void Company::flightDelete(Airplane *airplane) {
 
     } while (true);
 
-    do {
-        try {
-            airplane->removeFlight(flight);
-        }
-        catch (const ConnectionFlight &f) {
-            f.print();
-            continue;
-        }
-        break;
-
-    } while (true);
+    try {
+        airplane->removeFlight(flight);
+    }
+    catch (const ConnectionFlight &f) {
+        f.print();
+        return;
+    }
 
     cout << "Flight deleted sucessfully.\n";
     airplanesChanged = true;

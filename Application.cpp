@@ -594,6 +594,11 @@ void Application::bookingsMenu() {
     string menuhelper;
     Passenger *passenger;
 
+    if (company.getPassengers().empty()) {
+        cout << "There are no passengers.\n";
+        return;
+    }
+
     cout << "[BOOKING MANAGEMENT MENU]\n\n";
     do {
         cout << "Do you wish to book a flight for an existing customer(Y/N)? ";
