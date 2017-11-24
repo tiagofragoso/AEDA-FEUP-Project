@@ -1238,6 +1238,7 @@ vector<pair<string, Flight *> > Company::getTickets(Passenger *p) {
                 if (pass.second->getId() == p->getId()) tickets.emplace_back(pass.first, f);
             }
         else {
+            if (f->getBuyer() != nullptr)
             if (*(f->getBuyer()) == *p) tickets.emplace_back("ALL", f);
         }
     }
