@@ -634,6 +634,14 @@ float Company::ticketPrice(Passenger *p, Flight *f, string type) {
         if (type == "r") {
             price = f->getBasePrice();
         }
+        if (type == "c") {
+            if (f->getPassengers().size() < f->getCapacity() && f->getTime_to_flight() < 48) {
+                price = 0.9 * f->getBasePrice();
+
+            } else {
+                price = f->getBasePrice();
+            }
+        }
     }
 
     price = trunc(round(price * 100.0)) / 100.0;
