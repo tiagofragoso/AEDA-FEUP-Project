@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <set>
 #include <iomanip>
 #include "helper.h"
 #include "exceptions.h"
@@ -16,6 +17,18 @@
 #include <cmath>
 
 using namespace std;
+
+struct AirplaneCompare {
+    bool operator() (Airplane * a1, Airplane * a2) {
+        if (a1->getMaintenance().year == a2->getMaintenance().year) {
+            if (a1->getMaintenance().month == a2->getMaintenance().month)
+                return a1->getMaintenance().day < a2->getMaintenance().day;
+            else return a1->getMaintenance().month < a2->getMaintenance().month;
+        } else return a1->getMaintenance().year < a2->getMaintenance().year;
+    }
+};
+
+typedef std::set<Airplane *, AirplaneCompare> AirplanesSet;
 
 /**
 *	The Company class is the one that countains all the passengers, airplanes and flights information
@@ -32,7 +45,7 @@ private:
     /**
     * @brief vector with pointers to all the Airplanes of the company
     */
-    vector<Airplane *> fleet;
+    AirplanesSet fleet;
     /**
     * @brief vector with pointers to all the Passengers of the company
     */
@@ -93,7 +106,7 @@ public:
     * @brief Gets the fleet of the company
     * @return vector <Airplane*> with the pointers to the Airplanes of the company
     */
-    vector<Airplane *> getFleet() const;
+    AirplanesSet getFleet() const;
 
     /**
     * @brief Gets a vector of pointers to the passengers of the company
@@ -130,7 +143,7 @@ public:
     * @brief Sets the fleet of the company to the passed parameter vector \<Airplane * \> fleet
     * @param fleet vector \< Airplane * \> fleet
     */
-    void setFleet(vector<Airplane *> fleet);
+    void setFleet(AirplanesSet fleet);
 
     /**
     * @brief Removes the Passenger from the data member passengers
@@ -270,6 +283,7 @@ public:
     */
     void airplaneUpdateCapacity(Airplane *airplane);
 
+    void airplaneUpdateMaintenancePeriod(Airplane *airplane);
 
     /**
     * @brief Prints the tickets of the Passenger passed as argument, prints indexs if idx is set to true
@@ -418,11 +432,6 @@ public:
     * @brief Sorts the passengers by ID
     */
     void sortPassengers();
-
-    /**
-    * @brief Sorts the Airplanes by ID
-    */
-    void sortAirplanes();
 
     /**
     * @brief Sorts the Flights by ID

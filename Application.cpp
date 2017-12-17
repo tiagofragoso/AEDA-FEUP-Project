@@ -63,6 +63,7 @@ void Application::setupMenus() {
     //airplanes update menu
     menuAirplaneUpdate["1"] = &Company::airplaneUpdateModel;
     menuAirplaneUpdate["2"] = &Company::airplaneUpdateCapacity;
+    menuAirplaneUpdate["3"] = &Company::airplaneUpdateMaintenancePeriod;
 
     //passengers update menu
     menuPassengersUpdate["1n"] = &Company::passengerUpdateName;
@@ -187,6 +188,7 @@ void Application::printAirplaneUpdateMenu(Airplane *airplane) const {
     cout << "[AIRPLANE UPDATE MENU]\n\n";
     cout << "[1]- Change airplane model.\n";
     cout << "[2]- Change airplane capacity.\n";
+    cout << "[3]- Change period between maintenance sessions.\n";
     cout << "[9]- Back.\n\n";
 
 }
@@ -448,8 +450,12 @@ void Application::printListAirplane(type t) {
 
     }
 
-    vector<Airplane *> airplanes = company.getFleet();
+    vector<Airplane* > airplanes;
     string title;
+
+    for (auto a : company.getFleet()) {
+        airplanes.push_back(a);
+    }
 
     sort(airplanes.begin(), airplanes.end(), compAId);
     title = "Airplane by id:\n";
@@ -725,6 +731,31 @@ Airplane *Application::readAirplane(string &a) {
     newAirplane->setCapacity(temp);
 
     next(st, a, ";");
+    int day, month, year;
+    try {
+        next(day, st, "/");
+        next(month, st, "/");
+        next(year, st, "/");
+
+    } catch (InvalidFormat) {
+        cout << "Please insert the Airplane data in the correct format.\n";
+        return nullptr;
+    }
+    Date date;
+    date.day = day;
+    date.month = month;
+    date.year = year;
+
+    newAirplane->setMaintenance(date);
+
+    try { next(temp, a, ";"); } catch (InvalidFormat) {
+        cout << "Please insert the Airplane data in the correct format.\n";
+        return nullptr;
+    }
+
+    newAirplane->setMaintenancePeriod(temp);
+
+    next(st, a, ";");
 
     if (st == "no_flights") return newAirplane;
 
@@ -983,7 +1014,7 @@ void Application::loadAirplaneFile() {
         if (airplane != nullptr) this->company.addObject(airplane);
     }
     airFile.close();
-    this->company.sortAirplanes();
+    cout << company.getFleet().size();
 
     cout << "File successfully loaded.\n";
 
@@ -1013,6 +1044,20 @@ void Application::loadPassengerFile() {
 
     cout << "File successfully loaded.\n";
 
+}
+
+void Application::saveFile(string &path, AirplanesSet fleet) {
+    ofstream file(path);
+
+    if (!file) throw InvalidFilePath("fail");
+    auto it = fleet.begin();
+    while(it != fleet.end()) {
+        file << (*it);
+        it++;
+        if (it != fleet.end())
+            file << endl;
+    }
+    file.close();
 }
 
 void Application::saveAllFiles() {

@@ -3,18 +3,20 @@
 
 Airplane::Airplane() {}
 
-Airplane::Airplane(unsigned int id, string model, unsigned int capacity, vector<Flight *> flights) : id(id),
+Airplane::Airplane(unsigned int id, string model, unsigned int capacity, vector<Flight *> flights, Date maintenance, int maintenancePeriod) : id(id),
                                                                                                      model(model),
                                                                                                      capacity(capacity),
-                                                                                                     flights(flights) {}
+                                                                                                     flights(flights), maintenance(maintenance), maintenancePeriod(maintenancePeriod) {}
 
-Airplane::Airplane(unsigned int id, string model, unsigned int capacity) {
+Airplane::Airplane(unsigned int id, string model, unsigned int capacity, Date maintenance, int maintenancePeriod) {
 
     this->id = id;
     this->model = model;
     this->capacity = capacity;
     vector<Flight *> v;
     flights = v;
+    this->maintenance = maintenance;
+    this->maintenancePeriod = maintenancePeriod;
 }
 
 string Airplane::getModel() const {
@@ -31,6 +33,14 @@ unsigned int Airplane::getCapacity() const {
 
 vector<Flight *> Airplane::getFlights() const {
     return this->flights;
+}
+
+Date Airplane::getMaintenance() const {
+    return this->maintenance;
+}
+
+int Airplane::getMaintenancePeriod() const {
+    return this->maintenancePeriod;
 }
 
 void Airplane::setModel(string model) {
@@ -56,6 +66,13 @@ void Airplane::setFlights(vector<Flight *> flights) {
     this->flights = flights;
 }
 
+void Airplane::setMaintenance(Date maintenance) {
+    this->maintenance = maintenance;
+}
+
+void Airplane::setMaintenancePeriod(int maintenancePeriod) {
+    this->maintenancePeriod = maintenancePeriod;
+}
 
 void Airplane::printSummary() const {
 
@@ -67,6 +84,8 @@ void Airplane::print() const {
     cout << "Id: " << id << endl;
     cout << "Model: " << model << endl;
     cout << "Capacity: " << capacity << endl;
+    cout << "Next maintenance date: " << maintenance.day << "/" << maintenance.month << "/" << maintenance.year << endl;
+    cout << "Maintenance period: " << maintenancePeriod << endl;
 
 }
 
@@ -124,6 +143,8 @@ void Airplane::addFlight(Flight *flight) {
 
 ostream &operator<<(ostream &o, const Airplane *a) {
     o << to_string(a->id) << "; " << a->model << "; " << to_string(a->capacity) << "; ";
+    o << a->getMaintenance().day << "/" << a->getMaintenance().month << "/" << a->getMaintenance().year << "; ";
+    o << a->getMaintenancePeriod() << "; ";
     if (!a->flights.empty()) {
         for (size_t i = 0; i < a->flights.size(); i++) {
             o << to_string(a->flights.at(i)->getId());
@@ -137,3 +158,4 @@ bool compAId(Airplane *a1, Airplane *a2) {
 
     return (a1->getId() < a2->getId());
 }
+

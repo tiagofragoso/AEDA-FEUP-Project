@@ -222,6 +222,7 @@ public:
     *@ brief Saves all the changes made in the execution of the program to the files
     */
     void saveAllFiles();
+    void saveFile(string &path, AirplanesSet fleet);
 
     /**
     *@ brief Manages saving of the changes in a file, informing the user if changes were made

@@ -20,6 +20,11 @@ enum type {
     FTIME = 9      /*!< Flights by the time remaining to the time of the flight */
 };
 
+struct Date {
+    int day;
+    int month;
+    int year;
+};
 
 /**
  * @brief checks if input is valid
