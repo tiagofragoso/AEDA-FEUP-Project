@@ -408,7 +408,7 @@ void Company::passengerUpdateNYear(Passenger *passenger) {
 
 void Company::printSummaryAirplane() {
 
-    vector <Airplane * > airplanes;
+    vector<Airplane *> airplanes;
 
     cout << "AIRPLANE INFORMATION\n\n";
 
@@ -461,7 +461,7 @@ void Company::airplaneShow() {
     printSummaryAirplane();
     string foo;
     cout << endl;
-    Airplane * airplane;
+    Airplane *airplane;
 
     do {
         do {
@@ -622,6 +622,106 @@ void Company::airplaneDelete() {
 
 }
 
+void Company::airplaneMaintenanceReschedule() {
+
+    if (fleet.empty()) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
+
+    printSummaryAirplane();
+    string op;
+    Airplane *airplane;
+    do {
+        try {
+            airplane = chooseAirplane();
+        }
+        catch (const InvalidAirplane &i) {
+            i.print();
+            continue;
+        }
+
+        break;
+
+    } while (true);
+
+    string newDate;
+    int day, month, year;
+    cout << "The next maintenance session date for the chosen airplane is '";
+    cout << airplane->getMaintenance().day << "/" << airplane->getMaintenance().month << "/"
+         << airplane->getMaintenance().year << "'.\n";
+
+    cout << "Insert the new date (DD/MM/YYYY): ";
+    do {
+        if (!validString(newDate)) continue;
+        if (newDate.length() < 8) {
+            cout << "Insert date using DD/MM/YYYY format.\n";
+            continue;
+        }
+        try {
+            string dob = newDate;
+            next(day, dob, "/");
+            next(month, dob, "/");
+            next(year, dob, "/");
+        }
+        catch (InvalidFormat &i) {
+            cout << "Insert date using DD/MM/YYYY format.\n";
+            continue;
+        }
+        break;
+    } while (true);
+
+    Date date;
+    date.day = day;
+    date.month = month;
+    date.year = year;
+
+    removeAirplane(airplane);
+    airplane->setMaintenance(date);
+    addObject(airplane);
+    airplanesChanged = true;
+
+    cout << "Maintenance date successfully rescheduled.\n";
+}
+
+void Company::airplanePerformMaintenance() {
+
+    if (fleet.empty()) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
+
+    printSummaryAirplane();
+    string op;
+    Airplane *airplane;
+    do {
+        try {
+            airplane = chooseAirplane();
+        }
+        catch (const InvalidAirplane &i) {
+            i.print();
+            continue;
+        }
+
+        break;
+
+    } while (true);
+
+    removeAirplane(airplane);
+    Date date = airplane->getMaintenance();
+    addTime(date, airplane->getMaintenancePeriod());
+    airplane->setMaintenance(date);
+    addObject(airplane);
+    airplanesChanged = true;
+    cout << "Maintenance session completed.\n";
+    cout << "Next maintenance session is scheduled to " << date.day << "/" << date.month << "/" << date.year << endl;
+
+}
+
 void Company::airplaneUpdateModel(Airplane *airplane) {
 
     string newModel;
@@ -668,7 +768,8 @@ void Company::airplaneUpdateCapacity(Airplane *airplane) {
 void Company::airplaneUpdateMaintenancePeriod(Airplane *airplane) {
 
     int newPeriod;
-    cout << "The current period between maintenance sessions for the chosen airplane is '" << airplane->getMaintenancePeriod() << "'.\n";
+    cout << "The current period between maintenance sessions for the chosen airplane is '"
+         << airplane->getMaintenancePeriod() << "'.\n";
     do {
         cout << "Insert the new period: ";
         if (validArg(newPeriod)) break;

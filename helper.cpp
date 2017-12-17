@@ -91,3 +91,33 @@ bool validString(string &s) {
 
     return true;
 }
+
+void addTime(Date &date, int days) {
+
+    date.day += days;
+
+    while(true) {
+
+        switch(date.month) {
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                if (date.day <= 31) return;
+                date.day -= 31;
+                date.month++;
+                break;
+            case 2:
+                if (date.day <= 28) return;
+                date.day -= 28;
+                date.month++;
+                break;
+            case 4: case 6: case 9: case 11:
+                if (date.day <= 30) return;
+                date.day -= 30;
+                date.month++;
+                break;
+            default:
+                date.month -= 12;
+                date.year++;
+                break;
+        }
+    }
+}

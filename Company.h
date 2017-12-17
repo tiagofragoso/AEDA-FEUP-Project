@@ -254,6 +254,9 @@ public:
     */
     void airplaneDelete();
 
+    void airplaneMaintenanceReschedule();
+    void airplanePerformMaintenance();
+
     /**
     * @brief Prints a summary of an Airplane object
     */

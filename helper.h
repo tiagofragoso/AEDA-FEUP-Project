@@ -72,5 +72,6 @@ void next(string &piece, string &line, string separator);
  * @return true if input is valid and false otherwise
  */
 bool validString(string &s);
+void addTime(Date &date, int days);
 
 #endif /* SRC_HELPER_H_ */
