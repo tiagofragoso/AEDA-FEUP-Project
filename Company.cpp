@@ -12,7 +12,7 @@ const string Company::PASSENGER_IDENTIFIER = "passenger";
 Company::Company() {
 
     name = "";
-    vector<Airplane *> a;
+    AirplanesSet a;
     vector<Passenger *> p;
     fleet = a;
     passengers = p;
@@ -22,7 +22,7 @@ Company::Company() {
 Company::Company(string name) {
 
     this->name = name;
-    vector<Airplane *> fleet;
+    AirplanesSet fleet;
     vector<Passenger *> passengers;
     this->fleet = fleet;
     this->passengers = passengers;
@@ -32,7 +32,7 @@ string Company::getName() const {
     return this->name;
 }
 
-vector<Airplane *> Company::getFleet() const {
+AirplanesSet Company::getFleet() const {
     return this->fleet;
 }
 
@@ -59,7 +59,7 @@ void Company::setName(string name) {
     this->name = name;
 }
 
-void Company::setFleet(vector<Airplane *> fleet) {
+void Company::setFleet(AirplanesSet fleet) {
     this->fleet = fleet;
 }
 
@@ -84,15 +84,8 @@ void Company::removePassenger(Passenger *passenger) {
 
 void Company::removeAirplane(Airplane *airplane) {
 
-    int i = 0;
-
-    for (auto a : fleet) {
-
-        if (*a == *airplane) {
-            fleet.erase(fleet.begin() + i);
-        }
-        i++;
-    }
+    auto it = fleet.find(airplane);
+    fleet.erase(it);
 }
 
 
@@ -415,6 +408,8 @@ void Company::passengerUpdateNYear(Passenger *passenger) {
 
 void Company::printSummaryAirplane() {
 
+    vector<Airplane *> airplanes;
+
     cout << "AIRPLANE INFORMATION\n\n";
 
     cout << std::left;
@@ -422,6 +417,12 @@ void Company::printSummaryAirplane() {
          << "Capacity\n";
 
     for (auto &airplane : fleet) {
+        airplanes.push_back(airplane);
+    }
+
+    sort(airplanes.begin(), airplanes.end(), compAId);
+
+    for (auto &airplane : airplanes) {
         airplane->printSummary();
     }
     cout << endl;
@@ -460,6 +461,39 @@ void Company::airplaneShow() {
     printSummaryAirplane();
     string foo;
     cout << endl;
+    Airplane *airplane;
+
+    do {
+        do {
+            cout << "Do you wish to view detailed information about a airplane (Y/N)?: ";
+            if (!validString(foo)) continue;
+            else break;
+
+        } while (true);
+
+        normalize(foo);
+        if (foo == "y") {
+            cout << endl;
+            do {
+                try {
+                    airplane = chooseAirplane();
+                }
+                catch (const InvalidAirplane &i) {
+                    i.print();
+                    continue;
+                }
+
+                airplane->print();
+                break;
+
+            } while (true);
+
+        } else if (foo == "n") break;
+        else {
+            cout << "Invalid option. Reenter." << endl;
+        }
+    } while (true);
+    cout << endl;
 
 }
 
@@ -474,8 +508,9 @@ void Company::validAirplane(int id) {
 
 void Company::airplaneCreate() {
 
-    string model;
-    int id, capacity;
+    string model, date;
+    int id, capacity, period;
+    int day, month, year;
 
     cout << "Insert the new airplane information: \n\n";
 
@@ -515,9 +550,42 @@ void Company::airplaneCreate() {
 
     } while (true);
 
-    Airplane *newairplane = new Airplane(id, model, capacity);
+    do {
+        cout << "Date of next maintenance: (DD/MM/YYYY): ";
+        if (!validString(date)) continue;
+        if (date.length() < 8) {
+            cout << "Insert date of birth using DD/MM/YYYY format.\n";
+            continue;
+        }
+        try {
+            string dob = date;
+            next(day, dob, "/");
+            next(month, dob, "/");
+            next(year, dob, "/");
+        }
+        catch (InvalidFormat i) {
+            cout << "Insert date of birth using DD/MM/YYYY format.\n";
+            continue;
+        }
+        break;
+
+    } while (true);
+
+    do {
+
+        cout << "Insert period of airplane maintenance: ";
+        if (validArg(period)) break;
+
+    } while (true);
+
+    Date dateMaintenance;
+    dateMaintenance.year = year;
+    dateMaintenance.month = month;
+    dateMaintenance.day = day;
+
+    //TODO acrescentar novos membros da classe aviao
+    Airplane *newairplane = new Airplane(id, model, capacity, dateMaintenance, period);
     addObject(newairplane);
-    sortAirplanes();
     cout << "Airplane successfully added\n";
     airplanesChanged = true;
 }
@@ -551,6 +619,106 @@ void Company::airplaneDelete() {
         airplanesChanged = true;
         flightsChanged = true;
     } else cout << "Cannot delete an airplane with assigned flights. Please delete the flights first.\n";
+
+}
+
+void Company::airplaneMaintenanceReschedule() {
+
+    if (fleet.empty()) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
+
+    printSummaryAirplane();
+    string op;
+    Airplane *airplane;
+    do {
+        try {
+            airplane = chooseAirplane();
+        }
+        catch (const InvalidAirplane &i) {
+            i.print();
+            continue;
+        }
+
+        break;
+
+    } while (true);
+
+    string newDate;
+    int day, month, year;
+    cout << "The next maintenance session date for the chosen airplane is '";
+    cout << airplane->getMaintenance().day << "/" << airplane->getMaintenance().month << "/"
+         << airplane->getMaintenance().year << "'.\n";
+
+    cout << "Insert the new date (DD/MM/YYYY): ";
+    do {
+        if (!validString(newDate)) continue;
+        if (newDate.length() < 8) {
+            cout << "Insert date using DD/MM/YYYY format.\n";
+            continue;
+        }
+        try {
+            string dob = newDate;
+            next(day, dob, "/");
+            next(month, dob, "/");
+            next(year, dob, "/");
+        }
+        catch (InvalidFormat &i) {
+            cout << "Insert date using DD/MM/YYYY format.\n";
+            continue;
+        }
+        break;
+    } while (true);
+
+    Date date;
+    date.day = day;
+    date.month = month;
+    date.year = year;
+
+    removeAirplane(airplane);
+    airplane->setMaintenance(date);
+    addObject(airplane);
+    airplanesChanged = true;
+
+    cout << "Maintenance date successfully rescheduled.\n";
+}
+
+void Company::airplanePerformMaintenance() {
+
+    if (fleet.empty()) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
+
+    printSummaryAirplane();
+    string op;
+    Airplane *airplane;
+    do {
+        try {
+            airplane = chooseAirplane();
+        }
+        catch (const InvalidAirplane &i) {
+            i.print();
+            continue;
+        }
+
+        break;
+
+    } while (true);
+
+    removeAirplane(airplane);
+    Date date = airplane->getMaintenance();
+    addTime(date, airplane->getMaintenancePeriod());
+    airplane->setMaintenance(date);
+    addObject(airplane);
+    airplanesChanged = true;
+    cout << "Maintenance session completed.\n";
+    cout << "Next maintenance session is scheduled to " << date.day << "/" << date.month << "/" << date.year << endl;
 
 }
 
@@ -597,6 +765,21 @@ void Company::airplaneUpdateCapacity(Airplane *airplane) {
 
 }
 
+void Company::airplaneUpdateMaintenancePeriod(Airplane *airplane) {
+
+    int newPeriod;
+    cout << "The current period between maintenance sessions for the chosen airplane is '"
+         << airplane->getMaintenancePeriod() << "'.\n";
+    do {
+        cout << "Insert the new period: ";
+        if (validArg(newPeriod)) break;
+    } while (true);
+
+    airplane->setMaintenancePeriod(newPeriod);
+    airplanesChanged = true;
+    cout << "Airplane maintenance period updated successfully.\n";
+}
+
 void Company::bookFlight(Passenger *p) {
     string menuhelper;
     do {
@@ -633,6 +816,14 @@ float Company::ticketPrice(Passenger *p, Flight *f, string type) {
     } else {
         if (type == "r") {
             price = f->getBasePrice();
+        }
+        if (type == "c") {
+            if (f->getPassengers().size() < f->getCapacity() && f->getTime_to_flight() < 48) {
+                price = 0.9 * f->getBasePrice();
+
+            } else {
+                price = f->getBasePrice();
+            }
         }
     }
 
@@ -1173,10 +1364,6 @@ void Company::passengerCreateWrapper() {
     passengerCreate();
 }
 
-void Company::sortAirplanes() {
-    sort(fleet.begin(), fleet.end(), compAId);
-}
-
 void Company::sortFlights() {
 
     sort(flights.begin(), flights.end(), compFId);
@@ -1203,7 +1390,7 @@ void Company::addObject(Flight *flight) {
 }
 
 void Company::addObject(Airplane *airplane) {
-    this->fleet.push_back(airplane);
+    this->fleet.insert(airplane);
 }
 
 void Company::removeFlight(Flight *flight) {
@@ -1245,7 +1432,6 @@ void Company::flightUpdatePrice(Airplane *airplane) {
     } while (true);
 
     flightUpdatePrice(flight);
-
 }
 
 

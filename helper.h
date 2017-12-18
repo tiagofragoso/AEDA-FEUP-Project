@@ -20,6 +20,11 @@ enum type {
     FTIME = 9      /*!< Flights by the time remaining to the time of the flight */
 };
 
+struct Date {
+    int day;
+    int month;
+    int year;
+};
 
 /**
  * @brief checks if input is valid
@@ -67,5 +72,6 @@ void next(string &piece, string &line, string separator);
  * @return true if input is valid and false otherwise
  */
 bool validString(string &s);
+void addTime(Date &date, int days);
 
 #endif /* SRC_HELPER_H_ */

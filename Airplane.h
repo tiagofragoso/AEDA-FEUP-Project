@@ -6,6 +6,7 @@
 #include <vector>
 #include "Flight.h"
 #include "exceptions.h"
+#include "helper.h"
 
 using namespace std;
 
@@ -16,6 +17,8 @@ private:
     string model;
     unsigned int id;
     unsigned int capacity;
+    Date maintenance;
+    int maintenancePeriod;
     vector<Flight *> flights;
 
 public:
@@ -31,7 +34,7 @@ public:
      * @param capacity
      * @param flights
      */
-    Airplane(unsigned int id, string name, unsigned int capacity, vector<Flight *> flights);
+    Airplane(unsigned int id, string name, unsigned int capacity, vector<Flight *> flights, Date maintenance, int maintenancePeriod);
 
     /**
      * @brief Constructor of an Airplane object with no flights
@@ -39,7 +42,7 @@ public:
      * @param name
      * @param capacity
      */
-    Airplane(unsigned int id, string name, unsigned int capacity);
+    Airplane(unsigned int id, string name, unsigned int capacity, Date maintenance, int maintenancePeriod);
 
     /**
      * @brief  Gets the Model of the Airplane
@@ -64,6 +67,8 @@ public:
      * @return vector <Flight *> pointers to the flights of an Airplane
      */
     vector<Flight *> getFlights() const;
+    Date getMaintenance() const;
+    int getMaintenancePeriod() const;
 
     /**
      * @brief Sets the Airplane's model to the one passed as parameter
@@ -88,6 +93,8 @@ public:
      * @param vector <\ Flight * \> flights
      */
     void setFlights(vector<Flight *> flights);
+    void setMaintenance(Date maintenance);
+    void setMaintenancePeriod(int maintenancePeriod);
 
     /**
      * @brief Prints the id of the Airplane
@@ -134,5 +141,4 @@ public:
  * @return returns true if a1's id is less than a2's id
  */
 bool compAId(Airplane *a1, Airplane *a2);
-
 #endif //AEDA_FEUP_PROJECT_AIRPLANE_H
