@@ -4,8 +4,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <queue>
 #include "Card.h"
 #include "helper.h"
+#include "Booking.h"
 
 using namespace std;
 
@@ -13,9 +15,11 @@ class Passenger {
 
 private:
     unsigned int id;
+    unsigned int phoneNumber;
     string name;
     string dateOfBirth;
-
+    vector<Booking *> activeBookings;
+    vector<Booking *> pastBookings;
 public:
     /**
      * @brief Default Constructor of a Passenger object
