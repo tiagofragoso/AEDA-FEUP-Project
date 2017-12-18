@@ -1281,3 +1281,44 @@ void Company::removePassengerFromFlights(Passenger *passenger) {
 
     }
 }
+
+
+
+Technician* Company::technicianCreate() {
+	string foo;
+	string name, model;
+	int timeTillAvaiable;
+
+	cout << "Insert the new technician information: \n\n";
+
+	do {
+		cout << "Name: ";
+		if (!validString(name)) continue;
+		else break;
+
+	} while (true);
+
+	do {
+		cout << "Model: ";
+		if (!validString(model)) continue;
+		else break;
+
+	} while (true);
+	trimString(model);
+
+
+		do {
+
+			cout << "Insert time untill he is avaiable: ";
+			if (validArg(timeTillAvaiable)) break;
+
+		} while (true);
+
+	Technician *newtechnician;
+	newtechnician = new Technician(name,model,timeTillAvaiable);
+	techs.push(newtechnician);
+	techniciansChanged = true;
+	cout << "Technician successfully added\n";
+	return newtechnician;
+
+}

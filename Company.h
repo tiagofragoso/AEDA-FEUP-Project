@@ -13,6 +13,8 @@
 #include "helper.h"
 #include "exceptions.h"
 #include "Airplane.h"
+#include "Technician.h"
+#include <queue>
 #include <cmath>
 
 using namespace std;
@@ -42,6 +44,8 @@ private:
      */
     vector<Flight *> flights;
 
+	priority_queue <Technician *> techs;
+
     /**
     * @brief bool passengersChanged is true when Passengers vector has changed and false otherwise
     */
@@ -54,6 +58,8 @@ private:
      * @brief bool flightsChanged is true when Flights vector has changed and false otherwise
     */
     static bool flightsChanged;
+
+	static bool techniciansChanged;
 
 
 public:
@@ -481,6 +487,13 @@ public:
      * @param passenger Passenger * passenger
      */
     void removePassengerFromFlights(Passenger * passenger);
+
+
+
+
+	//SEGUNDO PROJECTO
+
+	Technician* technicianCreate();
 
 
 };
