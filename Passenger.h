@@ -119,6 +119,8 @@ public:
      * @return ostream
      */
     friend ostream &operator<<(ostream &o, const Passenger *p);
+
+    void addBooking(Booking * booking);
 };
 
 class PassengerWithCard : public Passenger {

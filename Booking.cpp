@@ -25,3 +25,7 @@ void Booking::completeBokking() {
 void Booking::cancelBooking() {
     this->state = CANCELED;
 }
+
+booking_state_t Booking::getState() {
+    return this->state;
+}

@@ -16,15 +16,15 @@ class Booking {
 private:
     Passenger * passenger;
     Flight * flight;
-    string date; //change do date object
     string seat;
     booking_state_t state;
 public:
     Booking(){}
-    Booking(Passenger* passenger, Flight* flight,string seat);
+    Booking(Passenger* passenger, Flight* flight, string seat);
     Passenger * getPassenger();
     Flight * getFlight();
     string getSeat();
+    booking_state_t getState();
     void completeBokking();
     void cancelBooking();
 };
