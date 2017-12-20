@@ -949,7 +949,47 @@ Flight *Application::readFlight(string &f) {
 
     return newFlight;
 }
+Technician *Application::readTechnician(string &p) {
+	Technician *newTechnician;
 
+	/*
+	int temp;
+	try { next(temp, p, ";"); }
+	catch (InvalidFormat) {
+		cout << "Please insert the Passenger data in the correct format.\n";
+		return nullptr;
+	}
+
+	newTechnician->setId((unsigned int)temp);
+
+	string st;
+	string models;
+	vector <string> models_v;
+
+	next(st, p, ";");
+
+	newTechnician->setName(st);
+
+	next(st, p, ";");
+
+	while (true) {
+		if (st.find(",") != st.npos) {
+			next(models, st, ",");
+			models_v.push_back(models);
+		} 
+		else { break; }
+	}
+
+	newTechnician->setModels(models_v);
+	string a_id;
+
+	while (p != "") {
+		next(st, p, ";");
+		next(a_id ,st, ",");
+	}
+	*/
+	return newTechnician;
+}
 Passenger *Application::readPassenger(string &p) {
     Passenger *newPassenger;
 

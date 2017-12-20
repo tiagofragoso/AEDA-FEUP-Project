@@ -253,6 +253,10 @@ public:
 
     /** @} end of Application Menu member-functions */
 
+	//2 projeto
+
+	Technician* readTechnician(string &p);
+
 };
 
 

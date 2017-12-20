@@ -625,7 +625,6 @@ void Company::airplaneDelete() {
 void Company::airplaneMaintenanceReschedule() {
 
     if (fleet.empty()) {
-
         cout << "There are no airplanes.\n";
         return;
 
@@ -904,6 +903,7 @@ void Company::bookFlightWithType(Passenger *p, string type) {
         flightAddPassenger(flight, p);
     else {
         flight->setBuyer(p);
+        p->addBooking(new Booking(p, flight, "ALL"));
         cout << "You have rented the flight " << id << ".\n";
     }
     flightsChanged = true;
@@ -922,6 +922,7 @@ void Company::returnTicket(Passenger *p) {
     } while (true);
 
     pair<string, Flight *> selectedTicket = static_cast<pair<string, Flight *> &&>(v.at(id - 1));
+
 
     if (selectedTicket.second->getType() == "c") {
 
@@ -1336,6 +1337,7 @@ void Company::flightAddPassenger(Flight *flight, Passenger *passenger) {
 
     } while (true);
     flight->addPassenger(seat, passenger);
+    passenger->addBooking(new Booking(passenger, flight, seat));
     cout << "Booking for seat " << seat << " on flight " << flight->getId() << " successful.\n";
     flightsChanged = true;
 }
@@ -1468,4 +1470,45 @@ void Company::removePassengerFromFlights(Passenger *passenger) {
         f->removePassenger(passenger);
 
     }
+}
+
+
+
+Technician* Company::technicianCreate() {
+	string foo;
+	string name, model;
+	int timeTillAvaiable;
+
+	cout << "Insert the new technician information: \n\n";
+
+	do {
+		cout << "Name: ";
+		if (!validString(name)) continue;
+		else break;
+
+	} while (true);
+
+	do {
+		cout << "Model: ";
+		if (!validString(model)) continue;
+		else break;
+
+	} while (true);
+	trimString(model);
+
+
+		do {
+
+			cout << "Insert time untill he is avaiable: ";
+			if (validArg(timeTillAvaiable)) break;
+
+		} while (true);
+
+	Technician *newtechnician;
+	newtechnician = new Technician(name,model,timeTillAvaiable);
+	techs.push(newtechnician);
+	techniciansChanged = true;
+	cout << "Technician successfully added\n";
+	return newtechnician;
+
 }
