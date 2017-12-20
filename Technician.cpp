@@ -1,27 +1,42 @@
 #include "Technician.h"
 
-Technician::Technician(string name, string model, unsigned int avaiability) {
+Technician::Technician(unsigned int id,string name, string models) {
+	this->id = id;
 	this->name = name;
-	this->model = model;
-	this->avaiability = avaiability;
+	this->models = models;
 }
 
+
 //get methods
+
+unsigned int Technician::getId() {
+	return this->id;
+}
 
 string Technician::getName() {
 	return this->name;
 }
 
-string Technician::getModel() {
-	return this->model;
+vector <string> Technician::getModels() {
+	return this->models;
 }
 
-unsigned int Technician::getAvaiability() {
-	return this->avaiability;
+//set methods
+
+void Technician::setId(unsigned int id) {
+	this->id = id;
+}
+
+void Technician::setName(string name) {
+	this->name = name;
+}
+
+void Technician::setModels(vector <string> models) {
+	this->models = models;
 }
 
 //Operator overload to sort the priority queue
 
 bool Technician::operator<(const Technician &tech1) const {
-	return (this->avaiability < tech1.avaiability);
+	return (this->maintenances.top() < tech1.maintenances.top());
 }

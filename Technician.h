@@ -5,20 +5,27 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <queue>
 
 using namespace std;
 
 class Technician
 {
 private:
+	unsigned int id;
 	string name;
-	string model;
-	unsigned int avaiability;
+	vector <string> models;
+	priority_queue <unsigned int> maintenances;
+
 public:
-	Technician(string name, string model, unsigned int avaiability);
+	Technician(unsigned int id,string name, string model);
+	unsigned int getId();
 	string getName();
-	string getModel();
-	unsigned int getAvaiability();
+	vector <string> getModels();
+
+	void setId(unsigned int id);
+	void setName(string name);
+	void setModels(vector <string> model);
 
 	bool operator<(const Technician &tech1) const;
 };

@@ -506,7 +506,9 @@ public:
 	//SEGUNDO PROJECTO
 
 	Technician* technicianCreate();
-
+	/*
+	void setTechs(priority_queue <Technician *> techs);
+	*/
 
 };
 
