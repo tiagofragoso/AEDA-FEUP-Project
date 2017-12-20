@@ -45,11 +45,12 @@ void Application::setupMenus() {
     menuLists["2"] = &Application::printListPassengers;
     menuLists["3"] = &Application::printListPassengers;
     menuLists["4"] = &Application::printListAirplane;
-    menuLists["5"] = &Application::printListFlights;
-    menuLists["6"] = &Application::printListFlights;
+    menuLists["5"] = &Application::printNextMaintenanceSessions;
     menuLists["7"] = &Application::printListFlights;
     menuLists["8"] = &Application::printListFlights;
     menuLists["9"] = &Application::printListFlights;
+    menuLists["10"] = &Application::printListFlights;
+    menuLists["11"] = &Application::printListFlights;
 
     //flights menu
     menuFlights["1"] = &Company::flightShow;
@@ -156,13 +157,15 @@ void Application::printListsMenu() const {
     cout << "[2]- Passengers by name.\n";
     cout << "[3]- Passengers by age.\n\n";
     cout << "Airplane lists.\n\n";
-    cout << "[4]- Airplanes by id.\n\n";
+    cout << "[4]- Airplanes by id.\n";
+    cout << "[5]- Next maintenance sessions.\n";
+    cout << "[6]- Maintenance session in a period of time.\n\n";
     cout << "Flights lists.\n\n";
-    cout << "[5]- Flights by id.\n";
-    cout << "[6]- Flights by price (low to high).\n";
-    cout << "[7]- Flights by price (high to low).\n";
-    cout << "[8]- Flights by destination.\n";
-    cout << "[9]- Flights by time to flight.\n";
+    cout << "[7]- Flights by id.\n";
+    cout << "[8]- Flights by price (low to high).\n";
+    cout << "[9]- Flights by price (high to low).\n";
+    cout << "[10]- Flights by destination.\n";
+    cout << "[11]- Flights by time to flight.\n\n";
     cout << "[0]- Back.\n\n";
 }
 
@@ -473,6 +476,36 @@ void Application::printListAirplane(type t) {
 
         airplane->printSummary();
     }
+}
+
+void Application::printNextMaintenanceSessions(type t) {
+
+    if (company.getFleet().empty()) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
+
+    cout << "Next maintenance sessions:\n";
+
+    for (auto a : company.getFleet()) {
+        cout << "Airplane " << a->getId() << " - ";
+        a->getMaintenance().print();
+        cout << endl;
+    }
+}
+
+void Application::printMaintenancePeriod(type t) {
+
+    if (company.getFleet().empty()) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
+    
+    
 }
 
 void Application::printListFlights(type t) {

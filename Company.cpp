@@ -711,6 +711,8 @@ void Company::airplanePerformMaintenance() {
 
     } while (true);
 
+    //TODO adicionar a parte dos tecnicos que eu nao sei como é que vai ser
+
     removeAirplane(airplane);
     Date date = airplane->getMaintenance();
     addTime(date, airplane->getMaintenancePeriod());

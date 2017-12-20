@@ -168,6 +168,8 @@ public:
     * @param t struct type t
     */
     void printListFlights(type t);
+    void printNextMaintenanceSessions(type t);
+    void printMaintenancePeriod(type t);
 
     /** @} end of Application Menu member-functions */
 
