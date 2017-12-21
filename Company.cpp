@@ -4,6 +4,7 @@
 bool Company::passengersChanged = false;
 bool Company::airplanesChanged = false;
 bool Company::flightsChanged = false;
+bool Company::techniciansChanged = false;
 
 const string Company::AIRPLANE_IDENTIFIER = "airplane";
 const string Company::FLIGHT_IDENTIFIER = "flight";
@@ -903,7 +904,7 @@ void Company::bookFlightWithType(Passenger *p, string type) {
         flightAddPassenger(flight, p);
     else {
         flight->setBuyer(p);
-        p->addBooking(new Booking(p, flight, "ALL"));
+       // p->addBooking(new Booking(p, flight, "ALL"));
         cout << "You have rented the flight " << id << ".\n";
     }
     flightsChanged = true;
@@ -1337,7 +1338,7 @@ void Company::flightAddPassenger(Flight *flight, Passenger *passenger) {
 
     } while (true);
     flight->addPassenger(seat, passenger);
-    passenger->addBooking(new Booking(passenger, flight, seat));
+    //passenger->addBooking(new Booking(passenger, flight, seat));
     cout << "Booking for seat " << seat << " on flight " << flight->getId() << " successful.\n";
     flightsChanged = true;
 }
@@ -1477,9 +1478,18 @@ void Company::removePassengerFromFlights(Passenger *passenger) {
 Technician* Company::technicianCreate() {
 	string foo;
 	string name, model;
-	int timeTillAvaiable;
+	int id;
+
+    do {
+        cout << "id: ";
+        if (!validArg(id)) continue;
+        else break;
+        //TODO função para checkar se nao existe nenhum tecnico com o mesmo id
+    } while(true);
 
 	cout << "Insert the new technician information: \n\n";
+
+
 
 	do {
 		cout << "Name: ";
@@ -1494,18 +1504,13 @@ Technician* Company::technicianCreate() {
 		else break;
 
 	} while (true);
+    //TODO adicionar possibilidade de ter mais que um modelo de aviao
 	trimString(model);
 
+    vector <string> models;
+    models.push_back(model);
 
-		do {
-
-			cout << "Insert time untill he is avaiable: ";
-			if (validArg(timeTillAvaiable)) break;
-
-		} while (true);
-
-	Technician *newtechnician;
-	newtechnician = new Technician(name,model,timeTillAvaiable);
+	Technician *newtechnician  = new Technician(id,name,models);
 	techs.push(newtechnician);
 	techniciansChanged = true;
 	cout << "Technician successfully added\n";

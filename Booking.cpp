@@ -4,11 +4,8 @@
 
 #include "Booking.h"
 
-Booking::Booking(Passenger *passenger, Flight *flight, string seat): passenger(passenger), flight(flight), seat(seat), state(ACTIVE) {}
+Booking::Booking(Flight *flight, string seat): flight(flight), seat(seat), state(ACTIVE) {}
 
-Passenger *Booking::getPassenger() {
-    return this->passenger;
-}
 
 Flight *Booking::getFlight() {
     return this->flight;

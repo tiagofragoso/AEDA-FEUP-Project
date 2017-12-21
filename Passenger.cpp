@@ -130,10 +130,10 @@ string PassengerWithCard::getType() const {
     return "c";
 }
 
-void Passenger::addBooking(Booking * booking) {
-    if (booking->getState() == ACTIVE) this->activeBookings.push_back(booking);
-    else this->pastBookings.push_back(booking);
-}
+//void Passenger::addBooking(Booking * booking) {
+//    if (booking->getState() == ACTIVE) this->activeBookings.push_back(booking);
+//    else this->pastBookings.push_back(booking);
+//}
 
 //Compare functions
 

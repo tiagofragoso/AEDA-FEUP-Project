@@ -18,7 +18,7 @@ private:
 	priority_queue <unsigned int> maintenances;
 
 public:
-	Technician(unsigned int id,string name, string model);
+	Technician(unsigned int id,string name, vector <string> model);
 	unsigned int getId();
 	string getName();
 	vector <string> getModels();

@@ -14,14 +14,12 @@ typedef enum {ACTIVE ,COMPLETED, CANCELED} booking_state_t;
 class Booking {
 
 private:
-    Passenger * passenger;
     Flight * flight;
     string seat;
     booking_state_t state;
 public:
     Booking(){}
-    Booking(Passenger* passenger, Flight* flight, string seat);
-    Passenger * getPassenger();
+    Booking(Flight* flight, string seat);
     Flight * getFlight();
     string getSeat();
     booking_state_t getState();

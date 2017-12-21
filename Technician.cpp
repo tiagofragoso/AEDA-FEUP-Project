@@ -1,6 +1,6 @@
 #include "Technician.h"
 
-Technician::Technician(unsigned int id,string name, string models) {
+Technician::Technician(unsigned int id,string name, vector<string> models) {
 	this->id = id;
 	this->name = name;
 	this->models = models;

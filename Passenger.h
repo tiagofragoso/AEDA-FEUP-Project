@@ -7,7 +7,6 @@
 #include <queue>
 #include "Card.h"
 #include "helper.h"
-#include "Booking.h"
 
 using namespace std;
 
@@ -18,8 +17,8 @@ private:
     unsigned int phoneNumber;
     string name;
     string dateOfBirth;
-    vector<Booking *> activeBookings;
-    vector<Booking *> pastBookings;
+    //vector<Booking *> activeBookings;
+    //vector<Booking *> pastBookings;
 public:
     /**
      * @brief Default Constructor of a Passenger object
@@ -120,7 +119,7 @@ public:
      */
     friend ostream &operator<<(ostream &o, const Passenger *p);
 
-    void addBooking(Booking * booking);
+    //void addBooking(Booking * booking);
 };
 
 class PassengerWithCard : public Passenger {
