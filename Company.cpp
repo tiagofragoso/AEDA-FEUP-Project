@@ -140,6 +140,36 @@ Passenger *Company::choosePassenger() {
     throw InvalidPassenger(pId);
 }
 
+void Company::printNextMaintenanceSessions() {
+
+    if (fleet.empty()) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
+
+    cout << "Next maintenance sessions:\n";
+
+    for (auto a : fleet) {
+        cout << "Airplane " << a->getId() << " - ";
+        a->getMaintenance().print();
+        cout << endl;
+    }
+}
+
+void Company::printMaintenancePeriod() {
+
+    if (fleet.empty()) {
+
+        cout << "There are no airplanes.\n";
+        return;
+
+    }
+
+
+}
+
 void Company::passengerShow() {
 
     if (passengers.empty()) {
@@ -584,7 +614,6 @@ void Company::airplaneCreate() {
     dateMaintenance.month = month;
     dateMaintenance.day = day;
 
-    //TODO acrescentar novos membros da classe aviao
     Airplane *newairplane = new Airplane(id, model, capacity, dateMaintenance, period);
     addObject(newairplane);
     cout << "Airplane successfully added\n";
@@ -711,17 +740,53 @@ void Company::airplanePerformMaintenance() {
 
     } while (true);
 
-    //TODO adicionar a parte dos tecnicos que eu nao sei como é que vai ser
+    Technician* tech;
 
+    try {
+        tech = chooseTechnician(airplane->getModel());
+    }
+    catch (const UnavailableTechnician &t) {
+        t.print();
+        return;
+    }
+
+    tech->setTimeUntilAvailable(5);
+    technicians.push(tech);
     removeAirplane(airplane);
     Date date = airplane->getMaintenance();
     addTime(date, airplane->getMaintenancePeriod());
     airplane->setMaintenance(date);
     addObject(airplane);
     airplanesChanged = true;
-    cout << "Maintenance session completed.\n";
+    cout << "Maintenance session .\n";
     cout << "Next maintenance session is scheduled to " << date.day << "/" << date.month << "/" << date.year << endl;
 
+}
+
+Technician* Company::chooseTechnician(string model) {
+    priority_queue<Technician*> temp;
+    Technician *chosenTech;
+    bool found = false;
+
+    while(!technicians.empty()) {
+        Technician* aux = technicians.top();
+        if (aux->getTimeUntilAvailable() == 0 && find(aux->getModels().begin(), aux->getModels().end(), model) != aux->getModels().end()) {
+            chosenTech = aux;
+            technicians.pop();
+            found = true;
+            break;
+        }
+        temp.push(aux);
+        technicians.pop();
+    }
+
+    while(!temp.empty()) {
+        technicians.push(temp.top());
+        temp.pop();
+    }
+
+    if (!found) throw UnavailableTechnician(model);
+    return chosenTech;
 }
 
 void Company::airplaneUpdateModel(Airplane *airplane) {
@@ -1006,6 +1071,39 @@ Flight *Company::chooseFlight(Airplane *airplane) {
     throw InvalidFlight(fId);
 }
 
+Technician *Company::chooseTechnician() {
+
+    int tId;
+    Technician *ctechnician;
+
+    do {
+        cout << "Choose technician: ";
+        if (!validArg(tId)) continue;
+        else break;
+
+    } while (true);
+
+    priority_queue<Technician *> temp;
+    Technician * aux;
+    bool found = false;
+
+    while(!technicians.empty()) {
+        if (technicians.top()->getId() == tId) {
+            aux = technicians.top();
+            found = true;
+        }
+        temp.push(technicians.top());
+        technicians.pop();
+    }
+
+    while(!temp.empty()) {
+        technicians.push(temp.top());
+        temp.pop();
+    }
+
+    if (!found) throw InvalidTechnician(tId);
+    return aux;
+}
 
 void Company::flightShow(Airplane *airplane) {
 
@@ -1475,7 +1573,7 @@ void Company::removePassengerFromFlights(Passenger *passenger) {
 
 
 
-Technician* Company::technicianCreate() {
+void Company::technicianCreate() {
 	string foo;
 	string name, model;
 	int id;
@@ -1504,16 +1602,45 @@ Technician* Company::technicianCreate() {
 		else break;
 
 	} while (true);
-    //TODO adicionar possibilidade de ter mais que um modelo de aviao
+    //TODO @MALHEIRO adicionar possibilidade de ter mais que um modelo de aviao
 	trimString(model);
 
     vector <string> models;
     models.push_back(model);
 
 	Technician *newtechnician  = new Technician(id,name,models);
-	techs.push(newtechnician);
+	technicians.push(newtechnician);
 	techniciansChanged = true;
 	cout << "Technician successfully added\n";
-	return newtechnician;
 
+}
+
+priority_queue<Technician *> Company::getTechnicians() const {
+    return technicians;
+}
+
+void Company::printSummaryTechnician() const {
+    //TODO @MALHEIRO
+
+}
+
+
+void Company::technicianShow() {
+    //TODO @MALHEIRO
+}
+
+void Company::technicianDelete() {
+    //TODO @MALHEIRO
+}
+
+void Company::technicianUpdateName(Technician *technician) {
+//TODO @MALHEIRO
+}
+
+void Company::technicianAddModel(Technician *technician) {
+//TODO @MALHEIRO
+}
+
+void Company::technicianDeleteModel(Technician *technician) {
+//TODO @MALHEIRO
 }

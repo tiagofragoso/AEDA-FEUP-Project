@@ -18,8 +18,10 @@ void Application::setupMenus() {
     menuMain["1"] = &Application::filesMenu;
     menuMain["2"] = &Application::passengersMenu;
     menuMain["3"] = &Application::airplanesMenu;
-    menuMain["4"] = &Application::bookingsMenu;
-    menuMain["5"] = &Application::listsMenu;
+    menuMain["4"] = &Application::techniciansMenu;
+    menuMain["5"] = &Application::bookingsMenu;
+    menuMain["6"] = &Application::maintenanceMenu;
+    menuMain["7"] = &Application::listsMenu;
     menuMain["0"] = &Application::exitMenu;
 
     //files menu
@@ -37,20 +39,17 @@ void Application::setupMenus() {
     menuAirplanes["1"] = &Company::airplaneShow;
     menuAirplanes["2"] = &Company::airplaneCreate;
     menuAirplanes["3"] = &Company::airplaneDelete;
-    menuAirplanes["6"] = &Company::airplaneMaintenanceReschedule;
-    menuAirplanes["7"] = &Company::airplanePerformMaintenance;
 
     //lists menu
     menuLists["1"] = &Application::printListPassengers;
     menuLists["2"] = &Application::printListPassengers;
     menuLists["3"] = &Application::printListPassengers;
     menuLists["4"] = &Application::printListAirplane;
-    menuLists["5"] = &Application::printNextMaintenanceSessions;
+    menuLists["6"] = &Application::printListFlights;
     menuLists["7"] = &Application::printListFlights;
     menuLists["8"] = &Application::printListFlights;
     menuLists["9"] = &Application::printListFlights;
     menuLists["10"] = &Application::printListFlights;
-    menuLists["11"] = &Application::printListFlights;
 
     //flights menu
     menuFlights["1"] = &Company::flightShow;
@@ -76,6 +75,21 @@ void Application::setupMenus() {
     menuPassengersUpdate["3c"] = &Company::passengerUpdateJob;
     menuPassengersUpdate["4c"] = &Company::passengerUpdateNYear;
 
+    //maintenance menu
+    menuMaintenance["1"] = &Company::airplaneMaintenanceReschedule;
+    menuMaintenance["2"] = &Company::airplanePerformMaintenance;
+    menuMaintenance["3"] = &Company::printNextMaintenanceSessions;
+    menuMaintenance["4"] = &Company::printMaintenancePeriod;
+
+    //technicians menu
+    menuTechnicians["1"] = &Company::technicianShow;
+    menuTechnicians["2"] = &Company::technicianCreate;
+    menuTechnicians["3"] = &Company::technicianDelete;
+
+    //technicians update menu
+    menuTechnicianUpdate["1"] = &Company::technicianUpdateName;
+    menuTechnicianUpdate["2"] = &Company::technicianAddModel;
+    menuTechnicianUpdate["3"] = &Company::technicianDeleteModel;
 }
 
 void Application::printMainMenu() const {
@@ -84,8 +98,10 @@ void Application::printMainMenu() const {
     cout << "[1]- File management.\n";
     cout << "[2]- Passenger management.\n";
     cout << "[3]- Airplane management.\n";
-    cout << "[4]- Bookings.\n";
-    cout << "[5]- Lists.\n";
+    cout << "[4]- Technician management.\n";
+    cout << "[5]- Bookings.\n";
+    cout << "[6]- Maintenance.\n";
+    cout << "[7]- Lists.\n";
     cout << "[0]- Quit.\n\n";
 
 }
@@ -218,6 +234,36 @@ void Application::printPassengerUpdateMenu(Passenger *passenger) const {
     cout << "[9]- Back.\n\n";
 }
 
+void Application::printMaintenanceMenu() const {
+
+    cout << "[MAINTENANCE MENU]\n\n";
+    cout << "[1]- Reschedule maintenance session\n";
+    cout << "[2]- Perform maintenance session.\n";
+    cout << "[3]- Show next maintenance sessions.\n";
+    cout << "[4]- Show maintenance sessions in given period of time.\n";
+    cout << "[9]- Back.\n\n";
+}
+
+void Application::printTechniciansMenu() const {
+
+    cout << "[TECHNICIAN MENU]\n\n";
+    cout << "[1]- Show technician info.\n";
+    cout << "[2]- Create new technician.\n";
+    cout << "[3]- Delete technician.\n";
+    cout << "[4]- Update technician.\n";
+    cout << "[9]- Back.\n\n";
+}
+
+void Application::printTechniciansUpdateMenu(Technician * technician) const {
+    cout << "Technician selected: \n\n";
+    technician->print();
+    cout << "[TECHNICIAN UPDATE MENU]\n\n";
+    cout << "[1]- Change technician name.\n";
+    cout << "[2]- Add model.\n";
+    cout << "[3]- Delete model.\n";
+    cout << "[9]- Back.\n\n";
+}
+
 void Application::exitMenu() {
 
     saveChanges();
@@ -337,6 +383,36 @@ void Application::passengersMenu() {
         }
 
         (company.*menuPassengers[op])();
+        pause();
+
+    } while (true);
+}
+
+void Application::techniciansMenu() {
+
+    string op;
+
+    do {
+
+        printTechniciansMenu();
+
+        do {
+            cout << "Insert the desired option: ";
+            getline(cin, op);
+            if (op.empty() || menuTechnicians.find(op) == menuTechnicians.end()) {
+                if (op == "9") return;
+                if (op == "4") break;
+                cout << "Invalid option.\n";
+            } else break;
+
+        } while(true);
+
+        if (op == "4") {
+            technicianUpdateMenu();
+            continue;
+        }
+
+        (company.*menuTechnicians[op])();
         pause();
 
     } while (true);
@@ -476,36 +552,6 @@ void Application::printListAirplane(type t) {
 
         airplane->printSummary();
     }
-}
-
-void Application::printNextMaintenanceSessions(type t) {
-
-    if (company.getFleet().empty()) {
-
-        cout << "There are no airplanes.\n";
-        return;
-
-    }
-
-    cout << "Next maintenance sessions:\n";
-
-    for (auto a : company.getFleet()) {
-        cout << "Airplane " << a->getId() << " - ";
-        a->getMaintenance().print();
-        cout << endl;
-    }
-}
-
-void Application::printMaintenancePeriod(type t) {
-
-    if (company.getFleet().empty()) {
-
-        cout << "There are no airplanes.\n";
-        return;
-
-    }
-    
-    
 }
 
 void Application::printListFlights(type t) {
@@ -653,6 +699,27 @@ void Application::bookingsMenu() {
     } while (true);
 }
 
+void Application::maintenanceMenu() {
+
+    string op;
+
+    do {
+        printMaintenanceMenu();
+
+        do {
+            cout << "Insert the desired option: ";
+            getline(cin, op);
+            if (op.empty() || menuMaintenance.find(op) == menuMaintenance.end()) {
+                if (op == "9") return;
+                cout << "Invalid option.\n";
+            } else break;
+        } while (true);
+
+        (company.*menuMaintenance[op])();
+        pause();
+    } while (true);
+}
+
 
 void Application::passengerUpdateMenu() {
 
@@ -741,6 +808,47 @@ void Application::airplaneUpdateMenu() {
         pause();
 
     } while (true);
+}
+
+void Application::technicianUpdateMenu() {
+
+    if (company.getTechnicians().empty()) {
+        cout << "There are no technicians.\n";
+        return;
+    }
+
+    company.printSummaryTechnician();
+    string op;
+    Technician * technician;
+    do {
+        try {
+            technician = company.chooseTechnician();
+        }
+        catch (const InvalidTechnician &i) {
+            i.print();
+            continue;
+        }
+
+        break;
+
+    } while(true);
+
+    do {
+        printTechniciansUpdateMenu(technician);
+
+        do {
+            cout << "Insert the desired option: ";
+            getline(cin, op);
+            if (op.empty() || menuTechnicianUpdate.find(op) == menuTechnicianUpdate.end()) {
+                if (op == "9") return;
+                cout << "Invalid option.\n";
+            } else break;
+        } while (true);
+
+        (company.*menuTechnicianUpdate[op])(technician);
+        pause();
+
+    } while(true);
 }
 
 Airplane *Application::readAirplane(string &a) {

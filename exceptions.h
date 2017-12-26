@@ -107,6 +107,16 @@ public:
 
 };
 
+class InvalidTechnician {
+private:
+    unsigned int id;
+
+public:
+    InvalidTechnician(unsigned int id);
+    void print() const;
+    void printDuplicate() const;
+};
+
 class InvalidSeat {
 
 private:
@@ -150,6 +160,14 @@ public:
     /**
      * @brief  prints exception message
      */
+    void print() const;
+};
+
+class UnavailableTechnician {
+private:
+    string model;
+public:
+    UnavailableTechnician(string model);
     void print() const;
 };
 

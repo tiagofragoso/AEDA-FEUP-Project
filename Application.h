@@ -25,6 +25,8 @@ class Application {
 
     typedef void(Company::*companyFunctionPassenger)(Passenger *passenger);
 
+    typedef void(Company::*companyFunctionTechnician) (Technician *technician);
+
 
 private:
     Company company;
@@ -40,6 +42,9 @@ private:
     map<string, companyFunctionPassenger> menuBookings;
     map<string, companyFunctionAirplane> menuAirplaneUpdate;
     map<string, companyFunctionPassenger> menuPassengersUpdate;
+    map<string, companyFunction> menuMaintenance;
+    map<string, companyFunction> menuTechnicians;
+    map<string, companyFunctionTechnician> menuTechnicianUpdate;
 
 public:
     /**
@@ -79,10 +84,16 @@ public:
      */
     void flightsMenu();
 
+    void techniciansMenu();
+
+    void technicianUpdateMenu();
+
     /**
      * @brief Menu to manage bookings
      */
     void bookingsMenu();
+
+    void maintenanceMenu();
 
     /**
     * @brief Menu to manage Lists (sorted information)
@@ -124,6 +135,10 @@ public:
     */
     void printAirplanesMenu() const;
 
+    void printTechniciansMenu() const;
+
+    void printTechniciansUpdateMenu(Technician * technician) const;
+
     /**
     * @brief Prints the Sorted Listing menu
     */
@@ -138,6 +153,8 @@ public:
     * @brief Prints the Booking menu
     */
     void printBookingsMenu() const;
+
+    void printMaintenanceMenu() const;
 
     /**
     * @brief Prints the Menu that displays the options for updating the Airplane passed as argument
@@ -168,8 +185,6 @@ public:
     * @param t struct type t
     */
     void printListFlights(type t);
-    void printNextMaintenanceSessions(type t);
-    void printMaintenancePeriod(type t);
 
     /** @} end of Application Menu member-functions */
 

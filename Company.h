@@ -57,7 +57,7 @@ private:
      */
     vector<Flight *> flights;
 
-	priority_queue <Technician *> techs;
+	priority_queue <Technician *> technicians;
 
     /**
     * @brief bool passengersChanged is true when Passengers vector has changed and false otherwise
@@ -119,6 +119,8 @@ public:
     * @return vector <Passenger*> with the pointers to the Passengers of the company
     */
     vector<Passenger *> getPassengers() const;
+
+    priority_queue<Technician *> getTechnicians() const;
 
     /**
     * @brief Gets the flag that indicates wheather the vector Passengers changed
@@ -501,11 +503,22 @@ public:
     void removePassengerFromFlights(Passenger * passenger);
 
 
+    Technician* chooseTechnician(string model);
+    Technician* chooseTechnician();
 
+    void printNextMaintenanceSessions();
+    void printMaintenancePeriod();
 
 	//SEGUNDO PROJECTO
 
-	Technician* technicianCreate();
+	void technicianCreate();
+    void technicianShow();
+    void technicianDelete();
+    void technicianUpdateName(Technician *technician);
+    void technicianAddModel(Technician *technician);
+    void technicianDeleteModel(Technician *technician);
+
+    void printSummaryTechnician() const;
 	/*
 	void setTechs(priority_queue <Technician *> techs);
 	*/

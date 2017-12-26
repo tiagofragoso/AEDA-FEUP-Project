@@ -89,3 +89,25 @@ void InvalidFilePath::print() {
 }
 
 InvalidFilePath::InvalidFilePath(std::string type) : type(type) {}
+
+UnavailableTechnician::UnavailableTechnician(string model) : model(model) {}
+
+void UnavailableTechnician::print() const {
+    cout << "There is no available technician for " << model << " airplane model. Please reschedule maintenance session.\n";
+}
+
+InvalidTechnician::InvalidTechnician(unsigned int id) {
+    this->id = id;
+
+}
+
+void InvalidTechnician::print() const {
+
+    cout << id << "is an invalid technician id. Reenter.\n";
+
+}
+
+void InvalidTechnician::printDuplicate() const {
+
+    cout << "This technician already exists. Please insert another id or delete the technician.\n";
+}

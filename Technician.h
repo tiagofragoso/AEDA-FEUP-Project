@@ -15,17 +15,22 @@ private:
 	unsigned int id;
 	string name;
 	vector <string> models;
-	priority_queue <unsigned int> maintenances;
+	int timeUntillAvailable;
 
 public:
 	Technician(unsigned int id,string name, vector <string> model);
-	unsigned int getId();
-	string getName();
-	vector <string> getModels();
+	unsigned int getId() const;
+	string getName() const;
+	vector <string> getModels() const;
+    int getTimeUntilAvailable() const;
 
 	void setId(unsigned int id);
 	void setName(string name);
 	void setModels(vector <string> model);
+	void setTimeUntilAvailable(int time);
+    void updateTimeUntilAvailabel(int timePassed);
+	void print() const;
+	void printSummary() const;
 
 	bool operator<(const Technician &tech1) const;
 };
