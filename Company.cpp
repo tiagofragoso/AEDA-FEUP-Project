@@ -168,6 +168,7 @@ void Company::printMaintenancePeriod() {
     }
 
 
+
 }
 
 void Company::passengerShow() {
@@ -740,7 +741,7 @@ void Company::airplanePerformMaintenance() {
 
     } while (true);
 
-    Technician* tech;
+    Technician *tech;
 
     try {
         tech = chooseTechnician(airplane->getModel());
@@ -763,14 +764,15 @@ void Company::airplanePerformMaintenance() {
 
 }
 
-Technician* Company::chooseTechnician(string model) {
-    priority_queue<Technician*> temp;
+Technician *Company::chooseTechnician(string model) {
+    priority_queue<Technician *> temp;
     Technician *chosenTech;
     bool found = false;
 
-    while(!technicians.empty()) {
-        Technician* aux = technicians.top();
-        if (aux->getTimeUntilAvailable() == 0 && find(aux->getModels().begin(), aux->getModels().end(), model) != aux->getModels().end()) {
+    while (!technicians.empty()) {
+        Technician *aux = technicians.top();
+        if (aux->getTimeUntilAvailable() == 0 &&
+            find(aux->getModels().begin(), aux->getModels().end(), model) != aux->getModels().end()) {
             chosenTech = aux;
             technicians.pop();
             found = true;
@@ -780,7 +782,7 @@ Technician* Company::chooseTechnician(string model) {
         technicians.pop();
     }
 
-    while(!temp.empty()) {
+    while (!temp.empty()) {
         technicians.push(temp.top());
         temp.pop();
     }
@@ -969,7 +971,7 @@ void Company::bookFlightWithType(Passenger *p, string type) {
         flightAddPassenger(flight, p);
     else {
         flight->setBuyer(p);
-       // p->addBooking(new Booking(p, flight, "ALL"));
+        // p->addBooking(new Booking(p, flight, "ALL"));
         cout << "You have rented the flight " << id << ".\n";
     }
     flightsChanged = true;
@@ -1084,10 +1086,10 @@ Technician *Company::chooseTechnician() {
     } while (true);
 
     priority_queue<Technician *> temp;
-    Technician * aux;
+    Technician *aux;
     bool found = false;
 
-    while(!technicians.empty()) {
+    while (!technicians.empty()) {
         if (technicians.top()->getId() == tId) {
             aux = technicians.top();
             found = true;
@@ -1096,13 +1098,36 @@ Technician *Company::chooseTechnician() {
         technicians.pop();
     }
 
-    while(!temp.empty()) {
+    while (!temp.empty()) {
         technicians.push(temp.top());
         temp.pop();
     }
 
     if (!found) throw InvalidTechnician(tId);
     return aux;
+}
+
+void Company::validTechnician(int id) {
+
+    bool found = false;
+    priority_queue<Technician*> temp;
+    Technician *aux;
+
+    while (!technicians.empty()) {
+        if (technicians.top()->getId() == id) {
+            aux = technicians.top();
+            found = true;
+        }
+        temp.push(technicians.top());
+        technicians.pop();
+    }
+
+    while (!temp.empty()) {
+        technicians.push(temp.top());
+        temp.pop();
+    }
+
+    if (found) throw InvalidTechnician(id);
 }
 
 void Company::flightShow(Airplane *airplane) {
@@ -1572,46 +1597,55 @@ void Company::removePassengerFromFlights(Passenger *passenger) {
 }
 
 
-
 void Company::technicianCreate() {
-	string foo;
-	string name, model;
-	int id;
+    string foo;
+    string name, model;
+    int id;
 
     do {
-        cout << "id: ";
-        if (!validArg(id)) continue;
+        do {
+            cout << "id: ";
+            if (!validArg(id)) continue;
+            else break;
+
+        } while (true);
+
+        try {
+            validTechnician(id);
+        }
+        catch (const InvalidTechnician &i) {
+            i.printDuplicate();
+            continue;
+        }
+        break;
+
+    } while (true);
+
+    cout << "Insert the new technician information: \n\n";
+
+    do {
+        cout << "Name: ";
+        if (!validString(name)) continue;
         else break;
-        //TODO função para checkar se nao existe nenhum tecnico com o mesmo id
-    } while(true);
 
-	cout << "Insert the new technician information: \n\n";
+    } while (true);
 
+    do {
+        cout << "Model: ";
+        if (!validString(model)) continue;
+        else break;
 
-
-	do {
-		cout << "Name: ";
-		if (!validString(name)) continue;
-		else break;
-
-	} while (true);
-
-	do {
-		cout << "Model: ";
-		if (!validString(model)) continue;
-		else break;
-
-	} while (true);
+    } while (true);
     //TODO @MALHEIRO adicionar possibilidade de ter mais que um modelo de aviao
-	trimString(model);
+    trimString(model);
 
-    vector <string> models;
+    vector<string> models;
     models.push_back(model);
 
-	Technician *newtechnician  = new Technician(id,name,models);
-	technicians.push(newtechnician);
-	techniciansChanged = true;
-	cout << "Technician successfully added\n";
+    Technician *newtechnician = new Technician(id, name, models);
+    technicians.push(newtechnician);
+    techniciansChanged = true;
+    cout << "Technician successfully added\n";
 
 }
 
@@ -1644,3 +1678,4 @@ void Company::technicianAddModel(Technician *technician) {
 void Company::technicianDeleteModel(Technician *technician) {
 //TODO @MALHEIRO
 }
+

@@ -505,6 +505,7 @@ public:
 
     Technician* chooseTechnician(string model);
     Technician* chooseTechnician();
+    void validTechnician(int id);
 
     void printNextMaintenanceSessions();
     void printMaintenancePeriod();

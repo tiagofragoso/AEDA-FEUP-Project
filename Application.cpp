@@ -174,14 +174,12 @@ void Application::printListsMenu() const {
     cout << "[3]- Passengers by age.\n\n";
     cout << "Airplane lists.\n\n";
     cout << "[4]- Airplanes by id.\n";
-    cout << "[5]- Next maintenance sessions.\n";
-    cout << "[6]- Maintenance session in a period of time.\n\n";
     cout << "Flights lists.\n\n";
-    cout << "[7]- Flights by id.\n";
-    cout << "[8]- Flights by price (low to high).\n";
-    cout << "[9]- Flights by price (high to low).\n";
-    cout << "[10]- Flights by destination.\n";
-    cout << "[11]- Flights by time to flight.\n\n";
+    cout << "[5]- Flights by id.\n";
+    cout << "[6]- Flights by price (low to high).\n";
+    cout << "[7]- Flights by price (high to low).\n";
+    cout << "[8]- Flights by destination.\n";
+    cout << "[9]- Flights by time to flight.\n\n";
     cout << "[0]- Back.\n\n";
 }
 
