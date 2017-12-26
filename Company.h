@@ -520,6 +520,7 @@ public:
     void technicianDeleteModel(Technician *technician);
 
     void printSummaryTechnician() const;
+
 	/*
 	void setTechs(priority_queue <Technician *> techs);
 	*/

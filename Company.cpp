@@ -167,8 +167,76 @@ void Company::printMaintenancePeriod() {
 
     }
 
+    string date1, date2;
+    Date d1, d2;
 
+    do {
+        cout << "First day: (DD/MM/YYYY): ";
+        if (!validString(date1)) continue;
+        if (date1.length() < 8) {
+            cout << "Insert date DD/MM/YYYY format.\n";
+            continue;
+        }
+        try {
+            string dob = date1;
+            next(d1.day, dob, "/");
+            next(d1.month, dob, "/");
+            next(d1.year, dob, "/");
+        }
+        catch (InvalidFormat i) {
+            cout << "Insert date of birth using DD/MM/YYYY format.\n";
+            continue;
+        }
+        break;
 
+    } while (true);
+
+    do {
+        cout << "Last day: (DD/MM/YYYY): ";
+        if (!validString(date2)) continue;
+        if (date1.length() < 8) {
+            cout << "Insert date DD/MM/YYYY format.\n";
+            continue;
+        }
+        try {
+            string dob = date2;
+            next(d2.day, dob, "/");
+            next(d2.month, dob, "/");
+            next(d2.year, dob, "/");
+        }
+        catch (InvalidFormat i) {
+            cout << "Insert date of birth using DD/MM/YYYY format.\n";
+            continue;
+        }
+        break;
+
+    } while (true);
+
+    vector<pair<int, Date> > maintenance;
+
+    for (auto const &a : fleet) {
+        Date date = a->getMaintenance();
+
+        while(date < d2) {
+
+            if (d1 < date && date < d2) {
+                maintenance.push_back(make_pair(a->getId(), date));
+            }
+
+            addTime(date, a->getMaintenancePeriod());
+
+        }
+
+    }
+
+    sort(maintenance.begin(), maintenance.end(), compMaintenance);
+
+    for (auto &m : maintenance) {
+
+        cout << "Aiplane " << m.first << " - ";
+        m.second.print();
+        cout << endl;
+    }
 }
 
 void Company::passengerShow() {
@@ -759,7 +827,8 @@ void Company::airplanePerformMaintenance() {
     airplane->setMaintenance(date);
     addObject(airplane);
     airplanesChanged = true;
-    cout << "Maintenance session .\n";
+    cout << "Maintenance session started sucesscfully. Finished in 5 hours\n";
+    cout << "Technician: Id-" << tech->getId() << " Name-" << tech->getName() << endl;
     cout << "Next maintenance session is scheduled to " << date.day << "/" << date.month << "/" << date.year << endl;
 
 }

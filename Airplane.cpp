@@ -159,3 +159,7 @@ bool compAId(Airplane *a1, Airplane *a2) {
     return (a1->getId() < a2->getId());
 }
 
+bool compMaintenance(pair<int, Date> d1, pair<int, Date> d2) {
+    return d1.second < d2.second;
+}
+

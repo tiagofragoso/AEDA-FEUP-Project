@@ -141,4 +141,6 @@ public:
  * @return returns true if a1's id is less than a2's id
  */
 bool compAId(Airplane *a1, Airplane *a2);
+
+bool compMaintenance(pair<int, Date> d1, pair<int, Date> d2);
 #endif //AEDA_FEUP_PROJECT_AIRPLANE_H
