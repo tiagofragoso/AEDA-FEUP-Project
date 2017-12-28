@@ -1,5 +1,6 @@
 #include "Company.h"
 #include "Application.h"
+#include <queue>
 
 bool Company::passengersChanged = false;
 bool Company::airplanesChanged = false;
@@ -1700,18 +1701,25 @@ void Company::technicianCreate() {
     } while (true);
 
     do {
-        cout << "Model: ";
+        cout << "Models (seperated between commas ','): ";
         if (!validString(model)) continue;
         else break;
 
     } while (true);
-    //TODO @MALHEIRO adicionar possibilidade de ter mais que um modelo de aviao
-    trimString(model);
 
-    vector<string> models;
-    models.push_back(model);
+	trimString(model);
+	vector<string> models_v;
+	string st;
 
-    Technician *newtechnician = new Technician(id, name, models);
+	while (true) {
+		if (model.find(",") != model.npos) {
+			next(st, model, ",");
+			models_v.push_back(st);
+		}
+		else { break; }
+	}
+
+    Technician *newtechnician = new Technician(id, name, models_v);
     technicians.push(newtechnician);
     techniciansChanged = true;
     cout << "Technician successfully added\n";
@@ -1723,28 +1731,172 @@ priority_queue<Technician *> Company::getTechnicians() const {
 }
 
 void Company::printSummaryTechnician() const {
-    //TODO @MALHEIRO
+	
+	if (technicians.size() == 0) {
+		cout << "There are no technicians.\n";
+		return;
+	}
+	cout << "TECHNICIAN SUMMARY\n\n";
 
+	cout << std::left;
+	cout << setw(12) << "Technician ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13)
+		<< "Models \n";
+	priority_queue <Technician *> techs = technicians;
+
+	while (techs.size() != 0) {
+		techs.top()->printSummary();
+		techs.pop();
+		cout << endl;
+	}
 }
 
 
 void Company::technicianShow() {
-    //TODO @MALHEIRO
+	
+	if (technicians.size() == 0) {
+		cout << "There are no technicians.\n";
+		return;
+	}
+
+	printSummaryTechnician();
+	string foo;
+	Technician *technician;
+	do {
+		do {
+			cout << "Do you wish to view detailed information about a technician (Y/N)?: ";
+			if (!validString(foo)) continue;
+			else break;
+
+		} while (true);
+
+		normalize(foo);
+		if (foo == "y") {
+			cout << endl;
+			do {
+				try {
+					technician = chooseTechnician();
+				}
+				catch (const InvalidTechnician &i) {
+					i.print();
+					continue;
+				}
+
+				technician->print();
+				break;
+
+			} while (true);
+
+		}
+		else if (foo == "n") break;
+		else {
+			cout << "Invalid option. Reenter." << endl;
+		}
+	} while (true);
+	cout << endl;
+}
+void Company::techRemovefromQueue(Technician * tech) {
+
+	priority_queue <Technician *> techs = technicians;
+
+	while (technicians.size() != 0) {
+		if (technicians.top() == tech) {
+			technicians.pop();
+		}
+			techs.push(technicians.top());
+			technicians.pop();
+	}
+
+	while (techs.size() != 0) {
+		technicians.push(techs.top());
+		techs.pop();
+	}
 }
 
 void Company::technicianDelete() {
-    //TODO @MALHEIRO
+    
+	if (technicians.size() == 0) {
+		cout << "There are no technicians.\n";
+		return;
+	}
+
+	printSummaryTechnician();
+	Technician *technician;
+	do {
+		try {
+			technician = chooseTechnician();
+		}
+		catch (const InvalidTechnician &i) {
+			i.print();
+			continue;
+		}
+		break;
+
+	} while (true);
+
+
+	techRemovefromQueue(technician);
+	cout << "Technician deleted sucessfully.\n ";
+	techniciansChanged = true;
+
 }
 
 void Company::technicianUpdateName(Technician *technician) {
-//TODO @MALHEIRO
+
+	string newName;
+	cout << "The current name for the chosen technician is '" << technician->getName() << "'.\n";
+
+	do {
+		cout << "Insert new name: ";
+		if (!validString(newName)) continue;
+		else break;
+
+	} while (true);
+	technician->setName(newName);
+	techniciansChanged = true;
+	cout << "Technician name updated successfully.\n";
 }
 
 void Company::technicianAddModel(Technician *technician) {
-//TODO @MALHEIRO
+
+	string newModel;
+
+	do {
+		cout << "Insert new model: ";
+		if (!validString(newModel)) continue;
+		else break;
+
+	} while (true);
+
+	vector <string> models = technician->getModels();
+	models.push_back(newModel);
+	technician->setModels(models);
+	techniciansChanged = true;
+	cout << "Technician new model added successfully.\n";
+
 }
 
 void Company::technicianDeleteModel(Technician *technician) {
-//TODO @MALHEIRO
+
+	string model;
+
+	do {
+		cout << "Insert the model you wish to remove: ";
+		if (!validString(model)) continue;
+		else break;
+
+	} while (true);
+
+	vector <string> models = technician->getModels();
+	
+	for (int i = 0; i < models.size(); i++)
+	{
+		if (models.at(i) == model) {
+			models.erase(models.begin() + i);
+			techniciansChanged = true;
+			cout << "Technician model removed successfully.\n";
+			return;
+		}
+	}
+	
 }
 

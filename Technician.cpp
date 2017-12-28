@@ -1,4 +1,6 @@
 #include "Technician.h"
+#include <iomanip>
+#include <string>
 
 Technician::Technician(unsigned int id,string name, vector<string> models) {
 	this->id = id;
@@ -53,14 +55,31 @@ bool Technician::operator<(const Technician &tech1) const {
 	return (timeUntillAvailable < tech1.getTimeUntilAvailable());
 }
 
+bool Technician::operator=(const Technician &tech1) const {
+	return (id == tech1.getId());
+}
+
 void Technician::setTimeUntilAvailable(int time) {
 	timeUntillAvailable = time;
 }
 
 void Technician::print() const {
-	//TODO @MALHEIRO
+	cout << "Id: " << id << endl << "Name: " << name << endl << "Model: ";
+	for (int i = 0; i < models.size() ; i++)
+	{
+		cout << models.at(i) << " , ";
+	}
+	cout << endl;
 }
 
 void Technician::printSummary() const {
-	//TODO @MALHEIRO
+	
+	cout << std::left;
+	cout << setw(12) << id << setw(3) << " " << setw(30) << name << setw(3) << " ";
+	
+	for (int i = 0; i < models.size(); i++)
+	{
+		cout << setw(30) << models.at(i) << setw(3) << " " ;
+	}
+	cout << endl;
 }

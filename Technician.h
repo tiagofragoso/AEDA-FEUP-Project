@@ -33,6 +33,7 @@ public:
 	void printSummary() const;
 
 	bool operator<(const Technician &tech1) const;
+	bool operator=(const Technician &tech1) const;
 };
 
 #endif //AEDA_FEUP_PROJECT_TECHNICIAN_H

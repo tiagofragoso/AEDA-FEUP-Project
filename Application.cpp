@@ -1058,7 +1058,7 @@ Flight *Application::readFlight(string &f) {
 Technician *Application::readTechnician(string &p) {
 	Technician *newTechnician;
 
-	/*
+	p = p.substr(1);
 	int temp;
 	try { next(temp, p, ";"); }
 	catch (InvalidFormat) {
@@ -1087,13 +1087,7 @@ Technician *Application::readTechnician(string &p) {
 	}
 
 	newTechnician->setModels(models_v);
-	string a_id;
 
-	while (p != "") {
-		next(st, p, ";");
-		next(a_id ,st, ",");
-	}
-	*/
 	return newTechnician;
 }
 Passenger *Application::readPassenger(string &p) {

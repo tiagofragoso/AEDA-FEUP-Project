@@ -512,6 +512,8 @@ public:
 
 	//SEGUNDO PROJECTO
 
+	void techRemovefromQueue(Technician * tech);
+
 	void technicianCreate();
     void technicianShow();
     void technicianDelete();
