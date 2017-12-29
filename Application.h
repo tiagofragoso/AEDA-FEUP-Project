@@ -240,6 +240,7 @@ public:
     */
     void saveAllFiles();
     void saveFile(string &path, AirplanesSet fleet);
+	void safeFile(string &path, priority_queue <Technician *> techs);
 
     /**
     *@ brief Manages saving of the changes in a file, informing the user if changes were made

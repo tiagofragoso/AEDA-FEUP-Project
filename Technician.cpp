@@ -59,6 +59,17 @@ bool Technician::operator=(const Technician &tech1) const {
 	return (id == tech1.getId());
 }
 
+ostream &operator<< (ostream &o, const Technician *t) {
+	o << to_string(t->id) << "; " << t->name << "; ";
+	if (!t->models.empty()) {
+		for (int i = 0; i < t->models.size(); i++)
+		{
+			o << t->models.at(i);
+			if (i != t->models.size() - 1) o << ", ";
+		}
+	} else o << "no_models";
+	return o;
+}
 void Technician::setTimeUntilAvailable(int time) {
 	timeUntillAvailable = time;
 }

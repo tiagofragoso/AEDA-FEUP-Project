@@ -1236,6 +1236,19 @@ void Application::saveFile(string &path, AirplanesSet fleet) {
     }
     file.close();
 }
+void Application::safeFile(string &path, priority_queue <Technician *> techs) {
+	ofstream file(path);
+
+	if (!file) throw InvalidFilePath("fail");
+	while (!techs.empty()) {
+		file << techs.top();
+		techs.pop();
+		if (techs.size() == 0)
+			file << endl;
+	}
+	file.close();
+
+}
 
 void Application::saveAllFiles() {
     if (company.getAirplanesChanged()) {

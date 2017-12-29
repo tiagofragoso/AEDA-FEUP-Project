@@ -34,6 +34,7 @@ public:
 
 	bool operator<(const Technician &tech1) const;
 	bool operator=(const Technician &tech1) const;
+	friend ostream &operator<<(ostream &o, const Technician *t);
 };
 
 #endif //AEDA_FEUP_PROJECT_TECHNICIAN_H
