@@ -42,7 +42,10 @@ AirplanesSet Company::getFleet() const {
 vector<Passenger *> Company::getPassengers() const {
     return this->passengers;
 }
+bool Company::getTechniciansChanged() const{
 
+    return this->techniciansChanged;
+}
 bool Company::getPassengersChanged() const {
 
     return this->passengersChanged;
@@ -1902,5 +1905,12 @@ void Company::technicianDeleteModel(Technician *technician) {
 
 void Company::addObject(Technician *technician){
     this->technicians.push(technician);
+}
+
+ void Company::setFlag(){
+    airplanesChanged=false;
+    flightsChanged=false;
+    passengersChanged=false;
+    techniciansChanged=false;
 }
 

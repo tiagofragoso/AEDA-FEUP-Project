@@ -124,6 +124,8 @@ public:
 
     priority_queue<Technician *> getTechnicians() const;
 
+    bool getTechniciansChanged() const;
+
     /**
     * @brief Gets the flag that indicates wheather the vector Passengers changed
     * @return true if the Passengers vector has changed or false otherwise
@@ -525,6 +527,8 @@ public:
 
     void printSummaryTechnician() const;
     void addObject(Technician *technician);
+
+    void setFlag();
 
 
 	/*

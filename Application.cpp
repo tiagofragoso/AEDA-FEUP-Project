@@ -336,11 +336,13 @@ void Application::filesMenu() {
     } while (true);
 
 }
-
+void Application::resetFlags() {
+    this->company.setFlag();
+}
 void Application::saveChanges() {
 
     char auxOp;
-    if (company.getPassengersChanged() || company.getAirplanesChanged() || company.getFlightsChanged()) {
+    if (company.getPassengersChanged() || company.getAirplanesChanged() || company.getFlightsChanged() || company.getTechniciansChanged()) {
         cout << "There are changes to be deployed to the files.\n";
         do {
             cout << "Would you like to save those changes (Y/N) ? ";
@@ -348,6 +350,7 @@ void Application::saveChanges() {
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 if (auxOp == 'Y' || auxOp == 'y') {
                     saveAllFiles();
+                    resetFlags();
                     pause();
                     break;
                 } else {
@@ -359,7 +362,7 @@ void Application::saveChanges() {
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
         } while (true);
-    }
+    } else {cout << "There are no changes to be deployed\n";}
 }
 
 void Application::passengersMenu() {
@@ -1271,18 +1274,17 @@ void Application::saveFile(string &path, AirplanesSet fleet) {
     }
     file.close();
 }
-void Application::safeFile(string &path, priority_queue <Technician *> techs) {
+void Application::saveFile(string &path, priority_queue <Technician *> techs) {
 	ofstream file(path);
 
 	if (!file) throw InvalidFilePath("fail");
 	while (!techs.empty()) {
 		file << techs.top();
 		techs.pop();
-		if (techs.size() == 0)
+		if (techs.size() != 0)
 			file << endl;
 	}
 	file.close();
-
 }
 
 void Application::saveAllFiles() {
@@ -1308,6 +1310,13 @@ void Application::saveAllFiles() {
 
         try { saveFile(passengersFilepath, this->company.getPassengers()); } catch (InvalidFilePath &in) { in.print(); }
 
+    }
+
+    if (company.getTechniciansChanged()){
+
+        if(techniciansFilepath.empty()) techniciansFilepath = inputFilePath(Company::TECHNICIAN_IDENTIFIER);
+
+        try { saveFile(techniciansFilepath, this->company.getTechnicians()); } catch (InvalidFilePath &in) {in.print(); }
     }
 
     cout << "All changes were saved.\n";
