@@ -1082,6 +1082,9 @@ Technician *Application::readTechnician(string &p) {
 
 	next(st, p, ";");
 	newTechnician->setName(st);
+
+    models_v.clear();
+
 	while (true) {
 		if (p.find(",") != p.npos) {
 			next(models, p, ",");
