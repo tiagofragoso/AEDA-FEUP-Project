@@ -33,6 +33,7 @@ private:
     string passengersFilepath;
     string airplanesFilepath;
     string flightsFilepath;
+    string techniciansFilepath;
     map<string, appFunction> menuMain;
     map<string, appFunction> menuFiles;
     map<string, companyFunction> menuPassengers;
@@ -272,6 +273,7 @@ public:
 	//2 projeto
 
 	Technician* readTechnician(string &p);
+    void loadTechnicianFile();
 
 };
 

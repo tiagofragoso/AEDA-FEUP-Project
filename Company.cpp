@@ -10,6 +10,7 @@ bool Company::techniciansChanged = false;
 const string Company::AIRPLANE_IDENTIFIER = "airplane";
 const string Company::FLIGHT_IDENTIFIER = "flight";
 const string Company::PASSENGER_IDENTIFIER = "passenger";
+const string Company::TECHNICIAN_IDENTIFIER = "technician";
 
 Company::Company() {
 
@@ -1897,6 +1898,9 @@ void Company::technicianDeleteModel(Technician *technician) {
 			return;
 		}
 	}
-	
+}
+
+void Company::addObject(Technician *technician){
+    this->technicians.push(technician);
 }
 

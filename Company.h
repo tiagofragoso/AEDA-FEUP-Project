@@ -101,6 +101,8 @@ public:
     */
     static const string PASSENGER_IDENTIFIER;
 
+    static const string TECHNICIAN_IDENTIFIER;
+
     //get methods
     /**
     * @brief Used to get the name of a company
@@ -522,6 +524,8 @@ public:
     void technicianDeleteModel(Technician *technician);
 
     void printSummaryTechnician() const;
+    void addObject(Technician *technician);
+
 
 	/*
 	void setTechs(priority_queue <Technician *> techs);

@@ -9,6 +9,7 @@ Application::Application() {
     passengersFilepath = "";
     airplanesFilepath = "";
     flightsFilepath = "";
+    techniciansFilepath = "";
 
 }
 
@@ -28,7 +29,8 @@ void Application::setupMenus() {
     menuFiles["1"] = &Application::loadPassengerFile;
     menuFiles["2"] = &Application::loadFlightFile;
     menuFiles["3"] = &Application::loadAirplaneFile;
-    menuFiles["4"] = &Application::saveChanges;
+    menuFiles["4"] = &Application::loadTechnicianFile;
+    menuFiles["5"] = &Application::saveChanges;
 
     //passengers Menu
     menuPassengers["1"] = &Company::passengerShow;
@@ -135,7 +137,14 @@ void Application::printFilesMenu() const {
         cout << "('" << airplanesFilepath << "' loaded).";
     }
     cout << endl;
-    cout << "[4]- Save all changes to files.\n";
+    cout << "[4]- Load technician file ";
+    if (techniciansFilepath.empty()) {
+        cout << "(No file loaded).";
+    } else {
+        cout << "('" << techniciansFilepath << "' loaded).";
+    }
+    cout << endl;
+    cout << "[5]- Save all changes to files.\n";
     cout << "[9]- Back.\n\n";
 
 }
@@ -1056,9 +1065,9 @@ Flight *Application::readFlight(string &f) {
     return newFlight;
 }
 Technician *Application::readTechnician(string &p) {
-	Technician *newTechnician;
+    vector <string> models_v;
+	Technician *newTechnician = new Technician(0,"",models_v);
 
-	p = p.substr(1);
 	int temp;
 	try { next(temp, p, ";"); }
 	catch (InvalidFormat) {
@@ -1070,20 +1079,18 @@ Technician *Application::readTechnician(string &p) {
 
 	string st;
 	string models;
-	vector <string> models_v;
 
 	next(st, p, ";");
-
 	newTechnician->setName(st);
-
-	next(st, p, ";");
-
 	while (true) {
-		if (st.find(",") != st.npos) {
-			next(models, st, ",");
-			models_v.push_back(models);
+		if (p.find(",") != p.npos) {
+			next(models, p, ",");
+            models_v.push_back(models);
 		} 
-		else { break; }
+		else {
+            p.substr(0,p.npos);
+            models_v.push_back(p);
+            break; }
 	}
 
 	newTechnician->setModels(models_v);
@@ -1143,7 +1150,32 @@ string Application::inputFilePath(string s) {
     getline(cin, input);
     return input;
 }
+void Application::loadTechnicianFile() {
 
+    string f;
+
+    techniciansFilepath = inputFilePath(Company::TECHNICIAN_IDENTIFIER);
+
+    if (techniciansFilepath == "") throw InvalidFilePath("empty");
+
+    ifstream flFile(techniciansFilepath);
+    if (!flFile) {
+        techniciansFilepath.clear();
+        throw InvalidFilePath("fail");
+    }
+    this->company.clearData(Company::TECHNICIAN_IDENTIFIER);
+    while (getline(flFile, f)) {
+        if (f.empty()) continue;
+        Technician *technician = readTechnician(f);
+        if (technician != nullptr) this->company.addObject(technician);
+    }
+
+    flFile.close();
+    //Sort or not to sort TODO: @SPOLIS dúvida
+
+    cout << "File successfully loaded.\n";
+
+}
 void Application::loadFlightFile() {
 
     string f;
