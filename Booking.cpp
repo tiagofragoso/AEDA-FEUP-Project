@@ -4,7 +4,7 @@
 
 #include "Booking.h"
 
-Booking::Booking(Flight *flight, string seat): flight(flight), seat(seat), state(ACTIVE) {}
+Booking::Booking(Passenger * passenger, Flight *flight, string seat): passenger(passenger), flight(flight), seat(seat)  {}
 
 
 Flight *Booking::getFlight() {
@@ -15,14 +15,6 @@ string Booking::getSeat() {
     return this->seat;
 }
 
-void Booking::completeBokking() {
-    this->state = COMPLETED;
-}
-
-void Booking::cancelBooking() {
-    this->state = CANCELED;
-}
-
-booking_state_t Booking::getState() {
-    return this->state;
+Passenger * Booking::getPassenger() {
+    return this->passenger;
 }

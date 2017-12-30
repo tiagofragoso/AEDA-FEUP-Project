@@ -17,6 +17,8 @@
 #include "Technician.h"
 #include <queue>
 #include <cmath>
+#include <unordered_set>
+#include <utility>
 
 using namespace std;
 
@@ -31,6 +33,18 @@ struct AirplaneCompare {
 };
 
 typedef std::set<Airplane *, AirplaneCompare> AirplanesSet;
+
+struct InactivePassengerHash {
+     int operator() (const Passenger * p1) const {
+        return static_cast<int>(hash<int>()(p1->getId()));
+    }
+
+    bool operator() (const Passenger * p1, const Passenger * p2) const{
+        return p1->getId() == p2->getId();
+    }
+};
+
+typedef unordered_set<Passenger *, InactivePassengerHash, InactivePassengerHash> inactivePassengers;
 
 /**
 *	The Company class is the one that countains all the passengers, airplanes and flights information
@@ -57,7 +71,13 @@ private:
      */
     vector<Flight *> flights;
 
+    vector<Flight *> pastFlights;
+
 	priority_queue <Technician *> technicians;
+
+    vector<Booking *> bookings;
+
+    vector<Booking *> pastBookings;
 
     /**
     * @brief bool passengersChanged is true when Passengers vector has changed and false otherwise
@@ -73,6 +93,8 @@ private:
     static bool flightsChanged;
 
 	static bool techniciansChanged;
+
+    static bool bookingsChanged;
 
 
 public:
