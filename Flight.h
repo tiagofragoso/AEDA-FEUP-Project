@@ -1,11 +1,11 @@
 #ifndef AEDA_FEUP_PROJECT_FLIGHT_H
 #define AEDA_FEUP_PROJECT_FLIGHT_H
 
-#include "Passenger.h"
 #include <iostream>
 #include <string>
 #include <vector>
 #include <map>
+#include "Passenger.h"
 
 
 using namespace std;

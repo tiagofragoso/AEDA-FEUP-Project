@@ -5,26 +5,22 @@
 #ifndef AEDA_FEUP_PROJECT_BOOKING_H
 #define AEDA_FEUP_PROJECT_BOOKING_H
 
+#include "Passenger.h"
 #include "Flight.h"
-#include "Airplane.h"
-
-typedef enum {ACTIVE ,COMPLETED, CANCELED} booking_state_t;
 
 
 class Booking {
 
 private:
+    Passenger * passenger;
     Flight * flight;
     string seat;
-    booking_state_t state;
 public:
     Booking(){}
-    Booking(Flight* flight, string seat);
+    Booking(Passenger * passenger, Flight* flight, string seat);
+    Passenger * getPassenger();
     Flight * getFlight();
     string getSeat();
-    booking_state_t getState();
-    void completeBokking();
-    void cancelBooking();
 };
 
 

@@ -17,8 +17,6 @@ private:
     unsigned int phoneNumber;
     string name;
     string dateOfBirth;
-    //vector<Booking *> activeBookings;
-    //vector<Booking *> pastBookings;
 public:
     /**
      * @brief Default Constructor of a Passenger object
