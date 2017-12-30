@@ -551,6 +551,8 @@ public:
     void addObject(Technician *technician);
 
     void setFlag();
+    unsigned int getNextBookingId();
+
 
 
 	/*
