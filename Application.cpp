@@ -9,6 +9,7 @@ Application::Application() {
     passengersFilepath = "";
     airplanesFilepath = "";
     flightsFilepath = "";
+    techniciansFilepath = "";
 
 }
 
@@ -28,7 +29,8 @@ void Application::setupMenus() {
     menuFiles["1"] = &Application::loadPassengerFile;
     menuFiles["2"] = &Application::loadFlightFile;
     menuFiles["3"] = &Application::loadAirplaneFile;
-    menuFiles["4"] = &Application::saveChanges;
+    menuFiles["4"] = &Application::loadTechnicianFile;
+    menuFiles["5"] = &Application::saveChanges;
 
     //passengers Menu
     menuPassengers["1"] = &Company::passengerShow;
@@ -135,7 +137,14 @@ void Application::printFilesMenu() const {
         cout << "('" << airplanesFilepath << "' loaded).";
     }
     cout << endl;
-    cout << "[4]- Save all changes to files.\n";
+    cout << "[4]- Load technician file ";
+    if (techniciansFilepath.empty()) {
+        cout << "(No file loaded).";
+    } else {
+        cout << "('" << techniciansFilepath << "' loaded).";
+    }
+    cout << endl;
+    cout << "[5]- Save all changes to files.\n";
     cout << "[9]- Back.\n\n";
 
 }
@@ -327,11 +336,13 @@ void Application::filesMenu() {
     } while (true);
 
 }
-
+void Application::resetFlags() {
+    this->company.setFlag();
+}
 void Application::saveChanges() {
 
     char auxOp;
-    if (company.getPassengersChanged() || company.getAirplanesChanged() || company.getFlightsChanged()) {
+    if (company.getPassengersChanged() || company.getAirplanesChanged() || company.getFlightsChanged() || company.getTechniciansChanged()) {
         cout << "There are changes to be deployed to the files.\n";
         do {
             cout << "Would you like to save those changes (Y/N) ? ";
@@ -339,6 +350,7 @@ void Application::saveChanges() {
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 if (auxOp == 'Y' || auxOp == 'y') {
                     saveAllFiles();
+                    resetFlags();
                     pause();
                     break;
                 } else {
@@ -350,7 +362,7 @@ void Application::saveChanges() {
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
         } while (true);
-    }
+    } else {cout << "There are no changes to be deployed\n";}
 }
 
 void Application::passengersMenu() {
@@ -1056,9 +1068,9 @@ Flight *Application::readFlight(string &f) {
     return newFlight;
 }
 Technician *Application::readTechnician(string &p) {
-	Technician *newTechnician;
+    vector <string> models_v;
+	Technician *newTechnician = new Technician(0,"",models_v);
 
-	/*
 	int temp;
 	try { next(temp, p, ";"); }
 	catch (InvalidFormat) {
@@ -1070,30 +1082,25 @@ Technician *Application::readTechnician(string &p) {
 
 	string st;
 	string models;
-	vector <string> models_v;
 
 	next(st, p, ";");
-
 	newTechnician->setName(st);
 
-	next(st, p, ";");
+    models_v.clear();
 
 	while (true) {
-		if (st.find(",") != st.npos) {
-			next(models, st, ",");
-			models_v.push_back(models);
+		if (p.find(",") != p.npos) {
+			next(models, p, ",");
+            models_v.push_back(models);
 		} 
-		else { break; }
+		else {
+            p.substr(0,p.npos);
+            models_v.push_back(p);
+            break; }
 	}
 
 	newTechnician->setModels(models_v);
-	string a_id;
 
-	while (p != "") {
-		next(st, p, ";");
-		next(a_id ,st, ",");
-	}
-	*/
 	return newTechnician;
 }
 Passenger *Application::readPassenger(string &p) {
@@ -1149,7 +1156,32 @@ string Application::inputFilePath(string s) {
     getline(cin, input);
     return input;
 }
+void Application::loadTechnicianFile() {
 
+    string f;
+
+    techniciansFilepath = inputFilePath(Company::TECHNICIAN_IDENTIFIER);
+
+    if (techniciansFilepath == "") throw InvalidFilePath("empty");
+
+    ifstream flFile(techniciansFilepath);
+    if (!flFile) {
+        techniciansFilepath.clear();
+        throw InvalidFilePath("fail");
+    }
+    this->company.clearData(Company::TECHNICIAN_IDENTIFIER);
+    while (getline(flFile, f)) {
+        if (f.empty()) continue;
+        Technician *technician = readTechnician(f);
+        if (technician != nullptr) this->company.addObject(technician);
+    }
+
+    flFile.close();
+    //Sort or not to sort TODO: @SPOLIS dúvida
+
+    cout << "File successfully loaded.\n";
+
+}
 void Application::loadFlightFile() {
 
     string f;
@@ -1242,6 +1274,18 @@ void Application::saveFile(string &path, AirplanesSet fleet) {
     }
     file.close();
 }
+void Application::saveFile(string &path, priority_queue <Technician *> techs) {
+	ofstream file(path);
+
+	if (!file) throw InvalidFilePath("fail");
+	while (!techs.empty()) {
+		file << techs.top();
+		techs.pop();
+		if (techs.size() != 0)
+			file << endl;
+	}
+	file.close();
+}
 
 void Application::saveAllFiles() {
     if (company.getAirplanesChanged()) {
@@ -1266,6 +1310,13 @@ void Application::saveAllFiles() {
 
         try { saveFile(passengersFilepath, this->company.getPassengers()); } catch (InvalidFilePath &in) { in.print(); }
 
+    }
+
+    if (company.getTechniciansChanged()){
+
+        if(techniciansFilepath.empty()) techniciansFilepath = inputFilePath(Company::TECHNICIAN_IDENTIFIER);
+
+        try { saveFile(techniciansFilepath, this->company.getTechnicians()); } catch (InvalidFilePath &in) {in.print(); }
     }
 
     cout << "All changes were saved.\n";

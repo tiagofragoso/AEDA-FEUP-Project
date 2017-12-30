@@ -33,6 +33,7 @@ private:
     string passengersFilepath;
     string airplanesFilepath;
     string flightsFilepath;
+    string techniciansFilepath;
     map<string, appFunction> menuMain;
     map<string, appFunction> menuFiles;
     map<string, companyFunction> menuPassengers;
@@ -240,6 +241,7 @@ public:
     */
     void saveAllFiles();
     void saveFile(string &path, AirplanesSet fleet);
+	void saveFile(string &path, priority_queue <Technician *> techs);
 
     /**
     *@ brief Manages saving of the changes in a file, informing the user if changes were made
@@ -271,6 +273,9 @@ public:
 	//2 projeto
 
 	Technician* readTechnician(string &p);
+    void loadTechnicianFile();
+
+    void resetFlags();
 
 };
 

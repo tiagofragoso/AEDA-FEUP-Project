@@ -123,6 +123,8 @@ public:
     */
     static const string PASSENGER_IDENTIFIER;
 
+    static const string TECHNICIAN_IDENTIFIER;
+
     //get methods
     /**
     * @brief Used to get the name of a company
@@ -143,6 +145,8 @@ public:
     vector<Passenger *> getPassengers() const;
 
     priority_queue<Technician *> getTechnicians() const;
+
+    bool getTechniciansChanged() const;
 
     /**
     * @brief Gets the flag that indicates wheather the vector Passengers changed
@@ -534,6 +538,8 @@ public:
 
 	//SEGUNDO PROJECTO
 
+	void techRemovefromQueue(Technician * tech);
+
 	void technicianCreate();
     void technicianShow();
     void technicianDelete();
@@ -542,6 +548,10 @@ public:
     void technicianDeleteModel(Technician *technician);
 
     void printSummaryTechnician() const;
+    void addObject(Technician *technician);
+
+    void setFlag();
+
 
 	/*
 	void setTechs(priority_queue <Technician *> techs);

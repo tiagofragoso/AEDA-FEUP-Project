@@ -126,7 +126,7 @@ public:
     void addFlight(Flight *flight);
 
     /**
-     * @brief overload of the operator << for obejcts of class Airplane
+     * @brief overload of the operator << for objects of class Airplane
      * @param o ostream o&
      * @param a Airplane * a
      * @return ostream&
