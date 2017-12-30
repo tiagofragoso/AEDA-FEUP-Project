@@ -47,11 +47,11 @@ void Application::setupMenus() {
     menuLists["2"] = &Application::printListPassengers;
     menuLists["3"] = &Application::printListPassengers;
     menuLists["4"] = &Application::printListAirplane;
+    menuLists["5"] = &Application::printListFlights;
     menuLists["6"] = &Application::printListFlights;
     menuLists["7"] = &Application::printListFlights;
     menuLists["8"] = &Application::printListFlights;
     menuLists["9"] = &Application::printListFlights;
-    menuLists["10"] = &Application::printListFlights;
 
     //flights menu
     menuFlights["1"] = &Company::flightShow;
@@ -169,8 +169,6 @@ void Application::printAirplanesMenu() const {
     cout << "[3]- Delete airplane.\n";
     cout << "[4]- Update airplane.\n";
     cout << "[5]- Flights management.\n";
-    cout << "[6]- Reschedule next maintenance.\n";
-    cout << "[7]- Perform maintenance session.\n";
     cout << "[9]- Back.\n\n";
 }
 
