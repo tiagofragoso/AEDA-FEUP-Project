@@ -12,6 +12,7 @@ const string Company::FLIGHT_IDENTIFIER = "flight";
 const string Company::PASSENGER_IDENTIFIER = "passenger";
 const string Company::TECHNICIAN_IDENTIFIER = "technician";
 
+
 Company::Company() {
 
     name = "";
@@ -188,7 +189,7 @@ void Company::printMaintenancePeriod() {
             next(d1.month, dob, "/");
             next(d1.year, dob, "/");
         }
-        catch (InvalidFormat i) {
+        catch (InvalidFormat &i) {
             cout << "Insert date of birth using DD/MM/YYYY format.\n";
             continue;
         }
@@ -209,7 +210,7 @@ void Company::printMaintenancePeriod() {
             next(d2.month, dob, "/");
             next(d2.year, dob, "/");
         }
-        catch (InvalidFormat i) {
+        catch (InvalidFormat &i) {
             cout << "Insert date of birth using DD/MM/YYYY format.\n";
             continue;
         }
@@ -399,7 +400,7 @@ Passenger *Company::passengerCreate() {
 
 void Company::passengerDelete() {
 
-    if (passengers.size() == 0) {
+    if (passengers.empty()) {
         cout << "There are no passengers.\n";
         return;
     }
@@ -459,7 +460,7 @@ void Company::passengerUpdateDateOfBirth(Passenger *passenger) {
             next(m, dob, "/");
             next(y, dob, "/");
         }
-        catch (InvalidFormat i) {
+        catch (InvalidFormat &i) {
             cout << "Insert date of birth using DD/MM/YYYY format.\n";
             continue;
         }
@@ -832,7 +833,7 @@ void Company::airplanePerformMaintenance() {
     airplane->setMaintenance(date);
     addObject(airplane);
     airplanesChanged = true;
-    cout << "Maintenance session started sucesscfully. Finished in 5 hours\n";
+    cout << "Maintenance session started successfully. Finished in 5 hours\n";
     cout << "Technician: Id-" << tech->getId() << " Name-" << tech->getName() << endl;
     cout << "Next maintenance session is scheduled to " << date.day << "/" << date.month << "/" << date.year << endl;
 
@@ -1045,7 +1046,7 @@ void Company::bookFlightWithType(Passenger *p, string type) {
         flightAddPassenger(flight, p);
     else {
         flight->setBuyer(p);
-        // p->addBooking(new Booking(p, flight, "ALL"));
+        bookings.push_back(new Booking(getNextBookingId(), p, flight, "ALL"));
         cout << "You have rented the flight " << id << ".\n";
     }
     flightsChanged = true;
@@ -1062,9 +1063,15 @@ void Company::returnTicket(Passenger *p) {
         else if (id >= 1 && id <= v.size()) break;
         cout << "Invalid input. Reenter.\n";
     } while (true);
+    id--;
+    auto selectedTicket = v.at(id);
 
-    pair<string, Flight *> selectedTicket = static_cast<pair<string, Flight *> &&>(v.at(id - 1));
-
+    for (auto bit = bookings.begin(); bit != bookings.end(); bit++){
+        if ((*bit)->getSeat() == selectedTicket.first && (*bit)->getFlight()->getId() == selectedTicket.second->getId()) {
+            bookings.erase(bit);
+            break;
+        }
+    }
 
     if (selectedTicket.second->getType() == "c") {
 
@@ -1535,7 +1542,7 @@ void Company::flightAddPassenger(Flight *flight, Passenger *passenger) {
 
     } while (true);
     flight->addPassenger(seat, passenger);
-    //passenger->addBooking(new Booking(passenger, flight, seat));
+    bookings.push_back(new Booking(getNextBookingId(), passenger, flight, seat));
     cout << "Booking for seat " << seat << " on flight " << flight->getId() << " successful.\n";
     flightsChanged = true;
 }
@@ -1543,7 +1550,7 @@ void Company::flightAddPassenger(Flight *flight, Passenger *passenger) {
 vector<pair<string, Flight *> > Company::getTickets(Passenger *p) {
     vector<pair<string, Flight *> > tickets;
 
-    for (auto const &f: flights) {
+    /*for (auto const &f: flights) {
         if (f->getType() == "c")
             for (auto const &pass: f->getPassengers()) {
                 if (pass.second->getId() == p->getId()) tickets.emplace_back(pass.first, f);
@@ -1552,7 +1559,9 @@ vector<pair<string, Flight *> > Company::getTickets(Passenger *p) {
             if (f->getBuyer() != nullptr)
                 if (*(f->getBuyer()) == *p) tickets.emplace_back("ALL", f);
         }
-    }
+    }*/
+
+    for_each(bookings.begin(), bookings.end(), [p, &tickets](Booking * b) { if (b->getPassenger()->getId() == p->getId()) tickets.emplace_back(b->getSeat(), b->getFlight());});
 
     return tickets;
 
@@ -1917,3 +1926,16 @@ void Company::addObject(Technician *technician){
     techniciansChanged=false;
 }
 
+unsigned int Company::getNextBookingId(){
+    unsigned int id = 0;
+    if (!bookings.empty()){
+        size_t idx = bookings.size() - 1;
+        id = bookings.at(idx)->getId() + 1;
+    }
+    if (!pastBookings.empty()){
+        size_t idx = pastBookings.size() - 1;
+        unsigned int newId = pastBookings.at(idx)->getId();
+        if (newId >= id) id = newId + 1;
+    }
+    return id;
+}

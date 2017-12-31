@@ -12,15 +12,17 @@
 class Booking {
 
 private:
+    unsigned int id;
     Passenger * passenger;
     Flight * flight;
     string seat;
 public:
     Booking(){}
-    Booking(Passenger * passenger, Flight* flight, string seat);
+    Booking(unsigned int id, Passenger * passenger, Flight* flight, string seat);
     Passenger * getPassenger();
     Flight * getFlight();
     string getSeat();
+    unsigned int getId();
 };
 
 

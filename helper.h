@@ -13,13 +13,11 @@ enum type {
     PNAME = 2,     /*!< Passengers by name */
     PAGE = 3,      /*!< Passengers by age */
     AID = 4,       /*!< Airplanes by ID */
-    ANM = 5,
-    APM = 6,
-    FID = 7,       /*!< Flights by ID */
-    FPRICEL = 8,   /*!< Flights based on Price(lowest to highest) */
-    FPRICEH = 9,   /*!< Flights based on Price(highest to lowest) */
-    FDEST = 10,     /*!< Flights by Destination city */
-    FTIME = 11      /*!< Flights by the time remaining to the time of the flight */
+    FID = 5,       /*!< Flights by ID */
+    FPRICEL = 6,   /*!< Flights based on Price(lowest to highest) */
+    FPRICEH = 7,   /*!< Flights based on Price(highest to lowest) */
+    FDEST = 8,     /*!< Flights by Destination city */
+    FTIME = 9      /*!< Flights by the time remaining to the time of the flight */
 };
 
 struct Date {
