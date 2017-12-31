@@ -8,6 +8,7 @@
 #include <string>
 #include <algorithm>
 #include <utility>
+#include "helper.h"
 #include "Company.h"
 
 
@@ -48,6 +49,7 @@ private:
     map<string, companyFunctionTechnician> menuTechnicianUpdate;
 
 public:
+    static Date currentDate;
     /**
      * @brief Default constructor of an Application object
      */

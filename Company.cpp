@@ -78,15 +78,9 @@ void Company::setPassengers(vector<Passenger *> passengers) {
 
 void Company::removePassenger(Passenger *passenger) {
 
-    int i = 0;
+    auto it = find(passengers.begin(), passengers.end(), passenger);
+    if (it != passengers.end()) passengers.erase(it);
 
-    for (auto &p : passengers) {
-
-        if (*p == *passenger) {
-            passengers.erase(passengers.begin() + i);
-        }
-        i++;
-    }
 }
 
 void Company::removeAirplane(Airplane *airplane) {
@@ -226,10 +220,10 @@ void Company::printMaintenancePeriod() {
         while(date < d2) {
 
             if (d1 < date && date < d2) {
-                maintenance.push_back(make_pair(a->getId(), date));
+                maintenance.emplace_back(a->getId(), date);
             }
-
-            addTime(date, a->getMaintenancePeriod());
+            date = date + a->getMaintenancePeriod();
+            //addTime(date, a->getMaintenancePeriod());
 
         }
 
@@ -303,6 +297,7 @@ Passenger *Company::passengerCreate() {
 
     string foo;
     string name, dateOfBirth, job;
+    Date dobd;
     int id;
 
     while (true) {
@@ -361,11 +356,10 @@ Passenger *Company::passengerCreate() {
             continue;
         }
         try {
-            int d, m, y;
             string dob = dateOfBirth;
-            next(d, dob, "/");
-            next(m, dob, "/");
-            next(y, dob, "/");
+            next(dobd.day, dob, "/");
+            next(dobd.month, dob, "/");
+            next(dobd.year, dob, "/");
         }
         catch (InvalidFormat i) {
             cout << "Insert date of birth using DD/MM/YYYY format.\n";
@@ -377,7 +371,7 @@ Passenger *Company::passengerCreate() {
 
     Passenger *newpassenger;
 
-    if (foo == "n") newpassenger = new Passenger(id, name, dateOfBirth);
+    if (foo == "n") newpassenger = new Passenger(id, name, dobd);
     else if (foo == "c") {
 
         do {
@@ -388,7 +382,7 @@ Passenger *Company::passengerCreate() {
         } while (true);
         trimString(job);
 
-        newpassenger = new PassengerWithCard(id, name, dateOfBirth, job, 0);
+        newpassenger = new PassengerWithCard(id, name, dobd, job, 0);
     }
     addObject(newpassenger);
     sortPassengers();
@@ -445,7 +439,10 @@ void Company::passengerUpdateName(Passenger *passenger) {
 void Company::passengerUpdateDateOfBirth(Passenger *passenger) {
 
     string newDateOfBirth;
-    cout << "The current date of birth for the chosen passenger is '" << passenger->getDateOfBirth() << "'.\n";
+    Date dobd;
+    cout << "The current date of birth for the chosen passenger is '";
+    passenger->getDateOfBirth().print();
+    cout << "'.\n";
     do {
         cout << "Insert the new date of birth (DD/MM/YYYY): ";
         if (!validString(newDateOfBirth)) continue;
@@ -454,11 +451,10 @@ void Company::passengerUpdateDateOfBirth(Passenger *passenger) {
             continue;
         }
         try {
-            int d, m, y;
             string dob = newDateOfBirth;
-            next(d, dob, "/");
-            next(m, dob, "/");
-            next(y, dob, "/");
+            next(dobd.day, dob, "/");
+            next(dobd.month, dob, "/");
+            next(dobd.year, dob, "/");
         }
         catch (InvalidFormat &i) {
             cout << "Insert date of birth using DD/MM/YYYY format.\n";
@@ -467,7 +463,7 @@ void Company::passengerUpdateDateOfBirth(Passenger *passenger) {
         break;
 
     } while (true);
-    passenger->setDateOfBirth(newDateOfBirth);
+    passenger->setDateOfBirth(dobd);
     passengersChanged = true;
     cout << "Passenger date of birth updated successfully.\n";
 }
@@ -688,8 +684,10 @@ void Company::airplaneCreate() {
     dateMaintenance.year = year;
     dateMaintenance.month = month;
     dateMaintenance.day = day;
+    Date mp;
+    mp.day = period;
 
-    Airplane *newairplane = new Airplane(id, model, capacity, dateMaintenance, period);
+    Airplane *newairplane = new Airplane(id, model, capacity, dateMaintenance, mp);
     addObject(newairplane);
     cout << "Airplane successfully added\n";
     airplanesChanged = true;
@@ -829,7 +827,8 @@ void Company::airplanePerformMaintenance() {
     technicians.push(tech);
     removeAirplane(airplane);
     Date date = airplane->getMaintenance();
-    addTime(date, airplane->getMaintenancePeriod());
+    date = date + airplane->getMaintenancePeriod();
+    //addTime(date, airplane->getMaintenancePeriod());
     airplane->setMaintenance(date);
     addObject(airplane);
     airplanesChanged = true;
@@ -913,13 +912,14 @@ void Company::airplaneUpdateMaintenancePeriod(Airplane *airplane) {
 
     int newPeriod;
     cout << "The current period between maintenance sessions for the chosen airplane is '"
-         << airplane->getMaintenancePeriod() << "'.\n";
+         << airplane->getMaintenancePeriod().day << "'.\n";
     do {
         cout << "Insert the new period: ";
         if (validArg(newPeriod)) break;
     } while (true);
-
-    airplane->setMaintenancePeriod(newPeriod);
+    Date mp;
+    mp.day = newPeriod;
+    airplane->setMaintenancePeriod(mp);
     airplanesChanged = true;
     cout << "Airplane maintenance period updated successfully.\n";
 }
@@ -946,11 +946,14 @@ void Company::bookFlight(Passenger *p) {
 
 float Company::ticketPrice(Passenger *p, Flight *f, string type) {
     float price;
+    Date priceDropDate;
+    priceDropDate.hour = 48;
+    priceDropDate.normalize();
     if (p->getType() == "c") {
         if (type == "r") {
             price = f->getBasePrice() * (100 - p->getCard()->getAvgYrFlights()) / 100;
         } else {
-            if (f->getPassengers().size() < f->getCapacity() && f->getTime_to_flight() < 48) {
+            if (f->getPassengers().size() < f->getCapacity() && f->getTimeToFlight() < priceDropDate) {
                 price = 0.9 * f->getBasePrice() * (100 - p->getCard()->getAvgYrFlights()) / 100;
             } else {
                 price = f->getBasePrice() * (100 - p->getCard()->getAvgYrFlights()) / 100;
@@ -962,7 +965,7 @@ float Company::ticketPrice(Passenger *p, Flight *f, string type) {
             price = f->getBasePrice();
         }
         if (type == "c") {
-            if (f->getPassengers().size() < f->getCapacity() && f->getTime_to_flight() < 48) {
+            if (f->getPassengers().size() < f->getCapacity() && f->getTimeToFlight() < priceDropDate) {
                 price = 0.9 * f->getBasePrice();
 
             } else {
@@ -1004,8 +1007,9 @@ void Company::printFlightsByType(Passenger *p, string type, vector<Flight *> &fv
         for (auto const &fl: fvector) {
             cout << std::left;
             cout << setw(9) << fl->getId() << setw(3) << " " << setw(15) << fl->getDeparture() << setw(3) << " "
-                 << setw(15) << fl->getDestination() << setw(3) << " " << setw(18)
-                 << to_string(fl->getTime_to_flight()) + "h" << setw(3) << " " << setw(10) << std::fixed
+                 << setw(15) << fl->getDestination() << setw(3) << " " << setw(18);
+                 fl->getDate().printFullDate();
+                 cout << setw(3) << " " << setw(10) << std::fixed
                  << setprecision(2) << ticketPrice(p, fl, type);
             if (type == "c")
                 cout << std::left << setw(3) << " " << setw(20)
@@ -1109,7 +1113,9 @@ void Company::showAllTickets(Passenger *passenger, bool idx) {
             cout << setw(9) << to_string(t.second->getId()) << setw(3) << " " << setw(4) << t.first << setw(3) << " "
                  << setw(15) << t.second->getDeparture() << setw(3) << " " << setw(15) << t.second->getDestination()
                  << setw(3)
-                 << " " << "Flight in " << to_string(t.second->getTime_to_flight()) << "h" << endl;
+                 << " " << "Flight in ";
+            t.second->getDate().printFullDate();
+                 cout << endl;
             i++;
         }
     } else cout << "Selected passenger has no booked tickets.\n";
@@ -1334,18 +1340,20 @@ void Company::flightCreate(Airplane *airplane) {
         cout << "Base price (in euros): ";
         if (validArg(price)) break;
     } while (true);
-
+    //TODO
     do {
-        cout << "Time to flight (h): ";
+        cout << "Date (DD/MM/YY-hh:mm): ";
         if (validArg(time_to_flight)) break;
     } while (true);
 
+    Date d1, d2;
+
     if (foo == "r") {
 
-        flight = new RentedFlight(id, departure, destination, time_to_flight, price, duration, nullptr);
+        flight = new RentedFlight(id, departure, destination, d1, price, d2, nullptr);
 
     } else
-        flight = new CommercialFlight(id, departure, destination, time_to_flight, price, duration);
+        flight = new CommercialFlight(id, departure, destination, d1, price, d2);
 
     flight->setCapacity(airplane->getCapacity());
 
@@ -1523,12 +1531,14 @@ void Company::flightAddPassenger(Flight *flight, Passenger *passenger) {
     cout << "Available seats: \n";
 
     seats = availableSeats(flight, capacity);
-    printSeats(capacity, seats);
 
     if (seats.empty()) {
         cout << "There are no available seats.\n";
         return;
     }
+
+    printSeats(capacity, seats);
+
     do {
         try {
             seat = chooseSeat(seats);
@@ -1653,19 +1663,27 @@ void Company::printRestrictions(Airplane *airplane) {
         auto it = airplane->getFlights().begin();
         cout
                 << "For efficiency purposes, the airplane will never fly empty. Therefore, we must apply some restrictions to flight creation.\n";
-        cout << "The plane should be ready to take off from " << (*it)->getDeparture() << " in "
-             << to_string((*it)->getTime_to_flight()) << "h and it should"
-                     " be ready to take off from " << (*it)->getDestination() << "in "
-             << to_string((*it)->getTime_to_flight() + (*it)->getDuration()) << "h.\n";
+        cout << "The plane should be ready to take off from " << (*it)->getDeparture() << " in ";
+        (*it)->getDate().printFullDate();
+             cout << "h and it should"
+                     " be ready to take off from " << (*it)->getDestination() << "in ";
+                Date final = (*it)->getDate() + (*it)->getDuration();
+                final.normalize();
+                final.printFullDate();
+                cout << "\n";
     } else {
         auto first = airplane->getFlights().begin();
         auto last = first + (airplane->getFlights().size() - 1);
         cout
                 << "For efficiency purposes, the airplane will never fly empty. Therefore, we must apply some restrictions to flight creation.\n";
-        cout << "The plane should be ready to take off from " << (*first)->getDeparture() << " in "
-             << to_string((*first)->getTime_to_flight()) << "h and it should"
-                     " be ready to take off from " << (*last)->getDestination() << " in "
-             << to_string((*last)->getTime_to_flight() + (*last)->getDuration()) << "h.\n";
+        cout << "The plane should be ready to take off from " << (*first)->getDeparture() << " in ";
+            (*first)->getDate().printFullDate();
+                cout << "h and it should"
+                     " be ready to take off from " << (*last)->getDestination() << " in ";
+                Date final = (*last)->getDate() + (*last)->getDuration();
+                final.normalize();
+                final.printFullDate();
+                cout << "\n";
     }
 }
 
@@ -1935,4 +1953,29 @@ unsigned int Company::getNextBookingId(){
         if (newId >= id) id = newId + 1;
     }
     return id;
+}
+
+void Company::addBooking(Booking *booking) {
+    bookings.push_back(booking);
+}
+
+void Company::addBookingsFromFlight(Flight * flight) {
+    if (flight->getType() == "c"){
+        auto pm = flight->getPassengers();
+        if (!pm.empty()){
+            for (auto const &b: pm) this->addBooking(new Booking(getNextBookingId(), b.second, flight, b.first));
+
+        }
+    } else {
+        if (flight->getBuyer() != nullptr) this->addBooking(new Booking(getNextBookingId(), flight->getBuyer(), flight, "ALL"));
+    }
+}
+
+void Company::addInactivePassenger(Passenger *passenger) {
+    inactivePassengers.insert(passenger);
+}
+
+void Company::removeInactivePassenger(Passenger *passenger) {
+    auto it = inactivePassengers.find(passenger);
+    if (it != inactivePassengers.end()) inactivePassengers.erase(it);
 }

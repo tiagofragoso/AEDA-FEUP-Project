@@ -121,3 +121,34 @@ void addTime(Date &date, int days) {
         }
     }
 }
+
+
+void Date::normalize() {
+    while (this->minute > 59) {
+        this->minute -= 60;
+        this->hour++;
+    }
+    while (this->hour > 23) {
+        this->hour -= 24;
+        this->day++;
+    }
+    while (this->day > monthdays[this->month]) {
+        this->day -= monthdays[this->month];
+        this->month++;
+    }
+    while (this->month > 12){
+        this->month -= 12;
+        this->year++;
+    }
+
+}
+
+int Date::convertToMinutes() const{
+    int t = this->minute;
+    t += this->hour*60;
+    t += this->day *24*60;
+    for (int i = 1; i <= this->month; i++) t += monthdays[i]*24*60;
+    t += this->year * 525600;
+    return t;
+
+}

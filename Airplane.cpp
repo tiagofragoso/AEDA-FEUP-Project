@@ -3,12 +3,12 @@
 
 Airplane::Airplane() {}
 
-Airplane::Airplane(unsigned int id, string model, unsigned int capacity, vector<Flight *> flights, Date maintenance, int maintenancePeriod) : id(id),
+Airplane::Airplane(unsigned int id, string model, unsigned int capacity, vector<Flight *> flights, Date maintenance, Date maintenancePeriod) : id(id),
                                                                                                      model(model),
                                                                                                      capacity(capacity),
                                                                                                      flights(flights), maintenance(maintenance), maintenancePeriod(maintenancePeriod) {}
 
-Airplane::Airplane(unsigned int id, string model, unsigned int capacity, Date maintenance, int maintenancePeriod) {
+Airplane::Airplane(unsigned int id, string model, unsigned int capacity, Date maintenance, Date maintenancePeriod) {
 
     this->id = id;
     this->model = model;
@@ -39,7 +39,7 @@ Date Airplane::getMaintenance() const {
     return this->maintenance;
 }
 
-int Airplane::getMaintenancePeriod() const {
+Date Airplane::getMaintenancePeriod() const {
     return this->maintenancePeriod;
 }
 
@@ -70,7 +70,7 @@ void Airplane::setMaintenance(Date maintenance) {
     this->maintenance = maintenance;
 }
 
-void Airplane::setMaintenancePeriod(int maintenancePeriod) {
+void Airplane::setMaintenancePeriod(Date maintenancePeriod) {
     this->maintenancePeriod = maintenancePeriod;
 }
 
@@ -85,7 +85,7 @@ void Airplane::print() const {
     cout << "Model: " << model << endl;
     cout << "Capacity: " << capacity << endl;
     cout << "Next maintenance date: " << maintenance.day << "/" << maintenance.month << "/" << maintenance.year << endl;
-    cout << "Maintenance period: " << maintenancePeriod << endl;
+    cout << "Maintenance period: " << maintenancePeriod.day << endl;
 
 }
 
@@ -123,7 +123,7 @@ void Airplane::addFlight(Flight *flight) {
     Flight *elem1 = flights.at(0);
     Flight *lelem = flights.at(flights.size() - 1);
 
-    if ((flight->getTime_to_flight() + flight->getDuration()) < elem1->getTime_to_flight() &&
+    if ((flight->getDate() + flight->getDuration()) < elem1->getDate() &&
         flight->getDestination() == elem1->getDeparture()) {
 
 
@@ -131,7 +131,7 @@ void Airplane::addFlight(Flight *flight) {
         return;
     }
 
-    if (flight->getTime_to_flight() > (lelem->getTime_to_flight() + lelem->getDuration()) &&
+    if (flight->getDate() > (lelem->getDate() + lelem->getDuration()) &&
         flight->getDeparture() == lelem->getDestination()) {
 
         flights.push_back(flight);
@@ -144,7 +144,7 @@ void Airplane::addFlight(Flight *flight) {
 ostream &operator<<(ostream &o, const Airplane *a) {
     o << to_string(a->id) << "; " << a->model << "; " << to_string(a->capacity) << "; ";
     o << a->getMaintenance().day << "/" << a->getMaintenance().month << "/" << a->getMaintenance().year << "; ";
-    o << a->getMaintenancePeriod() << "; ";
+    o << a->getMaintenancePeriod().day << "; ";
     if (!a->flights.empty()) {
         for (size_t i = 0; i < a->flights.size(); i++) {
             o << to_string(a->flights.at(i)->getId());

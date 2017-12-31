@@ -1,9 +1,10 @@
 #include "Flight.h"
+#include "Application.h"
 #include <iomanip>
 
-Flight::Flight(unsigned int id, string departure, string destination, unsigned int time_to_flight,
-               unsigned int basePrice, unsigned int duration) : id(id), departure(departure),
-                                                                destination(destination), timeToFlight(time_to_flight),
+Flight::Flight(unsigned int id, string departure, string destination, Date date,
+               unsigned int basePrice, Date duration) : id(id), departure(departure),
+                                                                destination(destination), date(date),
                                                                 basePrice(basePrice), duration(duration) {}
 
 string Flight::getDeparture() const {
@@ -14,15 +15,11 @@ string Flight::getDestination() const {
     return this->destination;
 }
 
-unsigned int Flight::getTime_to_flight() const {
-    return this->timeToFlight;
-}
-
 unsigned int Flight::getBasePrice() const {
     return this->basePrice;
 }
 
-unsigned int Flight::getDuration() const {
+Date Flight::getDuration() const {
     return this->duration;
 }
 
@@ -38,29 +35,33 @@ void Flight::setDestination(string destination) {
     this->destination = destination;
 }
 
-void Flight::setTime_to_flight(unsigned int time_to_flight) {
-    this->timeToFlight = time_to_flight;
+void Flight::setDate(Date date) {
+    this->date = date;
 }
 
 void Flight::setBasePrice(unsigned int basePrice) {
     this->basePrice = basePrice;
 }
 
-void Flight::setDuration(unsigned int duration) {
+void Flight::setDuration(Date duration) {
     this->duration = duration;
 }
 
 void Flight::printSummary() const {
 
     cout << setw(9) << id << setw(3) << " " << setw(15) << departure << setw(3) << " " << setw(15) << destination
-         << setw(3) << " " << setw(14) << timeToFlight << endl;
+         << setw(3) << " " << setw(14);
+    this->getDate().printFullDate();
+    cout << endl;
 
 }
 
 void Flight::printList() const {
 
     cout << setw(9) << id << setw(3) << " " << setw(15) << departure << setw(3) << " " << setw(15) << destination
-         << setw(3) << " " << setw(18) << timeToFlight << setw(3) << " " << setw(9) << basePrice << endl;
+         << setw(3) << " ";
+    this->getDate().printFullDate();
+     cout << setw(3) << " " << setw(9) << basePrice << endl;
 }
 
 void Flight::print() const {
@@ -68,9 +69,13 @@ void Flight::print() const {
     cout << "Id: " << id << endl;
     cout << "Departure: " << departure << endl;
     cout << "Destination: " << destination << endl;
-    cout << "Time to flight: " << timeToFlight << "h" << endl;
+    cout << "Date:  ";
+    this->getDate().printFullDate();
+    cout << endl;
     cout << "Base Price: " << basePrice << "€" << endl;
-    cout << "Flight duration: " << duration << endl;
+    cout << "Flight duration: ";
+    this->getDuration().printTime();
+    cout << endl;
 }
 
 unsigned int Flight::getId() const {
@@ -83,7 +88,7 @@ bool Flight::operator==(const Flight &f) {
 
 bool Flight::operator<(const Flight &f) {
 
-    return (timeToFlight < f.getTime_to_flight());
+    return (this->date < f.getDate());
 }
 
 void Flight::setId(unsigned int id) {
@@ -92,7 +97,7 @@ void Flight::setId(unsigned int id) {
 
 ostream &operator<<(ostream &o, Flight *f) {
     o << f->getType() << to_string(f->id) << "; " << f->departure << "; " << f->destination << "; "
-      << to_string(f->timeToFlight) << "; " << to_string(f->basePrice) << "; " << to_string(f->duration) << "; ";
+      << f->getDate().hour << ":" << f->getDate().minute << "; " << to_string(f->basePrice) << "; " << f->getDuration().hour << ":" << f->getDuration().minute << "; ";
     if (f->getType() == "c") {
         unsigned int i = f->getPassengers().size();
         if (i > 0) {
@@ -114,15 +119,26 @@ void Flight::setCapacity(unsigned int capacity) {
     this->capacity = capacity;
 }
 
-RentedFlight::RentedFlight() : Flight(0, "", "", 0, 0, 0) {
-
-    buyer = new Passenger;
+Date Flight::getDate() const {
+    return this->date;
 }
 
-RentedFlight::RentedFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight,
-                           unsigned int basePrice, unsigned int duration, Passenger *buyer) : Flight(id, departure,
+Date Flight::getTimeToFlight() {
+    return this->getDate() - Application::currentDate;
+}
+
+Flight::Flight() : id(0), departure(""), destination(""), basePrice(0){
+    Date d1;
+    date = d1;
+    duration = d1;
+}
+
+RentedFlight::RentedFlight() : Flight(), buyer(nullptr){}
+
+RentedFlight::RentedFlight(unsigned int id, string departure, string destination, Date date,
+                           unsigned int basePrice, Date duration, Passenger * buyer) : Flight(id, departure,
                                                                                                      destination,
-                                                                                                     time_to_flight,
+                                                                                                     date,
                                                                                                      basePrice,
                                                                                                      duration),
                                                                                               buyer(buyer) {}
@@ -160,14 +176,14 @@ void RentedFlight::removePassenger(Passenger *passenger) {
         setBuyer(nullptr);
 }
 
-CommercialFlight::CommercialFlight() : Flight(0, "", "", 0, 0, 0) {
-    PassengerMap p;
-    passengers = p;
+CommercialFlight::CommercialFlight() : Flight()  {
+    PassengerMap * passengers = new PassengerMap;
+    this->passengers = *passengers;
 }
 
-CommercialFlight::CommercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight,
-                                   unsigned int basePrice, unsigned int duration, PassengerMap passengers)
-        : Flight(id, departure, destination, time_to_flight, basePrice, duration), passengers(passengers) {}
+CommercialFlight::CommercialFlight(unsigned int id, string departure, string destination, Date date,
+                                   unsigned int basePrice,Date duration, PassengerMap passengers)
+        : Flight(id, departure, destination, date, basePrice, duration), passengers(passengers) {}
 
 
 PassengerMap &CommercialFlight::getPassengers() {
@@ -212,13 +228,13 @@ void CommercialFlight::print() const {
 
 }
 
-CommercialFlight::CommercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight,
-                                   unsigned int basePrice, unsigned int duration) : Flight(id, departure, destination,
-                                                                                           time_to_flight, basePrice,
+CommercialFlight::CommercialFlight(unsigned int id, string departure, string destination, Date date,
+                                   unsigned int basePrice, Date duration) : Flight(id, departure, destination,
+                                                                                           date, basePrice,
                                                                                            duration) {
 
-    PassengerMap passengers;
-    this->passengers = passengers;
+    PassengerMap * passengers = new PassengerMap;
+    this->passengers = *passengers;
 }
 
 void CommercialFlight::addPassenger(string seat, Passenger *passenger) {
@@ -256,7 +272,7 @@ bool compFPriceH(Flight *f1, Flight *f2) {
 
 bool compFTime(Flight *f1, Flight *f2) {
 
-    return f1->getTime_to_flight() < f2->getTime_to_flight();
+    return f1->getDate() < f2->getDate();
 }
 
 bool compFDest(Flight *f1, Flight *f2) {

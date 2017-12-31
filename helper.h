@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iomanip>
 
 using namespace std;
 /*! enum class used on the listing menu */
@@ -20,18 +21,73 @@ enum type {
     FTIME = 9      /*!< Flights by the time remaining to the time of the flight */
 };
 
+static vector<int> monthdays = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
 struct Date {
-    int day;
-    int month;
-    int year;
+    int day = 0;
+    int month = 0;
+    int year = 0;
+    int hour = 0;
+    int minute = 0;
     bool operator<(const Date& d1) const
     {
-        return std::tie(year, month, day) < std::tie(d1.year, d1.month, d1.day);
+        return std::tie(year, month, day, hour, minute) < std::tie(d1.year, d1.month, d1.day, hour, minute);
+    }
+    bool operator==(const Date& d1) const
+    {
+        return std::tie(year, month, day, hour, minute) == std::tie(d1.year, d1.month, d1.day, hour, minute);
+    }
+    bool operator>(const Date& d1) const
+    {
+        return std::tie(year, month, day, hour, minute) > std::tie(d1.year, d1.month, d1.day, hour, minute);
+    }
+    Date & operator+(const Date & d1){
+        Date * d = new Date;
+        d->year = this->year + d1.year;
+        d->month = this->month + d1.month;
+        d->day = this->day + d1.day;
+        d->hour = this->hour + d1.hour;
+        d->minute = this->minute + d1.minute;
+        d->normalize();
+        return *d;
+    }
+    Date & operator-(const Date & d1){
+        int m = this->convertToMinutes() - d1.convertToMinutes();
+        Date * d = new Date;
+        d->minute = abs(m);
+        d->normalize();
+        return *d;
+
+    }
+    Date & operator=(const Date & d1){
+        this->year = d1.year;
+        this->month = d1.month;
+        this->day = d1.day;
+        this->hour = d1.hour;
+        this->minute = d1.minute;
+        this->normalize();
+        return *this;
     }
     void print() {
-        cout << day << "/" << month << "/" << year;
+        cout << std::right << setfill('0') << setw(2) << to_string(this->day) << "/" << setfill('0') << setw(2)
+             << to_string(this->month) << "/" << setfill('0') << setw(4) << to_string(this->year) << resetiosflags(std::ios::showbase) << setfill(' ');
     }
+    void printFullDate(){
+        cout << std::right << setfill('0') << setw(2) << to_string(this->day) << "/" << setfill('0') << setw(2)
+             << to_string(this->month) << "/" << setfill('0') << setw(4) << to_string(this->year) << "-" << setfill('0')
+             << setw(2) << to_string(this->hour) << ":" << setfill('0') << setw(2) << to_string(this->minute)
+             << resetiosflags(std::ios::showbase) << setfill(' ');
+
+    }
+    void printTime(){
+        cout << std::right << setfill('0')
+                << setw(2) << to_string(this->hour) << ":" << setfill('0') << setw(2) << to_string(this->minute)
+                << resetiosflags(std::ios::showbase) << setfill(' ');
+    }
+    void normalize();
+    int convertToMinutes() const;
 };
+
 
 /**
  * @brief checks if input is valid

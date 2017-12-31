@@ -44,7 +44,7 @@ struct InactivePassengerHash {
     }
 };
 
-typedef unordered_set<Passenger *, InactivePassengerHash, InactivePassengerHash> inactivePassengers;
+typedef unordered_set<Passenger *, InactivePassengerHash, InactivePassengerHash> inactivePassengersHT;
 
 /**
 *	The Company class is the one that countains all the passengers, airplanes and flights information
@@ -79,6 +79,8 @@ private:
 
     vector<Booking *> pastBookings;
 
+    inactivePassengersHT inactivePassengers;
+
     /**
     * @brief bool passengersChanged is true when Passengers vector has changed and false otherwise
     */
@@ -93,8 +95,6 @@ private:
     static bool flightsChanged;
 
 	static bool techniciansChanged;
-
-    static bool bookingsChanged;
 
 
 public:
@@ -552,6 +552,10 @@ public:
 
     void setFlag();
     unsigned int getNextBookingId();
+    void addBooking(Booking * booking);
+    void addBookingsFromFlight(Flight * flight);
+    void addInactivePassenger(Passenger * passenger);
+    void removeInactivePassenger(Passenger * passenger);
 
 
 

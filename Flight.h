@@ -19,23 +19,25 @@ private:
     unsigned int id;
     string departure;
     string destination;
-    unsigned int timeToFlight;
+    Date date;
     unsigned int basePrice;
-    unsigned int duration;
+    Date duration;
     unsigned int capacity = 0;
 
 public:
+
+    Flight();
     /**
      * @brief Constructor of a Flight object with all of its data members
      * @param id
      * @param departure
      * @param destination
-     * @param time_to_flight
+     * @param date
      * @param basePrice
      * @param duration
      */
-    Flight(unsigned int id, string departure, string destination, unsigned int time_to_flight, unsigned int basePrice,
-           unsigned int duration);
+    Flight(unsigned int id, string departure, string destination, Date date, unsigned int basePrice,
+           Date duration);
 
     /**
      * @brief Gets the ID of the Flight object
@@ -56,12 +58,6 @@ public:
     string getDestination() const;
 
     /**
-     * @brief Gets the time remaining until the Flight object
-     * @return unsigned int time_to_flight
-     */
-    unsigned int getTime_to_flight() const;
-
-    /**
      * @brief Gets the base price of the Flight object
      * @return unsigned int base price of the Flight
      */
@@ -69,9 +65,9 @@ public:
 
     /**
      * @brief Gets the duration of the Flight object
-     * @return unsigned int duration of the Flight
+     * @return Date duration of the Flight
      */
-    unsigned int getDuration() const;
+    Date getDuration() const;
 
     /**
      * @brief Purely Virtual function that gets the type of the Flight, "c" if commercial and "r" if rented
@@ -98,10 +94,10 @@ public:
     void setDestination(string destination);
 
     /**
-     * @brief Sets the time_to_flight of the Flight to the one passed as parameter
-     * @param time_to_flight unsigned int time_to_flight
+     * @brief Sets the date of the Flight to the one passed as parameter
+     * @param date Date date
      */
-    void setTime_to_flight(unsigned int time_to_flight);
+    void setDate(Date date);
 
     /**
      * @brief Sets the basePrice of the Flight to the one passed as parameter
@@ -113,7 +109,7 @@ public:
      * @brief Sets the duration of the Flight to the one passed as parameter
      * @param duration unsigned int duration
      */
-    void setDuration(unsigned int duration);
+    void setDuration(Date duration);
 
     /**
      * @brief Sets the ID of the Flight to the one passed as parameter
@@ -141,6 +137,10 @@ public:
     * @brief Prints for the lists in the lists part of the Menu
     */
     void printList() const;
+
+    Date getDate() const;
+
+    Date getTimeToFlight();
 
     /**
      * @brief Purely virtual function redefined in the Rented Flight subclass
@@ -227,8 +227,8 @@ public:
      * @param duration
      * @param buyer
      */
-    RentedFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight,
-                 unsigned int basePrice, unsigned int duration, Passenger *buyer);
+    RentedFlight(unsigned int id, string departure, string destination, Date date,
+                 unsigned int basePrice, Date duration, Passenger *buyer);
 
     /**
      * @brief Gets a pointer to the buyer of the RentedFlight
@@ -286,9 +286,7 @@ private:
     PassengerMap passengers;
 
 public:
-    /**
-     * @brief Default Constructor of a CommercialFlight object
-     */
+
     CommercialFlight();
 
     /**
@@ -300,8 +298,8 @@ public:
      * @param basePrice
      * @param duration
      */
-    CommercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight,
-                     unsigned int basePrice, unsigned int duration);
+    CommercialFlight(unsigned int id, string departure, string destination, Date date,
+                     unsigned int basePrice, Date duration);
 
     /**
      * @brief Constructor of a CommercialFlight object with the Data-members inherited from the superclass plus the PassengerMap from this CommercialFlight class
@@ -313,8 +311,8 @@ public:
      * @param duration
      * @param passengers
      */
-    CommercialFlight(unsigned int id, string departure, string destination, unsigned int time_to_flight,
-                     unsigned int basePrice, unsigned int duration, PassengerMap passengers);
+    CommercialFlight(unsigned int id, string departure, string destination, Date date,
+                     unsigned int basePrice, Date duration, PassengerMap passengers);
 
     /**
      * @brief Inherited from the superclass used in RentedFlight

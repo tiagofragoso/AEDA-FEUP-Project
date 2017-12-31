@@ -2,6 +2,8 @@
 #include <vector>
 #include "Application.h"
 
+Date Application::currentDate;
+
 Application::Application() {
 
     Company c = Company("AirRoad");
@@ -906,7 +908,9 @@ Airplane *Application::readAirplane(string &a) {
         return nullptr;
     }
 
-    newAirplane->setMaintenancePeriod(temp);
+    Date mp;
+    mp.day = temp;
+    newAirplane->setMaintenancePeriod(mp);
 
     next(st, a, ";");
 
@@ -984,15 +988,26 @@ Flight *Application::readFlight(string &f) {
 
     newFlight->setDestination(st);
 
-    try { next(temp, f, ";"); } catch (InvalidFormat) {
+    //date
+
+    try {
+        next(st, f, ";");
+    } catch (InvalidFormat) {
         cout << "Flight " << to_string(newFlight->getId())
              << ": Please insert the Flight data in the correct format.\n";
         return nullptr;
     }
 
-    newFlight->setTime_to_flight((unsigned int) temp);
+    Date d;
+    next(d.day, st, "/");
+    next(d.month, st, "/");
+    next(d.year, st, "-");
+    next(d.hour, st, ":");
+    next(d.minute, st, ";");
 
-    try { next(temp, f, ";"); } catch (InvalidFormat) {
+    newFlight->setDate(d);
+
+    try { next(st, f, ";"); } catch (InvalidFormat) {
         cout << "Flight " << to_string(newFlight->getId())
              << ": Please insert the Flight data in the correct format.\n";
         return nullptr;
@@ -1000,13 +1015,18 @@ Flight *Application::readFlight(string &f) {
 
     newFlight->setBasePrice((unsigned int) temp);
 
-    try { next(temp, f, ";"); } catch (InvalidFormat) {
+    try { next(st, f, ";"); } catch (InvalidFormat) {
         cout << "Flight " << to_string(newFlight->getId())
              << ": Please insert the Flight data in the correct format.\n";
         return nullptr;
     }
 
-    newFlight->setDuration((unsigned int) temp);
+    Date d2;
+
+    next(d2.hour, st, ":");
+    next(d2.minute, st, ";");
+
+    newFlight->setDuration(d2);
 
     next(st, f, ";");
 
@@ -1129,7 +1149,13 @@ Passenger *Application::readPassenger(string &p) {
 
     next(st, p, ";");
 
-    newPassenger->setDateOfBirth(st);
+    Date d1;
+
+    next(d1.day, st, "/");
+    next(d1.month, st, "/");
+    next(d1.year, st, "/");
+
+    newPassenger->setDateOfBirth(d1);
 
 
     if (type == 'c') {
@@ -1197,7 +1223,10 @@ void Application::loadFlightFile() {
     while (getline(flFile, f)) {
         if (f.empty()) continue;
         Flight *flight = readFlight(f);
-        if (flight != nullptr) this->company.addObject(flight);
+        if (flight != nullptr) {
+            this->company.addObject(flight);
+            this->company.addBookingsFromFlight(flight);
+        }
     }
 
     flFile.close();

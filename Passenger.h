@@ -14,9 +14,8 @@ class Passenger {
 
 private:
     unsigned int id;
-    unsigned int phoneNumber;
     string name;
-    string dateOfBirth;
+    Date dateOfBirth;
 public:
     /**
      * @brief Default Constructor of a Passenger object
@@ -29,7 +28,7 @@ public:
      * @param name
      * @param dateOfBirth
      */
-    Passenger(unsigned int id, string name, string dateOfBirth);
+    Passenger(unsigned int id, string name, Date dateOfBirth);
 
     //get Methods
     /**
@@ -48,7 +47,7 @@ public:
      * @brief Gets the Date of birth of a Passenger
      * @return string containing the Date of birth of a Passenger
      */
-    string getDateOfBirth() const;
+    Date getDateOfBirth() const;
 
     //set Methods
     /**
@@ -67,7 +66,7 @@ public:
      * @brief Sets the Date of Birth of the Passenger object to the passed parameter
      * @param dateOfBirth string dateOfBirth
      */
-    void setDateOfBirth(string dateOfBirth);
+    void setDateOfBirth(Date dateOfBirth);
 
     /**
      * @brief Prints the id  and the name of the Passenger
@@ -96,11 +95,6 @@ public:
     * @param card Card * card
     */
     virtual void setCard(Card *card);
-
-    /**
-    * @brief Prints the date of birth of the Passenger object
-    */
-    void printDoB() const;
 
     /**
      * @brief overload of the operator == to match Passenger objects
@@ -140,7 +134,7 @@ public:
      * @param dateOfBirth
      * @param card
      */
-    PassengerWithCard(unsigned int id, string name, string dateOfBirth, Card *card);
+    PassengerWithCard(unsigned int id, string name, Date dateOfBirth, Card *card);
 
     /**
      * @brief Constructor of a PassengerWithCard object using ID, name, Date of birth, job and the number of Flights per year
@@ -150,7 +144,7 @@ public:
      * @param job
      * @param nYear
      */
-    PassengerWithCard(unsigned int id, string name, string dateOfBirth, string job, int nYear);
+    PassengerWithCard(unsigned int id, string name, Date dateOfBirth, string job, int nYear);
     //get Methods
     /**
      * @brief Gets the card of a PassengerWithCard object

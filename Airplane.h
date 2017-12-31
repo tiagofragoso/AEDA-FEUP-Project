@@ -18,7 +18,7 @@ private:
     unsigned int id;
     unsigned int capacity;
     Date maintenance;
-    int maintenancePeriod;
+    Date maintenancePeriod;
     vector<Flight *> flights;
 
 public:
@@ -34,7 +34,7 @@ public:
      * @param capacity
      * @param flights
      */
-    Airplane(unsigned int id, string name, unsigned int capacity, vector<Flight *> flights, Date maintenance, int maintenancePeriod);
+    Airplane(unsigned int id, string name, unsigned int capacity, vector<Flight *> flights, Date maintenance, Date maintenancePeriod);
 
     /**
      * @brief Constructor of an Airplane object with no flights
@@ -42,7 +42,7 @@ public:
      * @param name
      * @param capacity
      */
-    Airplane(unsigned int id, string name, unsigned int capacity, Date maintenance, int maintenancePeriod);
+    Airplane(unsigned int id, string name, unsigned int capacity, Date maintenance, Date maintenancePeriod);
 
     /**
      * @brief  Gets the Model of the Airplane
@@ -68,7 +68,7 @@ public:
      */
     vector<Flight *> getFlights() const;
     Date getMaintenance() const;
-    int getMaintenancePeriod() const;
+    Date getMaintenancePeriod() const;
 
     /**
      * @brief Sets the Airplane's model to the one passed as parameter
@@ -94,7 +94,7 @@ public:
      */
     void setFlights(vector<Flight *> flights);
     void setMaintenance(Date maintenance);
-    void setMaintenancePeriod(int maintenancePeriod);
+    void setMaintenancePeriod(Date maintenancePeriod);
 
     /**
      * @brief Prints the id of the Airplane
