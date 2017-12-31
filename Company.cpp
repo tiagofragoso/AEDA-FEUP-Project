@@ -1891,16 +1891,19 @@ void Company::technicianDeleteModel(Technician *technician) {
 	} while (true);
 
 	vector <string> models = technician->getModels();
-	
-	for (int i = 0; i < models.size(); i++)
+	bool found = false;
+	for (unsigned int i = 0; i < models.size(); i++)
 	{
 		if (models.at(i) == model) {
 			models.erase(models.begin() + i);
+            found = true;
 			techniciansChanged = true;
 			cout << "Technician model removed successfully.\n";
-			return;
+            break;
 		}
 	}
+    if (found) technician->setModels(models);
+    else cout << "Technician model was not found.\n";
 }
 
 void Company::addObject(Technician *technician){
