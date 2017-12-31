@@ -76,9 +76,14 @@ void Technician::setTimeUntilAvailable(int time) {
 
 void Technician::print() const {
 	cout << "Id: " << id << endl << "Name: " << name << endl << "Model: ";
+	bool first = true;
 	for (int i = 0; i < models.size() ; i++)
 	{
-		cout << models.at(i) << " , ";
+		if (first) {
+			first = false;
+			cout << models.at(i);
+		}
+		else cout << " , " << models.at(i);
 	}
 	cout << endl;
 }
