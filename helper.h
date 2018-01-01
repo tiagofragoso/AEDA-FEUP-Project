@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 #include <iomanip>
+#include <sstream>
 
 using namespace std;
 /*! enum class used on the listing menu */
@@ -13,12 +14,22 @@ enum type {
     PID = 1,       /*!< Passengers by ID */
     PNAME = 2,     /*!< Passengers by name */
     PAGE = 3,      /*!< Passengers by age */
-    AID = 4,       /*!< Airplanes by ID */
-    FID = 5,       /*!< Flights by ID */
-    FPRICEL = 6,   /*!< Flights based on Price(lowest to highest) */
-    FPRICEH = 7,   /*!< Flights based on Price(highest to lowest) */
-    FDEST = 8,     /*!< Flights by Destination city */
-    FTIME = 9      /*!< Flights by the time remaining to the time of the flight */
+    PACT = 4,      /*!< Active Passengers*/
+    PINC = 5,      /*!< Active Passengers*/
+    AID = 6,       /*!< Airplanes by ID */
+    FID = 7,       /*!< Flights by ID */
+    FPRICEL = 8,   /*!< Flights based on Price(lowest to highest) */
+    FPRICEH = 9,   /*!< Flights based on Price(highest to lowest) */
+    FDEST = 10,     /*!< Flights by Destination city */
+    FTIME = 11      /*!< Flights by the time remaining to the time of the flight */
+};
+
+enum date_member_t {
+    YEAR = 1,
+    MONTH = 2,
+    DAY = 3,
+    HOUR = 4,
+    MINUTE = 5
 };
 
 static vector<int> monthdays = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -29,6 +40,8 @@ struct Date {
     int year = 0;
     int hour = 0;
     int minute = 0;
+    Date(){};
+    Date(int y, int mo, int d, int h, int mn): year(y), month(mo), day(d), hour(h), minute(mn){}
     bool operator<(const Date& d1) const
     {
         return std::tie(year, month, day, hour, minute) < std::tie(d1.year, d1.month, d1.day, hour, minute);
@@ -68,21 +81,27 @@ struct Date {
         this->normalize();
         return *this;
     }
-    void print() {
-        cout << std::right << setfill('0') << setw(2) << to_string(this->day) << "/" << setfill('0') << setw(2)
+    string print() const{
+        stringstream s;
+        s << std::right << setfill('0') << setw(2) << to_string(this->day) << "/" << setfill('0') << setw(2)
              << to_string(this->month) << "/" << setfill('0') << setw(4) << to_string(this->year) << resetiosflags(std::ios::showbase) << setfill(' ');
+        return s.str();
     }
-    void printFullDate(){
-        cout << std::right << setfill('0') << setw(2) << to_string(this->day) << "/" << setfill('0') << setw(2)
+    string printFullDate() const{
+        stringstream s;
+        s << std::right << setfill('0') << setw(2) << to_string(this->day) << "/" << setfill('0') << setw(2)
              << to_string(this->month) << "/" << setfill('0') << setw(4) << to_string(this->year) << "-" << setfill('0')
              << setw(2) << to_string(this->hour) << ":" << setfill('0') << setw(2) << to_string(this->minute)
              << resetiosflags(std::ios::showbase) << setfill(' ');
+        return s.str();
 
     }
-    void printTime(){
+    string printTime() const{
+        stringstream s;
         cout << std::right << setfill('0')
                 << setw(2) << to_string(this->hour) << ":" << setfill('0') << setw(2) << to_string(this->minute)
                 << resetiosflags(std::ios::showbase) << setfill(' ');
+        return s.str();
     }
     void normalize();
     int convertToMinutes() const;
@@ -135,6 +154,7 @@ void next(string &piece, string &line, string separator);
  * @return true if input is valid and false otherwise
  */
 bool validString(string &s);
-void addTime(Date &date, int days);
 
+bool validFullDate(Date &date);
+bool validTime(Date &date);
 #endif /* SRC_HELPER_H_ */

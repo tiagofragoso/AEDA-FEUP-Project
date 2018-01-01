@@ -22,11 +22,14 @@ class Application {
 
     typedef void(Application::*appFunctionType)(type t);
 
+    typedef void(Application::*appFunctionDate)(date_member_t date_member);
+
     typedef void(Company::*companyFunctionAirplane)(Airplane *airplane);
 
     typedef void(Company::*companyFunctionPassenger)(Passenger *passenger);
 
     typedef void(Company::*companyFunctionTechnician) (Technician *technician);
+
 
 
 private:
@@ -47,6 +50,7 @@ private:
     map<string, companyFunction> menuMaintenance;
     map<string, companyFunction> menuTechnicians;
     map<string, companyFunctionTechnician> menuTechnicianUpdate;
+    map<string, appFunctionDate> menuTime;
 
 public:
     static Date currentDate;
@@ -97,6 +101,8 @@ public:
     void bookingsMenu();
 
     void maintenanceMenu();
+
+    void timeMenu();
 
     /**
     * @brief Menu to manage Lists (sorted information)
@@ -158,6 +164,8 @@ public:
     void printBookingsMenu() const;
 
     void printMaintenanceMenu() const;
+
+    void printTimeMenu() const;
 
     /**
     * @brief Prints the Menu that displays the options for updating the Airplane passed as argument
@@ -276,8 +284,9 @@ public:
 
 	Technician* readTechnician(string &p);
     void loadTechnicianFile();
-
+    static void advanceTime(Date d);
     void resetFlags();
+    void manageTime(date_member_t date_member);
 
 };
 

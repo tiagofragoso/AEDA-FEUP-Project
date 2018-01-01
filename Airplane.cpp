@@ -84,8 +84,8 @@ void Airplane::print() const {
     cout << "Id: " << id << endl;
     cout << "Model: " << model << endl;
     cout << "Capacity: " << capacity << endl;
-    cout << "Next maintenance date: " << maintenance.day << "/" << maintenance.month << "/" << maintenance.year << endl;
-    cout << "Maintenance period: " << maintenancePeriod.day << endl;
+    cout << "Next maintenance date: " << maintenance.print() << endl;
+    cout << "Maintenance period: " << maintenancePeriod.day << " day(s)" << endl;
 
 }
 
@@ -143,7 +143,7 @@ void Airplane::addFlight(Flight *flight) {
 
 ostream &operator<<(ostream &o, const Airplane *a) {
     o << to_string(a->id) << "; " << a->model << "; " << to_string(a->capacity) << "; ";
-    o << a->getMaintenance().day << "/" << a->getMaintenance().month << "/" << a->getMaintenance().year << "; ";
+    o << a->getMaintenance().print() << "; ";
     o << a->getMaintenancePeriod().day << "; ";
     if (!a->flights.empty()) {
         for (size_t i = 0; i < a->flights.size(); i++) {

@@ -66,16 +66,14 @@ void PassengerWithCard::setCard(Card *card) {
 void Passenger::printSummary() const {
 
     cout << std::left;
-    cout << setw(12) << id << setw(3) << " " << setw(30) << name << setw(3) << " ";
-    this->getDateOfBirth().print();
-    cout << endl;
+    cout << setw(12) << id << setw(3) << " " << setw(30) << name << setw(3) << " " << setw(13) <<
+         this->getDateOfBirth().print() << endl;
 }
 
 
 void Passenger::print() const {
-    cout << "Id: " << id << endl << "Name: " << name << endl << "Date of Birth: ";
-    this->getDateOfBirth().print();
-    cout<< endl;
+    cout << "Id: " << id << endl << "Name: " << name << endl << "Date of Birth: " <<
+         this->getDateOfBirth().print() << endl;
 }
 
 bool Passenger::operator==(const Passenger &p) {
@@ -92,8 +90,7 @@ Passenger::Passenger() {
 }
 
 ostream &operator<<(ostream &o, const Passenger *p) {
-    //TODO
-    //o << p->getType() << p->getId() << "; " << p->getName() << "; " << p->getDateOfBirth();
+    o << p->getType() << p->getId() << "; " << p->getName() << "; " << p->getDateOfBirth().print();
     if (p->getType() == "c" && p->getCard() != nullptr) {
         o << "; " << p->getCard()->getJob() << "; " << to_string(p->getCard()->getAvgYrFlights());
     }
@@ -109,9 +106,7 @@ void PassengerWithCard::print() const {
 
     cout << "Id: " << Passenger::getId() << endl;
     cout << "Name: " << Passenger::getName() << endl;
-    cout << "Date of Birth: ";
-    this->getDateOfBirth().print();
-    cout << endl;
+    cout << "Date of Birth: " << this->getDateOfBirth().print() << endl;
     cout << "Job: " << card->getJob() << endl;
     cout << "Number of flights/year: " << card->getAvgYrFlights() << endl;
 

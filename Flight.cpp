@@ -50,18 +50,14 @@ void Flight::setDuration(Date duration) {
 void Flight::printSummary() const {
 
     cout << setw(9) << id << setw(3) << " " << setw(15) << departure << setw(3) << " " << setw(15) << destination
-         << setw(3) << " " << setw(14);
-    this->getDate().printFullDate();
-    cout << endl;
+         << setw(3) << " " << setw(18) << this->getDate().printFullDate() << endl;
 
 }
 
 void Flight::printList() const {
 
     cout << setw(9) << id << setw(3) << " " << setw(15) << departure << setw(3) << " " << setw(15) << destination
-         << setw(3) << " ";
-    this->getDate().printFullDate();
-     cout << setw(3) << " " << setw(9) << basePrice << endl;
+         << setw(3) << " " << setw(18) << this->getDate().printFullDate() << setw(3) << " " << setw(9) << basePrice << endl;
 }
 
 void Flight::print() const {
@@ -69,13 +65,9 @@ void Flight::print() const {
     cout << "Id: " << id << endl;
     cout << "Departure: " << departure << endl;
     cout << "Destination: " << destination << endl;
-    cout << "Date:  ";
-    this->getDate().printFullDate();
-    cout << endl;
+    cout << "Date:  " << this->getDate().printFullDate() << endl;
     cout << "Base Price: " << basePrice << "€" << endl;
-    cout << "Flight duration: ";
-    this->getDuration().printTime();
-    cout << endl;
+    cout << "Flight duration: " <<this->getDuration().printTime() << endl;
 }
 
 unsigned int Flight::getId() const {
@@ -97,7 +89,7 @@ void Flight::setId(unsigned int id) {
 
 ostream &operator<<(ostream &o, Flight *f) {
     o << f->getType() << to_string(f->id) << "; " << f->departure << "; " << f->destination << "; "
-      << f->getDate().hour << ":" << f->getDate().minute << "; " << to_string(f->basePrice) << "; " << f->getDuration().hour << ":" << f->getDuration().minute << "; ";
+      << f->getDate().printFullDate() << "; " << to_string(f->basePrice) << "; " << f->getDuration().printTime() << "; ";
     if (f->getType() == "c") {
         unsigned int i = f->getPassengers().size();
         if (i > 0) {

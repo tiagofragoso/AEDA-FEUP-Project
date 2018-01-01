@@ -80,6 +80,8 @@ void Company::removePassenger(Passenger *passenger) {
 
     auto it = find(passengers.begin(), passengers.end(), passenger);
     if (it != passengers.end()) passengers.erase(it);
+    auto ip = inactivePassengers.find(passenger);
+    if (ip != inactivePassengers.end()) inactivePassengers.erase(ip);
 
 }
 
@@ -98,7 +100,7 @@ Flight *Company::flightById(unsigned int id) {
 }
 
 Passenger *Company::passengerById(unsigned int id) {
-    for (auto const &p: passengers) {
+    for (auto const &p: getAllPassengers()) {
         if (p->getId() == id) return (Passenger *) p;
     }
     throw InvalidPassenger(id);
@@ -111,8 +113,19 @@ void Company::printSummaryPassenger() {
     cout << std::left;
     cout << setw(12) << "Passenger ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13)
          << "Date of Birth\n";
+    if (passengers.empty()) cout << "There are no active passengers.\n\n";
+    else {
+        cout << "ACTIVE PASSENGERS\n";
     for (auto &passenger : passengers) {
         passenger->printSummary();
+    }
+    }
+    if (passengers.empty()) cout << "There are no inactive passengers.\n\n";
+    else {
+        cout << "INACTIVE PASSENGERS\n";
+        for (auto &passenger : getIncPassengers()) {
+            passenger->printSummary();
+        }
     }
 
     cout << endl;
@@ -129,7 +142,7 @@ Passenger *Company::choosePassenger() {
 
     } while (true);
 
-    for (auto &passenger : passengers) {
+    for (auto &passenger : getAllPassengers()) {
 
         if (passenger->getId() == pId) {
             cpassenger = passenger;
@@ -233,7 +246,7 @@ void Company::printMaintenancePeriod() {
 
     for (auto &m : maintenance) {
 
-        cout << "Aiplane " << m.first << " - ";
+        cout << "Airplane " << m.first << " - ";
         m.second.print();
         cout << endl;
     }
@@ -241,7 +254,7 @@ void Company::printMaintenancePeriod() {
 
 void Company::passengerShow() {
 
-    if (passengers.empty()) {
+    if (getAllPassengers().empty()) {
         cout << "There are no passengers.\n";
         return;
     }
@@ -285,7 +298,7 @@ void Company::passengerShow() {
 
 void Company::validPassenger(int id) {
 
-    for (auto &passenger : passengers) {
+    for (auto &passenger : getAllPassengers()) {
 
         if (passenger->getId() == id)
             throw InvalidPassenger(id);
@@ -385,9 +398,9 @@ Passenger *Company::passengerCreate() {
         newpassenger = new PassengerWithCard(id, name, dobd, job, 0);
     }
     addObject(newpassenger);
-    sortPassengers();
     passengersChanged = true;
     this->sortPassengers();
+    updatePassengers();
     cout << "Passenger successfully added\n";
     return newpassenger;
 }
@@ -413,6 +426,7 @@ void Company::passengerDelete() {
 
     } while (true);
     removePassengerFromFlights(passenger);
+    removePassengerFromBookings(passenger);
     removePassenger(passenger);
     cout << "Passenger deleted sucessfully.\n ";
     passengersChanged = true;
@@ -942,6 +956,7 @@ void Company::bookFlight(Passenger *p) {
         }
     } while (true);
     cout << endl;
+    updateTime();
 }
 
 float Company::ticketPrice(Passenger *p, Flight *f, string type) {
@@ -1007,9 +1022,7 @@ void Company::printFlightsByType(Passenger *p, string type, vector<Flight *> &fv
         for (auto const &fl: fvector) {
             cout << std::left;
             cout << setw(9) << fl->getId() << setw(3) << " " << setw(15) << fl->getDeparture() << setw(3) << " "
-                 << setw(15) << fl->getDestination() << setw(3) << " " << setw(18);
-                 fl->getDate().printFullDate();
-                 cout << setw(3) << " " << setw(10) << std::fixed
+                 << setw(15) << fl->getDestination() << setw(3) << " " << setw(18) << fl->getDate().printFullDate() << setw(3) << " " << setw(10) << std::fixed
                  << setprecision(2) << ticketPrice(p, fl, type);
             if (type == "c")
                 cout << std::left << setw(3) << " " << setw(20)
@@ -1096,6 +1109,7 @@ void Company::returnTicket(Passenger *p) {
     flightsChanged = true;
 
     cout << " Flight " << selectedTicket.second->getId() << " was successfully removed.\n";
+    updateTime();
 
 }
 
@@ -1107,15 +1121,13 @@ void Company::showAllTickets(Passenger *passenger, bool idx) {
     if (!v.empty()) {
         if (idx) cout << setw(5) << " ";
         cout << setw(9) << "Flight ID" << setw(3) << " " << setw(4) << "Seat" << setw(3) << " "
-             << setw(15) << "Departure" << setw(3) << " " << setw(15) << "Destination" << endl;
+             << setw(15) << "Departure" << setw(3) << " " << setw(15) << "Destination" << setw(3) << " " << setw(18) << "Date" << endl;
         for (auto const &t: v) {
             if (idx) cout << "[" << i << "]- ";
             cout << setw(9) << to_string(t.second->getId()) << setw(3) << " " << setw(4) << t.first << setw(3) << " "
                  << setw(15) << t.second->getDeparture() << setw(3) << " " << setw(15) << t.second->getDestination()
                  << setw(3)
-                 << " " << "Flight in ";
-            t.second->getDate().printFullDate();
-                 cout << endl;
+                 << " " << setw(18) << t.second->getDate().printFullDate() << endl;
             i++;
         }
     } else cout << "Selected passenger has no booked tickets.\n";
@@ -1128,7 +1140,7 @@ void Company::printSummaryFlight(Airplane *airplane) {
     cout << "FLIGHT SUMMARY\n\n";
     cout << std::left;
     cout << setw(9) << "Flight ID" << setw(3) << " " << setw(15) << "Departure" << setw(3) << " " << setw(15)
-         << "Destination" << setw(3) << " " << setw(14) << "Time to flight\n";
+         << "Destination" << setw(3) << " " << setw(18) << "Date" << endl;
 
     for (auto &flight : airplane->getFlights()) {
 
@@ -1276,14 +1288,14 @@ void Company::validFlight(int id) {
 void Company::flightCreate(Airplane *airplane) {
 
     string departure, destination, foo;
-    int price, id, duration, time_to_flight;
-    Passenger *buyer;
+    int price, id;
     Flight *flight;
+    Date date, duration;
 
     while (true) {
 
         do {
-            cout << "Comercial flight or rented flight? (c/r)\n";
+            cout << "Commercial flight or rented flight? (c/r)\n";
             if (!validString(foo)) continue;
             else break;
 
@@ -1330,30 +1342,33 @@ void Company::flightCreate(Airplane *airplane) {
         else break;
 
     } while (true);
-
+    //TODO: Check if date is correct
     do {
-        cout << "Duration (h): ";
-        if (validArg(duration)) break;
+        cout << "Duration (hh:mm): ";
+        if (validTime(duration)) break;
     } while (true);
 
     do {
         cout << "Base price (in euros): ";
         if (validArg(price)) break;
     } while (true);
-    //TODO
+    //TODO: Check if date is correct
+
     do {
         cout << "Date (DD/MM/YY-hh:mm): ";
-        if (validArg(time_to_flight)) break;
+        if (validFullDate(date)) {
+            if (date < Application::currentDate || date == Application::currentDate) cout << "The date selected is prior to the current date. Reenter.\n";
+            else break;
+        }
     } while (true);
 
-    Date d1, d2;
 
     if (foo == "r") {
 
-        flight = new RentedFlight(id, departure, destination, d1, price, d2, nullptr);
+        flight = new RentedFlight(id, departure, destination, date, price, duration, nullptr);
 
     } else
-        flight = new CommercialFlight(id, departure, destination, d1, price, d2);
+        flight = new CommercialFlight(id, departure, destination, date, price, duration);
 
     flight->setCapacity(airplane->getCapacity());
 
@@ -1616,16 +1631,10 @@ void Company::addObject(Airplane *airplane) {
 
 void Company::removeFlight(Flight *flight) {
 
-    for (size_t i = 0; i < flights.size(); i++) {
+    bookings.erase(remove_if(bookings.begin(), bookings.end(), [flight](Booking * b){return b->getFlight() == flight;}), bookings.end());
 
-        if (*flights.at(i) == *flight) {
-
-            flights.erase(flights.begin() + i);
-            break;
-        }
-
-
-    }
+    auto it = find(flights.begin(), flights.end(), flight);
+    if (it != flights.end()) flights.erase(it);
 
 }
 
@@ -1661,29 +1670,25 @@ void Company::printRestrictions(Airplane *airplane) {
     if (airplane->getFlights().empty()) cout << "There are no restrictions for this flight.\n";
     else if (airplane->getFlights().size() == 1) {
         auto it = airplane->getFlights().begin();
+        Date final = (*it)->getDate() + (*it)->getDuration();
+        final.normalize();
         cout
                 << "For efficiency purposes, the airplane will never fly empty. Therefore, we must apply some restrictions to flight creation.\n";
-        cout << "The plane should be ready to take off from " << (*it)->getDeparture() << " in ";
-        (*it)->getDate().printFullDate();
-             cout << "h and it should"
-                     " be ready to take off from " << (*it)->getDestination() << "in ";
-                Date final = (*it)->getDate() + (*it)->getDuration();
-                final.normalize();
-                final.printFullDate();
-                cout << "\n";
+        cout << "The plane should be ready to take off from " << (*it)->getDeparture() << " on " <<
+        (*it)->getDate().print() << " at " << (*it)->getDate().printTime() << " and it should"
+                     " be ready to take off from " << (*it)->getDestination() << "on " <<
+                final.print() << " at " << final.printTime() << ".\n";
     } else {
         auto first = airplane->getFlights().begin();
         auto last = first + (airplane->getFlights().size() - 1);
         cout
                 << "For efficiency purposes, the airplane will never fly empty. Therefore, we must apply some restrictions to flight creation.\n";
-        cout << "The plane should be ready to take off from " << (*first)->getDeparture() << " in ";
-            (*first)->getDate().printFullDate();
-                cout << "h and it should"
-                     " be ready to take off from " << (*last)->getDestination() << " in ";
+        cout << "The plane should be ready to take off from " << (*first)->getDeparture() << " on "
+             << (*first)->getDate().print() << " at " << (*first)->getDate().printTime()<< " and it should"
+                     " be ready to take off from " << (*last)->getDestination() << " on ";
                 Date final = (*last)->getDate() + (*last)->getDuration();
                 final.normalize();
-                final.printFullDate();
-                cout << "\n";
+                cout << final.print() << " at " << final.printTime() << ".\n";
     }
 }
 
@@ -1732,7 +1737,7 @@ void Company::technicianCreate() {
     } while (true);
 
     do {
-        cout << "Models (seperated between commas ','): ";
+        cout << "Models (separated between commas ','): ";
         if (!validString(model)) continue;
         else break;
 
@@ -1763,7 +1768,7 @@ priority_queue<Technician *> Company::getTechnicians() const {
 
 void Company::printSummaryTechnician() const {
 	
-	if (technicians.size() == 0) {
+	if (technicians.empty()) {
 		cout << "There are no technicians.\n";
 		return;
 	}
@@ -1774,7 +1779,7 @@ void Company::printSummaryTechnician() const {
 		<< "Models \n";
 	priority_queue <Technician *> techs = technicians;
 
-	while (techs.size() != 0) {
+	while (!techs.empty()) {
 		techs.top()->printSummary();
 		techs.pop();
 		cout << endl;
@@ -1784,7 +1789,7 @@ void Company::printSummaryTechnician() const {
 
 void Company::technicianShow() {
 	
-	if (technicians.size() == 0) {
+	if (technicians.empty()) {
 		cout << "There are no technicians.\n";
 		return;
 	}
@@ -1829,7 +1834,7 @@ void Company::techRemovefromQueue(Technician * tech) {
 
 	priority_queue <Technician *> techs = technicians;
 
-	while (technicians.size() != 0) {
+	while (technicians.empty()) {
 		if (technicians.top() == tech) {
 			technicians.pop();
 		}
@@ -1837,7 +1842,7 @@ void Company::techRemovefromQueue(Technician * tech) {
 			technicians.pop();
 	}
 
-	while (techs.size() != 0) {
+	while (!techs.empty()) {
 		technicians.push(techs.top());
 		techs.pop();
 	}
@@ -1845,7 +1850,7 @@ void Company::techRemovefromQueue(Technician * tech) {
 
 void Company::technicianDelete() {
     
-	if (technicians.size() == 0) {
+	if (technicians.empty()) {
 		cout << "There are no technicians.\n";
 		return;
 	}
@@ -1982,3 +1987,89 @@ void Company::removeInactivePassenger(Passenger *passenger) {
     auto it = inactivePassengers.find(passenger);
     if (it != inactivePassengers.end()) inactivePassengers.erase(it);
 }
+
+bool Company::pastFlight(Flight * f){
+    return ((f->getDate()+f->getDuration()) < Application::currentDate);
+}
+
+void Company::updateFlights() {
+    vector<Flight *> activeFlights;
+    for (auto const & f: flights){
+        if (pastFlight(f)) pastFlights.push_back(f);
+        else activeFlights.push_back(f);
+    }
+    this->flights = activeFlights;
+}
+
+void Company::updateBookings() {
+    vector<Booking *> activeBookings;
+    for (auto const & b: bookings){
+        if (pastFlight(b->getFlight())) pastBookings.push_back(b);
+        else activeBookings.push_back(b);
+    }
+    this->bookings = activeBookings;
+}
+
+void Company::updatePassengers() {
+    vector<Passenger *> activeToInactive;
+    vector<Passenger *> inactiveToActive;
+    for (auto const &p: passengers){
+        if (inactivePassenger(p)) activeToInactive.push_back(p);
+    }
+    for (auto const &p: inactivePassengers){
+        if (!inactivePassenger(p)) inactiveToActive.push_back(p);
+    }
+    for (auto const &p: activeToInactive){
+        this->addInactivePassenger(p);
+        passengers.erase(find(passengers.begin(), passengers.end(), p));
+    }
+    for (auto const &p: inactiveToActive){
+        passengers.push_back(p);
+        this->removeInactivePassenger(p);
+    }
+}
+
+void Company::updateTime() {
+    updateFlights();
+    updateBookings();
+    updatePassengers();
+}
+
+Date Company::getLastReservation(Passenger *p) {
+    Date d;
+    for (auto const &b: bookings)
+        if (b->getPassenger() == p && b->getFlight()->getDate() > d) d = b->getFlight()->getDate();
+
+    for (auto const &b: pastBookings)
+        if (b->getPassenger() == p && b->getFlight()->getDate() > d) d = b->getFlight()->getDate();
+
+    return d;
+}
+
+bool Company::inactivePassenger(Passenger *p) {
+    Date inactivePeriod;
+    inactivePeriod.month = 6;
+    return (getLastReservation(p)-Application::currentDate) > inactivePeriod;
+}
+
+vector<Passenger *> Company::getAllPassengers() {
+    vector<Passenger *> pass;
+    for (auto const &p: passengers) pass.push_back(p);
+    for (auto const &p: inactivePassengers) pass.push_back(p);
+    return pass;
+}
+
+void Company::removePassengerFromBookings(Passenger *passenger) {
+    bookings.erase(remove_if(bookings.begin(), bookings.end(), [passenger](Booking * b){return b->getPassenger() == passenger;}), bookings.end());
+
+}
+
+vector<Passenger *> Company::getIncPassengers() {
+    vector<Passenger *> pass;
+    for (auto const &p: inactivePassengers) pass.push_back(p);
+    if (!pass.empty())
+    sort(pass.begin(), pass.end(), compPID);
+    return pass;
+}
+
+

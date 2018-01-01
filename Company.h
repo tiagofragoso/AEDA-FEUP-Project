@@ -556,7 +556,16 @@ public:
     void addBookingsFromFlight(Flight * flight);
     void addInactivePassenger(Passenger * passenger);
     void removeInactivePassenger(Passenger * passenger);
-
+    bool pastFlight(Flight * f);
+    bool inactivePassenger(Passenger * p);
+    Date getLastReservation(Passenger * p);
+    void updateTime();
+    void updateBookings();
+    void updateFlights();
+    void updatePassengers();
+    vector<Passenger *> getAllPassengers();
+    void removePassengerFromBookings(Passenger * passenger);
+    vector<Passenger *> getIncPassengers();
 
 
 	/*

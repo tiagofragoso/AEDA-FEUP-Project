@@ -2,7 +2,7 @@
 #include <vector>
 #include "Application.h"
 
-Date Application::currentDate;
+Date Application::currentDate(2017, 12, 31, 12, 0);
 
 Application::Application() {
 
@@ -25,6 +25,7 @@ void Application::setupMenus() {
     menuMain["5"] = &Application::bookingsMenu;
     menuMain["6"] = &Application::maintenanceMenu;
     menuMain["7"] = &Application::listsMenu;
+    menuMain["8"] = &Application::timeMenu;
     menuMain["0"] = &Application::exitMenu;
 
     //files menu
@@ -48,12 +49,14 @@ void Application::setupMenus() {
     menuLists["1"] = &Application::printListPassengers;
     menuLists["2"] = &Application::printListPassengers;
     menuLists["3"] = &Application::printListPassengers;
-    menuLists["4"] = &Application::printListAirplane;
-    menuLists["5"] = &Application::printListFlights;
-    menuLists["6"] = &Application::printListFlights;
+    menuLists["4"] = &Application::printListPassengers;
+    menuLists["5"] = &Application::printListPassengers;
+    menuLists["6"] = &Application::printListAirplane;
     menuLists["7"] = &Application::printListFlights;
     menuLists["8"] = &Application::printListFlights;
     menuLists["9"] = &Application::printListFlights;
+    menuLists["10"] = &Application::printListFlights;
+    menuLists["11"] = &Application::printListFlights;
 
     //flights menu
     menuFlights["1"] = &Company::flightShow;
@@ -94,10 +97,16 @@ void Application::setupMenus() {
     menuTechnicianUpdate["1"] = &Company::technicianUpdateName;
     menuTechnicianUpdate["2"] = &Company::technicianAddModel;
     menuTechnicianUpdate["3"] = &Company::technicianDeleteModel;
+
+    //time management menu
+    menuTime["1"] = &Application::manageTime;
+    menuTime["2"] = &Application::manageTime;
+    menuTime["3"] = &Application::manageTime;
+    menuTime["4"] = &Application::manageTime;
+    menuTime["5"] = &Application::manageTime;
 }
 
 void Application::printMainMenu() const {
-
     cout << "\n[MAIN MENU]\n\n";
     cout << "[1]- File management.\n";
     cout << "[2]- Passenger management.\n";
@@ -106,7 +115,9 @@ void Application::printMainMenu() const {
     cout << "[5]- Bookings.\n";
     cout << "[6]- Maintenance.\n";
     cout << "[7]- Lists.\n";
+    cout << "[8]- Time management.\n";
     cout << "[0]- Quit.\n\n";
+    cout << "Current date: " << Application::currentDate.printFullDate() << endl << endl;
 
 }
 
@@ -180,15 +191,17 @@ void Application::printListsMenu() const {
     cout << "Passenger lists.\n\n";
     cout << "[1]- Passengers by id.\n";
     cout << "[2]- Passengers by name.\n";
-    cout << "[3]- Passengers by age.\n\n";
+    cout << "[3]- Passengers by age.\n";
+    cout << "[4]- Active passengers by id.\n";
+    cout << "[5]- Inactive passengers by id.\n\n";
     cout << "Airplane lists.\n\n";
-    cout << "[4]- Airplanes by id.\n";
+    cout << "[6]- Airplanes by id.\n\n";
     cout << "Flights lists.\n\n";
-    cout << "[5]- Flights by id.\n";
-    cout << "[6]- Flights by price (low to high).\n";
-    cout << "[7]- Flights by price (high to low).\n";
-    cout << "[8]- Flights by destination.\n";
-    cout << "[9]- Flights by time to flight.\n\n";
+    cout << "[7]- Flights by id.\n";
+    cout << "[8]- Flights by price (low to high).\n";
+    cout << "[9]- Flights by price (high to low).\n";
+    cout << "[10]- Flights by destination.\n";
+    cout << "[11]- Flights by time to flight.\n\n";
     cout << "[0]- Back.\n\n";
 }
 
@@ -497,33 +510,43 @@ void Application::listsMenu() {
 
 void Application::printListPassengers(type t) {
 
-    if (company.getPassengers().empty()) {
+    vector<Passenger *> passengers;
 
-        cout << "There are no passengers.\n";
-        return;
-
-    }
-
-    vector<Passenger *> passengers = company.getPassengers();
     string title;
     switch (t) {
 
         case PID:
+            passengers = company.getAllPassengers();
             sort(passengers.begin(), passengers.end(), compPID);
             title = "Passengers by id:\n";
             break;
         case PNAME:
+            passengers = company.getAllPassengers();
             sort(passengers.begin(), passengers.end(), compPNAME);
             title = "Passengers by name:\n";
             break;
         case PAGE:
+            passengers = company.getAllPassengers();
             sort(passengers.begin(), passengers.end(), compPAGE);
             title = "Passengers by age:\n";
+            break;
+        case PACT:
+            passengers = company.getPassengers();
+            sort(passengers.begin(), passengers.end(), compPID);
+            title = "Active passengers by id:\n";
+            break;
+        case PINC:
+            passengers = company.getIncPassengers();
+            sort(passengers.begin(), passengers.end(), compPID);
+            title = "Inactive passengers by id:\n";
             break;
         default:
             return;
     }
-
+    if (passengers.empty()){
+        cout << "There are no passengers.\n";
+        return;
+    }
     cout << title;
     cout << std::left;
     cout << setw(12) << "Passenger ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13)
@@ -605,7 +628,7 @@ void Application::printListFlights(type t) {
     cout << title;
     cout << std::left;
     cout << setw(9) << "Flight ID" << setw(3) << " " << setw(15) << "Departure" << setw(3) << " " << setw(15)
-         << "Destination" << setw(3) << " " << setw(17) << "Time to flight (h)" << setw(3) << " " << setw(9)
+         << "Destination" << setw(3) << " " << setw(18) << "Date" << setw(3) << " " << setw(9)
          << "Price (€)\n";
 
     for (auto &flight : flights) {
@@ -663,7 +686,7 @@ void Application::bookingsMenu() {
     string menuhelper;
     Passenger *passenger;
 
-    if (company.getPassengers().empty()) {
+    if (company.getAllPassengers().empty()) {
         cout << "There are no passengers.\n";
         return;
     }
@@ -1007,7 +1030,7 @@ Flight *Application::readFlight(string &f) {
 
     newFlight->setDate(d);
 
-    try { next(st, f, ";"); } catch (InvalidFormat) {
+    try { next(temp, f, ";"); } catch (InvalidFormat) {
         cout << "Flight " << to_string(newFlight->getId())
              << ": Please insert the Flight data in the correct format.\n";
         return nullptr;
@@ -1259,6 +1282,7 @@ void Application::loadAirplaneFile() {
     cout << company.getFleet().size();
 
     cout << "File successfully loaded.\n";
+    this->company.updateTime();
 
 }
 
@@ -1308,7 +1332,7 @@ void Application::saveFile(string &path, priority_queue <Technician *> techs) {
 	while (!techs.empty()) {
 		file << techs.top();
 		techs.pop();
-		if (techs.size() != 0)
+		if (techs.empty())
 			file << endl;
 	}
 	file.close();
@@ -1347,5 +1371,87 @@ void Application::saveAllFiles() {
     }
 
     cout << "All changes were saved.\n";
+
+}
+
+void Application::advanceTime(Date d) {
+    currentDate = currentDate + d;
+}
+
+void Application::timeMenu() {
+    string op;
+
+    do {
+
+        printTimeMenu();
+
+        do {
+
+            cout << "Insert the desired option: ";
+            getline(cin, op);
+            if (op.empty() || menuTime.find(op) == menuTime.end()) {
+
+                if (op == "9") return;
+                cout << "Invalid option.\n";
+            } else break;
+
+
+        } while (true);
+
+        (this->*menuTime[op])(static_cast<date_member_t>(stoi(op)));
+        pause();
+
+    } while (true);
+
+
+}
+
+void Application::printTimeMenu() const {
+    cout << "[TIME MENU]\n\n";
+    cout << "[1]- Advance year.\n";
+    cout << "[2]- Advance month.\n";
+    cout << "[3]- Advance day.\n";
+    cout << "[4]- Advance hour.\n";
+    cout << "[5]- Advance minutes.\n";
+    cout << "[9]- Back.\n\n";
+    cout << "Current date: " << Application::currentDate.printFullDate() << endl << endl;
+}
+
+void Application::manageTime(date_member_t date_member) {
+    Date d;
+    int * dm;
+    int input;
+    string label;
+    switch (date_member){
+        case YEAR:
+            label = "years";
+            dm = &d.year;
+            break;
+        case MONTH:
+            label = "months";
+            dm = &d.month;
+            break;
+        case DAY:
+            label = "days";
+            dm = &d.day;
+            break;
+        case HOUR:
+            label = "hours";
+            dm = &d.hour;
+            break;
+        case MINUTE:
+            label = "minutes";
+            dm = &d.minute;
+            break;
+    }
+
+    do {
+        cout << "How many " << label <<" would you like to advance: ";
+        if (validArg(input)) break;
+    } while (true);
+
+    *dm = input;
+    this->advanceTime(d);
+    cout << "Time updated successfully.\n\n";
 
 }

@@ -32,6 +32,55 @@ bool validArg(int &variable) {
     return success;
 }
 
+bool validFullDate(Date &date){
+    string input;
+    getline(cin, input);
+    bool success = true;
+    if (input.length() < 9 || input.length() > 16) success = false;
+    else {
+        trimString(input);
+        try {
+            next(date.day, input, "/");
+        } catch (InvalidFormat &i) {
+            success = false;
+            goto end;
+        }
+        try {
+            next(date.month, input, "/");
+        } catch (InvalidFormat &i) {
+            success = false;
+            goto end;
+        }
+        try {
+            next(date.year, input, "-");
+        } catch (InvalidFormat &i) {
+            success = false;
+            goto end;
+        }
+        try {
+            next(date.hour, input, ":");
+        } catch (InvalidFormat &i) {
+            success = false;
+            goto end;
+        }
+        try {
+            next(date.minute, input, "/");
+        } catch (InvalidFormat &i) {
+            success = false;
+            goto end;
+        }
+    }
+    end:
+
+    Date copyDate = date;
+    copyDate.normalize();
+    if (!(date == copyDate)) success = false;
+
+    if (!success) cout << "Invalid input. Reenter.\n";
+    return success;
+
+}
+
 // Helpers for string processing
 void trimString(string &s) {
     s = s.substr(s.find_first_not_of(" "));
@@ -92,36 +141,31 @@ bool validString(string &s) {
     return true;
 }
 
-void addTime(Date &date, int days) {
-
-    date.day += days;
-
-    while(true) {
-
-        switch(date.month) {
-            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-                if (date.day <= 31) return;
-                date.day -= 31;
-                date.month++;
-                break;
-            case 2:
-                if (date.day <= 28) return;
-                date.day -= 28;
-                date.month++;
-                break;
-            case 4: case 6: case 9: case 11:
-                if (date.day <= 30) return;
-                date.day -= 30;
-                date.month++;
-                break;
-            default:
-                date.month -= 12;
-                date.year++;
-                break;
+bool validTime(Date &date) {
+    string input;
+    getline(cin, input);
+    bool success = true;
+    if (input.length() < 3 || input.length() > 5) success = false;
+    else {
+        trimString(input);
+        try {
+            next(date.hour, input, ":");
+        } catch (InvalidFormat &i) {
+            success = false;
+            goto end;
+        }
+        try {
+            next(date.minute, input, "/");
+        } catch (InvalidFormat &i) {
+            success = false;
+            goto end;
         }
     }
+    end:
+    date.normalize();
+    if (!success) cout << "Invalid input. Reenter.\n";
+    return success;
 }
-
 
 void Date::normalize() {
     while (this->minute > 59) {
@@ -132,13 +176,17 @@ void Date::normalize() {
         this->hour -= 24;
         this->day++;
     }
+    while (this->month > 12) {
+        this->month -= 12;
+        this->year++;
+    }
     while (this->day > monthdays[this->month]) {
         this->day -= monthdays[this->month];
         this->month++;
-    }
-    while (this->month > 12){
-        this->month -= 12;
-        this->year++;
+        if (this->month > 12) {
+            this->month -= 12;
+            this->year++;
+        }
     }
 
 }
