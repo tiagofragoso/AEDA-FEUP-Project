@@ -1770,14 +1770,13 @@ void Company::printSummaryTechnician() const {
 	cout << "TECHNICIAN SUMMARY\n\n";
 
 	cout << std::left;
-	cout << setw(12) << "Technician ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13)
-		<< "Models \n";
+	cout << setw(13) << "Technician ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13)
+		<< "Models" << endl;
 	priority_queue <Technician *> techs = technicians;
 
 	while (techs.size() != 0) {
 		techs.top()->printSummary();
 		techs.pop();
-		cout << endl;
 	}
 }
 

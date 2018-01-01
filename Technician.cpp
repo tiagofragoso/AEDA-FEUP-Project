@@ -91,11 +91,15 @@ void Technician::print() const {
 void Technician::printSummary() const {
 	
 	cout << std::left;
-	cout << setw(12) << id << setw(3) << " " << setw(30) << name << setw(3) << " ";
-	
+	cout << setw(13) << id << setw(3) << " " << setw(30) << name << setw(3) << " ";
+	bool first = true;
 	for (int i = 0; i < models.size(); i++)
 	{
-		cout << setw(30) << models.at(i) << setw(3) << " " ;
+        if (first){
+        first= false;
+        cout << models.at(i);
+        }
+        else cout << " , " <<  models.at(i) ;
 	}
 	cout << endl;
 }

@@ -1107,12 +1107,13 @@ Technician *Application::readTechnician(string &p) {
     models_v.clear();
 
 	while (true) {
-		if (p.find(",") != p.npos) {
+		if (p.find(',') != p.npos) {
 			next(models, p, ",");
             models_v.push_back(models);
 		} 
 		else {
             p.substr(0,p.npos);
+            trimString(p);
             models_v.push_back(p);
             break; }
 	}
@@ -1201,7 +1202,6 @@ void Application::loadTechnicianFile() {
     }
 
     flFile.close();
-    //Sort or not to sort TODO: @SPOLIS dúvida
 
     cout << "File successfully loaded.\n";
 
