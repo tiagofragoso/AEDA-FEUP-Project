@@ -837,7 +837,10 @@ void Company::airplanePerformMaintenance() {
         return;
     }
 
-    tech->setTimeUntilAvailable(5);
+    techRemovefromQueue(tech);
+    Date d = {0,0,0,5,0};
+    d = d + tech->getTimeWhenAvailable();
+    tech->setTimeWhenAvailable(d);
     technicians.push(tech);
     removeAirplane(airplane);
     Date date = airplane->getMaintenance();
@@ -853,30 +856,19 @@ void Company::airplanePerformMaintenance() {
 }
 
 Technician *Company::chooseTechnician(string model) {
-    priority_queue<Technician *> temp;
-    Technician *chosenTech;
-    bool found = false;
+   techniciansPriorityQueue temp = technicians;
 
-    while (!technicians.empty()) {
-        Technician *aux = technicians.top();
-        if (aux->getTimeUntilAvailable() == 0 &&
-            find(aux->getModels().begin(), aux->getModels().end(), model) != aux->getModels().end()) {
-            chosenTech = aux;
-            technicians.pop();
-            found = true;
-            break;
+    while(!temp.empty()) {
+        vector<string> aux = temp.top()->getModels();
+        if (find(aux.begin(), aux.end(), model) != aux.end()) {
+            if (temp.top()->getTimeWhenAvailable() == Application::currentDate)
+                return temp.top();
         }
-        temp.push(aux);
-        technicians.pop();
-    }
-
-    while (!temp.empty()) {
-        technicians.push(temp.top());
         temp.pop();
     }
 
-    if (!found) throw UnavailableTechnician(model);
-    return chosenTech;
+    throw UnavailableTechnician(model);
+
 }
 
 void Company::airplaneUpdateModel(Airplane *airplane) {
@@ -1184,7 +1176,7 @@ Technician *Company::chooseTechnician() {
 
     } while (true);
 
-    priority_queue<Technician *> temp;
+    techniciansPriorityQueue temp;
     Technician *aux;
     bool found = false;
 
@@ -1209,7 +1201,7 @@ Technician *Company::chooseTechnician() {
 void Company::validTechnician(int id) {
 
     bool found = false;
-    priority_queue<Technician*> temp;
+   techniciansPriorityQueue temp;
     Technician *aux;
 
     while (!technicians.empty()) {
@@ -1752,7 +1744,10 @@ void Company::technicianCreate() {
 			next(st, model, ",");
 			models_v.push_back(st);
 		}
-		else { break; }
+		else {
+            models_v.push_back(model);
+            break;
+        }
 	}
 
     Technician *newtechnician = new Technician(id, name, models_v);
@@ -1762,7 +1757,7 @@ void Company::technicianCreate() {
 
 }
 
-priority_queue<Technician *> Company::getTechnicians() const {
+techniciansPriorityQueue Company::getTechnicians() const {
     return technicians;
 }
 
@@ -1777,7 +1772,7 @@ void Company::printSummaryTechnician() const {
 	cout << std::left;
 	cout << setw(13) << "Technician ID" << setw(3) << " " << setw(30) << "Name" << setw(3) << " " << setw(13)
 		<< "Models" << endl;
-	priority_queue <Technician *> techs = technicians;
+	techniciansPriorityQueue techs = technicians;
 
 	while (!techs.empty()) {
 		techs.top()->printSummary();
@@ -1831,11 +1826,12 @@ void Company::technicianShow() {
 }
 void Company::techRemovefromQueue(Technician * tech) {
 
-	priority_queue <Technician *> techs = technicians;
+	techniciansPriorityQueue techs;
 
-	while (technicians.empty()) {
+	while (!technicians.empty()) {
 		if (technicians.top() == tech) {
 			technicians.pop();
+            continue;
 		}
 			techs.push(technicians.top());
 			technicians.pop();
@@ -2071,4 +2067,34 @@ vector<Passenger *> Company::getIncPassengers() {
     return pass;
 }
 
+void Company::updateAirplanesDate() {
 
+    for (auto a : fleet) {
+
+       while(Application::currentDate > a->getMaintenance()) {
+
+           Airplane * aux = a;
+           removeAirplane(a);
+           aux->setMaintenance(aux->getMaintenance() + aux->getMaintenancePeriod());
+           addObject(aux);
+
+       }
+    }
+    
+}
+
+void Company::updateTechniciansDate() {
+
+    techniciansPriorityQueue temp = technicians;
+
+    while(!technicians.empty()) {technicians.pop();}
+
+    while(!temp.empty()) {
+
+          if (temp.top()->getTimeWhenAvailable() < Application::currentDate)
+              temp.top()->setTimeWhenAvailable(Application::currentDate);
+
+          technicians.push(temp.top());
+          temp.pop();
+    }
+}

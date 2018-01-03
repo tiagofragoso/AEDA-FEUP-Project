@@ -32,6 +32,12 @@ struct AirplaneCompare {
     }
 };
 
+struct TechnicianCompare {
+    bool operator() (Technician * t1, Technician * t2) {
+        return t1->getTimeWhenAvailable() > t2->getTimeWhenAvailable();
+    }
+};
+
 typedef std::set<Airplane *, AirplaneCompare> AirplanesSet;
 
 struct InactivePassengerHash {
@@ -45,6 +51,8 @@ struct InactivePassengerHash {
 };
 
 typedef unordered_set<Passenger *, InactivePassengerHash, InactivePassengerHash> inactivePassengersHT;
+
+typedef priority_queue <Technician *, vector<Technician *>, TechnicianCompare> techniciansPriorityQueue;
 
 /**
 *	The Company class is the one that countains all the passengers, airplanes and flights information
@@ -73,7 +81,7 @@ private:
 
     vector<Flight *> pastFlights;
 
-	priority_queue <Technician *> technicians;
+	techniciansPriorityQueue technicians;
 
     vector<Booking *> bookings;
 
@@ -144,7 +152,7 @@ public:
     */
     vector<Passenger *> getPassengers() const;
 
-    priority_queue<Technician *> getTechnicians() const;
+    techniciansPriorityQueue getTechnicians() const;
 
     bool getTechniciansChanged() const;
 
@@ -571,6 +579,9 @@ public:
 	/*
 	void setTechs(priority_queue <Technician *> techs);
 	*/
+
+    void updateAirplanesDate();
+    void updateTechniciansDate();
 
 };
 

@@ -2,16 +2,16 @@
 #include <vector>
 #include "Application.h"
 
-Date Application::currentDate(2017, 12, 31, 12, 0);
+Date Application::currentDate(2018, 2, 1, 12, 0);
 
 Application::Application() {
 
     Company c = Company("AirRoad");
     company = c;
-    passengersFilepath = "";
-    airplanesFilepath = "";
-    flightsFilepath = "";
-    techniciansFilepath = "";
+    passengersFilepath = "../Files/Passengers.txt";
+    airplanesFilepath = "../Files/Airplanes.txt";
+    flightsFilepath = "../Files/Flights.txt";
+    techniciansFilepath = "../Files/Technicians.txt";
 
 }
 
@@ -1208,7 +1208,7 @@ void Application::loadTechnicianFile() {
 
     string f;
 
-    techniciansFilepath = inputFilePath(Company::TECHNICIAN_IDENTIFIER);
+    //techniciansFilepath = inputFilePath(Company::TECHNICIAN_IDENTIFIER);
 
     if (techniciansFilepath == "") throw InvalidFilePath("empty");
 
@@ -1233,7 +1233,7 @@ void Application::loadFlightFile() {
 
     string f;
 
-    flightsFilepath = inputFilePath(Company::FLIGHT_IDENTIFIER);
+    //flightsFilepath = inputFilePath(Company::FLIGHT_IDENTIFIER);
 
     if (flightsFilepath == "") throw InvalidFilePath("empty");
 
@@ -1261,7 +1261,7 @@ void Application::loadFlightFile() {
 
 void Application::loadAirplaneFile() {
 
-    airplanesFilepath = inputFilePath(Company::AIRPLANE_IDENTIFIER);
+    //airplanesFilepath = inputFilePath(Company::AIRPLANE_IDENTIFIER);
 
     string a;
 
@@ -1279,7 +1279,6 @@ void Application::loadAirplaneFile() {
         if (airplane != nullptr) this->company.addObject(airplane);
     }
     airFile.close();
-    cout << company.getFleet().size();
 
     cout << "File successfully loaded.\n";
     this->company.updateTime();
@@ -1288,7 +1287,7 @@ void Application::loadAirplaneFile() {
 
 void Application::loadPassengerFile() {
 
-    passengersFilepath = inputFilePath(Company::PASSENGER_IDENTIFIER);
+    //passengersFilepath = inputFilePath(Company::PASSENGER_IDENTIFIER);
 
     string p;
 
@@ -1325,7 +1324,7 @@ void Application::saveFile(string &path, AirplanesSet fleet) {
     }
     file.close();
 }
-void Application::saveFile(string &path, priority_queue <Technician *> techs) {
+void Application::saveFile(string &path, techniciansPriorityQueue techs) {
 	ofstream file(path);
 
 	if (!file) throw InvalidFilePath("fail");
@@ -1452,6 +1451,9 @@ void Application::manageTime(date_member_t date_member) {
 
     *dm = input;
     this->advanceTime(d);
+    company.updateAirplanesDate();
+    company.updateTechniciansDate();
     cout << "Time updated successfully.\n\n";
 
 }
+

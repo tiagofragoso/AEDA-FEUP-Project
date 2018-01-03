@@ -1,27 +1,27 @@
-c1; Porto; Paris; 3; 37; 2; 1B-10009322, 1C-15091119, 2B-13617471
-r2; Porto; Pyongyang; 5; 7000; 15; 12009487
-c3; Lisbon; London; 13; 15; 3; 2C-17833321
-c4; London; Porto; 16; 27; 3; 1F-10009322
-r5; Porto; New York; 8; 400; 8; 15091119
-c6; Faro; Berlin; 48; 55; 4; 1A-12490990, 1B-14095521, 1C-13329879, 1D-18883212, 1E-17833321, 1F-15148612, 2A-15091119, 2B-12009487, 2C-19992109, 2D-21113409, 2F-19803328
-c7; Porto; London; 20; 95; 3; 1B-13329879
-c8; London; Tokyo; 24; 300; 12; 1B-19992109, 3C-17942881, 5F-11459900
-c9; New York; San Francisco; 20; 145; 7; 1A-15148612, 3E-19803328
-r10; San Francisco; Sydney; 28; 8000; 15; no_passengers
-c11; Berlin; Oslo; 56; 200; 3; 1C-13617471, 2C-21113409
-c12; Madrid; Ibiza; 10; 40; 2; 2C-13421313, 2D-15148612
-c13; Ibiza; Barcelona; 13; 65; 3; 1F-13617471
-c14; Barcelona; Roma; 20; 80; 3; 2C-19992109, 2D-14095521
-c15; Roma; Dublin; 24; 120; 5; no_passengers
-c16; Dublin; Stockholm; 30; 240; 3; 1A-19992109, 1D-11459900, 2E-13329879
-r17; Stockholm; Orlando; 33; 3000; 13; 21113409
-r18; Orlando; Miami; 50; 100; 1; 12490990
-c19; Miami; Rio de Janeiro; 52; 300; 9; 3A-12344599, 3B-12344599, 3C-12490990
-c20; Lisbon; Sao Paulo; 30; 400; 10; 1F-19803328, 4B-17942881, 4C-15091119
-c21; Sao Paulo; Madrid; 41; 600; 11; 4C-12344599
-r22; Las Vegas; Singapore; 50; 7500; 20; 13421313
-r23; Singapore; Dubai; 75; 6000; 8; 14095521
-c24; Milan; Copenhagen; 12; 50; 2; 1D-21113409, 2A-18883212
-c25; Copenhagen; Frankfurt; 15; 150; 2; no_passengers
-c26; Frankfurt; Helsinki; 18; 230; 3; 1A-13617471, 1E-14095521, 4B-10009322
-r27; London; Maldives; 78; 16000; 10; no_passengers
+c1; Porto; Paris; 2/1/2018-8:0; 37; 2:0; 1B-10009322, 1C-15091119, 2B-13617471
+r2; Porto; Pyongyang; 2/1/2018-11:0; 7000; 15:0; 12009487
+c3; Lisbon; London; 8/2/2018-6:0; 15; 3:0; 2C-17833321
+c4; London; Porto; 8/2/2018-10:0; 27; 3:0; 1F-10009322
+r5; Porto; New York; 9/2/2018-12:0; 400; 8:0; 15091119
+c6; Faro; Berlin; 12/1/2018-16:0; 55; 4:0; 1A-12490990, 1B-14095521, 1C-13329879, 1D-18883212, 1E-17833321, 1F-15148612, 2A-15091119, 2B-12009487, 2C-19992109, 2D-21113409, 2F-19803328
+c7; Porto; London; 8/2/2018-13:0; 95; 3:0; 1B-13329879
+c8; London; Tokyo; 8/2/2018-17:0; 300; 12:0; 1B-19992109, 3C-17942881, 5F-11459900
+c9; New York; San Francisco; 9/2/2018-21:0; 145; 7:0; 1A-15148612, 3E-19803328
+r10; San Francisco; Sydney; 10/2/2018-6:0; 8000; 15:0; no_passengers
+c11; Berlin; Oslo; 12/1/2018-21:0; 200; 3:0; 1C-13617471, 2C-21113409
+c12; Madrid; Ibiza; 20/1/2018-6:0; 40; 2:0; 2C-13421313, 2D-15148612
+c13; Ibiza; Barcelona; 20/1/2018-8:0; 65; 3:0; 1F-13617471
+c14; Barcelona; Roma; 20/1/2018-11:0; 80; 3:0; 2C-19992109, 2D-14095521
+c15; Roma; Dublin; 12/1/2018-14:0; 122; 5:0; no_passengers
+c16; Dublin; Stockholm; 20/1/2018-19:0; 240; 3:0; 1A-19992109, 1D-11459900, 2E-13329879
+r17; Stockholm; Orlando; 20/1/2018-22:0; 3000; 13:0; 21113409
+r18; Orlando; Miami; 21/1/2018-12:0; 350; 1:0; 12490990
+c19; Miami; Rio de Janeiro; 21/1/2018-14:0; 300; 9:0; 3A-12344599, 3B-12344599, 3C-12490990
+c20; Lisbon; Sao Paulo; 15/1/2018-8:0; 400; 10:0; 1F-19803328, 4B-17942881, 4C-15091119
+c21; Sao Paulo; Madrid; 15/1/2018-18:0; 600; 11:0; 4C-12344599
+r22; Las Vegas; Singapore; 31/1/2018-0:0; 7500; 20:0; 13421313
+r23; Singapore; Dubai; 31/1/2018-21:0; 6000; 8:0; 14095521
+c24; Milan; Copenhagen; 3/2/2018-15:0; 50; 2:0; 1D-21113409, 2A-18883212
+c25; Copenhagen; Frankfurt; 3/2/2018-17:0; 150; 2:0; no_passengers
+c26; Frankfurt; Helsinki; 3/2/2018-20:0; 230; 3:0; 1A-13617471, 1E-14095521, 4B-10009322
+r27; London; Maldives; 22/1/2018-6:0; 16000; 10:0; no_passengers

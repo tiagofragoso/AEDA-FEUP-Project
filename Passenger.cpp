@@ -42,8 +42,8 @@ void Passenger::setCard(Card *card) { return; }
 
 
 PassengerWithCard::PassengerWithCard(unsigned int id, string name, Date dateOfBirth, Card *card) : Passenger(id, name,
-                                                                                                               dateOfBirth),
-                                                                                                     card(card) {
+                                                                                                             dateOfBirth),
+                                                                                                   card(card) {
 }
 
 PassengerWithCard::PassengerWithCard(unsigned int id, string name, Date dateOfBirth, string job, int nYear = 0)

@@ -6,6 +6,7 @@
 #include <vector>
 #include <queue>
 #include <queue>
+#include "helper.h"
 
 using namespace std;
 
@@ -15,20 +16,19 @@ private:
 	unsigned int id;
 	string name;
 	vector <string> models;
-	int timeUntillAvailable;
+	Date timeWhenAvailable;
 
 public:
 	Technician(unsigned int id,string name, vector <string> model);
 	unsigned int getId() const;
 	string getName() const;
 	vector <string> getModels() const;
-    int getTimeUntilAvailable() const;
+    Date getTimeWhenAvailable() const;
 
 	void setId(unsigned int id);
 	void setName(string name);
 	void setModels(vector <string> model);
-	void setTimeUntilAvailable(int time);
-    void updateTimeUntilAvailabel(int timePassed);
+	void setTimeWhenAvailable(Date time);
 	void print() const;
 	void printSummary() const;
 

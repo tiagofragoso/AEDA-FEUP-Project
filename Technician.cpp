@@ -1,4 +1,5 @@
 #include "Technician.h"
+#include "Application.h"
 #include <iomanip>
 #include <string>
 
@@ -6,10 +7,9 @@ Technician::Technician(unsigned int id,string name, vector<string> models) {
 	this->id = id;
 	this->name = name;
 	this->models = models;
-    this->timeUntillAvailable = 0;
+	this->timeWhenAvailable = Application::currentDate;
+
 }
-
-
 //get methods
 
 unsigned int Technician::getId() const {
@@ -24,8 +24,8 @@ vector <string> Technician::getModels() const {
 	return this->models;
 }
 
-int Technician::getTimeUntilAvailable() const {
-    return this->timeUntillAvailable;
+Date Technician::getTimeWhenAvailable() const {
+    return this->timeWhenAvailable;
 }
 
 //set methods
@@ -42,17 +42,10 @@ void Technician::setModels(vector <string> models) {
 	this->models = models;
 }
 
-void Technician::updateTimeUntilAvailabel(int timePassed) {
-    timeUntillAvailable -= timePassed;
-    if (timeUntillAvailable < 0) {
-        timeUntillAvailable = 0;
-    }
-}
-
 //Operator overload to sort the priority queue
 
 bool Technician::operator<(const Technician &tech1) const {
-	return (timeUntillAvailable < tech1.getTimeUntilAvailable());
+	return (timeWhenAvailable < tech1.getTimeWhenAvailable());
 }
 
 bool Technician::operator=(const Technician &tech1) const {
@@ -70,8 +63,8 @@ ostream &operator<< (ostream &o, const Technician *t) {
 	} else o << "no_models";
 	return o;
 }
-void Technician::setTimeUntilAvailable(int time) {
-	timeUntillAvailable = time;
+void Technician::setTimeWhenAvailable(Date date) {
+	timeWhenAvailable = date;
 }
 
 void Technician::print() const {
@@ -86,6 +79,7 @@ void Technician::print() const {
 		else cout << " , " << models.at(i);
 	}
 	cout << endl;
+	cout << "Time Until Available: " << timeWhenAvailable.printFullDate() << endl;
 }
 
 void Technician::printSummary() const {
@@ -103,3 +97,5 @@ void Technician::printSummary() const {
 	}
 	cout << endl;
 }
+
+
