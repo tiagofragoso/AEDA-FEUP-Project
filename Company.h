@@ -547,32 +547,119 @@ public:
 	//SEGUNDO PROJECTO
 
 	void techRemovefromQueue(Technician * tech);
-
+    /**
+     * @brief Creates a new Technician and adds it to the Company priority queue technicians after validating the information
+     */
 	void technicianCreate();
+    /**
+    * @brief Prints the total information of a desired Technician
+    */
     void technicianShow();
+    /**
+      * @brief Deletes the pretended Technician from the Company priority queue containing the technicians
+      */
     void technicianDelete();
+    /**
+     * @brief Updates the name of the technician passed as argument (pointer) to the one inputed by the user
+     * @param technician Technician* technician
+     */
     void technicianUpdateName(Technician *technician);
+    /**
+     * @brief Adds a string model inputed by the user in the vector of strings models of the object Technician
+     * @param technician  Technician* technician
+     */
     void technicianAddModel(Technician *technician);
+    /**
+     * @brief Deletes a string model inputed by the user in the vector of strings models of the object Technician
+     * @param technician  Technician* technician
+     */
     void technicianDeleteModel(Technician *technician);
-
+    /**
+     * @brief Prints the summary of a Technician
+     */
     void printSummaryTechnician() const;
+    /**
+     * @brief Pushes the passed argument in the priority queue technicians of the Company class
+     * @param technician Technician* technician
+     */
     void addObject(Technician *technician);
-
+    /**
+     * @brief Resets all the state flags (passengersChanged, techniciansChanged, airplanesChanged and flightsChanged) to the false state
+     */
     void setFlag();
+    /**
+     * @brief Gets the id of the next Booking
+     * @return id
+     */
     unsigned int getNextBookingId();
+    /**
+     * @brief Adds the passed argument Booking * booking to the vector of Booking of the class Company
+     * @param booking Booking * booking
+     */
     void addBooking(Booking * booking);
+    /**
+     * @brief
+     * @param flight Flight * flight
+     */
     void addBookingsFromFlight(Flight * flight);
+    /**
+     * @brief Adds a Passenger * to the Hash Table of inactive passengers of the class Company
+     * @param passenger Passenger* passenger
+     */
     void addInactivePassenger(Passenger * passenger);
+    /**
+     * @brief Removes the desired Passenger passed as parameter from the inactivePassengers hash table
+     * @param passenger Passenger * passenger
+     */
     void removeInactivePassenger(Passenger * passenger);
+    /**
+     * @brief Checks if a flights Date has already passed
+     * @param f Flight * f
+     * @return true if it's in the past or false otherwise(future)
+     */
     bool pastFlight(Flight * f);
+    /**
+     * @brief Checks if a passenger passed as argument is inactive or not
+     * @param p Passenger * p
+     * @return true if the Passenger * p is inactive and false otherwise
+     */
     bool inactivePassenger(Passenger * p);
+    /**
+     * @brief Gets the last reservation of a passed Passenger pointer to help with inactivity functions
+     * @param p Passenger * p
+     * @return Date
+     */
     Date getLastReservation(Passenger * p);
+    /**
+     *  @brief Update the Time of the program
+     */
     void updateTime();
+    /**
+     * @brief Updates the bookings according to the time
+     */
     void updateBookings();
+    /**
+     * @brief Updates the flights according to the time
+     */
     void updateFlights();
+    /**
+     * @brief Updates the passengers according to the time
+     */
     void updatePassengers();
+    /**
+     * @brief Gets all the passengers that are registered in the system
+     * @return vector <Passenger*>
+     */
     vector<Passenger *> getAllPassengers();
+    /**
+     * @brief Removes the passenger passed as argument from the bookings vector
+     * @param passenger Passenger * passenger
+     */
     void removePassengerFromBookings(Passenger * passenger);
+    /**
+     * @brief Gets all the inactive Passengers
+     * @return vector<Passenger *>
+     */
     vector<Passenger *> getIncPassengers();
 
 

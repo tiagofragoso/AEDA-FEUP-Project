@@ -282,10 +282,29 @@ public:
 
 	//2 projeto
 
+    /**
+     * @brief Analyzes a string p that represents a technician from a file and creates a Technician * from it
+     * @param p string &p
+     * @return Technician *
+     */
 	Technician* readTechnician(string &p);
+    /**
+     * @brief Load the Technician file to get the data to the program
+     */
     void loadTechnicianFile();
+    /**
+     * @brief Function to manage system's dynamic time
+     * @param d Date d
+     */
     static void advanceTime(Date d);
+    /**
+     * @brief Helper function that resets the changed Flags
+     */
     void resetFlags();
+    /**
+     * @brief Function that manages the time in the program
+     * @param date_member date_member_t date_member
+     */
     void manageTime(date_member_t date_member);
 
 };

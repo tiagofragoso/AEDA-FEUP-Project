@@ -107,7 +107,7 @@ public:
 
     /**
      * @brief Sets the duration of the Flight to the one passed as parameter
-     * @param duration unsigned int duration
+     * @param duration Date duration
      */
     void setDuration(Date duration);
 
@@ -137,9 +137,15 @@ public:
     * @brief Prints for the lists in the lists part of the Menu
     */
     void printList() const;
-
+    /**
+     * @brief gets the Date of the Flight object
+     * @return Date
+     */
     Date getDate() const;
-
+    /**
+    * @brief Gets the difference between the actual time and the time of the Flight
+    * @return Date
+    */
     Date getTimeToFlight();
 
     /**
