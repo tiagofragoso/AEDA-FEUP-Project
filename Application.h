@@ -250,7 +250,17 @@ public:
     *@ brief Saves all the changes made in the execution of the program to the files
     */
     void saveAllFiles();
+    /**
+     * @brief Saves the fleet on the airplane File
+     * @param path
+     * @param fleet
+     */
     void saveFile(string &path, AirplanesSet fleet);
+    /**
+     * @brief Saves the technicians info in the techs file
+     * @param path
+     * @param techs
+     */
 	void saveFile(string &path, techniciansPriorityQueue techs);
 
     /**

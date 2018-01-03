@@ -666,8 +666,13 @@ public:
 	/*
 	void setTechs(priority_queue <Technician *> techs);
 	*/
-
+    /**
+     * @brief Updates the Date on the Airplanes
+     */
     void updateAirplanesDate();
+    /**
+     * @brief Updates the Date on the technicians
+     */
     void updateTechniciansDate();
 
 };

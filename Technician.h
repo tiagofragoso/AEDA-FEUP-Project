@@ -43,7 +43,7 @@ public:
 	vector <string> getModels() const;
     /**
      * @brief Gets the time untill the Technician is available
-     * @return int timeUntilAvailable of a Technician
+     * @return Date timeUntilAvailable of a Technician
      */
     Date getTimeWhenAvailable() const;
     /**
@@ -63,7 +63,7 @@ public:
 	void setModels(vector <string> model);
     /**
      * @brief Sets the timeUntilAvailable of the Technician object to the passed argument
-     * @param time int time
+     * @param time Date time
      */
 	void setTimeWhenAvailable(Date time);
 	void setTimeUntilAvailable(int time);
