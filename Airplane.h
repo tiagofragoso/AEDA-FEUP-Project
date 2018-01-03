@@ -93,7 +93,15 @@ public:
      * @param vector <\ Flight * \> flights
      */
     void setFlights(vector<Flight *> flights);
+    /**
+     * @brief Sets the Airplane's maintenance date to the one passed as parameter
+     * @param maintenance Date maintenance
+     */
     void setMaintenance(Date maintenance);
+    /**
+     * @brief Sets the Airplane's maintenance period to the one passed as parameter
+     * @param maintenancePeriod Date maintenancePeriod
+     */
     void setMaintenancePeriod(Date maintenancePeriod);
 
     /**
@@ -141,6 +149,11 @@ public:
  * @return returns true if a1's id is less than a2's id
  */
 bool compAId(Airplane *a1, Airplane *a2);
-
+/**
+ * @brief Compares two pairs
+ * @param d1 pair<int, Date> d1
+ * @param d2 pair<int, Date> d2
+ * @return returns true if d1 is equal to d2 and false otherwise
+ */
 bool compMaintenance(pair<int, Date> d1, pair<int, Date> d2);
 #endif //AEDA_FEUP_PROJECT_AIRPLANE_H
