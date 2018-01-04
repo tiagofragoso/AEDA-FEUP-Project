@@ -44,15 +44,15 @@ struct Date {
     Date(int y, int mo, int d, int h, int mn): year(y), month(mo), day(d), hour(h), minute(mn){}
     bool operator<(const Date& d1) const
     {
-        return std::tie(year, month, day, hour, minute) < std::tie(d1.year, d1.month, d1.day, hour, minute);
+        return std::tie(year, month, day, hour, minute) < std::tie(d1.year, d1.month, d1.day, d1.hour, d1.minute);
     }
     bool operator==(const Date& d1) const
     {
-        return std::tie(year, month, day, hour, minute) == std::tie(d1.year, d1.month, d1.day, hour, minute);
+        return std::tie(year, month, day, hour, minute) == std::tie(d1.year, d1.month, d1.day, d1.hour, d1.minute);
     }
     bool operator>(const Date& d1) const
     {
-        return std::tie(year, month, day, hour, minute) > std::tie(d1.year, d1.month, d1.day, hour, minute);
+        return std::tie(year, month, day, hour, minute) > std::tie(d1.year, d1.month, d1.day, d1.hour, d1.minute);
     }
     Date & operator+(const Date & d1){
         Date * d = new Date;

@@ -71,7 +71,7 @@ void Airplane::setMaintenance(Date maintenance) {
 }
 
 void Airplane::setMaintenancePeriod(Date maintenancePeriod) {
-    this->maintenancePeriod = maintenancePeriod;
+    this->maintenancePeriod.day = maintenancePeriod.day;
 }
 
 void Airplane::printSummary() const {

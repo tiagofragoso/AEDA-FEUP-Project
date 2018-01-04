@@ -166,8 +166,7 @@ void Company::printNextMaintenanceSessions() {
 
     for (auto a : fleet) {
         cout << "Airplane " << a->getId() << " - ";
-        a->getMaintenance().print();
-        cout << endl;
+        cout << a->getMaintenance().print() << endl;
     }
 }
 
@@ -247,7 +246,7 @@ void Company::printMaintenancePeriod() {
     for (auto &m : maintenance) {
 
         cout << "Airplane " << m.first << " - ";
-        m.second.print();
+        cout << m.second.print();
         cout << endl;
     }
 }
@@ -533,14 +532,9 @@ void Company::printSummaryAirplane() {
          << "Capacity\n";
 
     for (auto &airplane : fleet) {
-        airplanes.push_back(airplane);
-    }
-
-    sort(airplanes.begin(), airplanes.end(), compAId);
-
-    for (auto &airplane : airplanes) {
         airplane->printSummary();
     }
+
     cout << endl;
 }
 
@@ -2028,6 +2022,8 @@ void Company::updateTime() {
     updateFlights();
     updateBookings();
     updatePassengers();
+    updateAirplanesDate();
+    updateTechniciansDate();
 }
 
 Date Company::getLastReservation(Passenger *p) {
@@ -2069,16 +2065,24 @@ vector<Passenger *> Company::getIncPassengers() {
 
 void Company::updateAirplanesDate() {
 
+    vector<Airplane*> airplanes;
+
     for (auto a : fleet) {
+        airplanes.push_back(a);
+    }
 
-       while(Application::currentDate > a->getMaintenance()) {
+    for (auto a : airplanes) {
 
-           Airplane * aux = a;
-           removeAirplane(a);
-           aux->setMaintenance(aux->getMaintenance() + aux->getMaintenancePeriod());
-           addObject(aux);
+        Date date = a->getMaintenance();
 
-       }
+        while(date < Application::currentDate) {
+           date = date + a->getMaintenancePeriod();
+        }
+
+        Airplane * aux = a;
+        removeAirplane(a);
+        aux->setMaintenance(date);
+        addObject(aux);
     }
     
 }

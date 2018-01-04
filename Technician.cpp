@@ -48,7 +48,7 @@ bool Technician::operator<(const Technician &tech1) const {
 	return (timeWhenAvailable < tech1.getTimeWhenAvailable());
 }
 
-bool Technician::operator=(const Technician &tech1) const {
+bool Technician::operator==(const Technician &tech1) const {
 	return (id == tech1.getId());
 }
 

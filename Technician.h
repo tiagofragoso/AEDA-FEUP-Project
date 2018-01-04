@@ -66,7 +66,6 @@ public:
      * @param time Date time
      */
 	void setTimeWhenAvailable(Date time);
-	void setTimeUntilAvailable(int time);
     /**
      * @brief Prints the information about a technician
      */
@@ -78,15 +77,15 @@ public:
     /**
      * @brief overload of the operator < to be able to compare them when inserting in the priority queue
      * @param tech1 Technician tech1
-     * @return
+     * @return true if tech timeWhenAvailable is sooner that tech1
      */
 	bool operator<(const Technician &tech1) const;
     /**
-     * @brief overload of the operator = to be able to compare if the Technician objects are equal or not
+     * @brief overload of the operator == to be able to compare if the Technician objects are equal or not
      * @param tech1 Technician tech1
      * @return true if they are equal or false otherwise
      */
-	bool operator=(const Technician &tech1) const;
+	bool operator==(const Technician &tech1) const;
     /**
      * @brief overload of the operator << for objects of class Technician
      * @param o ostream &o
