@@ -79,7 +79,10 @@ void Technician::print() const {
 		else cout << " , " << models.at(i);
 	}
 	cout << endl;
-	cout << "Time Until Available: " << timeWhenAvailable.printFullDate() << endl;
+	cout << "Time Until Available: ";
+    if (timeWhenAvailable == Application::currentDate)
+        cout << "Available now.\n";
+    else cout << timeWhenAvailable.printFullDate() << endl;
 }
 
 void Technician::printSummary() const {
