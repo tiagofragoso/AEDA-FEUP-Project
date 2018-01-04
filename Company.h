@@ -130,7 +130,9 @@ public:
     * @brief identifier for a Passenger
     */
     static const string PASSENGER_IDENTIFIER;
-
+    /**
+     * @brief identifier for a Technician
+     */
     static const string TECHNICIAN_IDENTIFIER;
 
     //get methods
@@ -151,9 +153,15 @@ public:
     * @return vector <Passenger*> with the pointers to the Passengers of the company
     */
     vector<Passenger *> getPassengers() const;
-
+    /**
+     * @brief Gets the priority queue with all the technicians in the Company object
+     * @return techniciansPriorityQueue
+     */
     techniciansPriorityQueue getTechnicians() const;
-
+    /**
+     * @brief Gets if the priority queue of technicians has changed or not
+     * @return True if the technicians priority queue has changed and false otherwise
+     */
     bool getTechniciansChanged() const;
 
     /**
@@ -295,8 +303,13 @@ public:
     * @brief Deletes the pretended Airplane from the Company vector containing the Airplanes
     */
     void airplaneDelete();
-
+    /**
+     * @brief Reschedule the time in which a maintenance will occur
+     */
     void airplaneMaintenanceReschedule();
+    /**
+     * @brief Performs a Maintenance on an Airplane, it will use other functions and restart timetillAvaiable of a technician
+     */
     void airplanePerformMaintenance();
 
     /**
@@ -327,7 +340,10 @@ public:
     * @param airplane Airplane * airplane
     */
     void airplaneUpdateCapacity(Airplane *airplane);
-
+    /**
+     * @brief Changed the period in which a Maintenance will occur on a passed Airplane object
+     * @param airplane Airplane *
+     */
     void airplaneUpdateMaintenancePeriod(Airplane *airplane);
 
     /**
@@ -377,7 +393,7 @@ public:
     /**
      * @brief calls the function flightUpdatePrice
      */
-    void flightUpdatePrice(Airplane *airplanex);
+    void flightUpdatePrice(Airplane *airplane);
 
     /**
     * @brief Updates the base price of the Flight passed as argument
@@ -536,12 +552,29 @@ public:
      */
     void removePassengerFromFlights(Passenger * passenger);
 
-
+    /**
+     * @brief Based on a model of an Airplane, goes to the priority queue and chooses a Technician * to be returned
+     * @param model string model
+     * @return Technician *
+     */
     Technician* chooseTechnician(string model);
+    /**
+     * @brief Helper function to allow the user to choose a Technician
+     * @return Technician *
+     */
     Technician* chooseTechnician();
+    /**
+     * @brief Verifies if the passed argument id is a valid id of a Technician
+     * @param id int id
+     */
     void validTechnician(int id);
-
+    /**
+     * @brief Prints the next Maintenance sessions scheduled
+     */
     void printNextMaintenanceSessions();
+    /**
+     * @brief Print the Maintenance sessions between two dates
+     */
     void printMaintenancePeriod();
 
 	//SEGUNDO PROJECTO
