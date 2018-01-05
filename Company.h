@@ -694,8 +694,6 @@ public:
      * @return vector<Passenger *>
      */
     vector<Passenger *> getIncPassengers();
-
-
 	/*
 	void setTechs(priority_queue <Technician *> techs);
 	*/
