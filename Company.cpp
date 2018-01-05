@@ -210,6 +210,11 @@ void Company::printMaintenancePeriod() {
 
     sort(maintenance.begin(), maintenance.end(), compMaintenance);
 
+    if (maintenance.empty()) {
+        cout << "There are no scheduled maintenance sessions in this period.\n";
+        return;
+    }
+
     for (auto &m : maintenance) {
 
         cout << "Airplane " << m.first << " - ";
@@ -1590,7 +1595,7 @@ void Company::printRestrictions(Airplane *airplane) {
             dateLast = Application::currentDate;
         }
         cout << "The plane should be ready to take off from " << (*lastf)->getDestination() << " on "
-             << dateLast.print() << " at " << dateLast.printTime() << "or later.\n";
+             << dateLast.print() << " at " << dateLast.printTime() << " or later.\n";
     }
 }
 
@@ -1612,7 +1617,7 @@ void Company::technicianCreate() {
 
     do {
         do {
-            cout << "id: ";
+            cout << "Id: ";
             if (!validArg(id)) continue;
             else break;
 

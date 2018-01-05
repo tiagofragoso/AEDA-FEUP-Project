@@ -300,11 +300,11 @@ void Application::mainMenu() {
     Date date;
 
     do {
-        cout << "Insert current date (DD/MM/YYYY-HH/MM): ";
+        cout << "Insert current date (DD/MM/YYYY-HH:MM): ";
         if (validFullDate(date)) break;
     } while (true);
 
-    Application::currentDate = date;
+    currentDate = date;
 
     do {
 
