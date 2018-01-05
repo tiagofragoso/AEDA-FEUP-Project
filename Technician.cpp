@@ -1,7 +1,5 @@
 #include "Technician.h"
 #include "Application.h"
-#include <iomanip>
-#include <string>
 
 Technician::Technician(unsigned int id,string name, vector<string> models) {
 	this->id = id;

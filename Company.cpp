@@ -1167,8 +1167,6 @@ Flight *Company::chooseFlight(Airplane *airplane) {
 Technician *Company::chooseTechnician() {
 
     int tId;
-    Technician *ctechnician;
-
     do {
         cout << "Choose technician: ";
         if (!validArg(tId)) continue;
@@ -1202,11 +1200,9 @@ void Company::validTechnician(int id) {
 
     bool found = false;
     techniciansPriorityQueue temp;
-    Technician *aux;
 
     while (!technicians.empty()) {
         if (technicians.top()->getId() == id) {
-            aux = technicians.top();
             found = true;
         }
         temp.push(technicians.top());

@@ -91,7 +91,7 @@ ostream &operator<<(ostream &o, Flight *f) {
     o << f->getType() << to_string(f->id) << "; " << f->departure << "; " << f->destination << "; "
       << f->getDate().printFullDate() << "; " << to_string(f->basePrice) << "; " << f->getDuration().printTime() << "; ";
     if (f->getType() == "c") {
-        unsigned int i = f->getPassengers().size();
+        size_t i = f->getPassengers().size();
         if (i > 0) {
             for (auto const &p: f->getPassengers()) {
                 o << p.first << "-" << to_string(p.second->getId());
