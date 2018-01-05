@@ -32,7 +32,7 @@ enum date_member_t {
     MINUTE = 5
 };
 
-static vector<int> monthdays = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+static const vector<int> monthdays = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 struct Date {
     int day = 0;
@@ -154,7 +154,7 @@ void next(string &piece, string &line, string separator);
  * @return true if input is valid and false otherwise
  */
 bool validString(string &s);
-
 bool validFullDate(Date &date);
 bool validTime(Date &date);
+bool validDate(Date &date);
 #endif /* SRC_HELPER_H_ */

@@ -133,8 +133,6 @@ public:
      */
     void addFlight(Flight *flight);
 
-    vector<Flight *> getCurrentFlights();
-
     /**
      * @brief overload of the operator << for objects of class Airplane
      * @param o ostream o&

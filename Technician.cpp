@@ -84,17 +84,14 @@ void Technician::print() const {
 }
 
 void Technician::printSummary() const {
-	
+
 	cout << std::left;
 	cout << setw(13) << id << setw(3) << " " << setw(30) << name << setw(3) << " ";
-	bool first = true;
-	for (int i = 0; i < models.size(); i++)
-	{
-        if (first){
-        first= false;
-        cout << models.at(i);
-        }
-        else cout << " , " <<  models.at(i) ;
+    size_t s = this->models.size();
+	for (auto const &m: this->models) {
+        s--;
+        cout << m;
+        if (s) cout << ", ";
 	}
 	cout << endl;
 }

@@ -167,6 +167,42 @@ bool validTime(Date &date) {
     return success;
 }
 
+bool validDate(Date &date) {
+    string input;
+    getline(cin, input);
+    bool success = true;
+    if (input.length() < 4 || input.length() > 10) success = false;
+    else {
+        trimString(input);
+        try {
+            next(date.day, input, "/");
+        } catch (InvalidFormat &i) {
+            success = false;
+            goto end;
+        }
+        try {
+            next(date.month, input, "/");
+        } catch (InvalidFormat &i) {
+            success = false;
+            goto end;
+        }
+        try {
+            next(date.year, input, "/");
+        } catch (InvalidFormat &i) {
+            success = false;
+            goto end;
+        }
+    }
+    end:
+
+    Date copyDate = date;
+    copyDate.normalize();
+    if (!(date == copyDate)) success = false;
+
+    if (!success) cout << "Invalid input. Reenter.\n";
+    return success;
+}
+
 void Date::normalize() {
     while (this->minute > 59) {
         this->minute -= 60;

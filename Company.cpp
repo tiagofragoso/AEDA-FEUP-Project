@@ -137,7 +137,6 @@ void Company::printSummaryPassenger() {
 Passenger *Company::choosePassenger() {
 
     int pId;
-    Passenger *cpassenger;
     do {
         cout << "Choose passenger: ";
         if (!validArg(pId)) continue;
@@ -148,8 +147,7 @@ Passenger *Company::choosePassenger() {
     for (auto &passenger : getAllPassengers()) {
 
         if (passenger->getId() == pId) {
-            cpassenger = passenger;
-            return cpassenger;
+            return passenger;
         }
     }
 
@@ -174,6 +172,7 @@ void Company::printNextMaintenanceSessions() {
 }
 
 void Company::printMaintenancePeriod() {
+    Date d1, d2;
 
     if (fleet.empty()) {
 
@@ -182,48 +181,15 @@ void Company::printMaintenancePeriod() {
 
     }
 
-    string date1, date2;
-    Date d1, d2;
-
     do {
         cout << "First day: (DD/MM/YYYY): ";
-        if (!validString(date1)) continue;
-        if (date1.length() < 8) {
-            cout << "Insert date DD/MM/YYYY format.\n";
-            continue;
-        }
-        try {
-            string dob = date1;
-            next(d1.day, dob, "/");
-            next(d1.month, dob, "/");
-            next(d1.year, dob, "/");
-        }
-        catch (InvalidFormat &i) {
-            cout << "Insert date of birth using DD/MM/YYYY format.\n";
-            continue;
-        }
-        break;
+        if(validDate(d1)) break;
 
     } while (true);
 
     do {
         cout << "Last day: (DD/MM/YYYY): ";
-        if (!validString(date2)) continue;
-        if (date1.length() < 8) {
-            cout << "Insert date DD/MM/YYYY format.\n";
-            continue;
-        }
-        try {
-            string dob = date2;
-            next(d2.day, dob, "/");
-            next(d2.month, dob, "/");
-            next(d2.year, dob, "/");
-        }
-        catch (InvalidFormat &i) {
-            cout << "Insert date of birth using DD/MM/YYYY format.\n";
-            continue;
-        }
-        break;
+        if(validDate(d2)) break;
 
     } while (true);
 
@@ -238,8 +204,6 @@ void Company::printMaintenancePeriod() {
                 maintenance.emplace_back(a->getId(), date);
             }
             date = date + a->getMaintenancePeriod();
-            //addTime(date, a->getMaintenancePeriod());
-
         }
 
     }
@@ -365,22 +329,7 @@ Passenger *Company::passengerCreate() {
 
     do {
         cout << "Date of Birth: (DD/MM/YYYY): ";
-        if (!validString(dateOfBirth)) continue;
-        if (dateOfBirth.length() < 8) {
-            cout << "Insert date of birth using DD/MM/YYYY format.\n";
-            continue;
-        }
-        try {
-            string dob = dateOfBirth;
-            next(dobd.day, dob, "/");
-            next(dobd.month, dob, "/");
-            next(dobd.year, dob, "/");
-        }
-        catch (InvalidFormat i) {
-            cout << "Insert date of birth using DD/MM/YYYY format.\n";
-            continue;
-        }
-        break;
+        if (validDate(dobd)) break;
 
     } while (true);
 
@@ -409,7 +358,7 @@ Passenger *Company::passengerCreate() {
 
 void Company::passengerDelete() {
 
-    if (passengers.empty()) {
+    if (getAllPassengers().empty()) {
         cout << "There are no passengers.\n";
         return;
     }
@@ -430,8 +379,9 @@ void Company::passengerDelete() {
     removePassengerFromFlights(passenger);
     removePassengerFromBookings(passenger);
     removePassenger(passenger);
-    cout << "Passenger deleted sucessfully.\n ";
+    cout << "Passenger deleted successfully.\n ";
     passengersChanged = true;
+    updateTime();
 
 }
 
@@ -460,23 +410,8 @@ void Company::passengerUpdateDateOfBirth(Passenger *passenger) {
     passenger->getDateOfBirth().print();
     cout << "'.\n";
     do {
-        cout << "Insert the new date of birth (DD/MM/YYYY): ";
-        if (!validString(newDateOfBirth)) continue;
-        if (newDateOfBirth.length() < 8) {
-            cout << "Insert date of birth using DD/MM/YYYY format.\n";
-            continue;
-        }
-        try {
-            string dob = newDateOfBirth;
-            next(dobd.day, dob, "/");
-            next(dobd.month, dob, "/");
-            next(dobd.year, dob, "/");
-        }
-        catch (InvalidFormat &i) {
-            cout << "Insert date of birth using DD/MM/YYYY format.\n";
-            continue;
-        }
-        break;
+        cout << "Insert the new date of Birth: (DD/MM/YYYY): ";
+        if (validDate(dobd)) break;
 
     } while (true);
     passenger->setDateOfBirth(dobd);
@@ -620,7 +555,7 @@ void Company::validAirplane(int id) {
 }
 
 void Company::airplaneCreate() {
-
+    Date dateMaintenance;
     string model, date;
     int id, capacity, period;
     int day, month, year;
@@ -665,36 +600,17 @@ void Company::airplaneCreate() {
 
     do {
         cout << "Date of next maintenance: (DD/MM/YYYY): ";
-        if (!validString(date)) continue;
-        if (date.length() < 8) {
-            cout << "Insert date of birth using DD/MM/YYYY format.\n";
-            continue;
-        }
-        try {
-            string dob = date;
-            next(day, dob, "/");
-            next(month, dob, "/");
-            next(year, dob, "/");
-        }
-        catch (InvalidFormat i) {
-            cout << "Insert date of birth using DD/MM/YYYY format.\n";
-            continue;
-        }
-        break;
+        if(validDate(dateMaintenance)) break;
 
     } while (true);
 
     do {
 
-        cout << "Insert period of airplane maintenance: ";
+        cout << "Insert period of airplane maintenance (days): ";
         if (validArg(period)) break;
 
     } while (true);
 
-    Date dateMaintenance;
-    dateMaintenance.year = year;
-    dateMaintenance.month = month;
-    dateMaintenance.day = day;
     Date mp;
     mp.day = period;
 
@@ -760,39 +676,17 @@ void Company::airplaneMaintenanceReschedule() {
 
     } while (true);
 
-    string newDate;
-    int day, month, year;
-    cout << "The next maintenance session date for the chosen airplane is '";
-    cout << airplane->getMaintenance().day << "/" << airplane->getMaintenance().month << "/"
-         << airplane->getMaintenance().year << "'.\n";
+    Date newDate;
+    cout << "The next maintenance session date for the chosen airplane is '" << airplane->getMaintenance().print() << "'.\n";
 
-    cout << "Insert the new date (DD/MM/YYYY): ";
     do {
-        if (!validString(newDate)) continue;
-        if (newDate.length() < 8) {
-            cout << "Insert date using DD/MM/YYYY format.\n";
-            continue;
-        }
-        try {
-            string dob = newDate;
-            next(day, dob, "/");
-            next(month, dob, "/");
-            next(year, dob, "/");
-        }
-        catch (InvalidFormat &i) {
-            cout << "Insert date using DD/MM/YYYY format.\n";
-            continue;
-        }
-        break;
+        cout << "Insert the new date (DD/MM/YYYY): ";
+        if(validDate(newDate)) break;
     } while (true);
 
-    Date date;
-    date.day = day;
-    date.month = month;
-    date.year = year;
 
     removeAirplane(airplane);
-    airplane->setMaintenance(date);
+    airplane->setMaintenance(newDate);
     addObject(airplane);
     airplanesChanged = true;
 
@@ -914,10 +808,10 @@ void Company::airplaneUpdateCapacity(Airplane *airplane) {
 void Company::airplaneUpdateMaintenancePeriod(Airplane *airplane) {
 
     int newPeriod;
-    cout << "The current period between maintenance sessions for the chosen airplane is '"
-         << airplane->getMaintenancePeriod().day << "'.\n";
+    cout << "The current period between maintenance sessions for the chosen airplane is "
+         << airplane->getMaintenancePeriod().day << " day(s).\n";
     do {
-        cout << "Insert the new period: ";
+        cout << "Insert the new period (days): ";
         if (validArg(newPeriod)) break;
     } while (true);
     Date mp;
@@ -1057,6 +951,7 @@ void Company::bookFlightWithType(Passenger *p, string type) {
         cout << "You have rented the flight " << id << ".\n";
     }
     flightsChanged = true;
+    updateTime();
 }
 
 void Company::returnTicket(Passenger *p) {
@@ -1135,7 +1030,7 @@ void Company::printSummaryFlight(Airplane *airplane) {
          << "Destination" << setw(3) << " " << setw(18) << "Date" << endl;
 
     for (auto &flight : airplane->getFlights()) {
-
+        if (!pastFlight(flight))
         flight->printSummary();
     }
     cout << endl;
@@ -1145,8 +1040,6 @@ void Company::printSummaryFlight(Airplane *airplane) {
 Flight *Company::chooseFlight(Airplane *airplane) {
 
     int fId;
-    Flight *cflight;
-
     do {
         cout << "Choose flight: ";
         if (!validArg(fId)) continue;
@@ -1154,11 +1047,10 @@ Flight *Company::chooseFlight(Airplane *airplane) {
 
     } while (true);
 
-    for (auto &flight : airplane->getFlights()) {
+    for (auto const flight : airplane->getFlights()) {
 
-        if (flight->getId() == fId) {
-            cflight = flight;
-            return cflight;
+        if (flight->getId() == fId && !pastFlight(flight)) {
+            return flight;
         }
     }
     throw InvalidFlight(fId);
@@ -1219,7 +1111,11 @@ void Company::validTechnician(int id) {
 
 void Company::flightShow(Airplane *airplane) {
 
-    if (airplane->getFlights().empty()) {
+    unsigned int fnr = 0;
+
+    for (auto const f: airplane->getFlights()) if (!pastFlight(f)) fnr++;
+
+    if (!fnr) {
         cout << "There are no flights in this airplane.\n";
         return;
     }
@@ -1265,9 +1161,9 @@ void Company::validFlight(int id) {
 
     for (auto &airplane : fleet) {
 
-        for (auto &flight : airplane->getFlights()) {
+        for (auto const flight : airplane->getFlights()) {
 
-            if (flight->getId() == id)
+            if (flight->getId() == id && !pastFlight(flight))
                 throw InvalidFlight(id);
         }
     }
@@ -1330,7 +1226,6 @@ void Company::flightCreate(Airplane *airplane) {
         else break;
 
     } while (true);
-    //TODO: Check if date is correct
     do {
         cout << "Duration (hh:mm): ";
         if (validTime(duration)) break;
@@ -1340,7 +1235,6 @@ void Company::flightCreate(Airplane *airplane) {
         cout << "Base price (in euros): ";
         if (validArg(price)) break;
     } while (true);
-    //TODO: Check if date is correct
 
     do {
         cout << "Date (DD/MM/YY-hh:mm): ";
@@ -1380,7 +1274,11 @@ void Company::flightCreate(Airplane *airplane) {
 
 void Company::flightDelete(Airplane *airplane) {
 
-    if (airplane->getFlights().empty()) {
+    unsigned int fnr = 0;
+
+    for (auto const f: airplane->getFlights()) if (!pastFlight(f)) fnr++;
+
+    if (!fnr) {
         cout << "There are no flights in this airplane.\n";
         return;
     }
@@ -1564,17 +1462,6 @@ void Company::flightAddPassenger(Flight *flight, Passenger *passenger) {
 vector<pair<string, Flight *> > Company::getTickets(Passenger *p) {
     vector<pair<string, Flight *> > tickets;
 
-    /*for (auto const &f: flights) {
-        if (f->getType() == "c")
-            for (auto const &pass: f->getPassengers()) {
-                if (pass.second->getId() == p->getId()) tickets.emplace_back(pass.first, f);
-            }
-        else {
-            if (f->getBuyer() != nullptr)
-                if (*(f->getBuyer()) == *p) tickets.emplace_back("ALL", f);
-        }
-    }*/
-
     for_each(bookings.begin(), bookings.end(), [p, &tickets](Booking *b) {
         if (b->getPassenger()->getId() == p->getId())
             tickets.emplace_back(b->getSeat(), b->getFlight());
@@ -1599,8 +1486,8 @@ void Company::sortFlights() {
 
 void Company::clearData(string identifier) {
 
-    if (identifier == Company::PASSENGER_IDENTIFIER) passengers.clear();
-    else if (identifier == Company::FLIGHT_IDENTIFIER) flights.clear();
+    if (identifier == Company::PASSENGER_IDENTIFIER) {passengers.clear(); inactivePassengers.clear();}
+    else if (identifier == Company::FLIGHT_IDENTIFIER) {flights.clear(); pastFlights.clear();}
     else if (identifier == Company::AIRPLANE_IDENTIFIER) fleet.clear();
 
 }
@@ -1629,12 +1516,17 @@ void Company::removeFlight(Flight *flight) {
 
     auto it = find(flights.begin(), flights.end(), flight);
     if (it != flights.end()) flights.erase(it);
+    updateTime();
 
 }
 
 void Company::flightUpdatePrice(Airplane *airplane) {
 
-    if (airplane->getFlights().empty()) {
+    unsigned int fnr = 0;
+
+    for (auto const f: airplane->getFlights()) if (!pastFlight(f)) fnr++;
+
+    if (!fnr) {
         cout << "There are no flights in this airplane.\n";
         return;
     }

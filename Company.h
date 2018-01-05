@@ -695,10 +695,6 @@ public:
      */
     vector<Passenger *> getIncPassengers();
 
-
-	/*
-	void setTechs(priority_queue <Technician *> techs);
-	*/
     /**
      * @brief Updates the Date on the Airplanes
      */
