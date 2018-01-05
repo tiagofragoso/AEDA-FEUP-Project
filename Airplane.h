@@ -67,7 +67,15 @@ public:
      * @return vector <Flight *> pointers to the flights of an Airplane
      */
     vector<Flight *> getFlights() const;
+    /**
+     * @brief Gets the Date of a Airplane object
+     * @return Date
+     */
     Date getMaintenance() const;
+    /**
+     * @brief Gets the maintenances period of an Airplane object
+     * @return Date
+     */
     Date getMaintenancePeriod() const;
 
     /**

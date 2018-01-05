@@ -154,7 +154,16 @@ void next(string &piece, string &line, string separator);
  * @return true if input is valid and false otherwise
  */
 bool validString(string &s);
-
+/**
+ * @brief Checks if a full Date is valid or not
+ * @param date Date &date
+ * @return bool - true if valid and false otherwise
+ */
 bool validFullDate(Date &date);
+/**
+ * @brief Checks if a Time is valid or not
+ * @param date Date &date
+ * @return bool - true if valid and false otherwise
+ */
 bool validTime(Date &date);
 #endif /* SRC_HELPER_H_ */
