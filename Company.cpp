@@ -182,14 +182,14 @@ void Company::printMaintenancePeriod() {
     }
 
     do {
-        cout << "First day: (DD/MM/YYYY): ";
-        if(validDate(d1)) break;
+        cout << "First day (DD/MM/YYYY): ";
+        if (validDate(d1)) break;
 
     } while (true);
 
     do {
-        cout << "Last day: (DD/MM/YYYY): ";
-        if(validDate(d2)) break;
+        cout << "Last day (DD/MM/YYYY): ";
+        if (validDate(d2)) break;
 
     } while (true);
 
@@ -600,7 +600,7 @@ void Company::airplaneCreate() {
 
     do {
         cout << "Date of next maintenance: (DD/MM/YYYY): ";
-        if(validDate(dateMaintenance)) break;
+        if (validDate(dateMaintenance)) break;
 
     } while (true);
 
@@ -677,11 +677,12 @@ void Company::airplaneMaintenanceReschedule() {
     } while (true);
 
     Date newDate;
-    cout << "The next maintenance session date for the chosen airplane is '" << airplane->getMaintenance().print() << "'.\n";
+    cout << "The next maintenance session date for the chosen airplane is '" << airplane->getMaintenance().print()
+         << "'.\n";
 
     do {
         cout << "Insert the new date (DD/MM/YYYY): ";
-        if(validDate(newDate)) break;
+        if (validDate(newDate)) break;
     } while (true);
 
 
@@ -1031,7 +1032,7 @@ void Company::printSummaryFlight(Airplane *airplane) {
 
     for (auto &flight : airplane->getFlights()) {
         if (!pastFlight(flight))
-        flight->printSummary();
+            flight->printSummary();
     }
     cout << endl;
 }
@@ -1486,9 +1487,13 @@ void Company::sortFlights() {
 
 void Company::clearData(string identifier) {
 
-    if (identifier == Company::PASSENGER_IDENTIFIER) {passengers.clear(); inactivePassengers.clear();}
-    else if (identifier == Company::FLIGHT_IDENTIFIER) {flights.clear(); pastFlights.clear();}
-    else if (identifier == Company::AIRPLANE_IDENTIFIER) fleet.clear();
+    if (identifier == Company::PASSENGER_IDENTIFIER) {
+        passengers.clear();
+        inactivePassengers.clear();
+    } else if (identifier == Company::FLIGHT_IDENTIFIER) {
+        flights.clear();
+        pastFlights.clear();
+    } else if (identifier == Company::AIRPLANE_IDENTIFIER) fleet.clear();
 
 }
 
@@ -1555,13 +1560,15 @@ void Company::printRestrictions(Airplane *airplane) {
 
     if (airplane->getFlights().empty()) cout << "There are no restrictions for this flight.\n";
     else if (airplane->getFlights().size() == 1) {
-        cout << "For efficiency purposes, the airplane will never fly empty. Therefore, we must apply some restrictions to flight creation.\n";
+        cout
+                << "For efficiency purposes, the airplane will never fly empty. Therefore, we must apply some restrictions to flight creation.\n";
         auto it = airplane->getFlights().begin();
         Date begin = (*it)->getDate();
         Date final = (*it)->getDate() + (*it)->getDuration();
         final.normalize();
         if (begin > Application::currentDate) {
-            cout << "The plane should be ready to land on " << (*it)->getDestination() << " on " << begin.print() << " at " << begin.printTime() << ".\n";
+            cout << "The plane should be ready to land on " << (*it)->getDestination() << " on " << begin.print()
+                 << " at " << begin.printTime() << ".\n";
         }
         if ((final < Application::currentDate)) {
             final = Application::currentDate;
@@ -1575,13 +1582,15 @@ void Company::printRestrictions(Airplane *airplane) {
         auto lastf = firstf + (airplane->getFlights().size() - 1);
         Date dateFirst = (*firstf)->getDate();
         if (dateFirst > Application::currentDate) {
-            cout << "The plane should be ready to land on " << (*firstf)->getDestination() << " on " << dateFirst.print() << " at " << dateFirst.printTime() << ".\n";
+            cout << "The plane should be ready to land on " << (*firstf)->getDestination() << " on "
+                 << dateFirst.print() << " at " << dateFirst.printTime() << ".\n";
         }
         Date dateLast = (*lastf)->getDate() + (*lastf)->getDuration();
         if (dateLast < Application::currentDate) {
             dateLast = Application::currentDate;
         }
-        cout << "The plane should be ready to take off from " << (*lastf)->getDestination() << " on " << dateLast.print() << " at " << dateLast.printTime() << "or later.\n";
+        cout << "The plane should be ready to take off from " << (*lastf)->getDestination() << " on "
+             << dateLast.print() << " at " << dateLast.printTime() << "or later.\n";
     }
 }
 

@@ -93,7 +93,8 @@ InvalidFilePath::InvalidFilePath(std::string type) : type(type) {}
 UnavailableTechnician::UnavailableTechnician(string model) : model(model) {}
 
 void UnavailableTechnician::print() const {
-    cout << "There is no available technician for " << model << " airplane model. Please reschedule maintenance session.\n";
+    cout << "There is no available technician for " << model
+         << " airplane model. Please reschedule maintenance session.\n";
 }
 
 InvalidTechnician::InvalidTechnician(unsigned int id) {

@@ -113,7 +113,9 @@ private:
 
 public:
     InvalidTechnician(unsigned int id);
+
     void print() const;
+
     void printDuplicate() const;
 };
 
@@ -168,6 +170,7 @@ private:
     string model;
 public:
     UnavailableTechnician(string model);
+
     void print() const;
 };
 

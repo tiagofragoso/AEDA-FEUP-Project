@@ -23,7 +23,7 @@
 using namespace std;
 
 struct AirplaneCompare {
-    bool operator() (Airplane * a1, Airplane * a2) {
+    bool operator()(Airplane *a1, Airplane *a2) {
         if (a1->getMaintenance().year == a2->getMaintenance().year) {
             if (a1->getMaintenance().month == a2->getMaintenance().month)
                 return a1->getMaintenance().day < a2->getMaintenance().day;
@@ -33,7 +33,7 @@ struct AirplaneCompare {
 };
 
 struct TechnicianCompare {
-    bool operator() (Technician * t1, Technician * t2) {
+    bool operator()(Technician *t1, Technician *t2) {
         return t1->getTimeWhenAvailable() > t2->getTimeWhenAvailable();
     }
 };
@@ -41,18 +41,18 @@ struct TechnicianCompare {
 typedef std::set<Airplane *, AirplaneCompare> AirplanesSet;
 
 struct InactivePassengerHash {
-     int operator() (const Passenger * p1) const {
+    int operator()(const Passenger *p1) const {
         return static_cast<int>(hash<int>()(p1->getId()));
     }
 
-    bool operator() (const Passenger * p1, const Passenger * p2) const{
+    bool operator()(const Passenger *p1, const Passenger *p2) const {
         return p1->getId() == p2->getId();
     }
 };
 
 typedef unordered_set<Passenger *, InactivePassengerHash, InactivePassengerHash> inactivePassengersHT;
 
-typedef priority_queue <Technician *, vector<Technician *>, TechnicianCompare> techniciansPriorityQueue;
+typedef priority_queue<Technician *, vector<Technician *>, TechnicianCompare> techniciansPriorityQueue;
 
 /**
 *	The Company class is the one that countains all the passengers, airplanes and flights information
@@ -85,7 +85,7 @@ private:
     /**
      * @brief priority queue that has all of the pointers to technicians of the company
      */
-	techniciansPriorityQueue technicians;
+    techniciansPriorityQueue technicians;
     /**
      * @brief vector with pointers to all of the Bookings of the company
      */
@@ -98,7 +98,6 @@ private:
      * @brief Hash Table that holds all the inactive Passengers of the company
      */
     inactivePassengersHT inactivePassengers;
-
     /**
     * @brief bool passengersChanged is true when Passengers vector has changed and false otherwise
     */
@@ -114,8 +113,7 @@ private:
     /**
      * @brief bool techniciansChanged is true when Technicians priority queue has changed and false otherwise
      */
-	static bool techniciansChanged;
-
+    static bool techniciansChanged;
 
 public:
 
@@ -165,11 +163,13 @@ public:
     * @return vector <Passenger*> with the pointers to the Passengers of the company
     */
     vector<Passenger *> getPassengers() const;
+
     /**
      * @brief Gets the priority queue with all the technicians in the Company object
      * @return techniciansPriorityQueue
      */
     techniciansPriorityQueue getTechnicians() const;
+
     /**
      * @brief Gets if the priority queue of technicians has changed or not
      * @return True if the technicians priority queue has changed and false otherwise
@@ -315,10 +315,12 @@ public:
     * @brief Deletes the pretended Airplane from the Company vector containing the Airplanes
     */
     void airplaneDelete();
+
     /**
      * @brief Reschedule the time in which a maintenance will occur
      */
     void airplaneMaintenanceReschedule();
+
     /**
      * @brief Performs a Maintenance on an Airplane, it will use other functions and restart timetillAvaiable of a technician
      */
@@ -352,6 +354,7 @@ public:
     * @param airplane Airplane * airplane
     */
     void airplaneUpdateCapacity(Airplane *airplane);
+
     /**
      * @brief Changed the period in which a Maintenance will occur on a passed Airplane object
      * @param airplane Airplane *
@@ -419,7 +422,6 @@ public:
     * @param passenger Passenger* passenger
     */
     void flightAddPassenger(Flight *flight, Passenger *passenger);
-
 
     /**
     * @brief Returns the seat chosen by the user on the Flight passed as argument
@@ -556,163 +558,189 @@ public:
      * @brief Prints time restrictions to ensure connection flights
      * @param airplane
      */
-    void printRestrictions(Airplane * airplane);
+    void printRestrictions(Airplane *airplane);
 
     /**
      * @brief Removes passenger from all flights
      * @param passenger Passenger * passenger
      */
-    void removePassengerFromFlights(Passenger * passenger);
+    void removePassengerFromFlights(Passenger *passenger);
 
     /**
      * @brief Based on a model of an Airplane, goes to the priority queue and chooses a Technician * to be returned
      * @param model string model
      * @return Technician *
      */
-    Technician* chooseTechnician(string model);
+    Technician *chooseTechnician(string model);
+
     /**
      * @brief Helper function to allow the user to choose a Technician
      * @return Technician *
      */
-    Technician* chooseTechnician();
+    Technician *chooseTechnician();
+
     /**
      * @brief Verifies if the passed argument id is a valid id of a Technician
      * @param id int id
      */
     void validTechnician(int id);
+
     /**
      * @brief Prints the next Maintenance sessions scheduled
      */
     void printNextMaintenanceSessions();
+
     /**
      * @brief Print the Maintenance sessions between two dates
      */
     void printMaintenancePeriod();
 
-	//SEGUNDO PROJECTO
 
-	void techRemovefromQueue(Technician * tech);
+    void techRemovefromQueue(Technician *tech);
+
     /**
      * @brief Creates a new Technician and adds it to the Company priority queue technicians after validating the information
      */
-	void technicianCreate();
+    void technicianCreate();
+
     /**
     * @brief Prints the total information of a desired Technician
     */
     void technicianShow();
+
     /**
       * @brief Deletes the pretended Technician from the Company priority queue containing the technicians
       */
     void technicianDelete();
+
     /**
      * @brief Updates the name of the technician passed as argument (pointer) to the one inputed by the user
      * @param technician Technician* technician
      */
     void technicianUpdateName(Technician *technician);
+
     /**
      * @brief Adds a string model inputed by the user in the vector of strings models of the object Technician
      * @param technician  Technician* technician
      */
     void technicianAddModel(Technician *technician);
+
     /**
      * @brief Deletes a string model inputed by the user in the vector of strings models of the object Technician
      * @param technician  Technician* technician
      */
     void technicianDeleteModel(Technician *technician);
+
     /**
      * @brief Prints the summary of a Technician
      */
     void printSummaryTechnician() const;
+
     /**
      * @brief Pushes the passed argument in the priority queue technicians of the Company class
      * @param technician Technician* technician
      */
     void addObject(Technician *technician);
+
     /**
      * @brief Resets all the state flags (passengersChanged, techniciansChanged, airplanesChanged and flightsChanged) to the false state
      */
     void setFlag();
+
     /**
      * @brief Gets the id of the next Booking
      * @return id
      */
     unsigned int getNextBookingId();
+
     /**
      * @brief Adds the passed argument Booking * booking to the vector of Booking of the class Company
      * @param booking Booking * booking
      */
-    void addBooking(Booking * booking);
+    void addBooking(Booking *booking);
+
     /**
      * @brief
      * @param flight Flight * flight
      */
-    void addBookingsFromFlight(Flight * flight);
+    void addBookingsFromFlight(Flight *flight);
+
     /**
      * @brief Adds a Passenger * to the Hash Table of inactive passengers of the class Company
      * @param passenger Passenger* passenger
      */
-    void addInactivePassenger(Passenger * passenger);
+    void addInactivePassenger(Passenger *passenger);
+
     /**
      * @brief Removes the desired Passenger passed as parameter from the inactivePassengers hash table
      * @param passenger Passenger * passenger
      */
-    void removeInactivePassenger(Passenger * passenger);
+    void removeInactivePassenger(Passenger *passenger);
+
     /**
      * @brief Checks if a flights Date has already passed
      * @param f Flight * f
      * @return true if it's in the past or false otherwise(future)
      */
-    bool pastFlight(Flight * f);
+    bool pastFlight(Flight *f);
+
     /**
      * @brief Checks if a passenger passed as argument is inactive or not
      * @param p Passenger * p
      * @return true if the Passenger * p is inactive and false otherwise
      */
-    bool inactivePassenger(Passenger * p);
+    bool inactivePassenger(Passenger *p);
+
     /**
      * @brief Gets the last reservation of a passed Passenger pointer to help with inactivity functions
      * @param p Passenger * p
      * @return Date
      */
-    Date getLastReservation(Passenger * p);
+    Date getLastReservation(Passenger *p);
+
     /**
      *  @brief Update the Time of the program
      */
     void updateTime();
+
     /**
      * @brief Updates the bookings according to the time
      */
     void updateBookings();
+
     /**
      * @brief Updates the flights according to the time
      */
     void updateFlights();
+
     /**
      * @brief Updates the passengers according to the time
      */
     void updatePassengers();
+
     /**
      * @brief Gets all the passengers that are registered in the system
      * @return vector <Passenger*>
      */
     vector<Passenger *> getAllPassengers();
+
     /**
      * @brief Removes the passenger passed as argument from the bookings vector
      * @param passenger Passenger * passenger
      */
-    void removePassengerFromBookings(Passenger * passenger);
+    void removePassengerFromBookings(Passenger *passenger);
+
     /**
      * @brief Gets all the inactive Passengers
      * @return vector<Passenger *>
      */
     vector<Passenger *> getIncPassengers();
-	/*
-	void setTechs(priority_queue <Technician *> techs);
-	*/
+
     /**
      * @brief Updates the Date on the Airplanes
      */
     void updateAirplanesDate();
+
     /**
      * @brief Updates the Date on the technicians
      */
