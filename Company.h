@@ -95,7 +95,7 @@ private:
      */
     vector<Booking *> pastBookings;
     /**
-     * @brief Hast Table that holds all the inactive Passengers of the company
+     * @brief Hash Table that holds all the inactive Passengers of the company
      */
     inactivePassengersHT inactivePassengers;
     /**
