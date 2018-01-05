@@ -1167,8 +1167,6 @@ Flight *Company::chooseFlight(Airplane *airplane) {
 Technician *Company::chooseTechnician() {
 
     int tId;
-    Technician *ctechnician;
-
     do {
         cout << "Choose technician: ";
         if (!validArg(tId)) continue;
@@ -1202,11 +1200,9 @@ void Company::validTechnician(int id) {
 
     bool found = false;
     techniciansPriorityQueue temp;
-    Technician *aux;
 
     while (!technicians.empty()) {
         if (technicians.top()->getId() == id) {
-            aux = technicians.top();
             found = true;
         }
         temp.push(technicians.top());
@@ -1667,26 +1663,33 @@ void Company::printRestrictions(Airplane *airplane) {
 
     if (airplane->getFlights().empty()) cout << "There are no restrictions for this flight.\n";
     else if (airplane->getFlights().size() == 1) {
+        cout << "For efficiency purposes, the airplane will never fly empty. Therefore, we must apply some restrictions to flight creation.\n";
         auto it = airplane->getFlights().begin();
+        Date begin = (*it)->getDate();
         Date final = (*it)->getDate() + (*it)->getDuration();
         final.normalize();
-        cout
-                << "For efficiency purposes, the airplane will never fly empty. Therefore, we must apply some restrictions to flight creation.\n";
-        cout << "The plane should be ready to take off from " << (*it)->getDeparture() << " on " <<
-             (*it)->getDate().print() << " at " << (*it)->getDate().printTime() << " and it should"
-                     " be ready to take off from " << (*it)->getDestination() << "on " <<
-             final.print() << " at " << final.printTime() << ".\n";
+        if (begin > Application::currentDate) {
+            cout << "The plane should be ready to land on " << (*it)->getDestination() << " on " << begin.print() << " at " << begin.printTime() << ".\n";
+        }
+        if ((final < Application::currentDate)) {
+            final = Application::currentDate;
+        }
+        cout << "The plane should be ready to take off from " << (*it)->getDestination() << " on " <<
+             final.print() << " at " << final.printTime() << " or later.\n";
     } else {
-        auto first = airplane->getFlights().begin();
-        auto last = first + (airplane->getFlights().size() - 1);
         cout
                 << "For efficiency purposes, the airplane will never fly empty. Therefore, we must apply some restrictions to flight creation.\n";
-        cout << "The plane should be ready to take off from " << (*first)->getDeparture() << " on "
-             << (*first)->getDate().print() << " at " << (*first)->getDate().printTime() << " and it should"
-                     " be ready to take off from " << (*last)->getDestination() << " on ";
-        Date final = (*last)->getDate() + (*last)->getDuration();
-        final.normalize();
-        cout << final.print() << " at " << final.printTime() << ".\n";
+        auto firstf = airplane->getFlights().begin();
+        auto lastf = firstf + (airplane->getFlights().size() - 1);
+        Date dateFirst = (*firstf)->getDate();
+        if (dateFirst > Application::currentDate) {
+            cout << "The plane should be ready to land on " << (*firstf)->getDestination() << " on " << dateFirst.print() << " at " << dateFirst.printTime() << ".\n";
+        }
+        Date dateLast = (*lastf)->getDate() + (*lastf)->getDuration();
+        if (dateLast < Application::currentDate) {
+            dateLast = Application::currentDate;
+        }
+        cout << "The plane should be ready to take off from " << (*lastf)->getDestination() << " on " << dateLast.print() << " at " << dateLast.printTime() << "or later.\n";
     }
 }
 
