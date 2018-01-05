@@ -23,7 +23,7 @@ enum type {
     FDEST = 10,     /*!< Flights by Destination city */
     FTIME = 11      /*!< Flights by the time remaining to the time of the flight */
 };
-
+/*! enum used on time management menu */
 enum date_member_t {
     YEAR = 1,
     MONTH = 2,
@@ -166,5 +166,10 @@ bool validFullDate(Date &date);
  * @return bool - true if valid and false otherwise
  */
 bool validTime(Date &date);
+/**
+ * @brief Checks if a Date is valid or not
+ * @param date Date &date
+ * @return bool - true if valid and false otherwise
+ */
 bool validDate(Date &date);
 #endif /* SRC_HELPER_H_ */
