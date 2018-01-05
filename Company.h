@@ -78,15 +78,25 @@ private:
      * @brief vector with pointers to all the Flights of the company
      */
     vector<Flight *> flights;
-
+    /**
+    * @brief vector with pointers to all of the past Flights of the company
+    */
     vector<Flight *> pastFlights;
-
+    /**
+     * @brief priority queue that has all of the pointers to technicians of the company
+     */
 	techniciansPriorityQueue technicians;
-
+    /**
+     * @brief vector with pointers to all of the Bookings of the company
+     */
     vector<Booking *> bookings;
-
+    /**
+     * @brief vector with pointers to all of the past Bookings of the company
+     */
     vector<Booking *> pastBookings;
-
+    /**
+     * @brief Hast Table that holds all the inactive Passengers of the company
+     */
     inactivePassengersHT inactivePassengers;
 
     /**
@@ -101,7 +111,9 @@ private:
      * @brief bool flightsChanged is true when Flights vector has changed and false otherwise
     */
     static bool flightsChanged;
-
+    /**
+     * @brief bool techniciansChanged is true when Technicians priority queue has changed and false otherwise
+     */
 	static bool techniciansChanged;
 
 
@@ -694,7 +706,9 @@ public:
      * @return vector<Passenger *>
      */
     vector<Passenger *> getIncPassengers();
-
+	/*
+	void setTechs(priority_queue <Technician *> techs);
+	*/
     /**
      * @brief Updates the Date on the Airplanes
      */

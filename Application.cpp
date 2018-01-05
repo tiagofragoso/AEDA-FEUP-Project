@@ -8,10 +8,10 @@ Application::Application() {
 
     Company c = Company("AirRoad");
     company = c;
-    passengersFilepath = "../Files/Passengers.txt";
-    airplanesFilepath = "../Files/Airplanes.txt";
-    flightsFilepath = "../Files/Flights.txt";
-    techniciansFilepath = "../Files/Technicians.txt";
+    passengersFilepath = "";
+    airplanesFilepath = "";
+    flightsFilepath = "";
+    techniciansFilepath = "";
 
 }
 
@@ -1208,7 +1208,7 @@ void Application::loadTechnicianFile() {
 
     string f;
 
-    //techniciansFilepath = inputFilePath(Company::TECHNICIAN_IDENTIFIER);
+    techniciansFilepath = inputFilePath(Company::TECHNICIAN_IDENTIFIER);
 
     if (techniciansFilepath == "") throw InvalidFilePath("empty");
 
@@ -1233,7 +1233,7 @@ void Application::loadFlightFile() {
 
     string f;
 
-    //flightsFilepath = inputFilePath(Company::FLIGHT_IDENTIFIER);
+    flightsFilepath = inputFilePath(Company::FLIGHT_IDENTIFIER);
 
     if (flightsFilepath == "") throw InvalidFilePath("empty");
 
@@ -1261,7 +1261,7 @@ void Application::loadFlightFile() {
 
 void Application::loadAirplaneFile() {
 
-    //airplanesFilepath = inputFilePath(Company::AIRPLANE_IDENTIFIER);
+    airplanesFilepath = inputFilePath(Company::AIRPLANE_IDENTIFIER);
 
     string a;
 
@@ -1287,7 +1287,7 @@ void Application::loadAirplaneFile() {
 
 void Application::loadPassengerFile() {
 
-    //passengersFilepath = inputFilePath(Company::PASSENGER_IDENTIFIER);
+    passengersFilepath = inputFilePath(Company::PASSENGER_IDENTIFIER);
 
     string p;
 
@@ -1330,6 +1330,7 @@ void Application::saveFile(string &path, techniciansPriorityQueue techs) {
 	if (!file) throw InvalidFilePath("fail");
 	while (!techs.empty()) {
 		file << techs.top();
+        file << endl;
 		techs.pop();
 		if (techs.empty())
 			file << endl;
