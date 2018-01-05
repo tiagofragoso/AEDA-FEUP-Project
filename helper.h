@@ -40,22 +40,25 @@ struct Date {
     int year = 0;
     int hour = 0;
     int minute = 0;
-    Date(){};
-    Date(int y, int mo, int d, int h, int mn): year(y), month(mo), day(d), hour(h), minute(mn){}
-    bool operator<(const Date& d1) const
-    {
+
+    Date() {};
+
+    Date(int y, int mo, int d, int h, int mn) : year(y), month(mo), day(d), hour(h), minute(mn) {}
+
+    bool operator<(const Date &d1) const {
         return std::tie(year, month, day, hour, minute) < std::tie(d1.year, d1.month, d1.day, d1.hour, d1.minute);
     }
-    bool operator==(const Date& d1) const
-    {
+
+    bool operator==(const Date &d1) const {
         return std::tie(year, month, day, hour, minute) == std::tie(d1.year, d1.month, d1.day, d1.hour, d1.minute);
     }
-    bool operator>(const Date& d1) const
-    {
+
+    bool operator>(const Date &d1) const {
         return std::tie(year, month, day, hour, minute) > std::tie(d1.year, d1.month, d1.day, d1.hour, d1.minute);
     }
-    Date & operator+(const Date & d1){
-        Date * d = new Date;
+
+    Date &operator+(const Date &d1) {
+        Date *d = new Date;
         d->year = this->year + d1.year;
         d->month = this->month + d1.month;
         d->day = this->day + d1.day;
@@ -64,15 +67,17 @@ struct Date {
         d->normalize();
         return *d;
     }
-    Date & operator-(const Date & d1){
+
+    Date &operator-(const Date &d1) {
         int m = this->convertToMinutes() - d1.convertToMinutes();
-        Date * d = new Date;
+        Date *d = new Date;
         d->minute = abs(m);
         d->normalize();
         return *d;
 
     }
-    Date & operator=(const Date & d1){
+
+    Date &operator=(const Date &d1) {
         this->year = d1.year;
         this->month = d1.month;
         this->day = d1.day;
@@ -81,29 +86,35 @@ struct Date {
         this->normalize();
         return *this;
     }
-    string print() const{
+
+    string print() const {
         stringstream s;
         s << std::right << setfill('0') << setw(2) << to_string(this->day) << "/" << setfill('0') << setw(2)
-             << to_string(this->month) << "/" << setfill('0') << setw(4) << to_string(this->year) << resetiosflags(std::ios::showbase) << setfill(' ');
+          << to_string(this->month) << "/" << setfill('0') << setw(4) << to_string(this->year)
+          << resetiosflags(std::ios::showbase) << setfill(' ');
         return s.str();
     }
-    string printFullDate() const{
+
+    string printFullDate() const {
         stringstream s;
         s << std::right << setfill('0') << setw(2) << to_string(this->day) << "/" << setfill('0') << setw(2)
-             << to_string(this->month) << "/" << setfill('0') << setw(4) << to_string(this->year) << "-" << setfill('0')
-             << setw(2) << to_string(this->hour) << ":" << setfill('0') << setw(2) << to_string(this->minute)
-             << resetiosflags(std::ios::showbase) << setfill(' ');
+          << to_string(this->month) << "/" << setfill('0') << setw(4) << to_string(this->year) << "-" << setfill('0')
+          << setw(2) << to_string(this->hour) << ":" << setfill('0') << setw(2) << to_string(this->minute)
+          << resetiosflags(std::ios::showbase) << setfill(' ');
         return s.str();
 
     }
-    string printTime() const{
+
+    string printTime() const {
         stringstream s;
         cout << std::right << setfill('0')
-                << setw(2) << to_string(this->hour) << ":" << setfill('0') << setw(2) << to_string(this->minute)
-                << resetiosflags(std::ios::showbase) << setfill(' ');
+             << setw(2) << to_string(this->hour) << ":" << setfill('0') << setw(2) << to_string(this->minute)
+             << resetiosflags(std::ios::showbase) << setfill(' ');
         return s.str();
     }
+
     void normalize();
+
     int convertToMinutes() const;
 };
 
@@ -154,17 +165,21 @@ void next(string &piece, string &line, string separator);
  * @return true if input is valid and false otherwise
  */
 bool validString(string &s);
+
 /**
  * @brief Checks if a full Date is valid or not
  * @param date Date &date
  * @return bool - true if valid and false otherwise
  */
 bool validFullDate(Date &date);
+
 /**
  * @brief Checks if a Time is valid or not
  * @param date Date &date
  * @return bool - true if valid and false otherwise
  */
 bool validTime(Date &date);
+
 bool validDate(Date &date);
+
 #endif /* SRC_HELPER_H_ */

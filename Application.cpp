@@ -2,7 +2,7 @@
 #include <vector>
 #include "Application.h"
 
-Date Application::currentDate(2018, 2, 1, 12, 0);
+Date Application::currentDate(0, 0, 0, 0, 0);
 
 Application::Application() {
 
@@ -274,7 +274,7 @@ void Application::printTechniciansMenu() const {
     cout << "[9]- Back.\n\n";
 }
 
-void Application::printTechniciansUpdateMenu(Technician * technician) const {
+void Application::printTechniciansUpdateMenu(Technician *technician) const {
     cout << "Technician selected: \n\n";
     technician->print();
     cout << "[TECHNICIAN UPDATE MENU]\n\n";
@@ -296,6 +296,15 @@ void Application::mainMenu() {
     string op;
 
     setupMenus();
+
+    Date date;
+
+    do {
+        cout << "Insert current date (DD/MM/YYYY-HH/MM): ";
+        if (validFullDate(date)) break;
+    } while (true);
+
+    Application::currentDate = date;
 
     do {
 
@@ -349,13 +358,16 @@ void Application::filesMenu() {
     } while (true);
 
 }
+
 void Application::resetFlags() {
     this->company.setFlag();
 }
+
 void Application::saveChanges() {
 
     char auxOp;
-    if (company.getPassengersChanged() || company.getAirplanesChanged() || company.getFlightsChanged() || company.getTechniciansChanged()) {
+    if (company.getPassengersChanged() || company.getAirplanesChanged() || company.getFlightsChanged() ||
+        company.getTechniciansChanged()) {
         cout << "There are changes to be deployed to the files.\n";
         do {
             cout << "Would you like to save those changes (Y/N) ? ";
@@ -375,7 +387,7 @@ void Application::saveChanges() {
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
         } while (true);
-    } else {cout << "There are no changes to be deployed\n";}
+    } else { cout << "There are no changes to be deployed\n"; }
 }
 
 void Application::passengersMenu() {
@@ -428,7 +440,7 @@ void Application::techniciansMenu() {
                 cout << "Invalid option.\n";
             } else break;
 
-        } while(true);
+        } while (true);
 
         if (op == "4") {
             technicianUpdateMenu();
@@ -543,7 +555,7 @@ void Application::printListPassengers(type t) {
         default:
             return;
     }
-    if (passengers.empty()){
+    if (passengers.empty()) {
         cout << "There are no passengers.\n";
         return;
     }
@@ -566,7 +578,7 @@ void Application::printListAirplane(type t) {
 
     }
 
-    vector<Airplane* > airplanes;
+    vector<Airplane *> airplanes;
     string title;
 
     for (auto a : company.getFleet()) {
@@ -852,7 +864,7 @@ void Application::technicianUpdateMenu() {
 
     company.printSummaryTechnician();
     string op;
-    Technician * technician;
+    Technician *technician;
     do {
         try {
             technician = company.chooseTechnician();
@@ -864,7 +876,7 @@ void Application::technicianUpdateMenu() {
 
         break;
 
-    } while(true);
+    } while (true);
 
     do {
         printTechniciansUpdateMenu(technician);
@@ -881,7 +893,7 @@ void Application::technicianUpdateMenu() {
         (company.*menuTechnicianUpdate[op])(technician);
         pause();
 
-    } while(true);
+    } while (true);
 }
 
 Airplane *Application::readAirplane(string &a) {
@@ -1108,43 +1120,45 @@ Flight *Application::readFlight(string &f) {
 
     return newFlight;
 }
+
 Technician *Application::readTechnician(string &p) {
-    vector <string> models_v;
-	Technician *newTechnician = new Technician(0,"",models_v);
+    vector<string> models_v;
+    Technician *newTechnician = new Technician(0, "", models_v);
 
-	int temp;
-	try { next(temp, p, ";"); }
-	catch (InvalidFormat) {
-		cout << "Please insert the Passenger data in the correct format.\n";
-		return nullptr;
-	}
+    int temp;
+    try { next(temp, p, ";"); }
+    catch (InvalidFormat) {
+        cout << "Please insert the Passenger data in the correct format.\n";
+        return nullptr;
+    }
 
-	newTechnician->setId((unsigned int)temp);
+    newTechnician->setId((unsigned int) temp);
 
-	string st;
-	string models;
+    string st;
+    string models;
 
-	next(st, p, ";");
-	newTechnician->setName(st);
+    next(st, p, ";");
+    newTechnician->setName(st);
 
     models_v.clear();
 
-	while (true) {
-		if (p.find(',') != p.npos) {
-			next(models, p, ",");
+    while (true) {
+        if (p.find(',') != p.npos) {
+            next(models, p, ",");
             models_v.push_back(models);
-		} 
-		else {
-            p.substr(0,p.npos);
+        } else {
+            p.substr(0, p.npos);
             trimString(p);
             models_v.push_back(p);
-            break; }
-	}
+            break;
+        }
+    }
 
-	newTechnician->setModels(models_v);
+    newTechnician->setModels(models_v);
 
-	return newTechnician;
+    return newTechnician;
 }
+
 Passenger *Application::readPassenger(string &p) {
     Passenger *newPassenger;
 
@@ -1204,6 +1218,7 @@ string Application::inputFilePath(string s) {
     getline(cin, input);
     return input;
 }
+
 void Application::loadTechnicianFile() {
 
     string f;
@@ -1229,6 +1244,7 @@ void Application::loadTechnicianFile() {
     cout << "File successfully loaded.\n";
 
 }
+
 void Application::loadFlightFile() {
 
     string f;
@@ -1316,7 +1332,7 @@ void Application::saveFile(string &path, AirplanesSet fleet) {
 
     if (!file) throw InvalidFilePath("fail");
     auto it = fleet.begin();
-    while(it != fleet.end()) {
+    while (it != fleet.end()) {
         file << (*it);
         it++;
         if (it != fleet.end())
@@ -1324,18 +1340,19 @@ void Application::saveFile(string &path, AirplanesSet fleet) {
     }
     file.close();
 }
-void Application::saveFile(string &path, techniciansPriorityQueue techs) {
-	ofstream file(path);
 
-	if (!file) throw InvalidFilePath("fail");
-	while (!techs.empty()) {
-		file << techs.top();
+void Application::saveFile(string &path, techniciansPriorityQueue techs) {
+    ofstream file(path);
+
+    if (!file) throw InvalidFilePath("fail");
+    while (!techs.empty()) {
+        file << techs.top();
         file << endl;
-		techs.pop();
-		if (techs.empty())
-			file << endl;
-	}
-	file.close();
+        techs.pop();
+        if (techs.empty())
+            file << endl;
+    }
+    file.close();
 }
 
 void Application::saveAllFiles() {
@@ -1363,11 +1380,12 @@ void Application::saveAllFiles() {
 
     }
 
-    if (company.getTechniciansChanged()){
+    if (company.getTechniciansChanged()) {
 
-        if(techniciansFilepath.empty()) techniciansFilepath = inputFilePath(Company::TECHNICIAN_IDENTIFIER);
+        if (techniciansFilepath.empty()) techniciansFilepath = inputFilePath(Company::TECHNICIAN_IDENTIFIER);
 
-        try { saveFile(techniciansFilepath, this->company.getTechnicians()); } catch (InvalidFilePath &in) {in.print(); }
+        try { saveFile(techniciansFilepath, this->company.getTechnicians()); } catch (
+                InvalidFilePath &in) { in.print(); }
     }
 
     cout << "All changes were saved.\n";
@@ -1419,10 +1437,10 @@ void Application::printTimeMenu() const {
 
 void Application::manageTime(date_member_t date_member) {
     Date d;
-    int * dm;
+    int *dm;
     int input;
     string label;
-    switch (date_member){
+    switch (date_member) {
         case YEAR:
             label = "years";
             dm = &d.year;
@@ -1446,7 +1464,7 @@ void Application::manageTime(date_member_t date_member) {
     }
 
     do {
-        cout << "How many " << label <<" would you like to advance: ";
+        cout << "How many " << label << " would you like to advance: ";
         if (validArg(input)) break;
     } while (true);
 

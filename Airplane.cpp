@@ -4,10 +4,12 @@
 
 Airplane::Airplane() {}
 
-Airplane::Airplane(unsigned int id, string model, unsigned int capacity, vector<Flight *> flights, Date maintenance, Date maintenancePeriod) : id(id),
-                                                                                                     model(model),
-                                                                                                     capacity(capacity),
-                                                                                                     flights(flights), maintenance(maintenance), maintenancePeriod(maintenancePeriod) {}
+Airplane::Airplane(unsigned int id, string model, unsigned int capacity, vector<Flight *> flights, Date maintenance,
+                   Date maintenancePeriod) : id(id),
+                                             model(model),
+                                             capacity(capacity),
+                                             flights(flights), maintenance(maintenance),
+                                             maintenancePeriod(maintenancePeriod) {}
 
 Airplane::Airplane(unsigned int id, string model, unsigned int capacity, Date maintenance, Date maintenancePeriod) {
 

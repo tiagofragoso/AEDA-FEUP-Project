@@ -27,6 +27,7 @@ private:
 public:
 
     Flight();
+
     /**
      * @brief Constructor of a Flight object with all of its data members
      * @param id
@@ -137,11 +138,13 @@ public:
     * @brief Prints for the lists in the lists part of the Menu
     */
     void printList() const;
+
     /**
      * @brief gets the Date of the Flight object
      * @return Date
      */
     Date getDate() const;
+
     /**
     * @brief Gets the difference between the actual time and the time of the Flight
     * @return Date
@@ -183,7 +186,7 @@ public:
      * @brief Purely virtual function used in both of the subclasses
      * @param passenger Passenger * passenger
      */
-    virtual void removePassenger(Passenger * passenger) = 0;
+    virtual void removePassenger(Passenger *passenger) = 0;
 /** @name Flight functions to overload operators*/
     /** @{
     *
@@ -282,7 +285,7 @@ public:
      * @brief Removes passenger from flight
      * @param passenger Passenger * passenger
      */
-    void removePassenger(Passenger * passenger);
+    void removePassenger(Passenger *passenger);
 
 };
 
@@ -361,7 +364,7 @@ public:
      * @brief Removes passengers from flight
      * @param passenger Passenger * passenger
      */
-    void removePassenger(Passenger * passenger);
+    void removePassenger(Passenger *passenger);
 
     /**
      * @brief Prints the Information of the RentedFlight. Data-members inherited from the Flight class and the passengers from the PassengerMap

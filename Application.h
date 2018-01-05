@@ -28,8 +28,7 @@ class Application {
 
     typedef void(Company::*companyFunctionPassenger)(Passenger *passenger);
 
-    typedef void(Company::*companyFunctionTechnician) (Technician *technician);
-
+    typedef void(Company::*companyFunctionTechnician)(Technician *technician);
 
 
 private:
@@ -54,6 +53,7 @@ private:
 
 public:
     static Date currentDate;
+
     /**
      * @brief Default constructor of an Application object
      */
@@ -65,7 +65,6 @@ public:
     /**
      * @brief Main menu with the following options: File, Passenger, Airplane management, Booking and quit
      */
-
     /**
      * @brief main Menu
      */
@@ -146,7 +145,7 @@ public:
 
     void printTechniciansMenu() const;
 
-    void printTechniciansUpdateMenu(Technician * technician) const;
+    void printTechniciansUpdateMenu(Technician *technician) const;
 
     /**
     * @brief Prints the Sorted Listing menu
@@ -196,7 +195,6 @@ public:
     * @param t struct type t
     */
     void printListFlights(type t);
-
     /** @} end of Application Menu member-functions */
 
     /** @name Application File management member-functions*/
@@ -246,22 +244,25 @@ public:
     *@brief Loads all the lines from a passenger file if the filepath is correct
     */
     void loadPassengerFile();
+
     /**
     *@ brief Saves all the changes made in the execution of the program to the files
     */
     void saveAllFiles();
+
     /**
      * @brief Saves the fleet on the airplane File
      * @param path
      * @param fleet
      */
     void saveFile(string &path, AirplanesSet fleet);
+
     /**
      * @brief Saves the technicians info in the techs file
      * @param path
      * @param techs
      */
-	void saveFile(string &path, techniciansPriorityQueue techs);
+    void saveFile(string &path, techniciansPriorityQueue techs);
 
     /**
     *@ brief Manages saving of the changes in a file, informing the user if changes were made
@@ -290,27 +291,29 @@ public:
 
     /** @} end of Application Menu member-functions */
 
-	//2 projeto
-
     /**
      * @brief Analyzes a string p that represents a technician from a file and creates a Technician * from it
      * @param p string &p
      * @return Technician *
      */
-	Technician* readTechnician(string &p);
+    Technician *readTechnician(string &p);
+
     /**
      * @brief Load the Technician file to get the data to the program
      */
     void loadTechnicianFile();
+
     /**
      * @brief Function to manage system's dynamic time
      * @param d Date d
      */
     static void advanceTime(Date d);
+
     /**
      * @brief Helper function that resets the changed Flags
      */
     void resetFlags();
+
     /**
      * @brief Function that manages the time in the program
      * @param date_member date_member_t date_member

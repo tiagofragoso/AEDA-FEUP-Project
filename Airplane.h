@@ -34,7 +34,8 @@ public:
      * @param capacity
      * @param flights
      */
-    Airplane(unsigned int id, string name, unsigned int capacity, vector<Flight *> flights, Date maintenance, Date maintenancePeriod);
+    Airplane(unsigned int id, string name, unsigned int capacity, vector<Flight *> flights, Date maintenance,
+             Date maintenancePeriod);
 
     /**
      * @brief Constructor of an Airplane object with no flights
@@ -67,11 +68,13 @@ public:
      * @return vector <Flight *> pointers to the flights of an Airplane
      */
     vector<Flight *> getFlights() const;
+
     /**
      * @brief Gets the Date of a Airplane object
      * @return Date
      */
     Date getMaintenance() const;
+
     /**
      * @brief Gets the maintenances period of an Airplane object
      * @return Date
@@ -101,11 +104,13 @@ public:
      * @param vector <\ Flight * \> flights
      */
     void setFlights(vector<Flight *> flights);
+
     /**
      * @brief Sets the Airplane's maintenance date to the one passed as parameter
      * @param maintenance Date maintenance
      */
     void setMaintenance(Date maintenance);
+
     /**
      * @brief Sets the Airplane's maintenance period to the one passed as parameter
      * @param maintenancePeriod Date maintenancePeriod
@@ -157,6 +162,7 @@ public:
  * @return returns true if a1's id is less than a2's id
  */
 bool compAId(Airplane *a1, Airplane *a2);
+
 /**
  * @brief Compares two pairs
  * @param d1 pair<int, Date> d1
@@ -164,4 +170,5 @@ bool compAId(Airplane *a1, Airplane *a2);
  * @return returns true if d1 is equal to d2 and false otherwise
  */
 bool compMaintenance(pair<int, Date> d1, pair<int, Date> d2);
+
 #endif //AEDA_FEUP_PROJECT_AIRPLANE_H

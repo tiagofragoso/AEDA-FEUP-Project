@@ -1,10 +1,8 @@
-//
-// Created by Tiago Fragoso on 18/12/2017.
-//
-
 #include "Booking.h"
 
-Booking::Booking(unsigned int id, Passenger * passenger, Flight *flight, string seat): passenger(passenger), flight(flight), seat(seat), id(id)  {}
+Booking::Booking(unsigned int id, Passenger *passenger, Flight *flight, string seat) : passenger(passenger),
+                                                                                       flight(flight), seat(seat),
+                                                                                       id(id) {}
 
 
 Flight *Booking::getFlight() {
@@ -15,7 +13,7 @@ string Booking::getSeat() {
     return this->seat;
 }
 
-Passenger * Booking::getPassenger() {
+Passenger *Booking::getPassenger() {
     return this->passenger;
 }
 

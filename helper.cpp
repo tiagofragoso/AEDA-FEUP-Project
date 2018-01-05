@@ -32,7 +32,7 @@ bool validArg(int &variable) {
     return success;
 }
 
-bool validFullDate(Date &date){
+bool validFullDate(Date &date) {
     string input;
     getline(cin, input);
     bool success = true;
@@ -227,11 +227,11 @@ void Date::normalize() {
 
 }
 
-int Date::convertToMinutes() const{
+int Date::convertToMinutes() const {
     int t = this->minute;
-    t += this->hour*60;
-    t += this->day *24*60;
-    for (int i = 1; i <= this->month; i++) t += monthdays[i]*24*60;
+    t += this->hour * 60;
+    t += this->day * 24 * 60;
+    for (int i = 1; i <= this->month; i++) t += monthdays[i] * 24 * 60;
     t += this->year * 525600;
     return t;
 
