@@ -1451,6 +1451,7 @@ void Application::manageTime(date_member_t date_member) {
 
     *dm = input;
     this->advanceTime(d);
+    this->company.updateTime();
     cout << "Time updated successfully.\n\n";
 
 }

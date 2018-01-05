@@ -1,4 +1,5 @@
 #include "Airplane.h"
+#include "Application.h"
 #include <iomanip>
 
 Airplane::Airplane() {}
@@ -152,6 +153,12 @@ ostream &operator<<(ostream &o, const Airplane *a) {
         }
     } else o << "no_flights";
     return o;
+}
+
+vector<Flight *> Airplane::getCurrentFlights() {
+    vector<Flight*> currFlights;
+    for_each(this->flights.begin(), this->flights.end(), [&currFlights](Flight *f){if (f->getDate() > Application::currentDate || f->getDate() > Application::currentDate) currFlights.push_back(f);});
+    return currFlights;
 }
 
 bool compAId(Airplane *a1, Airplane *a2) {
