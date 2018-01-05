@@ -33,6 +33,8 @@ public:
      * @param name
      * @param capacity
      * @param flights
+     * @param maintenance
+     * @param maintenancePeriod
      */
     Airplane(unsigned int id, string name, unsigned int capacity, vector<Flight *> flights, Date maintenance, Date maintenancePeriod);
 
@@ -41,6 +43,8 @@ public:
      * @param id
      * @param name
      * @param capacity
+     * @param maintenance
+     * @param maintenancePeriod
      */
     Airplane(unsigned int id, string name, unsigned int capacity, Date maintenance, Date maintenancePeriod);
 

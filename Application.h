@@ -90,18 +90,26 @@ public:
      * @brief Menu to manage flights
      */
     void flightsMenu();
-
+    /**
+     * @brief Menu to manage Technicians
+     */
     void techniciansMenu();
-
+    /**
+     * @brief Menu to update a certain Technician
+     */
     void technicianUpdateMenu();
 
     /**
      * @brief Menu to manage bookings
      */
     void bookingsMenu();
-
+    /**
+     * @brief Menu to manage Maintenances
+     */
     void maintenanceMenu();
-
+    /**
+     * @brief Menu to manage time
+     */
     void timeMenu();
 
     /**
@@ -143,9 +151,14 @@ public:
     * @brief Prints the Airplanes management menu
     */
     void printAirplanesMenu() const;
-
+    /**
+     * @brief Prints Technicians Menu
+     */
     void printTechniciansMenu() const;
-
+    /**
+     * @brief Prints the menu that allows the user to update a certain Technician passed as paramter
+     * @param technician
+     */
     void printTechniciansUpdateMenu(Technician * technician) const;
 
     /**
@@ -162,9 +175,13 @@ public:
     * @brief Prints the Booking menu
     */
     void printBookingsMenu() const;
-
+    /**
+     * @brief Prints the Maintenances menu
+     */
     void printMaintenanceMenu() const;
-
+    /**
+     * @brief Prints the Time menu
+     */
     void printTimeMenu() const;
 
     /**
