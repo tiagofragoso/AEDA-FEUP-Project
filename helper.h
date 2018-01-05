@@ -166,4 +166,5 @@ bool validFullDate(Date &date);
  * @return bool - true if valid and false otherwise
  */
 bool validTime(Date &date);
+bool validDate(Date &date);
 #endif /* SRC_HELPER_H_ */
