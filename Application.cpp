@@ -1330,6 +1330,7 @@ void Application::saveFile(string &path, techniciansPriorityQueue techs) {
 	if (!file) throw InvalidFilePath("fail");
 	while (!techs.empty()) {
 		file << techs.top();
+        file << endl;
 		techs.pop();
 		if (techs.empty())
 			file << endl;
