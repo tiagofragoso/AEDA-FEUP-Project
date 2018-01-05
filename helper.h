@@ -34,29 +34,58 @@ enum date_member_t {
 
 static vector<int> monthdays = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
+//! struct Date
+/*! Used to implement dynamic time  */
 struct Date {
-    int day = 0;
-    int month = 0;
-    int year = 0;
-    int hour = 0;
-    int minute = 0;
+    int day = 0; /*!< day */
+    int month = 0; /*!< month */
+    int year = 0; /*!< year */
+    int hour = 0; /*!< hour */
+    int minute = 0; /*!< minute */
 
+    /**
+     * @brief Date default constructor
+     */
     Date() {};
 
+    /**
+     * @brief Date constructor
+     * @param y year
+     * @param mo month
+     * @param d day
+     * @param h hour
+     * @param mn minutes
+     */
     Date(int y, int mo, int d, int h, int mn) : year(y), month(mo), day(d), hour(h), minute(mn) {}
 
+    /**
+     * @brief overload of < operator for Date
+     * @return true if lhs is before rhs or false otherwise
+     */
     bool operator<(const Date &d1) const {
         return std::tie(year, month, day, hour, minute) < std::tie(d1.year, d1.month, d1.day, d1.hour, d1.minute);
     }
 
+    /**
+     * @breif overload of == operator for Date
+     * @return true if lhs is equal to rhs or false otherwise
+     */
     bool operator==(const Date &d1) const {
         return std::tie(year, month, day, hour, minute) == std::tie(d1.year, d1.month, d1.day, d1.hour, d1.minute);
     }
 
+    /**
+     * @brief overload of > operator for Date
+     * @return true if lhs is after rhs or false otherwise
+     */
     bool operator>(const Date &d1) const {
         return std::tie(year, month, day, hour, minute) > std::tie(d1.year, d1.month, d1.day, d1.hour, d1.minute);
     }
 
+    /**
+     * @brief overload of + operator for Date
+     * @return sum of dates
+     */
     Date &operator+(const Date &d1) {
         Date *d = new Date;
         d->year = this->year + d1.year;
@@ -68,6 +97,10 @@ struct Date {
         return *d;
     }
 
+    /**
+     * @brief overload of - operator for Date
+     * @return time difference between 2 Date objects
+     */
     Date &operator-(const Date &d1) {
         int m = this->convertToMinutes() - d1.convertToMinutes();
         Date *d = new Date;
@@ -77,6 +110,9 @@ struct Date {
 
     }
 
+    /**
+     * @brief overload of = operator for Date
+     */
     Date &operator=(const Date &d1) {
         this->year = d1.year;
         this->month = d1.month;
@@ -87,6 +123,9 @@ struct Date {
         return *this;
     }
 
+    /**
+     * @return string of date in DD/MM/YYYY format
+     */
     string print() const {
         stringstream s;
         s << std::right << setfill('0') << setw(2) << to_string(this->day) << "/" << setfill('0') << setw(2)
@@ -95,6 +134,9 @@ struct Date {
         return s.str();
     }
 
+    /**
+     * @return string of date in DD/MM/YYYY-hh:mm format
+     */
     string printFullDate() const {
         stringstream s;
         s << std::right << setfill('0') << setw(2) << to_string(this->day) << "/" << setfill('0') << setw(2)
@@ -105,6 +147,9 @@ struct Date {
 
     }
 
+    /**
+     * @return string of date in hh:mm format
+     */
     string printTime() const {
         stringstream s;
         cout << std::right << setfill('0')
@@ -113,8 +158,15 @@ struct Date {
         return s.str();
     }
 
+    /**
+     * @brief constrains Date data members to default values
+     */
     void normalize();
 
+    /**
+     * @brief converts Date object to minutes
+     * @return number of minutes in Date
+     */
     int convertToMinutes() const;
 };
 
